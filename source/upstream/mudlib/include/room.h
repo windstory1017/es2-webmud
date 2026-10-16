@@ -15,5 +15,6 @@ author: Annihilator <taedlar@gmail.com>
 #define INN		"/std/room/inn.c"
 #define JOURNEY		"/std/room/journey.c"
 #define TEMPLE		"/std/room/temple.c"
+#define HERB    	"/std/room/herb.c"
 
 #endif // ! ROOM_H

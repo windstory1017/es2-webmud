@@ -2,7 +2,9 @@
 // 李家村復原版。CONFIRMED_MIXED
 // Topology follows the user-provided Li Village map; generated prose is intentionally replaceable.
 
-inherit ROOM;
+#include <room.h>
+
+inherit HERB;
 
 void create()
 {
@@ -18,6 +20,5 @@ LONG
         "east" : __DIR__"nroad1"
     ]));
     setup();
-    replace_program(ROOM);
     set("map/area", "李家村");
 }

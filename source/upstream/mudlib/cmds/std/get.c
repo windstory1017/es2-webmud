@@ -1,3 +1,4 @@
+#include "/daemon/misc/heat_b.h"
 
 
 #pragma save_binary
@@ -10,7 +11,7 @@ int do_get(object me, object ob);
 
 void create() { seteuid(getuid()); }
 
-int main(object me, string arg)
+int ordinary_main(object me, string arg)
 {
     string from, item;
     object obj, *inv, env, obj2, obj3;
@@ -149,3 +150,8 @@ HELP
 }
  
 
+// HEAT B：丹爐操作先交給煉丹系統，其餘照原版處理。
+int main(object me, string arg) {
+    if(HEAT_D->handles(me,"get",arg)) return HEAT_D->enqueue(me,"get",arg);
+    return ordinary_main(me,arg);
+}
