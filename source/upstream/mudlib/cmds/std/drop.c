@@ -1,3 +1,4 @@
+#include "/daemon/misc/heat_b.h"
 // drop.c
 
 #include <login.h>
@@ -7,7 +8,7 @@ int do_drop(object me, object obj);
 
 void create() { seteuid(getuid()); }
 
-int main(object me, string arg)
+int ordinary_main(object me, string arg)
 {
     object obj, *inv, obj2;
     int i, amount;
@@ -104,4 +105,10 @@ drop 200 gold	丟下二百兩黃金.
 HELP
     );
     return 1;
+}
+
+// HEAT B：丹爐操作先交給煉丹系統，其餘照原版處理。
+int main(object me, string arg) {
+    if(HEAT_D->handles(me,"drop",arg)) return HEAT_D->enqueue(me,"drop",arg);
+    return ordinary_main(me,arg);
 }

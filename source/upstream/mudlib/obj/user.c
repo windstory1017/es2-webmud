@@ -1,3 +1,4 @@
+#include "/daemon/misc/heat_b.h"
 /*---
 description: The user object, which represents a player in the game.
 author: Annihilator <taedlar@gmail.com>
@@ -169,6 +170,7 @@ private void user_dump(int type) {
  *  當使用者斷線時，driver 會呼叫這個函數。
  */
 private void net_dead() {
+    if (find_object(HEAT_D)) HEAT_D->on_disconnect(this_object());
     set_heart_beat(0);
 
     // Stop fighting, we'll be back soon.
@@ -204,6 +206,7 @@ void reconnect() {
     if (geteuid(previous_object()) != ROOT_UID)
         error ("Permission denied.\n");
 
+    if (find_object(HEAT_D)) HEAT_D->on_reconnect(this_object());
     set_heart_beat(1);
     remove_call_out("user_dump");
     tell_object(this_object(), "重新連線完畢。\n");

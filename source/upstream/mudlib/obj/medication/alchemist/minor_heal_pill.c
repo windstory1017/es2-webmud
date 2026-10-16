@@ -1,5 +1,5 @@
-// minor_heal_pill.c
-
+// 龍圖獨立丹藥；只依賴 mudlib 通用核心，不載入其他丹藥或 HEAT 專用檔案。
+// produce_param 為方案 B；服用邏輯完整寫於本檔。
 inherit COMBINED_ITEM;
 
 void create()
@@ -17,18 +17,13 @@ void create()
 		set("base_weight", 5);
 		set("mixture_value", 250);
 		set("produce_param", ([
-			"min_heat_power" : 130,
-			"max_heat_power" : 150,
-			// change from 8000 to 800 by dragoon
-			"min_heat" : 800,
-			// change from 8200 to 820 by dragoon
-			"max_heat" : 820,
-		]));
-		// skill changed from 30 to 60 by dragoon
-		set("requirement", ([
-			"literate" : 15,
-			"alchemy-medication" : 60,
-		]));
+            "min_heat_power" : 130,
+            "max_heat_power" : 150,
+            "min_heat" : 533,
+            "max_heat" : 575,
+        ]));
+		
+		set("requirement", (["literate": 15, "alchemy-medication": 60]));
 	}
 	set_amount(1);
 	setup();
@@ -37,10 +32,10 @@ void create()
 int stuff_ob(object me)
 {
 	if (me->query_stat_maximum("food") - me->query_stat("food") < 8)
-		return notify_fail("你的肚子已經撐得連這粒藥丸也吞不下去了。\n");
+		return notify_fail(gender_self(me) + "的肚子已經撐得連這粒藥丸也吞不下去了。\n");
 	message_vision("$N吞下一粒小還丹。\n", me);
 	me->consume_stat("water", 15);
-	// changed from 20 to 5 by dragoon
+	
 	me->supplement_stat("food", 5);
 	me->damage_stat("gin", 5);
 	me->consume_stat("gin", 5);
@@ -50,4 +45,21 @@ int stuff_ob(object me)
 	add_amount(-1);
 
 	return 1;
+}
+
+// 供煉丹系統辨識；單獨使用時無需煉丹系統。
+string query_heat_product() { return "minor"; }
+
+// 僅合併同一新物件檔案的堆疊，不與舊丹藥建立關聯。
+varargs int move(mixed dest, int silent)
+{
+    object other;
+    if (!::move(dest, silent)) return 0;
+    foreach (other in all_inventory(environment())) {
+        if (other != this_object() && base_name(other) == base_name(this_object())) {
+            add_amount(other->query_amount());
+            destruct(other);
+        }
+    }
+    return 1;
 }

@@ -1,3 +1,4 @@
+#include "/daemon/misc/heat_b.h"
 /*---
 description: 定義角色相關功能。
 author: Annihilator <taedlar@gmail.com>
@@ -192,6 +193,7 @@ die()
 {
     object corpse, ob;
 
+    if (find_object(HEAT_D)) HEAT_D->on_death(this_object());
     /* 停止一切的戰鬥、保護、攻擊選擇的關係 */
     remove_all_killer();
     guard_ob(0);

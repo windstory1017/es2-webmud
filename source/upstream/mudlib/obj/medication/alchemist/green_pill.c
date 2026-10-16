@@ -1,5 +1,5 @@
-// green_pill.c
-
+// 龍圖獨立丹藥；只依賴 mudlib 通用核心，不載入其他丹藥或 HEAT 專用檔案。
+// produce_param 為方案 B；服用邏輯完整寫於本檔。
 inherit COMBINED_ITEM;
 
 void do_cure_poison(object me);
@@ -17,19 +17,16 @@ void create()
 		set("base_weight", 5);
 		set("mixture_value", 100);
 		set("produce_param", ([
-			"min_heat_power" : 85,
-			"max_heat_power" : 230,
-			"min_heat" : 150,
-			"max_heat" : 200,
-		]));
+            "min_heat_power" : 90,
+            "max_heat_power" : 230,
+            "min_heat" : 420,
+            "max_heat" : 959,
+        ]));
 		set("cure_poison", ([
 		"金" : -1, "水" : -1, "火" : -1, "土" : -1, "木" : -1,
 		"damage" :   -1,
 		]));
-		set("requirement", ([
-			"literate" : 5,
-			"alchemy-medication" : 15,
-		]));
+		set("requirement", (["literate": 5, "alchemy-medication": 15]));
 	}
 	set_amount(1);
 	setup();
@@ -38,7 +35,7 @@ void create()
 int stuff_ob(object me)
 {
 	if( me->query_stat_maximum("food") - me->query_stat("food") < 20)
-		return notify_fail("你的肚子已經撐得連這粒藥丸也吞不下去了。\n");
+		return notify_fail(gender_self(me) + "的肚子已經撐得連這粒藥丸也吞不下去了。\n");
 	message_vision("$N吞下一粒甘靈清毒丹。\n", me);
 	me->consume_stat("water", 10);
 	me->supplement_stat("food", 5);
@@ -56,7 +53,7 @@ void do_cure_poison(object me)
         cnd_data = me->query_condition("poison");
 
 	if ( me->query_condition("poison") == 0 ) {
-		tell_object(me, "你吞下這顆藥丸, 但是卻沒什麼感覺。\n");
+		tell_object(me, gender_self(me) + "吞下這顆藥丸, 但是卻沒什麼感覺。\n");
 	} else {
 		if ( ob->query("cure_poison/damage") )
 		cnd_data["damage"] = cnd_data["damage"] + 
@@ -64,13 +61,30 @@ void do_cure_poison(object me)
                 if (cnd_data["damage"] <= 0 ){
                         me->delete_condition("poison");
 	                tell_object(me, 
-			"你吞下這顆藥丸後, 身體的不適已經完全消除了。\n");
+			gender_self(me) + "吞下這顆藥丸後, 身體的不適已經完全消除了。\n");
                         return;
                 }
                 else {
 	                tell_object(me, 
-			"你吞下這顆藥丸後, 身體的不適感似乎稍微減輕了。\n");
+			gender_self(me) + "吞下這顆藥丸後, 身體的不適感似乎稍微減輕了。\n");
                 }
                 return;
         }
+}
+
+// 供煉丹系統辨識；單獨使用時無需煉丹系統。
+string query_heat_product() { return "green"; }
+
+// 僅合併同一新物件檔案的堆疊，不與舊丹藥建立關聯。
+varargs int move(mixed dest, int silent)
+{
+    object other;
+    if (!::move(dest, silent)) return 0;
+    foreach (other in all_inventory(environment())) {
+        if (other != this_object() && base_name(other) == base_name(this_object())) {
+            add_amount(other->query_amount());
+            destruct(other);
+        }
+    }
+    return 1;
 }

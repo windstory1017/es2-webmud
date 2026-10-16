@@ -1,3 +1,4 @@
+#include "/daemon/misc/heat_b.h"
 // put.c
 #include <login.h>
 
@@ -7,7 +8,7 @@ int do_put(object me, object obj, object dest);
 
 void create() {seteuid(getuid());}
 
-int main(object me, string arg)
+int ordinary_main(object me, string arg)
 {
 	string target, item;
 	object obj, dest, *inv, obj2;
@@ -111,4 +112,10 @@ write(@HELP
 HELP
     );
     return 1;
+}
+
+// HEAT B：丹爐操作先交給煉丹系統，其餘照原版處理。
+int main(object me, string arg) {
+    if(HEAT_D->handles(me,"put",arg)) return HEAT_D->enqueue(me,"put",arg);
+    return ordinary_main(me,arg);
 }
