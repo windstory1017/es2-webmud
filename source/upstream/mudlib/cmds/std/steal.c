@@ -7,6 +7,17 @@ inherit F_CLEAN_UP;
 
 void create() {seteuid(getuid());}
 
+/* 妙手空空點數（使用者定案，2026-10-19）：偷到東西
+ * random((定力+機敏)/2)² + random(定力+機敏)；被發現時給 1/4。 */
+int steal_exp(object me)
+{
+    int n, sum;
+
+    sum = me->query_attr("cps") + me->query_attr("dex");
+    n = random(sum / 2);
+    return n * n + random(sum);
+}
+
 int main(object me, string arg)
 {
     string what, who;
@@ -162,7 +173,7 @@ private void compelete_steal(object me, object victim, object ob, int sp, int dp
         tell_object(me, "你成功地偷到一" + ob->query("unit") + ob->name() + "﹗\n");
         if( living(victim) ) {
             int gain;
-            me->improve_skill("stealing", me->query_attr("int"));
+            me->improve_skill("stealing", steal_exp(me));
             gain = ob->query("value") / (me->query_skill("stealing")+50);
             if( gain > 100 ) gain = 100;
             me->gain_score("thievery", gain);
@@ -209,7 +220,7 @@ private void compelete_steal(object me, object victim, object ob, int sp, int dp
                 message_vision("$N一回頭﹐正好發現$n的手正抓著$P身上的" + ob->name() + "﹗\n\n"
                         + "$N喝道﹕「幹什麼﹗」\n\n", victim, me);
             }
-            me->improve_skill("stealing", random(me->query_attr("int")));
+            me->improve_skill("stealing", steal_exp(me) / 4);
             me->gain_score("thievery", 1);
             if( userp(victim) ) victim->fight_ob(me);
         else {

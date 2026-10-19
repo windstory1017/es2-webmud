@@ -36,6 +36,15 @@ function rememberCommand(c){
   try { localStorage.setItem(HISTORY_KEY, JSON.stringify(history)); } catch (_) {}
 }
 let retry = 0;
+// 斷線重連：等待時間逐次拉長（1、2、4、8、16、30 秒），再加一點隨機延遲，避免伺服器出狀況時
+// 所有玩家每秒同時重連、把伺服器壓垮。連線穩定 30 秒以上才把等待時間歸零。
+let retryResetTimer = null;
+const RECONNECT_MAX_MS = 30000;
+const RECONNECT_STABLE_MS = 30000;
+function reconnectDelay(){
+  const base=Math.min(RECONNECT_MAX_MS,1000*2**Math.min(retry++,5));
+  return Math.round(base+Math.random()*base*0.3);
+}
 let tail = '';
 let graph = {nodes:[], edges:[]};
 let nodeById = new Map();
@@ -1024,7 +1033,8 @@ function connect(){
     hudFallbackBuffer='';
     pendingUserCommands=[];
     mapRefreshPending=false;hudBootstrapInFlight=false;hudBootstrapAttempts=0;
-    retry=0;conn.textContent='LIVE';sessionRecorder.markTransportOpen();
+    clearBg(retryResetTimer);retryResetTimer=bgTimeout(()=>{retryResetTimer=null;retry=0;},RECONNECT_STABLE_MS);
+    conn.textContent='LIVE';sessionRecorder.markTransportOpen();
   };
   ws.onmessage=e=>{
     const raw=e.data instanceof ArrayBuffer?new TextDecoder('utf-8').decode(e.data):e.data;
@@ -1038,7 +1048,7 @@ function connect(){
       kickHudAfterServerText(forceMapRefresh);
     }
   };
-  ws.onclose=e=>{stopHudPolling();editorActive=false;if(mapBootstrapRetryTimer){clearTimeout(mapBootstrapRetryTimer);mapBootstrapRetryTimer=null;}pendingUserCommands=[];mapRefreshPending=false;hudBootstrapInFlight=false;hudBootstrapAttempts=0;currentRoomId=null;runtimeSnapshot=null;tail='';sessionRecorder.finishResponse();sessionRecorder.markTransportClose(e?.code??null,e?.reason||'');sessionRecorder.markReconnect();conn.textContent='DISCONNECTED';if(manualDisconnect){print('\n[已中斷連線，輸入 #con 重新連線]\n',true);return;}automation.cancelPending();if(!started)return;const wait=Math.min(10000,1000*2**Math.min(retry++,3));print(`\n[${wait/1000} 秒後重新連線]\n`,true);reconnectTimer=bgTimeout(()=>{reconnectTimer=null;connect();},wait);};
+  ws.onclose=e=>{stopHudPolling();editorActive=false;if(mapBootstrapRetryTimer){clearTimeout(mapBootstrapRetryTimer);mapBootstrapRetryTimer=null;}pendingUserCommands=[];mapRefreshPending=false;hudBootstrapInFlight=false;hudBootstrapAttempts=0;currentRoomId=null;runtimeSnapshot=null;tail='';sessionRecorder.finishResponse();sessionRecorder.markTransportClose(e?.code??null,e?.reason||'');sessionRecorder.markReconnect();conn.textContent='DISCONNECTED';if(manualDisconnect){print('\n[已中斷連線，輸入 #con 重新連線]\n',true);return;}automation.cancelPending();if(!started)return;clearBg(retryResetTimer);retryResetTimer=null;const wait=reconnectDelay();print(`\n[${Math.round(wait/1000)} 秒後重新連線]\n`,true);reconnectTimer=bgTimeout(()=>{reconnectTimer=null;connect();},wait);};
   ws.onerror=()=>conn.textContent='ERROR';
 }
 // Echo the player's own command into the transcript as its own line, the

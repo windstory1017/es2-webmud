@@ -12,7 +12,7 @@ mapping skill_flag      = ([]);         // Ultra skill flags.
 string best_skill = "";
 void refresh_taoist_spell_mastery(string skill)
 {
-    if( skill != "taoism-fire" && skill != "taoism-freeze"
+    if( skill != "spells" && skill != "taoism-fire" && skill != "taoism-freeze"
     && skill != "taoism-storm" && skill != "taoism-thunder" ) return;
     if( this_object()->query_class() != "taoist" ) return;
     CLASS_D("taoist")->refresh_spell_mastery(this_object());

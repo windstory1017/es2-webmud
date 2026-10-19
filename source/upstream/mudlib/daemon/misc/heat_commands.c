@@ -26,8 +26,14 @@ int put_limit(object me, object ob, object dest, int count)
         if (ancestor == dest) return 1;
         ancestor = environment(ancestor);
     }
-    if (weight > dest->query_max_encumbrance() - dest->query_encumbrance())
-        return fail(me, dest->name() + "似乎裝不下了。");
+    // 角色的負重上限是 carriage，容器才用 max_encumbrance（2026-10-19 修正）。
+    int cap;
+    cap = dest->is_character() ? dest->query_strength("carriage")
+                               : dest->query_max_encumbrance();
+    if (weight > cap - dest->query_encumbrance())
+        return fail(me, dest->is_character()
+            ? ob->name() + "現在對你來說太重了。"
+            : dest->name() + "似乎裝不下了。");
     return 1;
 }
 int transfer(object me, string verb, object ob, object dest, int count)

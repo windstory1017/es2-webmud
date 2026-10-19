@@ -39,13 +39,27 @@ string *knowledge_level_desc = ({
 
 string skill_level(string, int);
 
-mapping _skill;
+mapping _skill, _lrn, _raw;
+
+// 等級高的在前，同等級時累積經驗多的在前。
+int sort_by_level(string a, string b)
+{
+    if( _skill[a] != _skill[b] ) return _skill[b] - _skill[a];
+    return _lrn[b] - _lrn[a];
+}
+
+// 停用的技能：原始等級高的在前，同等級時累積經驗多的在前。
+int sort_by_raw(string a, string b)
+{
+    if( _raw[a] != _raw[b] ) return _raw[b] - _raw[a];
+    return _lrn[b] - _lrn[a];
+}
 
 int main(object me, string arg)
 {
     object ob;
     mapping skl, lrn, map, flag;
-    string *sname, *mapped, s, old_s, line, option;
+    string *sname, *mapped, *disabled, s, old_s, line, option;
     int show_all = 0;
 
     seteuid(getuid());
@@ -91,13 +105,24 @@ int main(object me, string arg)
     _skill = ([]);
     sname = filter_array(keys(skl) + keys(lrn),
         (: undefinedp($3[$1]) ? $3[$1] = $2->query_skill($1) : 0 :), ob, _skill );
+    // 求教後還沒 gain 的 0 級技能也列出來（使用者指示，2026-10-19）：已經學會，只是還是 0 級。
+    // 停用的技能有效等級是 0，但只要原本練過（等級或累積經驗）也要列出。
+    sname = filter_array(keys(_skill), (: $2[$1] > 0 || $3[$1] > 0 || $4[$1] > 0 :), _skill, lrn, skl);
 
     map = ob->query_skill_map();
     if( mapp(map) ) mapped = values(map);
     else mapped = ({});
 
-    sname = sort_array( show_all ? keys(_skill) : sname,
-        (: _skill[$2] - _skill[$1] :));
+    if( !mapp(map) ) map = ([]);
+
+    // 排序（使用者指示，2026-10-19）：一般技能依等級由高到低，同等級時累積經驗多的在前；
+    // 停用（disable）的技能一律排在最後，依原始等級、累積經驗排列。
+    sname = show_all ? keys(_skill) : sname;
+    disabled = filter_array(sname, (: !undefinedp($2[$1]) && !$2[$1] :), map);
+    sname -= disabled;
+    _lrn = lrn;
+    _raw = skl;
+    sname = sort_array(sname, "sort_by_level") + sort_array(disabled, "sort_by_raw");
 
     foreach(s in sname )
     {
@@ -107,7 +132,8 @@ int main(object me, string arg)
         }
 
         if( !show_all ) {
-            if( !undefinedp(map[s]) ) {
+            // 停用的技能沒有對應的武功，照一般技能顯示名稱。
+            if( !undefinedp(map[s]) && map[s] ) {
                 line += HIY "　" + cjk_align(to_chinese(s) + " - " + to_chinese(map[s])
                         + " (" + map[s] + ")", NAME_WIDE, NAME_NARROW) + NOR
                     + " - " + cjk_align(skill_level(SKILL_D(s)->type(), skl[s]), 4, 0)

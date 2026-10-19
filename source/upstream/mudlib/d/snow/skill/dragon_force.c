@@ -69,7 +69,9 @@ int do_exercise(object me)
 	me->damage_stat("sen", 1);
 	/* Preserve Dragon Force's canonical special-skill gain, but route the
 	 * accompanying BASIC force learned through the user-restored formula. */
-	me->improve_skill("dragon force", random(me->query_attr("con")/10) + 1);
+	// 龍形神功點數（使用者定案，2026-10-19）：悟性公式 + random(靈性)。
+	me->improve_skill_exact("dragon force", COMBAT_D->int_formula_exp(me)
+	    + random(me->query_attr("spi")));
 	me->improve_restored_force_tick();
     }
     return 1;

@@ -390,13 +390,14 @@ int handles(object me, string verb, string arg)
     if (item == "all") {
         foreach (ob in inventory(env))
             if (ob->is_heat_wood() || ob->is_heat_mixture() || ob->is_heat_ash()
-            || ob->is_heat_furnace() || ob->is_heat_reactor() || product_key(ob)) return 1;
+            || ob->is_heat_furnace() || ob->is_heat_reactor()) return 1;
         return 0;
     }
     if (sscanf(item, "%d %s", count, target) == 2) item = target;
+    // 丹藥成品沒有火候，不在丹爐／丹鼎裡時交回原版 get／drop／put，立即執行（2026-10-20）。
     ob = present(item, env);
     return ob && (ob->is_heat_wood() || ob->is_heat_mixture() || ob->is_heat_ash()
-        || ob->is_heat_furnace() || ob->is_heat_reactor() || product_key(ob));
+        || ob->is_heat_furnace() || ob->is_heat_reactor());
 }
 int has_water(object env)
 {
@@ -415,9 +416,30 @@ void on_disconnect(object who)
 void on_reconnect(object who) { map_delete(paused, who); refresh_holder(who); }
 int enqueue(object me, string verb, string arg)
 {
+    object who, f, ob;
+    mixed err;
     if (!me || me != this_player()) return 0;
-    queue += ({({me, verb, arg})});
-    set_heart_beat(1);
+    // 2026-10-20 使用者決定：煉丹指令立即執行，不再等下一次心跳。
+    // 心跳結束時所有到期事件都已結算，兩次心跳之間狀態一致，可直接執行。
+    // 萬一在心跳處理途中被呼叫，仍排到下一次心跳，避免重入。
+    if (in_pulse) {
+        queue += ({({me, verb, arg})});
+        set_heart_beat(1);
+        return 1;
+    }
+    begin_operation(me);
+    err = catch((HB "heat_commands")->execute(me, verb, arg));
+    end_operation();
+    if (err) {
+        tell_object(me, "這次操作未能完成。\n");
+        log_file("heat_b", sprintf("%O\n", err));
+    }
+    // 與心跳結尾相同的收尾：結算到期事件、送出藥香等訊息。
+    foreach (who in keys(holders)) if (who) flush_holder(who);
+    foreach (f in furnaces) if (f) flush_furnace(f);
+    foreach (ob in woods) if (ob && environment(ob) && !environment(ob)->is_heat_furnace()) flush_wood(ob);
+    flush_scents();
+    invalidate_inventory();
     return 1;
 }
 void pulse()

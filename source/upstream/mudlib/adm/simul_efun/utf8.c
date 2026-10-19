@@ -3,6 +3,10 @@ description: UTF-8 utilities
 author: Annihilator <taedlar@gmail.com>
 ---*/
 
+// 不能出現在行首的全形收尾標點（cjk_wrap() 換行時讓它們留在上一行）。
+#define NO_LINE_START ({ "﹗", "！", "？", "﹖", "，", "﹐", "。", "﹒", "、", "；", "﹔", "：", "﹕", \
+    "」", "』", "）", "】", "〉", "》", "…" })
+
 varargs string cjk_wrap (string str, int width, int indent, int first_line_indent) {
     string* mbch;
     string result = "";
@@ -26,7 +30,8 @@ varargs string cjk_wrap (string str, int width, int indent, int first_line_inden
         }
         prev_char_width = char_width;
         if (char_width > 1 || ch == " ") { // break on spaces and multi-byte characters
-            if (line_length + char_width > width) {
+            // 收尾的標點（﹗。」等）不放在行首，超出寬度時掛在上一行尾端。
+            if (line_length + char_width > width && member_array (ch, NO_LINE_START) == -1) {
                 result += "\n";
                 if (indent > 0)
                     result += repeat_string (" ", indent);

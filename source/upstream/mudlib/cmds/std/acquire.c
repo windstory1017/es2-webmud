@@ -26,18 +26,19 @@ int main(object me, string arg)
         return notify_fail("你已經會這種技能了。\n");
 
     // Produce proper message according to relation between player and teacher.
+    // 求教的話一律整句顯示、不自動換行（message_vision 第四個參數）。
     if( me->is_apprentice_of(ob) ) {
         message_vision("$N向$n磕頭行禮﹐恭恭敬敬地說道﹕師父在上﹐求您傳授徒兒"
             + "「" + to_chinese(skill) + "」﹗\n",
-            me, ob);
+            me, ob, 1);
     } else if( ob->query("age") > me->query("age") ) {
         message_vision("$N向$n屈膝下拜﹐說道﹕晚輩" + me->name() + "﹐望前輩指點"
             + me->rank("self") + "「" + to_chinese(skill) + "」﹗\n",
-            me, ob);
+            me, ob, 1);
     } else {
         message_vision("$N向$n拱手行禮﹐說道﹕請這位" + ob->rank("respectful") 
             + "指點" + me->rank("self") + "「" + to_chinese(skill) + "」﹗\n",
-            me, ob);
+            me, ob, 1);
     }
 
     notify_fail("看起來" + ob->name() + "不想教你這項技能。\n");

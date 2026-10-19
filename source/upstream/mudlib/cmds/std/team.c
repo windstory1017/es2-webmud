@@ -70,7 +70,7 @@ main(object me, string arg)
     if( sscanf(arg, "form %s", arg)==1 ) {
         if( !pointerp(t=me->query_team()) || !me->is_team_leader() )
             return notify_fail("你必須是一個隊伍的領袖才能組織陣形。\n");
-        if( !me->query_skill(arg, 1) )
+        if( !me->query_skill(arg, 1) && !me->query_learn(arg) )
             return notify_fail("這種陣形你沒學過。\n");
         return SKILL_D(arg)->form_array(me);
     }

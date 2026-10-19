@@ -229,6 +229,9 @@ const server=http.createServer(async(req,res)=>{
 const sessions=new Map();
 let sessionSeq=0;
 const bridgeLog=path.join(ROOT,'reports','bridge_runtime.log');
+// 每個指令封包都記一行只在除錯時需要（BRIDGE_TRACE_PACKETS=1）：平常 30 人在線每秒要寫幾十行，
+// 紀錄檔會長到數百 MB，而且同步寫檔會拖慢轉送。連線建立、關閉、錯誤照常記錄。
+const TRACE_PACKETS=process.env.BRIDGE_TRACE_PACKETS==='1';
 function bridgeTrace(line){
   const text=`${new Date().toISOString()} ${line}\n`;
   try{fsSync.mkdirSync(path.dirname(bridgeLog),{recursive:true});fsSync.appendFileSync(bridgeLog,text)}catch{}
@@ -271,7 +274,7 @@ wss.on('connection',(ws,req)=>{
     const b=Buffer.from(m);row.bytesIn+=b.length;row.lastActivity=Date.now();
     // Length/timing only: useful for diagnosing pre-login automation without
     // ever recording usernames, passwords or command contents.
-    bridgeTrace(`session ${id} WS->MUD packet bytes=${b.length} total=${row.bytesIn}`);
+    if(TRACE_PACKETS)bridgeTrace(`session ${id} WS->MUD packet bytes=${b.length} total=${row.bytesIn}`);
     if(!tcp.destroyed)tcp.write(b);
   });
   ws.on('error',()=>{bridgeStats.wsErrors++});

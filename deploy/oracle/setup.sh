@@ -69,7 +69,7 @@ test -x "$NEOLITH_BIN"
 
 step "5/7 建立遊戲執行時需要的資料夾、安裝網頁橋接程式"
 MUD="$APP_DIR/source/upstream/mudlib"
-mkdir -p "$MUD/log" "$MUD/bin" "$MUD/data/board"   # data/board：留言板存檔（不放在 git 裡）
+mkdir -p "$MUD/log/static" "$MUD/bin" "$MUD/data/board"   # log/static：自殺、複製物品等事件紀錄；data/board：留言板存檔（都不放在 git 裡）
 for d in login user mail; do
     for c in a b c d e f g h i j k l m n o p q r s t u v w x y z; do
         mkdir -p "$MUD/data/$d/$c"

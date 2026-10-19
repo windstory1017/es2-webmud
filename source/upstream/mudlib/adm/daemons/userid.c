@@ -19,6 +19,9 @@ void query_userid(string str) {
     int port,fd,err;
     object ob;
 
+    // 停用：玩家都經由主機上的網頁橋接程式連入，位址都是本機，ident 查詢一定被拒絕；
+    // 而驅動程式收不掉被拒絕的連線，會讓伺服器空轉吃滿 CPU、連線數一直累積。
+    return;
     if(!str) return 0;
     ob = find_player(str);
 

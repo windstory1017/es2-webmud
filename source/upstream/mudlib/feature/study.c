@@ -90,7 +90,7 @@ int study_content(object me)
 {
     mapping req, caps, skills;
     string skill;
-    int cost, intellect, divisor, gain;
+    int cost, intellect, gain;
 
     caps = query("content");
     if( !mapp(caps) || study_capped(me, caps) ) {
@@ -110,10 +110,9 @@ int study_content(object me)
     if( mapp(req) )
         foreach(skill, int minimum in req) skills[skill] = 1;
 
+    /* 讀書點數（使用者定案，2026-10-19）：和跟王懷芝坐下讀書相同，悟性 × random(悟性)；耗神不變。 */
     intellect = me->query_attr("int");
-    divisor = intellect / 7;
-    if( divisor < 1 ) divisor = 1;
-    gain = intellect + 1 + random(divisor);
+    gain = intellect * random(intellect);
     foreach(skill in keys(skills))
         me->improve_skill_exact(skill, gain);
 

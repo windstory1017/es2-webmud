@@ -47,11 +47,12 @@ int spell_mastery_score(object ob)
     string *schools;
     int i, skill, total;
 
-    schools = ({ "fire", "freeze", "storm", "thunder" });
+    /* 咒術道行（使用者定案，2026-10-16；2026-10-19 加入基本咒術）：
+     * 基本咒術與各系咒術每升到第 n 級給 n×10（和武術造詣相同），
+     * 累計起來等於 5 × 等級 × (等級 + 1)。 */
+    schools = ({ "spells", "taoism-fire", "taoism-freeze", "taoism-storm", "taoism-thunder" });
     for(i = 0; i < sizeof(schools); i++) {
-        /* 咒術道行（使用者定案，2026-10-16）：各系咒術每升到第 n 級給 n×10，
-         * 累計起來等於 5 × 等級 × (等級 + 1)。 */
-        skill = ob->query_skill("taoism-" + schools[i], 1);
+        skill = ob->query_skill(schools[i], 1);
         if( skill > 0 ) total += 5 * skill * (skill + 1);
     }
     return total;

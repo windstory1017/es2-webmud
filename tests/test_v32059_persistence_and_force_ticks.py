@@ -44,8 +44,9 @@ def test_tiger_and_dragon_force_both_use_shared_basic_force_tick():
     assert 'me->improve_restored_force_tick();' in dragon
     # The old basic-force amount must not survive inside Dragon Force.
     assert 'improve_skill("force", random(me->query_attr("int")/10) + 1)' not in dragon
-    # Dragon Force's own canonical special-skill gain is intentionally preserved.
-    assert 'improve_skill("dragon force", random(me->query_attr("con")/10) + 1)' in dragon
+    # Dragon Force's own gain: int formula + random(spi) (user decision, 2026-10-19).
+    assert 'improve_skill("dragon force", random(me->query_attr("con")/10) + 1)' not in dragon
+    assert 'COMBAT_D->int_formula_exp(me)' in dragon and 'random(me->query_attr("spi"))' in dragon
 
 
 def test_force_tick_formula_floor_and_precedence_regression():

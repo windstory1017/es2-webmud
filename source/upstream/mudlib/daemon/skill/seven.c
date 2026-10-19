@@ -20,19 +20,19 @@ private void create()
 
     moves = ({
         ([ "attack": 6, "defense": 3, "force": 1, "bonus": 0, "damage_type": "瘀傷",
-           "action": "$N五指微張如梅枝橫斜﹐掌緣帶著一股冷意﹐斜斜削向$n的$l" ]),
+           "action": "$N左掌護胸﹐右掌五指微張如梅枝橫斜﹐掌緣帶著一縷寒意削向$n的$l" ]),
         ([ "attack": 5, "defense": 4, "force": 2, "bonus": 5, "damage_type": "瘀傷",
-           "action": "$N身形一沉如老梅盤根﹐右拳自下而上﹐筆直撞向$n的$l" ]),
+           "action": "$N身形一沉﹐雙足穩如老梅盤根﹐右拳自下而上﹐筆直撞向$n的$l" ]),
         ([ "attack": 7, "defense": 3, "force": 0, "bonus": 0, "damage_type": "瘀傷",
-           "action": "$N雙手交錯﹐十指似梅花五瓣次第綻開﹐輕輕拂向$n的$l" ]),
+           "action": "$N雙手十指交錯一分﹐似梅花五瓣次第綻開﹐輕輕拂過$n的$l" ]),
         ([ "attack": 6, "defense": 4, "force": 1, "bonus": 0, "damage_type": "瘀傷",
-           "action": "$N手腕一抖﹐指尖如梅枝承雪後倏然彈起﹐點向$n的$l" ]),
+           "action": "$N手腕一抖﹐指尖如雪壓梅枝後倏然彈起﹐疾點$n的$l" ]),
         ([ "attack": 4, "defense": 6, "force": 1, "bonus": 0, "damage_type": "瘀傷",
-           "action": "$N左掌虛引﹐右掌隨之而出﹐掌風清冷如雪後梅香﹐悄然印向$n的$l" ]),
+           "action": "$N左掌虛引﹐右掌隨後悄然按出﹐掌風清冷如雪後梅香﹐直印$n的$l" ]),
         ([ "attack": 5, "defense": 3, "force": 2, "bonus": 5, "damage_type": "瘀傷",
-           "action": "$N五指併攏如含苞梅蕊﹐一縮一放之間﹐指勁直透$n的$l" ]),
+           "action": "$N五指併攏如含苞梅蕊﹐一縮一放之間﹐指勁已透入$n的$l" ]),
         ([ "attack": 6, "defense": 5, "force": 1, "bonus": 0, "damage_type": "瘀傷",
-           "action": "$N雙臂舒展如寒梅迎風﹐兩掌一上一下交替拍出﹐帶起點點寒意襲向$n的$l" ]),
+           "action": "$N雙臂舒展如寒梅迎風﹐兩掌一上一下交替拍出﹐點點寒意罩住$n的$l" ]),
     });
 
     /* 學成：累積 10000 點，gain 時直接練成 25 級；學成那一級也給獎勵。 */

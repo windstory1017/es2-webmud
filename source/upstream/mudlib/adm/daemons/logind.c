@@ -72,6 +72,7 @@ varargs void reconnect(object ob, object user, int silent);
 object find_body(string name);
 int check_legal_id(string arg);
 int check_legal_name(string arg);
+int check_new_id(string arg);
 private void increment_visitor_count();
 private string login_date_string(int t);
 private void show_visitor_count();
@@ -231,6 +232,14 @@ private void get_id (string arg, object ob) {
         }
         write ("對不起﹐您的人物儲存檔出了一些問題﹐請利用 guest 人物通知巫師處理。\n");
         destruct (ob);
+        return;
+    }
+
+    // 新帳號只能用 a 到 z 的英文字母（使用者指示，2026-10-19）；
+    // 舊帳號照 check_legal_id() 原規則，含數字的舊帳號仍可登入。
+    if (!check_new_id(arg)) {
+        write ("您的使用者代號: ");
+        input_to ("get_id", ob);
         return;
     }
 
@@ -832,6 +841,29 @@ int check_legal_id (string id) {
     return 1;
 }
 
+// 新帳號：只能由 a 到 z 的英文字母組成。
+int check_new_id (string id) {
+    int i = strlen (id);
+
+    while (i--)
+        if (id[i] < 'a' || id[i] > 'z') {
+            write("新的使用者代號只能使用 a 到 z 的英文字母。\n");
+            return 0;
+        }
+    return 1;
+}
+
+// 是不是中文字：UTF-8 三個位元組、落在 CJK 統一漢字（含擴充 A）或相容漢字的範圍。
+int is_chinese_char (string ch) {
+    int cp;
+
+    if (strlen (ch) != 3) return 0;
+    cp = ((ch[0] & 0x0F) << 12) | ((ch[1] & 0x3F) << 6) | (ch[2] & 0x3F);
+    return (cp >= 0x4E00 && cp <= 0x9FFF)
+        || (cp >= 0x3400 && cp <= 0x4DBF)
+        || (cp >= 0xF900 && cp <= 0xFAFF);
+}
+
 int check_legal_name(string name) {
     int i;
     string* mbcs = explode(name, ""); // neolith extension, split a UTF-8 string to an array of MBCS characters
@@ -850,6 +882,11 @@ int check_legal_name(string name) {
         }
         if (mbcs[i] == "　") {
             write ("顯示名稱不可以使用空白字元。\n");
+            return 0;
+        }
+        // 顯示名稱只能用中文（使用者指示，2026-10-19）。
+        if (!is_chinese_char (mbcs[i])) {
+            write ("顯示名稱只能使用中文字﹐不可以使用英文、數字或符號。\n");
             return 0;
         }
         if (member_array (mbcs[i], banned_name) != -1) {

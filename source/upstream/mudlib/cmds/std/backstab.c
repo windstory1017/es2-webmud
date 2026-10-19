@@ -95,7 +95,7 @@ int main(object me, string arg)
 
 int do_backstab(object victim, object me)
 {
-    int countdown, ability, defend, bonus;
+    int countdown, ability, defend, bonus, n;
 
     if( !me ) return 0;
 
@@ -133,7 +133,8 @@ int do_backstab(object victim, object me)
         tell_object(me, CYN "\n看起來" + victim->name()
                 + "還沒有察覺你的舉動 ... 。\n\n" NOR);
         me->set_temp("backstab_countdown", ENGAGE_COUNTDOWN);
-        me->improve_skill("backstab", 1 + random(me->query_attr("int")));
+        // 偷襲暗算點數（使用者定案，2026-10-19）：對方沒察覺 random(膽識)。
+        me->improve_skill("backstab", random(me->query_attr("cor")));
         return 1;
 
     case ENGAGE_COUNTDOWN:
@@ -165,7 +166,8 @@ int do_backstab(object victim, object me)
             return 1;
         }
         write(CYN "\n你成功地來到" + victim->name() + "的背後，準備動手了 ...\n\n" NOR);
-        me->improve_skill("backstab", 1 + random(me->query_attr("int")));
+        // 來到背後 random(悟性)。
+        me->improve_skill("backstab", random(me->query_attr("int")));
         me->gain_score("mortal sin", random(10)+1);
         me->set_temp("backstab_countdown", DOIT_COUNTDOWN);
         return 50;
@@ -198,9 +200,15 @@ int do_backstab(object victim, object me)
         victim->kill_ob(me);
 
 
-        me->improve_skill("backstab", 1 + random(me->query_attr("int")*2) );
-        if( me->query_learn("killerhood") )
-            me->improve_skill("killerhood", 1 + random(me->query_attr("dex")) );
+        // 偷襲出手：random((膽識+悟性)/2)² + random(膽識+悟性)；
+        // 殺手本能：(random(膽識)+1)²（使用者定案，2026-10-19）。
+        n = random((me->query_attr("cor") + me->query_attr("int")) / 2);
+        me->improve_skill("backstab", n * n
+            + random(me->query_attr("cor") + me->query_attr("int")));
+        if( me->query_learn("killerhood") ) {
+            n = random(me->query_attr("cor")) + 1;
+            me->improve_skill("killerhood", n * n);
+        }
         me->gain_score("mortal sin", bonus);
 
         return 0;

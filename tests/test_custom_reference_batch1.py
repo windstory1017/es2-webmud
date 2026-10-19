@@ -69,7 +69,9 @@ def test_identify_labels():
 
 def test_elemental_damage():
     s = read(MUD / 'daemon/skill/taoism-spells.c')
-    assert '(power + elemental_bonus(me, kind)) * 100 / (100 + resist)' in s
+    # 2026-10-18 使用者定案：抗性每點減 1 點傷害，風抗 2 點減 1 點；裝備元素傷害力仍在抗性前加上。
+    assert 'damage = power + elemental_bonus(me, kind) - resist;' in s
+    assert 'if( kind == "storm" ) resist /= 2;' in s
     assert 'damage += me->query_temp("apply/damage_vs_fire");' in read(MUD / 'daemon/race/yenhold/breathe.c')
     s = read(MUD / 'adm/daemons/combatd.c')
     assert 'int elemental_extra(object me, object victim, string element)' in s

@@ -36,6 +36,7 @@ if git -C "$APP_DIR" diff --name-only "$OLD" "$NEW" | grep -q '^server/package';
     (cd "$APP_DIR/server" && npm ci --omit=dev)
 fi
 
+mkdir -p "$MUD/log/static"   # 自殺、複製物品等事件紀錄要寫在這裡（舊主機可能沒有這個資料夾）
 echo "==== 4/4 清除編譯快取並重開 ===="
 rm -rf "$MUD/bin/"*
 sudo systemctl restart es2-mud

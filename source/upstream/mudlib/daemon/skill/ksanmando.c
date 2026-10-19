@@ -20,15 +20,15 @@ private void create()
 
     moves = ({
         ([ "name": "開門見山", "lvl": 0, "attack": 8, "defense": 3, "force": 0, "bonus": 0,
-           "action": "$N踏前一步﹐使出「開門見山」﹐$w當頭劈向$n的$l" ]),
+           "action": "$N大步踏前﹐右手$w高舉過頂﹐一招「開門見山」挾著風聲劈落﹐直取$n的$l" ]),
         ([ "name": "迴門藏鋒", "lvl": 0, "attack": 6, "defense": 5, "force": 0, "bonus": 0,
-           "action": "$N刀貼腰側一轉﹐「迴門藏鋒」﹐$w自旁翻出削向$n的$l" ]),
+           "action": "$N刀身貼腰一轉﹐鋒芒盡藏肘後﹐忽地「迴門藏鋒」翻腕而出﹐$w橫削$n的$l" ]),
         ([ "name": "側門截勢", "lvl": 5, "attack": 7, "defense": 4, "force": 1, "bonus": 0,
-           "action": "$N腳下一錯﹐「側門截勢」﹐$w斜斜截向$n的$l" ]),
+           "action": "$N腳下斜錯半步﹐左掌虛引﹐使出「側門截勢」﹐$w自外而內截向$n的$l" ]),
         ([ "name": "中門直進", "lvl": 10, "attack": 9, "defense": 2, "force": 1, "bonus": 5,
-           "action": "$N沉肩直進﹐「中門直進」﹐$w迎面斬向$n的$l" ]),
+           "action": "$N沉肩墜肘﹐搶入中路﹐正是「中門直進」﹐$w一往無回地斬向$n的$l" ]),
         ([ "name": "反門回刃", "lvl": 20, "attack": 6, "defense": 6, "force": 1, "bonus": 0,
-           "action": "$N退步回身﹐「反門回刃」﹐$w反手捲向$n的$l" ]),
+           "action": "$N佯作退步﹐回身之際手腕一翻﹐「反門回刃」﹐$w由下而上反撩$n的$l" ]),
     });
 
     ma_coef  = 10;
