@@ -2,7 +2,7 @@
 description: 竹上經心法（zushang）。龍圖丹派方士的內功，安裝在 force
              （enable force with zushang）。exert zushang 打坐修練，
              exert regenerate 消耗精、氣，回復神與受傷減少的神上限。
-design: claude/技能設計/03_竹上經心法.md（2026-10-22）
+design: docs/martial_arts/龍圖丹派_竹上經心法.md（2026-10-22）
 note: 1～9 級不存在，累積到門檻後 gain 直接練成 10 級。門檻不打折。
 ---*/
 

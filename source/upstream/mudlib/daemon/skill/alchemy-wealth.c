@@ -2,7 +2,7 @@
 description: 丹道【黃白之術】（alchemy-wealth）。龍圖丹派方士的法術類技能，
              安裝在 magic（enable magic with alchemy-wealth），以 conjure 施展
              銀咒（silver seal）、金咒（gold seal），把身上的物品轉成錢存入錢莊。
-design: claude/技能設計/02_黃白之術.md（2026-10-22）
+design: docs/martial_arts/龍圖丹派_黃白之術.md（2026-10-22）
 note: 0 級即可施展；1～19 級不存在，累積到門檻後 gain 直接學成 20 級。
       79 級後只累積經驗，達到 90 級的累計值時直接從 79 升到 90 並領悟金咒；
       80～89 級不存在。法術修為、法術道行只拿系統規則，本檔不另外給。

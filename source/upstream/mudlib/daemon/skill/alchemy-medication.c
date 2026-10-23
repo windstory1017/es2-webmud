@@ -2,7 +2,7 @@
 description: 丹道【神農之術】（alchemy-medication）。龍圖丹派方士的法術類技能，
              安裝在 magic（enable magic with alchemy-medication），以 conjure 施展
              七色印，封住或解開青銅丹鼎。
-design: claude/技能設計/01_神農之術.md（2026-10-15；2026-10-22 修改 U-10、U-11）
+design: docs/martial_arts/龍圖丹派_神農之術.md（2026-10-15；2026-10-22 修改 U-10、U-11）
 note: 0 級即可施展；0～14 級不存在，累積到學成門檻後 gain 直接學成 15 級。
       升級不增加精、氣、神；法術修為、法術道行只拿系統規則（2026-10-22）。
 ---*/

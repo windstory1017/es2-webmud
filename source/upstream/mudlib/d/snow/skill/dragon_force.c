@@ -3,7 +3,7 @@ description: 龍圖心經（dragon force）。龍圖丹派的內功，安裝在 
              （enable force with dragon force）。exert dragon force 打坐修練；
              練成後可用錢莊存款轉化丹藥（exert lavage／relax／refresh／mana／heal／
              minor heal／major heal）。
-design: claude/技能設計/04_龍圖心經.md（2026-10-22）
+design: docs/martial_arts/龍圖丹派_龍圖心經.md（2026-10-22）
 note: 1～69 級不存在，累積到門檻後 gain 直接練成 70 級。門檻不打折。
 ---*/
 
