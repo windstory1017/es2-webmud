@@ -336,6 +336,9 @@ void improve_skill_exact(string skill, int amount)
 
     if( skill_flag[skill] & SKILL_FLAG_ABANDONED ) return;
     if( amount <= 0 ) return;
+    // 技能已達個人上限（天賦值）就不再累積點數
+    if( userp(this_object()) && skills[skill] > 0
+    &&  skills[skill] >= restored_skill_cap(skill) ) return;
     /* 人物等級加成：點數 × (1 + random(人物等級 / 8))。 */
     amount += amount * random(this_object()->query_level() / 8);
     if( undefinedp(learned[skill]) ) learned[skill] = amount; else learned[skill] += amount;
@@ -379,6 +382,9 @@ improve_skill(string skill, int amount)
     if( skill_flag[skill] & SKILL_FLAG_ABANDONED ) return;
 
     if( !amount ) amount = 1;
+    // 技能已達個人上限（天賦值）就不再累積點數
+    if( userp(this_object()) && skills[skill] > 0
+    &&  skills[skill] >= restored_skill_cap(skill) ) return;
 
     // Level bonus for skill improvement.
     amount += amount * random(this_object()->query_level() / 8);

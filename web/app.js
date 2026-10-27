@@ -308,7 +308,7 @@ function ansi(s){
   const emit=(text,fg,bg,bold,underline)=>{
     if(!text)return;
     if(isBarRun(text,fg,bg)){ html+=barCells(text,fg,bg); return; }
-    const st=(bold?'font-weight:700;':'')+(underline?'text-decoration:underline;':'')+(fg?`color:${fg};`:'')+(bg?`background:${bg};`:'');
+    const st=(underline?'text-decoration:underline;':'')+(fg?`color:${fg};`:'')+(bg?`background:${bg};`:'');
     html+= st? `<span style="${st}">${esc(text)}</span>` : esc(text);
   };
   while((m=re.exec(s))){

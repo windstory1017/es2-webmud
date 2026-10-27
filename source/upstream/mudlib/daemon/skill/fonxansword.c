@@ -140,7 +140,7 @@ void after_strike(object me, object opponent, object weapon, mapping m, int dama
 
     /* 越鬥越長：enable 封山派內功時，出劍後 10% × 等級/200，回復精 封山劍法/2（開放中）。 */
     if( me->skill_mapped("force") == "fonxan force" && random(100) < scaled_chance(me, 10) ) {
-        message_vision(HIW "$N的封山劍法配合封山派的正宗心法﹐雖於激烈的惡鬥之中﹐竟是越鬥精力越長！\n" NOR, me);
+        message_vision(HIW "$N的封山劍法配合封山派的正宗心法﹐雖於激烈的惡鬥之中﹐竟是越鬥精力越長！\n" NOR, me, 0, 1);
         me->supplement_stat("gin", lv / 2);
     }
 

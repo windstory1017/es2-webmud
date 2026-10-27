@@ -45,7 +45,7 @@ void initialize(object ob)
 
 void advance_level(object ob)
 {
-    grow_stats(ob, 6, 6, 6, "禪修佛法讓你的精氣神更加充沛！");
+    grow_stats(ob, 6, 6, 6);
     // advance_level() 在等級加 1 之前執行，新等級是 query_level() + 1。
     set_next_target(ob, ob->query_level() + 1);
 }

@@ -26,7 +26,7 @@ private int lin_from(int lv, int base)
 
 // 升級增加精氣神最大值：精 = 機敏/dex_div、氣 = 根骨/con_div、神 = 靈性/spi_div，
 // 各自再隨機 +1、+0 或 -1，不會倒扣。用先天屬性計算。
-private void grow_stats(object ob, int dex_div, int con_div, int spi_div, string msg)
+private void grow_stats(object ob, int dex_div, int con_div, int spi_div)
 {
     int gin_gain, kee_gain, sen_gain;
 
@@ -40,6 +40,4 @@ private void grow_stats(object ob, int dex_div, int con_div, int spi_div, string
     ob->set_stat_maximum("gin", ob->query_stat_maximum("gin") + gin_gain);
     ob->set_stat_maximum("kee", ob->query_stat_maximum("kee") + kee_gain);
     ob->set_stat_maximum("sen", ob->query_stat_maximum("sen") + sen_gain);
-
-    tell_object(ob, HIY + msg + "\n" NOR);
 }

@@ -36,8 +36,8 @@ a{color:#9bd7a6}
 .scroll-latest{position:absolute;right:40px;bottom:78px;z-index:5;width:34px;height:34px;padding:0;display:flex;align-items:center;justify-content:center;border:1px solid #4a7a66;border-radius:50%;background:rgba(10,24,18,.92);color:#cfe8da;font-size:13px;box-shadow:0 2px 10px rgba(0,0,0,.45)}
 .scroll-latest:hover{background:#1b3a2d;color:#fff}
 .scroll-latest[hidden]{display:none}
-#terminal .room-line{color:#43e48b;font-weight:700;font-size:1.05em}
-#terminal .exit-line{color:#f0c95f;font-weight:600}
+#terminal .room-line{color:#43e48b;font-weight:400;font-size:1.05em}
+#terminal .exit-line{color:#f0c95f;font-weight:400}
 #terminal .stat-cell{display:inline-block;width:.9em;height:1em;margin-right:1px;vertical-align:-.15em;box-sizing:border-box}
 #terminal .stat-cell-empty{background:transparent;border:1px solid}
 .login-welcome{margin:28px auto 30px;max-width:760px;text-align:center;padding:24px 18px 22px;border-top:1px solid rgba(224,185,82,.25);border-bottom:1px solid rgba(224,185,82,.25);background:linear-gradient(90deg,transparent,rgba(42,34,17,.35),transparent)}

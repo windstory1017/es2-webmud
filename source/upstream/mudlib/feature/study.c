@@ -83,7 +83,7 @@ int study_ob(object me)
     }
 
     me->start_busy((: study_content :), (: halt_study :));
-    message_vision("$N 坐下來開始靜心閱讀" + name() + "。\n", me);
+    message_vision("$N坐下來開始靜心閱讀" + name() + "。\n", me);
     return 1;
 }
 

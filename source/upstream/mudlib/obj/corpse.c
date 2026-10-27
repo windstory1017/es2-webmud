@@ -30,11 +30,20 @@ int is_character() { return decayed < 1; }
 
 string short() { return name() + "(" + capitalize(query("id")) + ")"; }
 
+// decay() runs from call_out, where say() has no this_player() and reaches
+// nobody; tell the room the corpse lies in instead.
+private void notify_room(string msg)
+{
+    object env = environment();
+
+    if( env ) tell_room(env, msg);
+}
+
 void decay()
 {
     switch(++decayed) {
         case 1:
-            say( query("name") + "開始腐爛了﹐發出一股難聞的惡臭。\n" );
+            notify_room( query("name") + "開始腐爛了﹐發出一股難聞的惡臭。\n" );
             switch(query("gender")) {
                 case "male":
                     set_name("腐爛的男屍", ({ "corpse" }) );
@@ -50,13 +59,13 @@ void decay()
             call_out("decay", decay_interval);
             break;
         case 2:
-            say( query("name") + "被風吹乾了﹐變成一具骸骨。\n" );
+            notify_room( query("name") + "被風吹乾了﹐變成一具骸骨。\n" );
             set_name("枯乾的骸骨", ({ "skeleton" }) );
             set("long", "這副骸骨已經躺在這裡很久了。\n");
             call_out("decay", decay_interval);
             break;
         case 3:
-            say( "一陣風吹過﹐把" + query("name") + "化成骨灰吹散了。\n" );
+            notify_room( "一陣風吹過﹐把" + query("name") + "化成骨灰吹散了。\n" );
             destruct(this_object());
             break;
     }

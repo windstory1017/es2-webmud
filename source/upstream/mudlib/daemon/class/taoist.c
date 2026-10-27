@@ -59,7 +59,6 @@ void advance_level(object ob)
     ob->set_stat_maximum("kee", ob->query_stat_maximum("kee") + kee_gain);
     ob->set_stat_maximum("sen", ob->query_stat_maximum("sen") + sen_gain);
 
-    tell_object(ob, HIY "你對天地氣機的體悟更深，精氣神隨之增長。\n" NOR);
     // advance_level() 在等級加 1 之前執行，新等級是 query_level() + 1。
     set_next_target(ob, ob->query_level() + 1);
 }

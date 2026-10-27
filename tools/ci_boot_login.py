@@ -134,6 +134,8 @@ def log_problems():
     debug = MUD / 'log/debug.log'
     if debug.exists():
         for line in debug.read_text(encoding='utf-8', errors='replace').splitlines():
+            if 'process terminated' in line:    # 本檢查自己送 SIGTERM 關伺服器，之後的收尾紀錄不算
+                break
             if DEBUG_ERROR.search(line):
                 problems.append(f'log/debug.log：{line}')
     compile_log = MUD / 'log/log'    # master.c 的 log_error 寫在這裡

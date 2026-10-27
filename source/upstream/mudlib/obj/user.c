@@ -161,6 +161,12 @@ private void user_dump(int type) {
       // wiz don't get kicked out (Elon 10-17-95)
       if (wizardp(this_object()))
         return;
+      // quit refuses while busy (e.g. studying a book never ends by itself),
+      // which made this message repeat every heartbeat without logging out.
+      if (is_busy())
+        interrupt(this_object(), INTR_QUIT);
+      if (is_busy())
+        return;
       tell_object(this_object(), CYN "你聽到一個細小的聲音說道：節能愛地球，請勿長時間掛機發呆～～\n" NOR);
       tell_object(this_object(), HIW "\n一個小小的，長著白色翅膀的生物忽然出現，抓著你的手在鍵盤上敲了 quit 命令。\n\n" NOR);
       tell_room(environment(), "一陣風吹來﹐將發呆中的" + query("name") + "化為一堆飛灰﹐消失了。\n", ({this_object()}));

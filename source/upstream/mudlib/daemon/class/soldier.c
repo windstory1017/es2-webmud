@@ -84,7 +84,5 @@ void advance_level(object ob)
     ob->set_stat_maximum("kee", (int)ob->query_stat_maximum("kee") + kee_gain);
     ob->set_stat_maximum("sen", (int)ob->query_stat_maximum("sen") + sen_gain);
 
-    tell_object(ob, HIY "常年的軍旅操練讓你的精氣神更加充沛！\n" NOR);
-
     set_next_target(ob, ob->query_level() + 1);
 }
