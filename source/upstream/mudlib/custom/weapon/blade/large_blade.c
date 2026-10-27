@@ -1,4 +1,4 @@
-/* 大刀 — ES2 原始武器資料。所屬 NPC 另行設定。 */
+/* 大刀 — ES2 原始武器資料。雪亭鎮鐵匠販售（/d/snow/npc/smith）。 */
 #include <ansi.h>
 #include <weapon.h>
 

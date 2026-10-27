@@ -1,6 +1,7 @@
 /adm/daemons/securityd
 /adm/daemons/virtuald
 /adm/daemons/logind
+/adm/daemons/realipd
 /adm/daemons/cmd_d
 /adm/daemons/chinesed
 /adm/daemons/emoted

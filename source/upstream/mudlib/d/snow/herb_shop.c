@@ -1,6 +1,9 @@
 // Room: /d/snow/herb_shop.c
 
-inherit ROOM;
+#include <room.h>
+
+// 改為龍圖藥鋪櫃台：可查丹藥、買丹藥與配方、賣丹藥（使用者指示 #3，2026-10-23）。
+inherit HERB;
 
 void create()
 {
@@ -21,6 +24,5 @@ LONG
 	]));
 
     setup();
-	replace_program(ROOM);
 	set("map/area", "雪亭鎮");
 }

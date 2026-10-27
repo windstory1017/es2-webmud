@@ -1,0 +1,67 @@
+# 開 PR 自動檢查（說明：docs/CI_AUTO_CHECK.md）
+# 在 GitHub 的臨時機器上編譯遊戲、開機、新建角色登入、舊角色再登入、啟動網頁橋接程式、跑全部測試。
+# 跟 Oracle 正式主機無關，不會碰到玩家資料。
+name: pr-check
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: pr-check-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  pr-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 安裝編譯工具（跟 deploy/oracle/setup.sh 相同）
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y build-essential cmake ninja-build bison pkg-config \
+              libssl-dev libcurl4-openssl-dev libc-ares-dev
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 1. 編譯遊戲伺服器
+        working-directory: source/upstream/neolith
+        run: |
+          cmake --preset linux
+          cmake --build --preset pr-linux --target neolith
+
+      - name: 2～3. 開機、新建角色登入、舊角色再登入
+        run: python3 tools/ci_boot_login.py --neolith source/upstream/neolith/out/build/linux/src/RelWithDebInfo/neolith
+
+      - name: 安裝網頁橋接程式的套件
+        working-directory: server
+        run: npm ci --omit=dev
+
+      - name: 4. 網頁橋接程式能啟動
+        working-directory: server
+        run: |
+          PORT=8080 HOST=127.0.0.1 MUD_PORT=4001 node index.js > bridge.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl -fsS http://127.0.0.1:8080/api/health; then exit 0; fi
+            sleep 1
+          done
+          echo "::error::網頁橋接程式 20 秒內沒有回應"
+          cat bridge.log
+          exit 1
+
+      - name: 5. 跑全部測試
+        run: tools/ci_run_tests.sh

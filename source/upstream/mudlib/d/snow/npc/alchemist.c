@@ -1,3 +1,4 @@
+#include <ansi.h>
 // alchemist.c
 
 #include <npc.h>
@@ -88,6 +89,13 @@ int init_apprentice(object me)
 	}
 }
 
+// 傳授到經驗值 50 為止（2026-10-22 決定）。超過 50 時壓回 50。
+void teach_to_cap(object ob, string skill)
+{
+	ob->improve_skill_exact(skill, 50 - ob->query_learn(skill));
+	if( ob->query_learn(skill) > 50 ) ob->set_learn(skill, 50);
+}
+
 int acquire_skill(object ob, string skill)
 {
 	if( is_chatting() )
@@ -96,12 +104,29 @@ int acquire_skill(object ob, string skill)
 
 	switch(skill) {
 	case "alchemy-medication":
-		if( !ob->query_learn(skill)
-		&&	ob->query_score("alchemy") >= 1000 ) {
-			say("陳維俠點了點頭，說道：為師這就傳你，聽好了。\n");
-			message_vision("$N將龍圖丹道中的神農之術大要傳授給$n。\n", this_object(), ob);
-			ob->improve_skill(skill, random(ob->query_attr("wis")) + 1);
+		// 2026-10-22：神農之術改由大弟子江述仁傳授。
+		command("say 去去去～去找你大師兄，整天無所事事，正好照顧照顧小師弟。");
+		return 1;
+	case "dragon force":
+		// 04_龍圖心經：內功 90（原生）、等級 30、悟性 30（目前的值），最多學到經驗值 50。
+		if( ob->query_skill("force", 1) < 90 ) {
+			command("say 你的內功根基還不夠紮實，再練練吧。");
+			return 1;
 		}
+		if( ob->query_level() < 30 ) {
+			command("say 你的歷練尚淺，還不是學龍圖心經的時候。");
+			return 1;
+		}
+		if( ob->query_attr("int") < 30 ) {
+			command("say 龍圖心經講究悟性，你的悟性還不足以領會。");
+			return 1;
+		}
+		if( ob->query_learn(skill) >= 50 ) {
+			command("say 心經的要訣為師都傳給你了，往後全看你自己修練。");
+			return 1;
+		}
+		message_vision(CYN + "$N將龍圖心經的入門心訣傳授給$n。\n" NOR, this_object(), ob);
+		teach_to_cap(ob, skill);
 		break;
 	case "alchemy-wealth":
 	case "alchemy-magic":

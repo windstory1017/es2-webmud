@@ -10,5 +10,5 @@ assert 'choicePanel' not in html
 assert 'grid-template-columns:repeat(7' in css
 assert 'currentRoomId' in js and 'radius=3' in js
 assert 'xterm256' in js
-assert '請輸入 Y 或 N' in inputc
+assert '(Yes / No) ' in inputc
 print('v3.3 UI source checks passed')

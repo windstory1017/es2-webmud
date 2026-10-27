@@ -2,22 +2,18 @@
 
 inherit ROOM;
 
-static object storage;
+// 當鋪連線（docs/PAWNSHOP_NETWORK.md，2026-10-23）：三間當鋪共用一個倉庫，
+// 由 HOCKSHOP_D 管理；賣斷的物品上架並疊加，典當物任何一間當鋪都能贖回。
+#define HOCKSHOP_D "/daemon/misc/hockshop_d"
 
-void remove()
-{
-    if( storage ) destruct(storage);
-}
+static object storage;
 
 void setup()
 {
     ::setup();
     seteuid(getuid());
-    if( !storage ) {
-        storage = new(__DIR__"hockshop_storage");
-        storage->set("shop_ob", this_object());
-        set("storage_ob", storage);
-    }
+    storage = HOCKSHOP_D->query_storage();
+    set("storage_ob", storage);
 }
 
 void init()
@@ -33,12 +29,11 @@ void init()
 
 string value_string(int value)
 {
-    if( value < 1 ) value = 1;
-    else if( value < 100 )
+    if( value < 1 ) return "不值一文";
+    if( value < 100 )
         return chinese_number(value) + "文錢";
-    else
-        return chinese_number(value/100) + "兩"
-            + (value%100? "又" + chinese_number(value%100) + "文錢": "");
+    return chinese_number(value/100) + "兩"
+        + (value%100? "又" + chinese_number(value%100) + "文錢": "");
 }
 
 void pay_player(object who, int amount)
@@ -71,13 +66,12 @@ int do_value(string arg)
         return notify_fail("這是「錢」﹐你沒見過嗎﹖\n");
 
     value = ob->query("value");
-    if( !value ) printf("%s一文不值。\n", ob->query("name"));
-    if( ob->query("sinister") )
-        printf("%s價值%s。\n但是這種死人身上的倒楣東西當鋪很不願意收。\n"
-            "典當(pawn)或賣斷(sell)只能得到%s。\n",
-            ob->query("name"), value_string(value), value_string(value / 100 ));
-    else 
-        printf("%s價值%s。\n如果你要典當(pawn)﹐可以拿到%s及一張當票。\n如果賣斷(sell)﹐可以拿到%s。\n",
+    if( value < 1 ) {
+        printf("%s一文不值。\n", ob->query("name"));
+        return 1;
+    }
+    // 打倒 NPC 撿來的物品（sinister）與一般物品同價（使用者指定，2026-10-23；原本只給 1%）。
+    printf("%s價值%s。\n如果你要典當(pawn)﹐可以拿到%s及一張當票。\n如果賣斷(sell)﹐可以拿到%s。\n",
             ob->query("name"), value_string(value),
             value_string(value * 60 / 100), value_string(value * 80 / 100));
 
@@ -95,24 +89,16 @@ int do_pawn(string arg)
     if( ob->query("money_id") )    return notify_fail("你要當「錢」﹖\n");
 
     value = ob->query("value");
-    if( !value ) return notify_fail("這樣東西不值錢。\n");
+    if( value < 1 ) return notify_fail("這樣東西不值錢。\n");
 
     if (ob->query("no_sell")) return notify_fail("這樣東西不能典當。\n");
 
     message_vision("$N把身上的" + ob->query("name") + "拿出來典當了"
         + value_string(value * 60 / 100) + "﹐換得一張當票。\n", this_player());
 
-    if( ob->query("sinister") ) {
-        int v;
-        message_vision("當鋪朝奉對這種死人身上的倒楣東西很不甘願地收下了 ...\n", this_player());
-        v = value / 100;
-        if( v > 100 ) v = 100;
-        pay_player(this_player(), v);
-    }
-    else
-        pay_player(this_player(), value * 60 / 100);
+    pay_player(this_player(), value * 60 / 100);
 
-    ob->move(storage);
+    HOCKSHOP_D->add_pawned(ob);
     stamp = new(__DIR__"obj/pawn_stamp");
     stamp->set("pawned_item", ob);
     stamp->set("long", "茲收到\n    " + this_player()->name(1)
@@ -130,38 +116,20 @@ int sell_item(object ob)
 
     if( ob->query("money_id") )    return notify_fail("你要賣「錢」﹖\n");
     value = ob->query("value");
-    if( !value ) return notify_fail("這樣東西不值錢。\n");
+    if( value < 1 ) return notify_fail("這樣東西不值錢。\n");
 
     if (ob->query("no_sell")) return notify_fail("這樣東西不能賣。\n");
 
     message_vision("$N把身上的" + ob->query("name") + "賣掉。\n",
         this_player());
 
-    if( ob->query("sinister") ) {
-        int v;
-        message_vision("當鋪朝奉對這種死人身上的倒楣東西很不甘願地收下了 ...\n", this_player());
-        v = value / 100;
-        if( v > 100 ) v = 100;
-        pay_player(this_player(), v);
-    }
-    else
-        pay_player(this_player(), value * 80 / 100);
+    // 打倒 NPC 撿來的物品（sinister）與一般物品同價：賣斷 80%（使用者指定，2026-10-23）。
+    pay_player(this_player(), value * 80 / 100);
 
     ob->delete("sinister");
-
-    if( storage ) {
-        int s;
-
-        // Make a simple storage management, when we have more goods in
-        // storage, only keeps higher price goods.
-        s = sizeof(all_inventory(storage));
-        if( value >= (s * 50) ) {
-            ob->add("pawned_time", 1);
-            ob->move(storage);
-        }
-        else destruct(ob);
-    }
-    else destruct(ob);
+    // 上架到共用倉庫（相同物品疊成一項；滿 200 項時從最舊的一項整項丟掉；
+    // 同一項已有 10 件的話，這一件不上架，錢照付）。
+    HOCKSHOP_D->add_goods(ob);
 
     return 1;
 }
@@ -209,8 +177,9 @@ int do_retrieve(string arg)
         return 1;
     }
 
-    if( !present(ob, storage) )
-        return notify_fail("這不是這家當鋪開出的當票。\n");
+    // 三間當鋪共用倉庫：任何一間都能贖回。
+    if( !present(ob, HOCKSHOP_D->query_storage()) || !ob->query("hockshop_pawned") )
+        return notify_fail("這張當票上的典物已經不在當鋪裡了。\n");
 
     value = (int)ob->query("value") * 120 / 100;
     if( (int)this_player()->can_afford(value) != 1 )
@@ -220,89 +189,124 @@ int do_retrieve(string arg)
         + ob->name() + "。\n", this_player());
 
     this_player()->pay_money(value);
-    ob->move(this_player());
-    ob->delete("pawned_time");
+    ob->delete("hockshop_pawned");
+    ob->delete("hockshop_seq");
+    ob->delete("hockshop_key");
+    if( !ob->move(this_player()) ) ob->move(environment(this_player()));
     destruct(stamp);
 
     return 1;
 }
 
+// 一項貨物的單價：疊加的物品是單件價格；本來就是一疊的（饅頭等）是整疊價格。
+int goods_price(object ob) { return (int)ob->query("value") * 2; }
+
+// 一次 write() 最多 8192 個位元組（中文字一個佔 3），清單分段送出，每段留在這個長度以內。
+#define LIST_CHUNK 6000
+
 int do_list(string arg)
 {
-    int i;
-    object *inv;
-    string msg;
+    mixed *groups;
+    object ob;
+    string line, chunk, count;
+    int i, n, shown;
 
-    if( !storage ) return notify_fail("當鋪裡現在沒有貨物。\n");
-    if( wizardp(this_player()) )
-        inv = all_inventory(storage);
-    else
-        inv = filter( all_inventory(storage), (: $1->query("pawned_time") :));
-    if( !sizeof(inv) ) return notify_fail("當鋪裡現在沒有可供出售的貨物。\n");
-    if( arg ) inv = filter( inv, (: $1->id($(arg)) :) );
+    groups = HOCKSHOP_D->query_groups();
+    if( !sizeof(groups) && !wizardp(this_player()) )
+        return notify_fail("當鋪裡現在沒有可供出售的貨物。\n");
 
+    chunk = "當鋪裡現在有以下貨物出售﹕\n\n";
+    // 名稱、數量與價格依畫面寬度補空白；價格靠右對齊。
+    // list <名稱> 只列出符合的項目，但編號仍是完整清單上的編號，與 buy <編號> 一致。
+    for(i = 0; i < sizeof(groups); i++) {
+        ob = groups[i][0];
+        if( arg && !ob->id(arg) ) continue;
+        n = sizeof(groups[i]);
+        count = n > 1 ? "共 " + n + " " + (ob->query("unit") ? ob->query("unit") : "件") : "";
+        line = sprintf("     %-5d  %s %s %s\n", i + 1,
+            cjk_pad(ob->short(), 40), cjk_pad(count, 10, 1),
+            cjk_pad(value_string(goods_price(ob)), 22, 1));
+        if( strlen(chunk) + strlen(line) > LIST_CHUNK ) {
+            write(chunk);
+            chunk = "";
+        }
+        chunk += line;
+        shown++;
+    }
+    if( arg && !shown && !wizardp(this_player()) )
+        return notify_fail("當鋪裡現在沒有可供出售的貨物。\n");
+    if( wizardp(this_player()) ) {
+        object *pawned = HOCKSHOP_D->query_pawned();
+        mapping kinds = ([]);
+        string *order = ({}), key;
 
-
-    msg = "當鋪裡現在有以下貨物出售﹕\n\n";
-    // 名稱與價格依畫面寬度補空白（sprintf 會把中文字與顏色碼算成好幾格，有顏色的名稱就對不齊）；價格靠右對齊。
-    for ( i = 0; i < sizeof(inv); i++)
-        msg += sprintf("     %-5d  %s %s\n",
-        i+1,
-        cjk_pad(inv[i]->short(), 48),
-        cjk_pad(value_string(inv[i]->query("value") * 2), 24, 1));
-    this_player()->start_more_if_needed (msg);
+        // 典當中的物品，相同的合成一行並標數量。
+        foreach(ob in pawned) {
+            key = ob->short();
+            if( undefinedp(kinds[key]) ) { kinds[key] = 0; order += ({ key }); }
+            kinds[key]++;
+        }
+        if( sizeof(order) ) {
+            if( strlen(chunk) > LIST_CHUNK - 200 ) { write(chunk); chunk = ""; }
+            chunk += "\n（巫師）典當中的物品﹕\n";
+            foreach(key in order) {
+                line = "            " + key + (kinds[key] > 1 ? "  共 " + kinds[key] + " 件" : "") + "\n";
+                if( strlen(chunk) + strlen(line) > LIST_CHUNK ) { write(chunk); chunk = ""; }
+                chunk += line;
+            }
+        }
+    }
+    if( strlen(chunk) ) write(chunk);
     return 1;
 }
 
+// buy <名稱>、buy <名稱> <第幾項>、buy <清單編號>；一次買一件，不支援一次買多件。
 int do_buy(string arg)
 {
-    int i, index;
-    object *inv, ob;
+    mixed *groups, *match;
+    object ob;
+    string name_part;
+    int index, price;
 
     if( !arg ) return notify_fail("你要買什麼東西﹖\n");
 
-    if( !storage ) return notify_fail("當鋪裡現在沒有貨物。\n");
-    inv = filter_array( all_inventory(storage), (: $1->query("pawned_time") :));
-    if( !sizeof(inv) ) return notify_fail("當鋪裡現在沒有貨物。\n  ");
+    groups = HOCKSHOP_D->query_groups();
+    if( !sizeof(groups) ) return notify_fail("當鋪裡現在沒有貨物。\n");
 
-// This is a crasher! Dunno why .... Annihilator(11/01/95)
-//    if( !parse_command(arg, inv, "%o", ob) )
-//        return notify_fail("你要買什麼東西﹖\n");
-
-    // 「buy dagger 2」= 第二把 dagger；sscanf 失敗時不能動到 arg，否則「short sword」會被截成「short」。
-    {
-        string name_part;
+    if( sscanf(arg, "%d", index) == 1 && ("" + index) == arg ) {
+        // 照清單編號
+        if( index < 1 || index > sizeof(groups) )
+            return notify_fail("當鋪的清單上沒有這一項。\n");
+        match = groups[index - 1];
+    } else {
+        // 照名稱；「buy dagger 2」= 清單上第二項 dagger。sscanf 失敗時不能動到 arg。
         if( sscanf(arg, "%s %d", name_part, index) == 2 ) arg = name_part;
         else index = 1;
+        groups = filter_array(groups, (: $1[0]->id($(arg)) :));
+        if( index < 1 || index > sizeof(groups) )
+            return notify_fail("你要買什麼東西﹖\n");
+        match = groups[index - 1];
     }
-    index--;
-    for(i=0; i<sizeof(inv); i++)
-        if( inv[i]->id(arg) && !(index--)) break;
+    ob = match[0];
+    price = goods_price(ob);
 
-    if( i==sizeof(inv) )
-        return notify_fail("你要買什麼東西﹖\n");
-    ob = inv[i];
-
-    if( (int)this_player()->can_afford((int)ob->query("value") * 2) != 1 )
+    if( (int)this_player()->can_afford(price) != 1 )
         return notify_fail("你的(零)錢不夠。\n");
-    message_vision("$N掏出錢買下一" + ob->query("unit") + ob->name() + "。\n",
-        this_player() );
-    this_player()->pay_money((int)ob->query("value") * 2);
-    ob->delete("pawned_time");
-//     fix if pay money....and player can't get....drop in environment
-    if(!ob->move(this_player()))
+    message_vision("$N掏出錢買下" + (function_exists("query_amount", ob)
+        ? ob->short() : "一" + ob->query("unit") + ob->name()) + "。\n", this_player());
+    this_player()->pay_money(price);
+    ob->delete("hockshop_seq");
+    ob->delete("hockshop_key");
+    // 付了錢卻拿不動時放在地上。
+    if( !ob->move(this_player()) )
         ob->move(environment(this_player()));
-    else
-        ob->move(this_player());
-
     return 1;
 }
 
 int do_store(string arg)
 {
     if( !wizardp(this_player()) ) return 0;
-    if( !storage ) return notify_fail("倉庫物件不存在。\n");
-    this_player()->move(storage);
+    this_player()->move(HOCKSHOP_D->query_storage());
     write("Ok.\n");
     return 1;
 }

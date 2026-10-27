@@ -1,3 +1,4 @@
+#include <ansi.h>
 // child.c
 
 #include <npc.h>
@@ -102,7 +103,7 @@ private void exchange(string food_name, object player)
 private void do_follow(object me,object ob)
 {
 	if( !ob->move(me) )	ob->move(environment(me));
-	message_vision("阿寶把一件物品遞給了$N.\n",me);
+	message_vision(CYN + "阿寶把一件物品遞給了$N.\n" NOR,me);
 	command("follow "+me->query("id"));
 	me->set_temp("try/fon",43);
 }

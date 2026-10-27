@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>天朝圖鑑</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>
+/* 玩家版天朝圖鑑（tools/build_player_codex.py 產生）。版面與配色沿用巫師版圖鑑：
+   青瓷綠為主色，朱砂只用在唯一、劇毒這類警示標記。 */
+:root {
+  --bg: #edf1ee;
+  --panel: #f8faf8;
+  --sunk: #e3e9e5;
+  --fg: #1b2420;
+  --muted: #5b6a63;
+  --line: #cdd7d1;
+  --accent: #2c6a58;
+  --accent-soft: #d5e6de;
+  --seal: #a3372a;
+  --seal-soft: #f3dcd7;
+  --gold: #7d6310;
+  --room: #ffffff;
+  --room-line: #9fb3a9;
+  --c-black: #6b7470; --c-red: #b3261e; --c-green: #1f7a3d; --c-yellow: #8a6a00;
+  --c-blue: #1f4fb3; --c-magenta: #8e2f8e; --c-cyan: #0b7385; --c-white: #4f5b66;
+  --serif: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+  --sans: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111614; --panel: #171e1b; --sunk: #0d1210; --fg: #e1e8e4; --muted: #92a39a; --line: #2a3530;
+    --accent: #72c2a6; --accent-soft: #1d3530; --seal: #e57866; --seal-soft: #3a1f1b; --gold: #d8b64f;
+    --room: #1d2622; --room-line: #3d4f47;
+    --c-black: #8d9894; --c-red: #ff7b72; --c-green: #6fd08c; --c-yellow: #e8c547;
+    --c-blue: #7aa7ff; --c-magenta: #e08ae0; --c-cyan: #5fd3e0; --c-white: #f2f5f4;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111614; --panel: #171e1b; --sunk: #0d1210; --fg: #e1e8e4; --muted: #92a39a; --line: #2a3530;
+  --accent: #72c2a6; --accent-soft: #1d3530; --seal: #e57866; --seal-soft: #3a1f1b; --gold: #d8b64f;
+  --room: #1d2622; --room-line: #3d4f47;
+  --c-black: #8d9894; --c-red: #ff7b72; --c-green: #6fd08c; --c-yellow: #e8c547;
+  --c-blue: #7aa7ff; --c-magenta: #e08ae0; --c-cyan: #5fd3e0; --c-white: #f2f5f4;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 15px; line-height: 1.6; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 16px; padding-block: 0 48px; }
+header.top .wrap { padding-block: 0; }
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
+.brand { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; padding-block: 14px 8px; }
+.brand h1 { margin: 0; font-family: var(--serif); font-size: 1.55rem; letter-spacing: 0.08em; }
+.brand .back { margin-left: auto; color: var(--accent); font-size: 0.9rem; }
+.brand .tally { color: var(--muted); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+nav.tabs { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+nav.tabs button { flex: 0 0 auto; border: 0; background: none; color: var(--muted); font: 500 0.98rem var(--sans); padding: 8px 14px; border-bottom: 2px solid transparent; cursor: pointer; }
+nav.tabs button[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--accent); }
+nav.tabs button:focus-visible, .chip:focus-visible, .row-head:focus-visible, .linkish:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tools { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; padding-block: 16px 10px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + var(--hdr, 100px)); z-index: 15; background: var(--bg); border-bottom: 1px solid var(--line); }
+.search { flex: 1 1 260px; min-width: 0; font: 0.95rem var(--sans); padding: 8px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); color: var(--fg); }
+.search:focus { outline: 2px solid var(--accent); outline-offset: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { border: 1px solid var(--line); background: var(--panel); color: var(--fg); border-radius: 999px; padding: 3px 12px; font: 0.88rem var(--sans); cursor: pointer; }
+.chip .n { color: var(--muted); font-variant-numeric: tabular-nums; margin-left: 4px; font-size: 0.8rem; }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--panel); }
+.chip[aria-pressed="true"] .n { color: var(--panel); opacity: 0.8; }
+.hint { color: var(--muted); font-size: 0.85rem; }
+.list { }
+.row { border-bottom: 1px solid var(--line); }
+.row-head { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.6fr) 7.5em; gap: 4px 16px; align-items: baseline; padding: 9px 4px; cursor: pointer; width: 100%; text-align: left; border: 0; background: none; color: inherit; font: inherit; }
+.row-head:hover { background: var(--sunk); }
+.row.open > .row-head { background: var(--accent-soft); }
+.nm { font-weight: 700; min-width: 0; overflow-wrap: anywhere; }
+.nm .en { font-weight: 400; color: var(--muted); font-size: 0.82rem; margin-left: 6px; }
+.sum { color: var(--muted); font-size: 0.88rem; min-width: 0; overflow-wrap: anywhere; }
+.num { text-align: right; font-variant-numeric: tabular-nums; font-size: 0.88rem; color: var(--muted); }
+.tag { display: inline-block; font-size: 0.72rem; letter-spacing: 0.04em; padding: 0 6px; border-radius: 3px; margin-left: 6px; vertical-align: 2px; border: 1px solid var(--line); color: var(--muted); font-weight: 500; }
+.tag.seal { border-color: var(--seal); color: var(--seal); background: var(--seal-soft); }
+.tag.gold { border-color: var(--gold); color: var(--gold); }
+.tag.ok { border-color: var(--accent); color: var(--accent); }
+.detail { padding: 4px 4px 18px; display: grid; gap: 14px; }
+.detail .long { white-space: pre-wrap; font-family: var(--serif); line-height: 1.8; max-width: 44em; margin: 0; }
+.kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 3px 14px; font-size: 0.9rem; }
+.kv dt { color: var(--muted); }
+.kv dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.tbl-wrap { overflow-x: auto; }
+table { border-collapse: collapse; font-size: 0.88rem; min-width: 18em; }
+th, td { text-align: left; padding: 4px 14px 4px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 500; }
+td.v { font-variant-numeric: tabular-nums; text-align: right; padding-right: 20px; }
+.traits { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.trait-group h4 { margin: 0 0 4px; font: 500 0.82rem var(--sans); color: var(--muted); letter-spacing: 0.05em; }
+code, .file { font-family: var(--mono); font-size: 0.82rem; }
+.file { color: var(--muted); overflow-wrap: anywhere; }
+pre.code { font-family: var(--mono); font-size: 0.8rem; background: var(--sunk); padding: 10px 12px; border-radius: 6px; overflow-x: auto; margin: 0; white-space: pre; }
+.linkish { color: var(--accent); background: none; border: 0; padding: 0; font: inherit; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.copy { font: 0.75rem var(--sans); border: 1px solid var(--line); background: var(--panel); color: var(--muted); border-radius: 4px; padding: 0 6px; margin-left: 8px; cursor: pointer; }
+.empty { color: var(--muted); padding: 24px 4px; }
+/* 區域 */
+.area-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.map-box { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px; min-width: 0; }
+.map-scroll { overflow: auto; max-height: 70vh; }
+.map-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; color: var(--muted); font-size: 0.8rem; padding: 6px 2px 0; }
+.layer-title { font: 600 0.9rem var(--serif); color: var(--muted); margin: 6px 2px 2px; }
+svg.map text { font-family: var(--sans); font-size: 12px; fill: var(--fg); pointer-events: none; }
+svg.map .room rect { fill: var(--room); stroke: var(--room-line); stroke-width: 1; rx: 5; }
+svg.map .room.has-npc rect { stroke: var(--accent); stroke-width: 1.6; }
+svg.map .room.sel rect { fill: var(--accent); stroke: var(--accent); }
+svg.map .room.sel text { fill: var(--panel); }
+svg.map .room.hl rect { stroke: var(--seal); stroke-width: 2.4; }
+svg.map .room { cursor: pointer; }
+svg.map .room:focus-visible rect { stroke: var(--seal); stroke-width: 2.4; }
+svg.map line { stroke: var(--room-line); stroke-width: 2; }
+svg.map .cmd { stroke: var(--accent); stroke-width: 1.6; stroke-dasharray: 5 4; fill: none; }
+svg.map .dot { fill: var(--accent); }
+svg.map .ud { font-size: 10px; fill: var(--muted); }
+.side { display: grid; gap: 16px; min-width: 0; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; min-width: 0; }
+.panel h3 { margin: 0 0 6px; font-family: var(--serif); font-size: 1.1rem; }
+.npc-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.npc-list .chip { font-size: 0.85rem; }
+.stats { display: flex; flex-wrap: wrap; gap: 4px 18px; color: var(--muted); font-size: 0.88rem; font-variant-numeric: tabular-nums; }
+/* NPC 視窗 */
+.overlay { position: fixed; inset: 0; background: rgba(10, 16, 13, 0.45); z-index: 50; display: grid; place-items: center; padding: 16px; }
+.dialog { background: var(--panel); color: var(--fg); border-radius: 10px; border: 1px solid var(--line); width: min(640px, 100%); max-height: 88vh; overflow: auto; padding: 18px 20px 20px; display: grid; gap: 12px; }
+.dialog h2 { margin: 0; font-family: var(--serif); font-size: 1.35rem; }
+.dlg-head { display: flex; align-items: flex-start; gap: 12px; }
+.dlg-head h2 { flex: 1 1 auto; min-width: 0; }
+.dialog .close { flex: none; margin: 0; min-width: 4.5em; min-height: 32px; padding: 4px 12px; font-size: 0.85rem; line-height: 1.2; }
+/* 門派卡片 */
+.fac-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; padding-top: 16px; }
+.fac-grid .panel { display: grid; gap: 8px; align-content: start; }
+.fac-grid .panel h3 .tag { font-family: var(--sans); }
+.fac-intro { margin: 0; font-family: var(--serif); line-height: 1.8; }
+/* 遊戲裡的 ANSI 顏色 */
+.a1 { font-weight: 700; }
+.a30 { color: var(--c-black); } .a31 { color: var(--c-red); } .a32 { color: var(--c-green); } .a33 { color: var(--c-yellow); }
+.a34 { color: var(--c-blue); } .a35 { color: var(--c-magenta); } .a36 { color: var(--c-cyan); } .a37 { color: var(--c-white); }
+@media (max-width: 760px) {
+  .area-grid { grid-template-columns: minmax(0, 1fr); }
+  .row-head { grid-template-columns: minmax(0, 1fr) auto; }
+  .row-head .sum { grid-column: 1 / -1; grid-row: 2; }
+}
+@media (prefers-reduced-motion: no-preference) { .row-head { transition: background 0.12s; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <h1>天朝圖鑑</h1>
+      <span class="tally" id="tally"></span>
+      <a class="back" href="/">回到遊戲</a>
+    </div>
+    <nav class="tabs" role="tablist" id="tabs"></nav>
+  </div>
+</header>
+<main class="wrap" id="main"></main>
+<div class="overlay" id="overlay" hidden></div>
+
+<script id="codex-data" type="application/json">/*__CODEX_DATA__*/null</script>
+<script>
+(function () {
+  const D = JSON.parse(document.getElementById('codex-data').textContent);
+  const $ = (s, el) => (el || document).querySelector(s);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const plain = s => String(s || '').replace(/\x1b\[[0-9;]*m/g, '');
+
+  // 把遊戲的 ANSI 色碼轉成 span
+  function ansi(s) {
+    s = String(s || '');
+    let out = '', open = false;
+    const re = /\x1b\[([0-9;]*)m/g;
+    let last = 0, m;
+    while ((m = re.exec(s))) {
+      out += esc(s.slice(last, m.index));
+      last = re.lastIndex;
+      const codes = m[1].split(';').filter(Boolean).map(Number);
+      if (open) { out += '</span>'; open = false; }
+      const cls = codes.filter(c => c === 1 || (c >= 30 && c <= 37)).map(c => 'a' + c);
+      if (cls.length && !(codes.length === 1 && codes[0] === 0)) { out += '<span class="' + cls.join(' ') + '">'; open = true; }
+    }
+    out += esc(s.slice(last));
+    if (open) out += '</span>';
+    return out;
+  }
+
+  // 索引
+  const itemById = {};
+  D.weapons.forEach(w => itemById[w.id] = { tab: 'weapons', it: w });
+  D.armors.forEach(a => itemById[a.id] = { tab: 'armors', it: a });
+  D.items.forEach(i => itemById[i.id] = { tab: 'items', it: i });
+  const skillById = {};
+  D.skills.forEach(s => skillById[s.id] = s);
+  const facById = {};
+  D.factions.forEach(f => facById[f.id] = f);
+  const areaOfRoom = {};
+  D.areas.forEach(a => a.rooms.forEach(r => areaOfRoom[r] = a.key));
+
+  const TABS = [
+    { key: 'areas', label: '地圖' },
+    { key: 'npcs', label: '人物' },
+    { key: 'factions', label: '門派' },
+    { key: 'skills', label: '技能' },
+    { key: 'weapons', label: '武器' },
+    { key: 'armors', label: '防具' },
+    { key: 'items', label: '物品' },
+  ];
+  const state = { tab: 'areas', q: '', sub: {}, open: null, area: D.areas[0] && D.areas[0].key, room: null };
+  try { const t = localStorage.getItem('es2codex-tab'); if (t && TABS.some(x => x.key === t)) state.tab = t; } catch (e) {}
+  const hash = location.hash.replace('#', '');
+  if (TABS.some(x => x.key === hash)) state.tab = hash;
+
+  const c = D.counts;
+  $('#tally').textContent = `區域 ${c.areas}・人物 ${c.npcs}・門派 ${c.factions}・技能 ${c.skills}・武器 ${c.weapons}・防具 ${c.armors}・物品 ${c.items}`;
+
+  function drawTabs() {
+    $('#tabs').innerHTML = TABS.map(t => `<button role="tab" data-tab="${t.key}" aria-selected="${t.key === state.tab}">${t.label}</button>`).join('');
+  }
+  $('#tabs').addEventListener('click', e => {
+    const b = e.target.closest('button[data-tab]');
+    if (b) go(b.dataset.tab);
+  });
+  function go(tab, opts) {
+    state.tab = tab; state.open = null; state.q = '';
+    Object.assign(state, opts || {});
+    try { localStorage.setItem('es2codex-tab', tab); } catch (e) {}
+    drawTabs(); render();
+    if (state.open) {
+      const el = document.querySelector(`[data-row="${CSS.escape(state.open)}"]`);
+      if (el) el.scrollIntoView({ block: 'center' });
+    } else window.scrollTo(0, 0);
+  }
+
+  // ---------------------------------------------------------------- 共用
+  function flagsHtml(flags) {
+    return (flags || []).map(f => `<span class="tag ${f === '唯一' || f === '劇毒' || f === '特攻' ? 'seal' : f.startsWith('限') ? 'gold' : ''}">${esc(f)}</span>`).join('');
+  }
+  function traitText(list) { return (list || []).map(([k, v]) => `${k} ${v > 0 ? '+' : ''}${v}`).join('、'); }
+  function npcLink(id) { const n = D.npcs[id]; return n ? `<button class="linkish" data-npc="${esc(id)}">${ansi(n.name)}</button>` : ''; }
+  function itemLink(id) { const x = itemById[id]; return x ? `<button class="linkish" data-item="${esc(id)}">${ansi(x.it.name)}</button>` : ''; }
+  function skillLink(id) { const s = skillById[id]; return s ? `<button class="linkish" data-skill="${esc(id)}">${esc(s.name)}</button>` : ''; }
+  function facLink(id) { const f = facById[id]; return f ? `<button class="linkish" data-fac="${esc(id)}">${esc(f.name)}</button>` : ''; }
+  function roomLink(r) {
+    const room = D.rooms[r];
+    return room ? `<button class="linkish" data-room="${esc(r)}">${esc(room.short)}</button><span class="hint">（${esc(areaOfRoom[r] || '')}）</span>` : '';
+  }
+  function whereHtml(it) {
+    const by = { room: [], npc: [], shop: [] };
+    (it.src || []).forEach(([k, ref]) => by[k].push(ref));
+    const parts = [];
+    if (by.shop.length) parts.push('販售：' + by.shop.map(npcLink).join('、'));
+    if (by.npc.length) parts.push('身上帶著：' + by.npc.map(npcLink).join('、'));
+    if (by.room.length) parts.push('擺放在：' + by.room.map(roomLink).join('、'));
+    return parts.join('<br>') || '—';
+  }
+  function subChips(key, groups) {
+    const cur = state.sub[key] || 'all';
+    return `<div class="chips" role="group" aria-label="分類">` + groups.map(([k, label, n]) =>
+      `<button class="chip" data-sub="${esc(k)}" aria-pressed="${cur === k}">${esc(label)}<span class="n">${n}</span></button>`).join('') + '</div>';
+  }
+  function matches(text) {
+    if (!state.q) return true;
+    return plain(text).toLowerCase().includes(state.q.toLowerCase());
+  }
+  function listShell(tools, rows, hint) {
+    return `<div class="tools"><input class="search" id="q" type="search" placeholder="搜尋名稱或特性" value="${esc(state.q)}" aria-label="搜尋">${tools || ''}</div>` +
+      (hint ? `<p class="hint">${hint}</p>` : '') +
+      `<div class="list">${rows.length ? rows.join('') : '<p class="empty">沒有符合的項目。換個關鍵字或分類試試。</p>'}</div>`;
+  }
+  function row(id, head, body) {
+    const open = state.open === id;
+    return `<div class="row${open ? ' open' : ''}" data-row="${esc(id)}"><button class="row-head" aria-expanded="${open}">${head}</button>${open ? `<div class="detail">${body()}</div>` : ''}</div>`;
+  }
+  function names(it) { return plain(it.name) + ' ' + (it.ids || []).join(' '); }
+  function nameHtml(it) { return `${ansi(it.name)}${it.ids && it.ids[0] ? `<span class="en">${esc(it.ids[0])}</span>` : ''}`; }
+
+  // ---------------------------------------------------------------- 技能
+  function skillSummary(s) {
+    if (s.help) return s.help.kind || '';
+    const g = ['練成 ' + s.entry];
+    if (s.attrs.length) g.push('增長 ' + s.attrs.join('、'));
+    if (s.pools.length) g.push('提升' + s.pools.join('、') + '上限');
+    return g.join('・');
+  }
+  // 法術、咒術的各道法術：學會等級、耗神、效果、傷害（傷害以咒文強度為準）
+  function spellTable(s) {
+    if (!s.spells || !s.spells.length) return '';
+    const dmg = s.spells.some(x => x.dmg && x.dmg !== '—');
+    return `<div><h4 class="hint" style="margin:0 0 4px">法術</h4><div class="tbl-wrap"><table><thead><tr><th>法術</th><th>指令</th><th>學會</th><th>耗神</th>${dmg ? '<th>傷害</th>' : ''}<th>效果</th></tr></thead><tbody>` +
+      s.spells.map(x => `<tr><td style="white-space:nowrap">${esc(x.name)}</td><td><code>${esc(x.cmd || '—')}</code></td><td style="white-space:nowrap">${x.lv === '0' ? '一學會' : esc(x.lv) + ' 級'}</td><td class="v">${esc(x.cost || '—')}</td>` +
+        (dmg ? `<td style="white-space:nowrap">${esc(x.dmg || '—')}</td>` : '') + `<td>${esc(x.eff)}</td></tr>`).join('') +
+      `</tbody></table></div>${dmg ? '<p class="hint" style="margin:4px 0 0">傷害以咒文強度為準。咒文強度 = 慧根² ÷ 10 + 施咒當時的神 ÷ 32 + 0～慧根的隨機值；基本咒術練到 100 級起，再乘以（50 + 咒術等級）%。<br>命中率 = 50% + (咒文技巧 − 對方抗性) × 2%，最低 5%、最高 95%；咒文技巧 = 咒術有效等級 + 咒文能力。</p>' : ''}</div>`;
+  }
+  // 武功的招式（幾級起可用）與絕招、運功方式
+  function moveList(s) {
+    if (!s.moves || !s.moves.length) return '';
+    return `<dt>招式</dt><dd>${s.moves.map(([n, lv]) => esc(n) + (lv > 0 ? `<span class="hint">（${lv} 級）</span>` : '')).join('、')}</dd>`;
+  }
+  // 有遊戲說明檔（help）的技能：照說明檔的項目顯示，不另外寫公式
+  function helpBody(s) {
+    const h = s.help;
+    return `<dl class="kv"><dt>技能種類</dt><dd>${esc(h.kind || '—')}</dd><dt>學習條件</dt><dd>${esc(h.cond || '—')}</dd>` +
+      `<dt>任務起始</dt><dd>${esc(h.start || '—')}</dd>` +
+      `<dt>特殊能力</dt><dd>${h.abilities.length ? h.abilities.map(a => '‧' + esc(a)).join('<br>') : '無'}</dd>` +
+      (h.level ? `<dt>練成等級</dt><dd>${esc(h.level)}</dd><dt>能力提升</dt>` : `<dt>能力提昇</dt>`) + `<dd>${esc(h.gain || '—')}</dd>` +
+      (s.excl ? `<dt>專屬</dt><dd>${esc(s.excl)}</dd>` : '') +
+      (s.factions.length ? `<dt>門派</dt><dd>${s.factions.map(facLink).join('、')}</dd>` : '') +
+      (s.teachers.length ? `<dt>傳授</dt><dd>${s.teachers.map(npcLink).join('、')}</dd>` : '') +
+      (s.books.length ? `<dt>書籍</dt><dd>${s.books.map(itemLink).join('、')}</dd>` : '') + `</dl>`;
+  }
+  // 右欄：基本技能、某某專屬、門派名稱
+  function skillOwner(s) {
+    if (s.basic) return '基本技能';
+    if (s.excl) return s.excl;
+    if (s.factions.length === 1) return facById[s.factions[0]].name;
+    return s.factions.length ? '多派' : '';
+  }
+  function renderSkills() {
+    // 本門武功：只有一個門派傳授、而且不是基本技能
+    const own = s => !s.basic && s.factions.length === 1;
+    const facs = D.factions.filter(f => D.skills.some(s => own(s) && s.factions[0] === f.id));
+    const groups = [['all', '全部', D.skills.length]].concat(
+      facs.map(f => [f.id, f.name, D.skills.filter(s => own(s) && s.factions[0] === f.id).length]),
+      [['basic', '基本技能', D.skills.filter(s => s.basic).length], ['common', '其他', D.skills.filter(s => !own(s) && !s.basic).length]]);
+    const cur = state.sub.skills || 'all';
+    const rows = D.skills.filter(s => (cur === 'all' || (cur === 'basic' ? s.basic : cur === 'common' ? !own(s) && !s.basic : own(s) && s.factions[0] === cur)) &&
+        matches([s.name, s.cat, s.desc, s.attrs.join(' '), s.attrText, s.poolText, (s.spells || []).map(x => x.name).join(' '), s.factions.map(f => facById[f].name).join(' ')].join(' ')))
+      .map(s => row(s.id,
+        `<span class="nm">${esc(s.name)}</span><span class="sum">${esc((s.help ? [skillSummary(s)] : [s.cat, skillSummary(s)]).filter(Boolean).join('・'))}</span><span class="num">${esc(skillOwner(s))}</span>`,
+        () => s.help ? helpBody(s) : `<dl class="kv">` +
+          (s.cat ? `<dt>分類</dt><dd>${esc(s.cat)}</dd>` : '') +
+          (s.desc ? `<dt>說明</dt><dd>${esc(s.desc)}</dd>` : '') + moveList(s) +
+          (s.excl ? `<dt>專屬</dt><dd>${esc(s.excl)}</dd>` : '') +
+          `<dt>練成</dt><dd>${esc(s.entry)}</dd>` +
+          `<dt>精氣神</dt><dd>${s.poolText ? esc(s.poolText) : s.pools.length ? '提升' + esc(s.pools.join('、')) + '的上限' : '—'}</dd>` +
+          `<dt>屬性</dt><dd>${s.attrText ? esc(s.attrText) : s.attrs.length ? esc(s.attrs.join('、')) + '會隨修練增長' : '—'}</dd>` +
+          (s.spellNote ? `<dt>法術特性</dt><dd>${esc(s.spellNote)}</dd>` : '') +
+          (s.factions.length ? `<dt>門派</dt><dd>${s.factions.map(facLink).join('、')}</dd>` : '') +
+          (s.teachers.length ? `<dt>傳授</dt><dd>${s.teachers.map(npcLink).join('、')}</dd>` : '') +
+          (s.books.length ? `<dt>書籍</dt><dd>${s.books.map(itemLink).join('、')}</dd>` : '') + `</dl>` + spellTable(s)));
+    return listShell(subChips('skills', groups), rows, '只列出在江湖上找得到師父或書籍的技能；機緣巧合才學得到的武功，留待各位自行探索。');
+  }
+
+  // ---------------------------------------------------------------- 武器、防具、物品
+  function commonKv(it) {
+    return `<dl class="kv"><dt>重量</dt><dd>${it.weight != null ? it.weight : '—'}</dd><dt>價值</dt><dd>${esc(it.value || '—')}</dd>` +
+      (it.effects ? `<dt>效果</dt><dd>${esc(it.effects.join('、'))}</dd>` : '') +
+      (it.study && it.study.length ? `<dt>研讀</dt><dd>${it.study.map(skillLink).join('、')}</dd>` : '') +
+      `<dt>出處</dt><dd>${whereHtml(it)}</dd></dl>`;
+  }
+  function traitTables(traits, label) {
+    const tr = Object.entries(traits || {});
+    return tr.length ? `<div class="traits">${tr.map(([k, l]) => `<div class="trait-group"><h4>${esc(label)}・${esc(k)}</h4><div class="tbl-wrap"><table><tbody>${l.map(([a, v]) => `<tr><td>${esc(a)}</td><td class="v">${v > 0 ? '+' : ''}${v}</td></tr>`).join('')}</tbody></table></div></div>`).join('')}</div>` : '';
+  }
+  function renderWeapons() {
+    const kinds = Object.keys(D.weaponKinds).filter(k => D.weapons.some(w => w.kind === k));
+    const groups = [['all', '全部', D.weapons.length]].concat(kinds.map(k => [k, D.weaponKinds[k], D.weapons.filter(w => w.kind === k).length]));
+    const cur = state.sub.weapons || 'all';
+    const rows = D.weapons.filter(w => (cur === 'all' || w.kind === cur) && matches(names(w) + ' ' + Object.values(w.traits).flat().map(t => t[0]).join(' ')))
+      .map(w => row(w.id,
+        `<span class="nm">${nameHtml(w)}${flagsHtml(w.flags)}</span><span class="sum">${esc(w.usages.map(u => `${u.skill} ${u.dmg || ''}`).join('・'))}</span><span class="num">${esc(w.value || '')}</span>`,
+        () => (w.long ? `<p class="long">${ansi(w.long)}</p>` : '') +
+          `<div class="tbl-wrap"><table><thead><tr><th>可用技能</th><th>傷害</th></tr></thead><tbody>` +
+          w.usages.map(u => `<tr><td>${esc(u.skill)}</td><td class="v">${esc(u.dmg || '—')}</td></tr>`).join('') + `</tbody></table></div>` +
+          traitTables(w.traits, '武器特性') + commonKv(w)));
+    return listShell(subChips('weapons', groups), rows);
+  }
+  function renderArmors() {
+    const slots = Object.keys(D.slots).filter(k => D.armors.some(a => a.slot === k));
+    const groups = [['all', '全部', D.armors.length]].concat(slots.map(k => [k, D.slots[k], D.armors.filter(a => a.slot === k).length]));
+    const cur = state.sub.armors || 'all';
+    const rows = D.armors.filter(a => (cur === 'all' || a.slot === cur) && matches(names(a) + ' ' + Object.values(a.traits).flat().map(t => t[0]).join(' ')))
+      .map(a => row(a.id,
+        `<span class="nm">${nameHtml(a)}${flagsHtml(a.flags)}</span><span class="sum">${esc(D.slots[a.slot] || '')}・${esc(traitText(Object.values(a.traits)[0]) || '沒有特性')}</span><span class="num">${esc(a.value || '')}</span>`,
+        () => (a.long ? `<p class="long">${ansi(a.long)}</p>` : '') + traitTables(a.traits, '護具特性') + commonKv(a)));
+    return listShell(subChips('armors', groups), rows);
+  }
+  function renderItems() {
+    const cats = [...new Set(D.items.map(i => i.cat))];
+    const groups = [['all', '全部', D.items.length]].concat(cats.map(k => [k, k, D.items.filter(i => i.cat === k).length]));
+    const cur = state.sub.items || 'all';
+    const rows = D.items.filter(i => (cur === 'all' || i.cat === cur) && matches(names(i) + ' ' + (i.effects || []).join(' ')))
+      .map(i => row(i.id,
+        `<span class="nm">${nameHtml(i)}${flagsHtml(i.flags)}</span><span class="sum">${esc(i.cat)}${i.effects ? '・' + esc(i.effects.join('、')) : ''}</span><span class="num">${esc(i.value || '')}</span>`,
+        () => (i.long ? `<p class="long">${ansi(i.long)}</p>` : '') + commonKv(i)));
+    return listShell(subChips('items', groups), rows);
+  }
+
+  // ---------------------------------------------------------------- 人物
+  function npcAreas(n) { return [...new Set(n.rooms.map(([r]) => areaOfRoom[r]).filter(Boolean))]; }
+  function npcTags(n) {
+    const t = [];
+    if (n.faction) t.push(facById[n.faction].name);
+    if (n.sells.length) t.push('商人');
+    if (n.teaches.length) t.push('傳授武藝');
+    if (n.wander) t.push('四處走動');
+    return t;
+  }
+  function renderNpcs() {
+    const all = Object.entries(D.npcs).map(([id, n]) => Object.assign({ id }, n))
+      .sort((a, b) => (npcAreas(a)[0] || '').localeCompare(npcAreas(b)[0] || '') || plain(a.name).localeCompare(plain(b.name)));
+    const keys = D.areas.map(a => a.key).filter(k => all.some(n => npcAreas(n).includes(k)));
+    const groups = [['all', '全部', all.length]].concat(keys.map(k => [k, k, all.filter(n => npcAreas(n).includes(k)).length]));
+    const cur = state.sub.npcs || 'all';
+    const rows = all.filter(n => (cur === 'all' || npcAreas(n).includes(cur)) && matches(names(n) + ' ' + plain(n.title || '') + ' ' + npcTags(n).join(' ')))
+      .map(n => row(n.id,
+        `<span class="nm">${n.title ? `<span class="en" style="margin:0 6px 0 0">${ansi(n.title)}</span>` : ''}${nameHtml(n)}</span>` +
+        `<span class="sum">${esc([npcAreas(n).join('、')].concat(npcTags(n)).filter(Boolean).join('・'))}</span><span class="num"></span>`,
+        () => npcBody(n)));
+    return listShell(subChips('npcs', groups), rows);
+  }
+  function npcBody(n) {
+    const rooms = n.rooms.map(([r, c]) => roomLink(r) + (c > 1 ? ` ×${c}` : '')).join('、') || '—';
+    const eq = (n.equip || []).map(([i, use]) => `${itemLink(i)}<span class="hint">（${use === 'wield' ? '手持' : use === 'wear' ? '穿戴' : '攜帶'}）</span>`).join('、');
+    return (n.long ? `<p class="long">${ansi(n.long)}</p>` : '') +
+      `<dl class="kv">${n.title ? `<dt>稱號</dt><dd>${ansi(n.title)}</dd>` : ''}<dt>出沒地點</dt><dd>${rooms}${n.wander ? '<span class="hint">（會四處走動）</span>' : ''}</dd>` +
+      (n.faction ? `<dt>門派</dt><dd>${facLink(n.faction)}</dd>` : '') +
+      (n.sells.length ? `<dt>販賣</dt><dd>${n.sells.map(itemLink).join('、')}</dd>` : '') +
+      (n.teaches.length ? `<dt>傳授</dt><dd>${n.teaches.map(skillLink).join('、')}</dd>` : '') +
+      (eq ? `<dt>身上的東西</dt><dd>${eq}</dd>` : '') + `</dl>`;
+  }
+  function openNpc(id) {
+    const n = D.npcs[id];
+    if (!n) return;
+    const o = $('#overlay');
+    o.innerHTML = `<div class="dialog" role="dialog" aria-modal="true" aria-label="${esc(plain(n.name))}">` +
+      `<div class="dlg-head"><h2>${ansi(n.name)}</h2><button class="copy close" data-close>關閉</button></div>` +
+      npcBody(n) + `</div>`;
+    o.hidden = false;
+    const b = o.querySelector('[data-close]');
+    if (b) b.focus();
+  }
+  function closeNpc() { $('#overlay').hidden = true; $('#overlay').innerHTML = ''; }
+  $('#overlay').addEventListener('click', e => { if (e.target.id === 'overlay' || e.target.closest('[data-close]')) closeNpc(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#overlay').hidden) closeNpc(); });
+
+  // ---------------------------------------------------------------- 門派
+  function renderFactions() {
+    const cards = D.factions.map(f => {
+      const masters = f.masters.map(m => npcLink(m) + (D.npcs[m] ? '<span class="hint">（' + D.npcs[m].rooms.map(([r]) => esc(D.rooms[r].short)).join('、') + '）</span>' : '')).join('、');
+      const others = f.members.filter(m => !f.masters.includes(m));
+      const own = f.skills.filter(s => skillById[s] && !skillById[s].basic && skillById[s].factions.length === 1);
+      const common = f.skills.filter(s => !own.includes(s));
+      return `<div class="panel" data-fac-card="${esc(f.id)}"><h3>${esc(f.name)}<span class="tag">${esc(f.cls)}</span></h3>` +
+        (f.intro ? `<p class="fac-intro">${esc(f.intro)}</p>` : '') +
+        `<dl class="kv"><dt>師父</dt><dd>${masters}</dd>` +
+        (others.length ? `<dt>同門</dt><dd>${others.map(npcLink).join('、')}</dd>` : '') +
+        `<dt>入門條件</dt><dd>${esc(f.entry)}</dd>` +
+        (own.length ? `<dt>本門武功</dt><dd>${own.map(skillLink).join('、')}</dd>` : '') +
+        (common.length ? `<dt>基本功夫</dt><dd>${common.map(skillLink).join('、')}</dd>` : '') + `</dl></div>`;
+    }).join('');
+    return `<div class="fac-grid">${cards || '<p class="empty">目前沒有門派資料。</p>'}</div>`;
+  }
+
+  // ---------------------------------------------------------------- 地圖
+  const CW = 108, CH = 38, GX = 26, GY = 26;
+  function renderAreas() {
+    const area = D.areas.find(a => a.key === state.area) || D.areas[0];
+    if (!area) return '<p class="empty">沒有區域資料。</p>';
+    const chips = `<div class="chips" role="group" aria-label="區域">` + D.areas.map(a =>
+      `<button class="chip" data-area="${esc(a.key)}" aria-pressed="${a.key === area.key}">${esc(a.name)}<span class="n">${a.rooms.length}</span></button>`).join('') + '</div>';
+    const rooms = area.rooms.map(id => Object.assign({ id }, D.rooms[id]));
+    const layers = {};
+    rooms.forEach(r => { const z = r.pos ? r.pos[2] : 0; (layers[z] = layers[z] || []).push(r); });
+    const zs = Object.keys(layers).map(Number).sort((a, b) => b - a);
+    const maps = zs.map(z => {
+      const rs = layers[z];
+      const lnames = [...new Set(rs.map(r => r.layer).filter(Boolean))];
+      const xs = rs.map(r => r.pos[0]), ys = rs.map(r => r.pos[1]);
+      const minx = Math.min(...xs), miny = Math.min(...ys);
+      const W = (Math.max(...xs) - minx + 1) * (CW + GX) + GX, H = (Math.max(...ys) - miny + 1) * (CH + GY) + GY;
+      const px = r => GX + (r.pos[0] - minx) * (CW + GX), py = r => GY + (r.pos[1] - miny) * (CH + GY);
+      const inLayer = {};
+      rs.forEach(r => inLayer[r.id] = r);
+      let lines = '';
+      const seen = new Set();
+      rs.forEach(r => Object.values(r.exits).forEach(t => {
+        const o = inLayer[t];
+        if (!o) return;
+        const k = [r.id, t].sort().join('|');
+        if (seen.has(k)) return;
+        seen.add(k);
+        lines += `<line x1="${px(r) + CW / 2}" y1="${py(r) + CH / 2}" x2="${px(o) + CW / 2}" y2="${py(o) + CH / 2}"/>`;
+      }));
+      const cells = rs.map(r => {
+        const ud = (r.ud.includes('up') ? '↑' : '') + (r.ud.includes('down') ? '↓' : '');
+        const out = Object.values(r.exits).some(t => areaOfRoom[t] && areaOfRoom[t] !== area.key);
+        const label = r.short.length > 7 ? r.short.slice(0, 7) + '…' : r.short;
+        const cls = ['room', r.npcs.length ? 'has-npc' : '', state.room === r.id ? 'sel' : ''].join(' ');
+        return `<g class="${cls}" data-room="${esc(r.id)}" tabindex="0" role="button" aria-label="${esc(r.short)}"><title>${esc(r.short)}</title><rect x="${px(r)}" y="${py(r)}" width="${CW}" height="${CH}"/>` +
+          `<text x="${px(r) + CW / 2}" y="${py(r) + CH / 2 + 4}" text-anchor="middle">${esc(label)}</text>` +
+          (r.npcs.length ? `<circle class="dot" cx="${px(r) + 8}" cy="${py(r) + 8}" r="3"/>` : '') +
+          (ud || out ? `<text class="ud" x="${px(r) + CW - 6}" y="${py(r) + 12}" text-anchor="end">${ud}${out ? '⇢' : ''}</text>` : '') + '</g>';
+      }).join('');
+      const title = zs.length > 1 || lnames.length ? `<div class="layer-title">${lnames.length ? esc(lnames.join('／')) : ''}${zs.length > 1 ? `（樓層 ${z >= 0 ? '+' : ''}${z}）` : ''}</div>` : '';
+      return `${title}<div class="map-scroll"><svg class="map" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(area.name)} 地圖">${lines}${cells}</svg></div>`;
+    }).join('');
+    const legend = `<div class="map-legend"><span>● 有人物</span><span>↑↓ 上下樓</span><span>⇢ 通往其他區域</span><span>沒有連線的格子，入口得靠自己找</span></div>`;
+    const room = state.room && D.rooms[state.room] && areaOfRoom[state.room] === area.key ? D.rooms[state.room] : null;
+    const roomPanel = room ? `<div class="panel"><h3>${esc(room.short)}</h3>` +
+      (room.long ? `<p class="long" style="font-size:0.92rem">${ansi(room.long)}</p>` : '') +
+      `<dl class="kv"><dt>出口</dt><dd>${Object.entries(room.exits).map(([d, t]) => `${esc(d)}：${roomLink(t)}`).join('<br>') || '—'}</dd>` +
+      `<dt>人物</dt><dd>${room.npcs.map(([p, n]) => npcLink(p) + (n > 1 ? ' ×' + n : '')).join('、') || '—'}</dd>` +
+      `<dt>物品</dt><dd>${room.items.map(([p, n]) => itemLink(p) + (n > 1 ? ' ×' + n : '')).join('、') || '—'}</dd></dl></div>`
+      : `<div class="panel"><h3>房間</h3><p class="hint" style="margin:0">點地圖上的房間，這裡會顯示敘述、出口、人物與物品。</p></div>`;
+    const npcIds = [...new Set(area.rooms.flatMap(r => D.rooms[r].npcs.map(([p]) => p)))];
+    const npcPanel = `<div class="panel"><h3>人物</h3>${npcIds.length ? `<div class="npc-list">${npcIds.map(p => `<button class="chip" data-npc="${esc(p)}">${ansi(D.npcs[p].name)}</button>`).join('')}</div>` : '<p class="hint" style="margin:0">這個區域沒有固定出沒的人物。</p>'}</div>`;
+    const stats = `<div class="stats"><span>房間 ${area.rooms.length} 格</span><span>人物 ${npcIds.length} 位</span></div>`;
+    return `<div class="tools">${chips}</div>${stats}<div class="area-grid" style="margin-top:12px"><div class="map-box">${maps}${legend}</div><div class="side">${roomPanel}${npcPanel}</div></div>`;
+  }
+
+  // ---------------------------------------------------------------- 事件
+  function render() {
+    const f = { skills: renderSkills, weapons: renderWeapons, armors: renderArmors, items: renderItems, npcs: renderNpcs, factions: renderFactions, areas: renderAreas }[state.tab];
+    const hadFocus = document.activeElement && document.activeElement.id === 'q';
+    const pos = hadFocus ? document.activeElement.selectionStart : 0;
+    $('#main').innerHTML = f();
+    if (hadFocus && $('#q')) { $('#q').focus(); $('#q').setSelectionRange(pos, pos); }
+  }
+  // 注音等輸入法組字時不重繪，組字完成再搜尋。
+  function onSearch(e) { if (e.target.id !== 'q' || e.isComposing) return; state.q = e.target.value; state.open = null; render(); }
+  document.addEventListener('input', onSearch);
+  document.addEventListener('compositionend', onSearch);
+  document.addEventListener('click', e => {
+    const t = e.target;
+    const npc = t.closest('[data-npc]');
+    if (npc) { openNpc(npc.dataset.npc); return; }
+    const item = t.closest('[data-item]');
+    if (item && itemById[item.dataset.item]) {
+      closeNpc();
+      const x = itemById[item.dataset.item];
+      go(x.tab, { open: x.it.id, sub: Object.assign(state.sub, { [x.tab]: 'all' }) });
+      return;
+    }
+    const sk = t.closest('[data-skill]');
+    if (sk && skillById[sk.dataset.skill]) { closeNpc(); go('skills', { open: sk.dataset.skill, sub: Object.assign(state.sub, { skills: 'all' }) }); return; }
+    const fac = t.closest('[data-fac]');
+    if (fac) {
+      closeNpc(); go('factions');
+      const el = document.querySelector(`[data-fac-card="${CSS.escape(fac.dataset.fac)}"]`);
+      if (el) el.scrollIntoView({ block: 'center' });
+      return;
+    }
+    const room = t.closest('[data-room]');
+    if (room) {
+      const rid = room.dataset.room;
+      closeNpc();
+      if (areaOfRoom[rid]) {
+        state.area = areaOfRoom[rid]; state.room = rid;
+        if (state.tab !== 'areas') go('areas', { area: state.area, room: rid }); else render();
+      }
+      return;
+    }
+    const sub = t.closest('[data-sub]');
+    if (sub) { state.sub[state.tab] = sub.dataset.sub; state.open = null; render(); return; }
+    const area = t.closest('[data-area]');
+    if (area) { state.area = area.dataset.area; state.room = null; render(); return; }
+    const head = t.closest('.row-head');
+    if (head) {
+      const id = head.parentElement.dataset.row;
+      state.open = state.open === id ? null : id;
+      render();
+      const el = document.querySelector(`[data-row="${CSS.escape(id)}"] .row-head`);
+      if (el) el.focus({ preventScroll: true });
+    }
+  });
+  document.addEventListener('keydown', e => {
+    const g = e.target.closest && e.target.closest('g[data-room]');
+    if (g && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); g.dispatchEvent(new MouseEvent('click', { bubbles: true })); }
+  });
+
+  // 搜尋列固定在頁首下方：依頁首實際高度設定位置
+  const hdr = document.querySelector('header.top');
+  const setHdr = () => document.documentElement.style.setProperty('--hdr', hdr.offsetHeight + 'px');
+  setHdr();
+  if (window.ResizeObserver) new ResizeObserver(setHdr).observe(hdr); else window.addEventListener('resize', setHdr);
+
+  drawTabs();
+  render();
+})();
+</script>
+</body>
+</html>

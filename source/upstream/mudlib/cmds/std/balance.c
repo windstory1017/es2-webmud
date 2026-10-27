@@ -22,7 +22,11 @@ int main(object me, string arg)
 
     if( env && function_exists("retire_bankbond", env) )
         env->retire_bankbond(me);
-    write("你在錢莊的存款共有" + money_string(me->query("bank_account")) + "。\n");
+    // 沒有存款時不說「共有零文錢」（使用者指示，2026-10-25）。
+    if( !me->query("bank_account") )
+        write("你在錢莊並沒有任何存款。\n");
+    else
+        write("你在錢莊的存款共有" + money_string(me->query("bank_account")) + "。\n");
     return 1;
 }
 

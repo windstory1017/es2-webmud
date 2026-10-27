@@ -12,7 +12,7 @@ checks={
   "new_password_prompt":"請設定您的密碼:" in text,
   "confirm_password_prompt":"請再輸入一次您的密碼" in text,
   "email_prompt":"您的電子郵件地址" in text,
-  "race_prompt":"選擇你的角色所屬的種族:" in text,
+  "race_prompt":("選擇你的角色所屬的種族:" in text) or ("可以選擇以下的種族" in text),
   "display_name_prompt":"您的顯示名稱:" in text,
 }
 # A transcript may represent existing-login OR new-character flow.

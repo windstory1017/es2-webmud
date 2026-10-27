@@ -23,7 +23,8 @@ LONG
 	        set("base_value", 3000);
         set("mixture_value", 600);
     }
-    set("requirement", (["literate": 15, "alchemy-medication": 55]));
+    set("requirement", (["literate": 45, "alchemy-medication": 40]));
+    set("pill_grade", 2);   // 丹藥階級：一階最高、三階最低（使用者指示 #7，2026-10-23）
     set_amount(1);
     setup();
 }

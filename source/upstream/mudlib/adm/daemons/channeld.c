@@ -131,7 +131,33 @@ do_channel(object me, string verb, string arg, int emote)
  
     ob = filter_array( users(), "filter_listener", this_object(), channels[verb] );
     if( !arg ) arg = "...";
- 
+
+    // CUSTOM WEBMUD RULE: wizard 以上的巫師看得到匿名頻道（如 rumor）真正的發言者。
+    if( channels[verb]["anonymous"] && who == channels[verb]["anonymous"] ) {
+        object *wiz_ob = filter_array( ob, (: wiz_level($1) >= 3 :) );
+        string real_who = sprintf("%s〔%s(%s)〕", who, me->name(1),
+            capitalize(me->query("id")));
+
+        if( sizeof(wiz_ob) ) {
+            ob -= wiz_ob;
+            if( emote ) {
+                string wmsg;
+                string warg = arg;
+
+                if( !channels[verb]["msg_emote"] )
+                    return notify_fail("這個頻道不能 emote。\n");
+                if( channels[verb]["intermud_emote"] ) warg = real_who + " " + warg;
+                wmsg = sprintf( channels[verb]["msg_emote"], warg );
+                if( strsrch(wmsg, '\n')==-1 ) wmsg += "\n";
+                message( "channel:" + verb, wmsg, wiz_ob );
+            } else {
+                string wmsg = sprintf( channels[verb]["msg_speak"], real_who, arg );
+                if( strsrch(wmsg, '\n')==-1 ) wmsg += "\n";
+                message( "channel:" + verb, wmsg, wiz_ob );
+            }
+        }
+    }
+
     if( emote ) {
         string msg;
 
@@ -139,7 +165,7 @@ do_channel(object me, string verb, string arg, int emote)
             return notify_fail("這個頻道不能 emote。\n");
         // Support of old behavier of intermud emote.
         if( channels[verb]["intermud_emote"] ) arg = who + " " + arg;
- 
+
         msg = sprintf( channels[verb]["msg_emote"], arg );
 	if( strsrch(msg, '\n')==-1 ) msg += "\n";
         message( "channel:" + verb, msg, ob );

@@ -39,11 +39,7 @@ void setup(object ob) {
 void initialize(object ob) {
     ::initialize(ob);
 
-    // New-race rule: human creation has a 0.01% chance to become avatar.
-    if (base_name(ob) == USER_OB && random(10000) == 9999) {
-        ob->set_race("avatar");
-        return;
-    }
+    // 人類族的機率改由選種族時判定（1%，見 LOGIN_D get_race()，使用者定案 2026-10-22）。
 
     ob->init_attribute(([
         "str":13 + random(6), "cor":13 + random(6),

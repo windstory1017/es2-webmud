@@ -59,11 +59,12 @@ private void finish(object me, object victim, int total) {
     if (userp(victim)) {
         // 夜叉族的鬼魂，精以兩倍計算。
         if (victim->query_race() == "yaksa") ghost_gin *= 2;
-        // 先給加成：make_mist() 之後 this_player() 變成對方的連線物件，
-        // 給夜叉的訊息會被過濾掉。
         reward_player(me, ghost_gin);
-        victim->die();
-        CHAR_D->make_mist(victim);
+        // 不在這裡直接 die() + make_mist()：魂飛魄散後的選種族畫面與輸入，
+        // 會綁在「目前下指令的人」身上，在這裡就是夜叉，結果變成夜叉看到選種族、
+        // 被吞的玩家什麼都沒看到。改為耗盡對方的形體（HP），讓對方在自己的心跳裡
+        // 走鬼魂再死一次的正常流程（die() → make_mist()），畫面才會出現在對方身上。
+        victim->consume_stat("HP", victim->query_stat("HP") + 1, me);
         return;
     }
 

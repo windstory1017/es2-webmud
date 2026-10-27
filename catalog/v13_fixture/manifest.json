@@ -3,9 +3,9 @@
   "source_policy": "SOURCE-ONLY / no external augmentation",
   "git": {
     "repository": "https://github.com/taedlar/es2_mudlib",
-    "origin": null,
-    "commit": null,
-    "branch": null
+    "origin": "https://github.com/wolfer168/es2-webmud",
+    "commit": "862907bd2b532a2f5262d2b41a504b9bf58688e5",
+    "branch": "claude/compassionate-hopper-gums1q"
   },
   "total_files": 16,
   "counts": {

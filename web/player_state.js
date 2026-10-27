@@ -49,7 +49,7 @@ export class PlayerStateObserver {
     }
     const lvl=line.match(/目前是等級\s*(\d+)/);
     if(lvl)this.state.scoreDetail.level=Number(lvl[1]);
-    const karma=line.match(/累積業力共\s*(-?\d+)\s*點/);
+    const karma=line.match(/目前有\s*(-?\d+)\s*點業力/)||line.match(/累積業力共\s*(-?\d+)\s*點/);
     if(karma)this.state.scoreDetail.karma=Number(karma[1]);
     // Experience rows: label value [remaining], two columns may appear on one line.
     const xp=/([^\s\[\]]{1,16})\s+(-?\d+)(?:\s+\[([0-9]+)\])?/g;

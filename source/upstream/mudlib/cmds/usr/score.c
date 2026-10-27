@@ -44,7 +44,7 @@ int main (object me, string arg) {
 
     line = sprintf (HIW "【 %s 】" NOR "%s\n\n", ob->rank(), ob->short(1));
     line += cjk_wrap (sprintf(
-            "%s出生於%s﹐外表是一%s%s歲的%s%s。目前是等級 %d 的%s﹐累積業力共 %d 點。",
+            "%s出生於%s﹐外表是一%s%s歲的%s%s。目前是等級 %d 的%s﹐目前有 %d 點業力。",
                 ob==me ? gender_self (ob) : gender_pronoun (ob),
                 CHINESE_D->chinese_date(),
                 (tmp = ob->query ("unit")) ? tmp : "個",
@@ -114,7 +114,8 @@ int main (object me, string arg) {
         foreach (c, xp in score) {
             int xp_t;
 
-            if (xp >= 0 && (xp_t = ob->query_target_score(c) - xp) > 0) 
+            // 已達等級上限就不再顯示還差多少經驗。
+            if (xp >= 0 && !ob->at_level_cap() && (xp_t = ob->query_target_score(c) - xp) > 0)
                 // 名稱一律補到 4 個全形字寬（用全形空白），兩欄在任何字型下都會對齊。
                 line = sprintf("%s" HIM "%s %8d %-9s " NOR, line, cjk_align(to_chinese("score of " + c), 4, 0), xp, "[" + xp_t + "]");
             else

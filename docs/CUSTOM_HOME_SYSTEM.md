@@ -2,6 +2,13 @@
 
 > This is a WebMUD custom extension and is **not** canonical `taedlar/es2_mudlib` content.
 
+## 入口現況（使用者決定，2026-10-23）
+
+- 家園傳送師已移除；`recall`、`recall home` 指令也已取消（含說明檔）。
+- **未來不會再開放 recall／recall home 進入家園。** 家園的新入口另行設計。
+- 目前玩家沒有進入家園的方式；家園的儲物箱、房間發展等功能仍保留。
+- 下方 Phase 1 起的內容是當初的設計紀錄，其中「家園傳送師」「home 指令」已不適用。
+
 ## Phase 1
 
 - Snow Inn (`/d/snow/inn_hall`) contains `家園傳送師` (`home teleporter`).

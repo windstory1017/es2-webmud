@@ -1,3 +1,4 @@
+#include <ansi.h>
 // gammer.c
 
 #include <npc.h>
@@ -73,7 +74,7 @@ void relay_say(object ob, string arg)
 (:command("say 他想娶妳, 可以, 但條件是他父子要先幫你爺爺報了仇.
 這樣他家與咱們的恩怨才算一筆勾消."):),
 				}));
-				call_out((:message_vision("瞎眼老太婆說完, 轉過身走了.\n",this_player()):),4);
+				call_out((:message_vision(CYN + "瞎眼老太婆說完, 轉過身走了.\n" NOR,this_player()):),4);
 				call_out((:destruct(this_object()):),6);
 				return;
 			}
@@ -85,7 +86,7 @@ void relay_say(object ob, string arg)
 			command("pat " + ob->query("id"));
 			if( (string)ob->query_class() != "commoner" ) return;
 			ob->set_class("thief");
-			tell_object(ob, "你正式成為一名盜賊了。\n");
+			tell_object(ob, CYN + "你正式成為一名盜賊了。\n" NOR);
 			ob->improve_skill("sneak", 20);
 			ob->improve_skill("stealing", 20);
 			do_chat(({
@@ -152,7 +153,7 @@ void init()
 {
     if( environment(this_object())->query("connect-p") ) {
 	command("say 口渴了, 來喝口水...\n");
-        message_vision("$N緩緩走回大水缸邊。\n", this_object());
+        message_vision(CYN + "$N緩緩走回大水缸邊。\n" NOR, this_object());
         this_object()->move("/d/snow/square");
         return;
     }

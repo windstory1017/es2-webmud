@@ -55,6 +55,16 @@ receive_message(string msgclass, string msg)
 private void
 write_prompt()
 {
+    object link = this_object()->link();
+
+    // 網頁玩家結束等待輸入、回到指令狀態：通知網頁恢復背景狀態查詢（暫停見 feature/user/input.c）。
+    // 魂飛魄散後選種族時暫停記號在連線物件上，進入遊戲後由新身體這裡恢復。
+    if( query_temp("webhud/input_wait")
+    ||  (objectp(link) && link->query_temp("webhud/input_wait")) ) {
+	delete_temp("webhud/input_wait");
+	if( objectp(link) ) link->delete_temp("webhud/input_wait");
+	receive("@@WEBHUD|READY\n");
+    }
     if( sizeof(msg_buffer) )
     {
 	receive(BOLD "[輸入時暫存訊息]\n" NOR);

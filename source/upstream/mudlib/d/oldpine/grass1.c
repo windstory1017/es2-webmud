@@ -15,6 +15,7 @@ LONG
         "northwest" : __DIR__"forest_n3",
         "north" : __DIR__"clearing_n",
         "southeast" : __DIR__"grass2",
+        "east" : "/d/kangping/forest_exit",   // 康平村（2026-10-20）
     ]));
     set("map/area", "老松林");
     setup();

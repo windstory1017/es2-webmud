@@ -1,5 +1,3 @@
-
-
 inherit F_CLEAN_UP;
 
 int main(object me, string str)
@@ -17,10 +15,12 @@ int main(object me, string str)
     ob->heal_stat("gin", 9999);
     ob->heal_stat("kee", 9999);
     ob->heal_stat("sen", 9999);
+    ob->heal_stat("HP", 9999);
 
     ob->supplement_stat("gin", 9999);
     ob->supplement_stat("kee", 9999);
     ob->supplement_stat("sen", 9999);
+    ob->supplement_stat("HP", 9999);
 
     // ok ..
     message_vision("$N用巫師的神力治療$n的傷勢。\n", me, ob);

@@ -10,19 +10,13 @@ mapping skill_map       = ([]);         // The links of mapped skill.
 mapping skill_flag      = ([]);         // Ultra skill flags.
 
 string best_skill = "";
-void refresh_taoist_spell_mastery(string skill)
-{
-    if( skill != "spells" && skill != "taoism-fire" && skill != "taoism-freeze"
-    && skill != "taoism-storm" && skill != "taoism-thunder" ) return;
-    if( this_object()->query_class() != "taoist" ) return;
-    CLASS_D("taoist")->refresh_spell_mastery(this_object());
-}
 
 /* Old Neolith LPC needs inherited function prototypes visible at compile time. */
 varargs int query_attr(string attr, int raw);
 int set_attr(string what, int value);
 varargs void advance_skill(string skill, int amount);
 void apply_restored_skill_progression(string skill);
+int query_personal_skill_cap(string skill);
 
 // implementations
 
@@ -105,7 +99,7 @@ void set_skill(string skill, int val)
 {
     if( val > 200 ) val = 200;
     skills[skill] = val;
-    refresh_taoist_spell_mastery(skill);
+    query_personal_skill_cap(skill);   // 得到技能的當下決定個人上限
 }
 
 int set_learn(string skill, int lrn)
@@ -123,7 +117,6 @@ int delete_skill(string skill)
     string s1, s2;
 
     map_delete(skills, skill);
-    refresh_taoist_spell_mastery(skill);
     map_delete(learned, skill);
     foreach(s1, s2 in skill_map)
 	if( s2==skill ) map_delete(skill_map, s1);
@@ -220,9 +213,34 @@ int restored_skill_threshold(int level)
     return level * level * base;
 }
 
+/* 個人技能上限（使用者定案，2026-10-22）：玩家得到一項技能時，隨機決定這項技能的上限
+ * 140、145……200（逢 5，機率平均），記在 skill_cap/<技能>，之後不再改變。
+ * 舊角色已經練過頭的技能，上限設成目前等級（不會掉級）。NPC 不受影響（200）。 */
+int query_personal_skill_cap(string skill)
+{
+    int cap;
+
+    if( !userp(this_object()) ) return 200;
+    if( (cap = this_object()->query("skill_cap/" + skill)) > 0 ) return cap;
+    cap = 140 + random(13) * 5;
+    if( skills[skill] > cap ) cap = skills[skill];
+    this_object()->set("skill_cap/" + skill, cap);
+    return cap;
+}
+
+/* 技能等級上限：個人上限；技能檔有 query_skill_cap(人物) 時取兩者較低的
+ * （例如水雲劍法暫時 30，使用者定案，2026-10-20）。 */
 int restored_skill_cap(string skill)
 {
-    return 200;
+    object daemon;
+    int cap, own;
+
+    own = query_personal_skill_cap(skill);
+    daemon = SKILL_D(skill);
+    if( objectp(daemon) && function_exists("query_skill_cap", daemon)
+    &&  (cap = call_other(daemon, "query_skill_cap", this_object())) > 0 )
+        return cap < own ? cap : own;
+    return own;
 }
 
 // 學成等級：技能檔用 query_entry_level() 指定，沒指定的是 1。
@@ -323,6 +341,7 @@ void improve_skill_exact(string skill, int amount)
     if( undefinedp(learned[skill]) ) learned[skill] = amount; else learned[skill] += amount;
     if( undefinedp(skill_gain[skill]) ) skill_gain[skill] = amount; else skill_gain[skill] += amount;
     if( undefinedp(skills[skill]) ) skills[skill] = 0;
+    query_personal_skill_cap(skill);   // 得到技能的當下決定個人上限
 
     daemon = SKILL_D(skill);
     if( objectp(daemon) )
@@ -434,6 +453,8 @@ private void roll_attr_growth(string skill, int old_level, int new_level)
 
     for(lv = (last / 5 + 1) * 5; lv <= new_level; lv += 5) {
         this_object()->set("attr_growth/" + skill, lv);
+        // 善想禪要 100 級改為固定慧根 +3，這一級不再擲機率（使用者定案，2026-10-19）。
+        if( skill == "absorption" && lv == 100 ) continue;
         value = query_attr(attr, 1);
         if( value >= ATTR_GROWTH_MAX ) continue;
         // 機率以萬分之一計：基礎% × (50 + lv/2)% × 1.2
@@ -458,6 +479,24 @@ private void magic_mastery_growth(string skill, int old_level, int new_level)
     if( !daemon->valid_enable("magic") ) return;
     for(lv = old_level + 1; lv <= new_level; lv++)
         this_object()->gain_score("magic mastery", lv * 10);
+}
+
+/* 咒術道行（使用者定案，2026-10-24）：比照法術道行，基本咒術（spells）與能裝在咒術上的
+ * 武功（天師道法四系、茅山幻術等）每升到第 sk 級給 sk × 30。一次升多級時每一級都給；
+ * 不限職業，只對玩家生效。 */
+private void spell_mastery_growth(string skill, int old_level, int new_level)
+{
+    object daemon;
+    int lv;
+
+    if( !userp(this_object()) ) return;
+    if( skill != "spells" ) {
+        daemon = SKILL_D(skill);
+        if( !objectp(daemon) || !function_exists("valid_enable", daemon) ) return;
+        if( !daemon->valid_enable("spells") ) return;
+    }
+    for(lv = old_level + 1; lv <= new_level; lv++)
+        this_object()->gain_score("spell mastery", lv * 30);
 }
 
 /* 基本技能升級給武術造詣（NEW）
@@ -504,11 +543,11 @@ varargs void advance_skill(string skill, int amount)
 
     SKILL_D(skill)->skill_advanced(this_object(), skill);
     magic_mastery_growth(skill, old_level, skills[skill]);
+    spell_mastery_growth(skill, old_level, skills[skill]);
     roll_attr_growth(skill, old_level, skills[skill]);
     basic_skill_martial_art(skill, old_level, skills[skill]);
 
     if( skills[skill] > skills[best_skill] ) best_skill = skill;
-    refresh_taoist_spell_mastery(skill);
 }
 
 // abandon_skill()

@@ -12,6 +12,28 @@ reset()
     stock = copy(query("merchandise"));
 }
 
+// 商品順序（使用者定案，2026-10-23）：list 顯示的順序和 buy <名稱> <第幾個> 的計數
+// 用同一份排序（價錢由低到高，同價依檔名），兩邊才會一致。
+private int sort_goods(string a, string b)
+{
+    int va = a->query("value"), vb = b->query("value");
+    if( va != vb ) return va - vb;
+    return strcmp(a, b);
+}
+
+string *query_goods_order()
+{
+    mapping list = query("merchandise");
+    if( !mapp(list) ) return ({});
+    return sort_array(keys(list), (: sort_goods :));
+}
+
+int query_stock(string item)
+{
+    if( !mapp(stock) ) stock = copy(query("merchandise"));
+    return stock[item];
+}
+
 // affirm_merchandise()
 //
 // This is an apply function interfacing with the standard 'buy' command
@@ -40,17 +62,24 @@ affirm_merchandise(object buyer, string what, int amount)
 
     if( !mapp(stock) ) stock = copy(list);
 
-    foreach(item, count in stock)
+    // 和 list 一樣的順序，只數還有存貨（list 上看得到）的商品。
+    foreach(item in query_goods_order())
     {
-	if( (!item->id(what)) || (--index) ) continue;
-	if( stock[item] < 1 )
-	    return notify_fail(item->name() + "已經賣完了﹐待會兒再來吧。\n");
+	if( !item->id(what) ) continue;
+	if( stock[item] < 1 ) {
+	    if( !count ) count = -1;   // 記下有同名但賣完的商品
+	    continue;
+	}
+	count = 1;
+	if( --index ) continue;
 	if( stock[item] < amount )
 	    return notify_fail(item->name() + "只剩下" + chinese_number(stock[item])
 		+ (item->query("base_unit") || item->query("unit") || "個") + "了。\n");
 	return item;
     }
-
+    if( count < 0 )
+	return notify_fail("這樣東西已經賣完了﹐待會兒再來吧。\n");
+    return notify_fail(name() + "並沒有賣 " + what + " 這種東西。\n");
 }
 
 int
@@ -146,33 +175,64 @@ price_string(int v)
     return chinese_number(v) + "文錢";
 }
 
+// 計算字串的全形字數與半形字數（略過 ANSI 顏色碼），對齊用。
+private int *glyph_count(string str)
+{
+    int w = 0, n = 0, in_ansi = 0;
+
+    foreach(string ch in explode(str, "")) {
+	if( in_ansi ) { if( ch == "m" ) in_ansi = 0; continue; }
+	if( ch == "\x1b" ) { in_ansi = 1; continue; }
+	if( strlen(ch) > 1 && ch >= "⺀" ) w++;
+	else n++;
+    }
+    return ({ w, n });
+}
+
+// 補到 wide 個全形字、narrow 個半形字：不論網頁字型的中文字寬為何，每一行都會對齊。
+private string pad_glyphs(string str, int wide, int narrow, int right_align)
+{
+    int *c = glyph_count(str);
+    string pad = repeat_string("　", wide > c[0] ? wide - c[0] : 0)
+	+ repeat_string(" ", narrow > c[1] ? narrow - c[1] : 0);
+    return right_align ? pad + str : str + pad;
+}
+
 int
 do_vendor_list(string arg)
 {
     mapping goods;
-    string list, item;
-    int count;
+    string list, *names, *prices, *items;
+    int i, wide, narrow, pwide, pnarrow, *c;
 
     if( !mapp(goods = query("merchandise")) ) return 0;
     if( arg && !id(arg) ) return 0;
 
-    list = "";
-    foreach(item, count in goods) {
-	if( count < 1 ) continue;
-	// MODIFIED: %-30s pads by raw char count, which goes ragged when a
-	// name mixes Chinese (double-width) and ASCII; cjk_pad() counts
-	// visual width instead so the "：" column and the price column both
-	// line up. Not original ES2 wording, only the alignment logic.
-	// 價格欄寬 18（最長像「九千九百九十九文錢」九個字），靠右對齊；名稱有顏色也照算畫面寬度。
-	list += "  " + cjk_pad(item->short(1), 30) + "： "
-	    + cjk_pad(price_string(item->query("value")), 18, 1) + "\n";
-    }
-    if( list=="" ) {
+    // 只列還有存貨的商品，順序和 buy 的計數相同。
+    items = filter(query_goods_order(), (: query_stock($1) > 0 :));
+    if( !sizeof(items) ) {
 	write( name() + "的貨物已經全部賣光了，下次早一點來吧！\n");
 	return 1;
     }
 
+    // 名稱與價錢欄都以最寬的一項為準對齊（使用者定案，2026-10-23）；
+    // 名稱與「：」之間多空四個半形（2026-10-24）。
+    names = map(items, (: $1->short(1) :));
+    prices = map(items, (: price_string($1->query("value")) :));
+    for( i = 0; i < sizeof(items); i++ ) {
+	c = glyph_count(names[i]);
+	if( c[0] > wide ) wide = c[0];
+	if( c[1] > narrow ) narrow = c[1];
+	c = glyph_count(prices[i]);
+	if( c[0] > pwide ) pwide = c[0];
+	if( c[1] > pnarrow ) pnarrow = c[1];
+    }
+
+    list = "";
+    for( i = 0; i < sizeof(items); i++ )
+	list += "  " + pad_glyphs(names[i], wide, narrow, 0) + "    ："
+	    + pad_glyphs(prices[i], pwide, pnarrow, 1) + "\n";
+
     write("你可以購買下列這些東西：\n-------------------------\n" + list);
     return 1;
 }
-

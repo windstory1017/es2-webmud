@@ -30,7 +30,8 @@ def test_tiger_force_user_growth_table_and_powerup_formula():
     assert 'lv >= 161' in s and 'lv >= 141 && lv <= 160' in s
     assert 'advance_stat("gin", lv >= 161 ? 1 : 2 + (lv >= 141 && lv <= 160 ? 1 : 0))' in s
     assert 'advance_stat("kee", lv >= 161 ? 1 : 2 + (lv >= 141 && lv <= 160 ? 2 : 0))' in s
-    assert 'cap = lv * 12;' in s and 'query_stat_maximum("gin") <= cap' in s
+    # 精氣上限不再受「瘋虎功等級 × 12」限制（使用者定案，2026-10-23）。
+    assert 'cap = lv * 12;' not in s and 'query_stat_maximum("gin") <= cap' not in s
     assert 'gain_score("martial art", lv * 10)' in s
     # 90 -> 91 branch: combat exp over 100000 jumps to 100 with str+2 con+1.
     assert 'lv == 91' in s and 'score/combat") > 100000' in s

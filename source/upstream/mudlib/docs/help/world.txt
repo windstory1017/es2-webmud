@@ -4,6 +4,5 @@
   help snowkeep        雪亭
   help inn             客棧
   help home_help       私人家園
-  help recall          返回功能
 
 世界仍持續擴充；不存在或來源不足的區域不會在 HELP 中自行補完。

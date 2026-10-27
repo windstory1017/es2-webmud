@@ -6,8 +6,6 @@
 | 書名 | 英文名 | 閱讀門檻 | 讀到上限 | 檔案 |
 |---|---|---|---|---|
 | 【遊歷雜記】 | Travel Notes | 無 | 讀書識字 35 | `obj/books/travel_notes.c` |
-| 【幼學輯要】 | Book of elementary | 讀書識字 1 | 讀書識字 10 | `d/snow/obj/basic_book.c` |
-| 【幼學輯要】 | Book of elementary | 讀書識字 1 | 讀書識字 10 | `d/snow/obj/literate_book.c` |
 | 【般若波羅密多心經】 | Book of buddhology | 讀書識字 10，限和尚 | 讀書識字 60、古文造詣 25、善想禪要 30 | `obj/books/book_of_buddhology.c` |
 | 黃山對弈譜 | Yellow Mountain Chess Manual | 讀書識字 10 | 讀書識字 15 | `obj/books/yellow_mountain_chess_manual.c` |
 | 【古文觀止】 | Anthology of Classical Prose | 讀書識字 15，限書生 | 讀書識字 50、古文造詣 20 | `obj/books/anthology_of_classical_prose.c` |

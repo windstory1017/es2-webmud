@@ -2,9 +2,10 @@
 description: 丹道【神農之術】（alchemy-medication）。龍圖丹派方士的法術類技能，
              安裝在 magic（enable magic with alchemy-medication），以 conjure 施展
              七色印，封住或解開青銅丹鼎。
-design: claude/技能設計/01_神農之術.md（2026-10-15）
+design: docs/martial_arts/龍圖丹派_神農之術.md（2026-10-15；2026-10-22 修改 U-10、U-11；2026-10-24 印名上色）
 note: 0 級即可施展；0～14 級不存在，累積到學成門檻後 gain 直接學成 15 級。
-      升級不增加精、氣、神；31 級起每升一級給法術修為（sk-30)^2*10。
+      升級不增加精、氣、神；法術修為、法術道行只拿系統規則（2026-10-22）。
+      施法時同時累積基本法術（magic），失敗得 1/3（U-13，2026-10-24）。
 ---*/
 
 #include <ansi.h>
@@ -24,6 +25,17 @@ private mapping colors = ([
     "yellow": "黃",
     "gray":   "灰",
     "black":  "皂",
+]);
+
+// 印名的顏色（使用者定案，2026-10-24）：({ X印, 散X印 })，散印暗一階；只有印名上色。
+private mapping seal_colors = ([
+    "green":  ({ HIC, CYN }),
+    "white":  ({ HIW, WHT }),
+    "red":    ({ HIR, RED }),
+    "purple": ({ HIM, MAG }),
+    "yellow": ({ HIY, YEL }),
+    "gray":   ({ WHT, HIK }),
+    "black":  ({ HIK, HIK }),
 ]);
 
 void create()
@@ -46,15 +58,7 @@ void skill_completed(object me, string sk)
         + gender_self(me) + "對這個法術已經逐漸熟悉。\n");
 }
 
-// U-11：31 級起每升一級給法術修為；不增加精、氣、神。
-void skill_advanced(object me, string sk)
-{
-    int level;
-
-    level = me->query_skill(sk, 1);
-    if( level > 30 )
-        me->gain_score("magic", (level - 30) * (level - 30) * 10);
-}
+// U-11（2026-10-22）：取消 31 級起的法術修為；升級不增加精、氣、神。
 
 // S-32：成功率（靈性＋悟性×2＋技能等級＋10）%，最高 95%。
 int success_chance(object me)
@@ -67,6 +71,24 @@ int success_chance(object me)
     return chance;
 }
 
+// U-13（2026-10-24，使用者指示 #12）：施法時同時累積基本法術（magic），照茅山法術的基本法術公式，
+// 層級固定 1：（random(靈性)＋1）×（random(靈性)＋1）＋random(靈性)。
+// 失敗時取 1/3（無條件捨去），最少 1。
+void magic_gain(object me, int failed)
+{
+    int spi, gain;
+
+    if( !userp(me) ) return;
+    spi = me->query_attr("spi");
+    if( spi < 1 ) spi = 1;
+    gain = (random(spi) + 1) * (random(spi) + 1) + random(spi);
+    if( failed ) {
+        gain /= 3;
+        if( gain < 1 ) gain = 1;
+    }
+    me->improve_skill_exact("magic", gain);
+}
+
 // U-03、U-10：成功的經驗與丹道修養。
 void reward_success(object me)
 {
@@ -77,7 +99,9 @@ void reward_success(object me)
     level = me->query_skill(SKILL_ID, 1);
     me->improve_skill(SKILL_ID,
         (spi + (intel * 5 > 0 ? random(intel * 5) : 0)) * 2);
-    me->gain_score("alchemy", 1 + (level > 0 ? random(level) : 0));
+    // U-10（2026-10-22）：1 + random(等級) ÷ 2，無條件捨去。
+    me->gain_score("alchemy", 1 + (level > 0 ? random(level) / 2 : 0));
+    magic_gain(me, 0);
 }
 
 // U-04、U-10：失敗的經驗與丹道修養。
@@ -89,6 +113,7 @@ void reward_failure(object me)
     gain = n > 0 ? random(n) : 0;
     if( gain > 0 ) me->improve_skill(SKILL_ID, gain);
     me->gain_score("alchemy", 1);
+    magic_gain(me, 1);
 }
 
 int conjure_magic(object me, string spell, object target)
@@ -109,12 +134,14 @@ int conjure_magic(object me, string spell, object target)
         return notify_fail(gender_self(me) + "的「神」不足以施展這個法術。\n");
 
     cname = colors[color];
-    seal_name = (action == "seal" ? "" : "散") + cname + "印";
+    seal_name = seal_colors[color][action == "seal" ? 0 : 1]
+        + (action == "seal" ? "" : "散") + cname + "印" NOR;
 
     // S-30：固定消耗 15 神，失敗照扣。
     me->consume_stat("sen", SEN_COST);
+    // 印名的顏色代碼會被斷行程式算進寬度，這句不自動斷行（整句不到 70 格）。
     message_vision("$N用手在" + target->name() + "上虛畫了一個「" + seal_name
-        + "」，口中念念有詞地祝禱著。\n", me);
+        + "」，口中念念有詞地祝禱著。\n", me, 0, 1);
 
     // S-33：重複封印、錯色解印、解沒有封印的丹鼎，一律算失敗。
     current = target->query_seal();
@@ -127,6 +154,7 @@ int conjure_magic(object me, string spell, object target)
     if( !ok ) {
         tell_object(me, gender_self(me) + "的法術失敗了。\n");
         reward_failure(me);
+        me->set_temp("conjure/failed", 1);
         return 1;
     }
 

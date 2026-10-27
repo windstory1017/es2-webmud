@@ -50,8 +50,8 @@ void skill_completed(object me, string skill)
     if( userp(me) ) me->set_attr("wis", me->query_attr("wis", 1) + 2);
 }
 
-/* 每級獎勵（引擎）；超過學成等級後，精上限 < 等級×8 時 +1、
- * 氣上限 < 等級×8 時 +1、神上限 < 等級×15 時 +3。 */
+/* 每級獎勵（引擎）；超過學成等級後，每級精 +1、氣 +1、神 +3
+ * （不再受上限條件限制，使用者定案，2026-10-23）。 */
 void skill_advanced(object me, string skill)
 {
     int lv;
@@ -61,9 +61,9 @@ void skill_advanced(object me, string skill)
     if( !userp(me) ) return;
     lv = me->query_skill("sun force", 1);
     if( lv <= 10 ) return;
-    if( me->query_stat_maximum("gin") < lv * 8 )  me->advance_stat("gin", 1);
-    if( me->query_stat_maximum("kee") < lv * 8 )  me->advance_stat("kee", 1);
-    if( me->query_stat_maximum("sen") < lv * 15 ) me->advance_stat("sen", 3);
+    me->advance_stat("gin", 1);
+    me->advance_stat("kee", 1);
+    me->advance_stat("sen", 3);
 }
 
 /* 修習：每回合消耗 精 2、氣 2～3、神 3～4（受傷減少上限 精 1、氣 1、神 3），
@@ -72,8 +72,7 @@ int do_exercise(object me)
 {
     if( me->query_stat("gin") < 3 || me->query_stat("kee") < 4 || me->query_stat("sen") < 7 ) {
         tell_object(me, "你只覺口乾舌燥、心火虛浮﹐再也運轉不動丹陽真氣。\n");
-        me->interrupt_me(me, "exhausted");
-        return 1;
+        return 0;   // 傳回 0 結束打坐（系統沒有 interrupt_me，舊寫法會一直重複這句；2026-10-23）
     }
 
     me->consume_stat("gin", 2);

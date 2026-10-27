@@ -20,7 +20,8 @@ void create()
             "min_heat" : 400,
             "max_heat" : 479,
         ]));
-		set("requirement", (["literate": 15, "alchemy-medication": 50]));
+		set("requirement", (["literate": 40, "alchemy-medication": 30]));
+		set("pill_grade", 2);   // 丹藥階級：一階最高、三階最低（使用者指示 #7，2026-10-23）
 	}
 	set_amount(1);
 	setup();

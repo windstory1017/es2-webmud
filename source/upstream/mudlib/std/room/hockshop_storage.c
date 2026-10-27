@@ -4,7 +4,7 @@ inherit ROOM;
 
 void create()
 {
-	set("short", "某間當鋪的儲藏室");
+	set("short", "當鋪的共用倉庫");
 	set("long", "這裡是某間當鋪的儲藏室﹐你不該出現在這裡。\n");
 	setup();
 }
@@ -17,19 +17,6 @@ int clean_up()
 	return 0;
 }
 
-void reset()
-{
-	object *inv;
-
-	inv = all_inventory(this_object());
-
-	// Make the goods in storage older that maybe we can sell some of them
-	if( sizeof(inv) ) inv->add("pwaned_time", 1);
-
-	// Destruct items that are not touched for a long time, say, 30 resets.
-	// This should be longer than the time that pawned goods can be sold.
-	for(int i=0; i<sizeof(inv); i++)
-	if( (int)inv[i]->query("pawned_time") > 4 )
-//	destruct(inv[i]);
-	inv[i]->delete("pawned_time");
-}
+// 當鋪連線後不再有「放久了改上架」的機制（docs/PAWNSHOP_NETWORK.md，2026-10-23）。
+// 原本的寫法把 pawned_time 打成 pwaned_time，這個機制從未生效。
+void reset() { }

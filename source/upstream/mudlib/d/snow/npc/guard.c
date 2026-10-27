@@ -1,3 +1,4 @@
+#include <ansi.h>
 
 
 #include <npc.h>
@@ -52,7 +53,7 @@ void greet_visitor(object ob, object invitation)
     destruct(invitation);
     if( environment(ob)!=environment() ) return;
 
-    message_vision(name() + "引領$N過了橋﹐進入雪吟莊。\n", ob);
+    message_vision(CYN + name() + "引領$N過了橋﹐進入雪吟莊。\n" NOR, ob);
     ob->move("/d/snowkeep/entrance");
 }
 

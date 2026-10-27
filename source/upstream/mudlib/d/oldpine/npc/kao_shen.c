@@ -1,3 +1,4 @@
+#include <ansi.h>
 // /d/oldpine/npc/kao_shen.c — 老松林 NPC：虎刀門長老 高慎（放在老松林北緣的空地）。
 /*
 CUSTOM LEGACY-RESEARCH NPC PLACEMENT.
@@ -123,9 +124,9 @@ int acquire_skill(object me, string skill)
     me->improve_skill_exact(skill,
         me->skill_threshold(skill, cap) - me->query_learn(skill));
     if( skill == "tiger force" )
-        tell_object(me, "高慎將瘋虎功的入門心訣傳授給你，接下來就得靠你自己運功修習了。\n");
+        tell_object(me, CYN + "高慎將瘋虎功的入門心訣傳授給你，接下來就得靠你自己運功修習了。\n" NOR);
     else
-        tell_object(me, "高慎將「" + to_chinese(skill) + "」的入門要訣傳授給你。\n");
+        tell_object(me, CYN + "高慎將「" + to_chinese(skill) + "」的入門要訣傳授給你。\n" NOR);
     return 1;
 }
 

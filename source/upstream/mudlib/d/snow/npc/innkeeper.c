@@ -1,3 +1,4 @@
+#include <ansi.h>
 /*---
 description: 這是雪亭鎮客棧的掌櫃，負責開店、關店和保護客棧安全。
 author: Annihilator <taedlar@gmail.com>
@@ -76,7 +77,7 @@ void accept_kill(object player) {
 
         // 交代官兵的出現，注意前面掌櫃已經用 command() 喊出聲了，如果
         // 用 do_chat() 其訊息要到下一個 heart beat 才會出來。
-        tell_room(environment(), "巡邏官兵聽到叫聲﹐跑了過來。\n");
+        tell_room(environment(), CYN + "巡邏官兵聽到叫聲﹐跑了過來。\n" NOR);
     }
 
     // protect() 定義在官兵身上，也是大聲嚷嚷幾句場面話。

@@ -45,7 +45,7 @@ void skill_completed(object me, string skill)
     tell_object(me, HIW "你練成寒梅心法第一重﹗\n" NOR);
 }
 
-/* 每級獎勵（引擎）；每 10 級練成一重（20 級第二重……100 級第十重）。
+/* 每級獎勵（引擎）；11 級起每級精 +2～3、氣 +2、神 +0～1；每 10 級練成一重（20 級第二重……100 級第十重）。
  * 100 級：修完十重基本心法，膂力 +1、膽識 +1、精上限 +100、氣上限 +100。 */
 void skill_advanced(object me, string skill)
 {
@@ -54,6 +54,12 @@ void skill_advanced(object me, string skill)
     ::skill_advanced(me, skill);
 
     lv = me->query_skill("hainmay force", 1);
+    // 練成（10 級）之後每升一級：精 +2～3、氣 +2、神 +0～1（使用者定案，2026-10-23）。
+    if( userp(me) && lv > 10 ) {
+        me->advance_stat("gin", 2 + random(2));
+        me->advance_stat("kee", 2);
+        me->advance_stat("sen", random(2));
+    }
     if( lv >= 20 && lv <= 100 && lv % 10 == 0 )
         tell_object(me, HIW "你練成了寒梅心法第" + chinese_number(lv / 10) + "重。\n" NOR);
 
@@ -76,8 +82,7 @@ int do_exercise(object me)
 {
     if( me->query_stat("kee") < 3 || me->query_stat("gin") < 4 ) {
         tell_object(me, "你覺得氣血浮動、精力難繼﹐已無法再運轉寒梅心法。\n");
-        me->interrupt_me(me, "exhausted");
-        return 1;
+        return 0;   // 傳回 0 結束打坐（系統沒有 interrupt_me，舊寫法會一直重複這句；2026-10-23）
     }
 
     me->consume_stat("kee", 2);

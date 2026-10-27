@@ -2,7 +2,8 @@
 
 #include <room.h>
 
-inherit ROOM;
+// 改為龍圖藥鋪櫃台：可查丹藥、買丹藥與配方、賣丹藥（使用者指示 #3，2026-10-23）。
+inherit HERB;
 
 void create()
 {
@@ -19,5 +20,4 @@ LONG
     ]));
     set("map/area", "喬陰縣");
     setup();
-    replace_program(ROOM);
 }

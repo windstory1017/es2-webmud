@@ -1,3 +1,4 @@
+#include <ansi.h>
 // /d/wutang/npc/town_god.c — 五堂鎮 NPC：城隍爺（依五堂鎮設計表）。
 
 inherit "/custom/ghost/std_ghost";
@@ -15,7 +16,7 @@ int do_register(string arg)
 
     if( me->query("life_form") != "ghost" )
         return notify_fail("你陽壽未盡，用不著向城隍爺報到。\n");
-    message_vision("$N向城隍爺跪拜報到，城隍爺翻了翻生死簿，點了點頭。\n", me);
+    message_vision(CYN + "$N向城隍爺跪拜報到，城隍爺翻了翻生死簿，點了點頭。\n" NOR, me);
     write("城隍爺說道：「你陽壽未盡，回去吧。」\n你覺得一陣暈眩 ...\n");
     CHAR_D->make_living(me);
     me->start_busy(3);

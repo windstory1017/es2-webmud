@@ -7,7 +7,7 @@ private void create() {
     ::create(); seteuid(getuid());
     set("karma", 40); set("civilized", 1); set("commoner_score_base", 180);
     set("class_level_cap", ([
-        "commoner":1, "fighter":60, "taoist":60, "alchemist":50,
+        "commoner":1, "fighter":70, "taoist":60, "alchemist":50,
         "soldier":70, "scholar":-1, "monk":-1, "thief":50
     ]));
     DAEMON_D->register_race_daemon("ashura");

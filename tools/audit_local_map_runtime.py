@@ -4,7 +4,6 @@ import json,re
 root=Path(__file__).resolve().parents[1]
 app=(root/'web/app.js').read_text()
 hud=(root/'source/upstream/mudlib/cmds/usr/webhud.c').read_text()
-recall=(root/'source/upstream/mudlib/cmds/usr/recall.c').read_text()
 g=json.loads((root/'web/custom_map_graph.json').read_text())
 ids={n['id'] for n in g['nodes']}
 checks={
@@ -15,9 +14,8 @@ checks={
 'oldpine_in_map': '/custom/oldpine/room/path01' in ids and '/custom/oldpine/room/path10' in ids,
 'zhenwu_in_map': '/custom/zhenwu/room/gate' in ids and '/custom/zhenwu/room/yard14' in ids,
 'home_in_map_index': '/custom/home/room/home_hall' in ids,
-'recall_home_branch': 'if (arg == "home")' in recall,
-'recall_home_direct_hall': 'new("/custom/home/room/home_hall")' in recall and 'me->move(dest)' in recall,
-'recall_help': 'recall home' in recall,
+# recall／recall home 已依使用者要求取消（2026-10-23）
+'recall_removed': not (root/'source/upstream/mudlib/cmds/usr/recall.c').exists(),
 }
 out={'version':(root/'VERSION').read_text().strip(),'checks':checks,'failures':[k for k,v in checks.items() if not v],'passed':all(checks.values())}
 (root/'reports/local_map_runtime_audit.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n")

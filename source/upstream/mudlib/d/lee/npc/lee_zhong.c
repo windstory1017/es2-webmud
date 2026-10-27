@@ -19,6 +19,7 @@ void create()
         "/d/lee/obj/salt" : 100,
         "/d/lee/obj/sugar" : 100,
         "/d/lee/obj/flour" : 100,
+        "/custom/item/scroll/blank" : 1000,   // 空白符紙（2026-10-24）
     ]));
     set_power("C");
     setup();

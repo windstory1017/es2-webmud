@@ -6,7 +6,6 @@ app=(ROOT/'web/app.js').read_text(encoding='utf-8')
 css=(ROOT/'web/styles.css').read_text(encoding='utf-8')
 hud=(M/'cmds/usr/webhud.c').read_text(encoding='utf-8')
 inn=(M/'d/snow/inn_hall.c').read_text(encoding='utf-8')
-gold=(M/'custom/test/obj/infinite_100_gold.c').read_text(encoding='utf-8')
 checks={
  'room_scoped_context_parser':'contextRoomScan' in app and 'if(!contextRoomScan)continue' in app,
  'ansi_stripped_for_context':'const text=cleanText(String(raw))' in app,
@@ -21,10 +20,8 @@ checks={
  'drink_button':'return "drink"' in hud and "drink:'喝'" in app,
  'equipment_buttons':'return "wear"' in hud and 'return "wield"' in hud and "wear:'裝備'" in app,
  'buttons_send_server_commands':"ws.send(command+'\\r\\n')" in app,
- 'test_gold_spawn':'/custom/test/obj/infinite_100_gold' in inn,
- 'test_gold_100':'gold->set_amount(100)' in gold,
- 'test_gold_is_canonical_money':'new("/obj/money/gold")' in gold,
- 'test_gold_stays_in_inn':'base_name(environment()) == "/d/snow/inn_hall"' in gold and 'return 1;' in gold,
+ # 測試用黃金已依使用者要求移除（2026-10-23）
+ 'test_gold_removed':'/custom/test/obj/infinite_100_gold' not in inn and not (M/'custom/test/obj/infinite_100_gold.c').exists(),
 }
 fail=[k for k,v in checks.items() if not v]
 out={'version':(ROOT/'VERSION').read_text().strip(),'checks':checks,'failures':fail,'passed':not fail}

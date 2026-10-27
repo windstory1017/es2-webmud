@@ -116,7 +116,7 @@
 | 92 | 晏訌 | Yen hong | `custom/legacy_npc/yen_hong.c` | 老劍山／客房 | 人類 | 武者 | 20 | B | — | — |
 | 93 | 公孫志 | Gong-sun zhi | `custom/legacy_npc/gong_sun_zhi.c` | 茅山、丱天樹／紅燈客棧 | 人類 | 道士 | 20 | B | — | — |
 | 94 | 土伯 | Guard of hell | `custom/legacy_npc/guard_of_hell.c` | 茅山／茅山石陣 | 形天族 | 武者 | 30 | B | — | — |
-| 95 | 杜風凌 | Du feng ling | `custom/legacy_npc/du_feng_ling.c` | 茅山、龍安鎮／客棧 | 巫首族 | 道士 | 40 | A | — | — |
+| 95 | 杜風凌 | Du feng ling | `custom/legacy_npc/du_feng_ling.c` | 茅山、李家村／小旅店 | 巫首族 | 道士 | 40 | A | — | — |
 | 96 | 查思古禮 | Chaxigol | `custom/legacy_npc/chaxigol.c` | 茅山／大街 | 人類 | 武者 | 25 | B | — | — |
 | 97 | 歐陽無寂 | Ou-yan wu ji | `custom/legacy_npc/ou_yan_wu_ji.c` | 茅山／客房內 | 人類 | 道士 | 30 | B | — | — |
 | 98 | 歐陽無極 | Ou-yan wu ji | `custom/legacy_npc/ou_yan_wu_ji_2.c` | 茅山、康平村／小客店 | 人類 | 道士 | 40 | A | — | — |

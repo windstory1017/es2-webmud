@@ -52,7 +52,11 @@ def test_formula_ranges_and_floor_int_base():
 def test_every_skill_caps_at_200_and_levels_one_per_gain():
     s=src('source/upstream/mudlib/feature/char/skill.c')
     cap=s.split('int restored_skill_cap(string skill)',1)[1].split('}',1)[0]
-    assert 'return 200;' in cap
+    assert 'query_personal_skill_cap(skill)' in cap
+    # 個人技能上限（使用者定案，2026-10-22）：玩家隨機 140～200（逢 5），NPC 仍是 200。
+    own=s.split('int query_personal_skill_cap(string skill)\n{',1)[1].split('\n}\n',1)[0]
+    assert 'if( !userp(this_object()) ) return 200;' in own
+    assert 'cap = 140 + random(13) * 5;' in own
     assert 'return 120;' not in s and 'return 140;' not in s
     prog=s.split('void apply_gain_progression(mapping gained)',1)[1].split('\n}\n',1)[0]
     assert 'while' not in prog          # 一次 gain 最多一級

@@ -1,0 +1,27 @@
+◎ 丹道【神農之術】（alchemy-medication）
+　技能種類：法術
+　學習條件：付柴火錢後向大師兄江述仁學習
+　任務起始：江述仁
+　安裝：enable magic with alchemy-medication
+　修練：施法時同時累積基本法術，失敗時較少。
+　特殊能力：
+　　‧七色印：conjure <印> on reactor，封住或解開青銅丹鼎。
+　　　　　　　青印：green seal      散青印：green dispel
+　　　　　　　白印：white seal      散白印：white dispel
+　　　　　　　赤印：red seal        散赤印：red dispel
+　　　　　　　紫印：purple seal     散紫印：purple dispel
+　　　　　　　黃印：yellow seal     散黃印：yellow dispel
+　　　　　　　灰印：gray seal       散灰印：gray dispel
+　　　　　　　皂印：black seal      散皂印：black dispel
+　　　　　　　封住的丹鼎不能放入、取出東西；仍可搬動，放進丹爐照常加熱。
+　　　　　　　什麼顏色封的只能用同色散印解開，任何人都能解。
+　　　　　　　外觀只看得出有封印，看不出顏色。
+　　　　　　　丹鼎在丹爐裡不能施印，要先取出。
+　　　　　　　每次消耗 15 點神，失敗也扣；
+　　　　　　　成功率隨靈性、悟性與等級提高，最高 95%。
+　　‧辨藥　：在藥鋪買配方、買丹藥、賣丹藥，以及龍圖心經轉化丹藥，
+　　　　　　　都要有足夠的神農之術：
+　　　　　　　烏心丹 不需     清腹丹 20    甘靈清毒丹 15
+　　　　　　　養心丹 25       金液丹 30    金鎖固精丸 30
+　　　　　　　醒神丹 40       小還丹 50    大還丹 90
+　能力提昇：練成為 15 級；尚未練成也能施印。

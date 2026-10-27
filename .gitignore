@@ -22,11 +22,21 @@ __pycache__/
 .pytest_cache/
 
 # Formal player/login data must never be public
-source/upstream/mudlib/data/user/
-source/upstream/mudlib/data/login/
+# (only the .keep placeholders are tracked, so a fresh clone can save characters)
+source/upstream/mudlib/data/user/*
+!source/upstream/mudlib/data/user/.keep
+source/upstream/mudlib/data/login/*
+!source/upstream/mudlib/data/login/.keep
 
 # Runtime-generated data
 source/upstream/mudlib/log/
 source/upstream/mudlib/logs/
 .local-test/
 localtest-start.log
+
+# 橋接程式與遊戲共用的暗號、同 IP 限制設定（主機各自產生，不放進 git）
+source/upstream/mudlib/adm/etc/bridge_secret
+source/upstream/mudlib/data/iplimit.o
+
+# 玩家版天朝圖鑑：部署時由 tools/build_player_codex.py 產生
+web/codex.html

@@ -22,14 +22,15 @@ int study_cost(object me)
     return cost - (1 + random(divisor));
 }
 
+/* 書本上限只看技能等級（使用者定案，2026-10-23）：累積點數超過上限等級的門檻
+ * 但還沒 gain 升上去時照樣可以讀，讀書拿到新點數才能下 gain 升級。 */
 int study_capped(object me, mapping caps)
 {
     string skill;
     int limit;
 
     foreach(skill, limit in caps)
-        if( me->query_skill(skill, 1) >= limit
-        ||  me->query_learn(skill) >= me->skill_threshold(skill, limit) ) return 1;
+        if( me->query_skill(skill, 1) >= limit ) return 1;
     return 0;
 }
 

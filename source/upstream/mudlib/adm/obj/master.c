@@ -60,6 +60,10 @@ private void crash (string error, object command_giver, object current_object) {
     efun::shout ("系統核心發出一聲慘叫：哇 ....\n");
     efun::shout ("系統核心告訴你﹕要當機了﹐自己保重吧﹗\n");
     log_file ("CRASHES", sprintf("[%s] %s\n", ctime(time()), error) );
+    // 結束前替在線玩家存檔：systemctl restart、update.sh、自動更新送來的結束訊號也會走到這裡，
+    // 不存的話玩家會損失最近一次自動存檔（每 5 分鐘）之後的進度（使用者同意，2026-10-24）。
+    foreach (object u in users())
+        if (environment(u)) catch (u->save());
     if (command_giver)
         log_file ("CRASHES", sprintf("  this_player: %O\n", command_giver));
     if (current_object)

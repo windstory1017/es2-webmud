@@ -21,8 +21,6 @@ LONG
     set ("objects", ([
         "/d/snow/npc/waiter" : 1,
         "/d/snow/npc/innkeeper" : 1,
-        /* CUSTOM WEBMUD EXTENSIONS: not canonical taedlar/es2_mudlib content. */
-        "/custom/test/obj/infinite_100_gold" : 1,
     ]));
     set ("valid_startroom", 1);
     set ("no_fight",1);

@@ -217,7 +217,7 @@ die()
 	revive(1);
 
     if (query("life_form") == "ghost") {
-        tell_object(this_object(), HIR "\n你已經魂飛魄散了！！！\n\n" NOR);
+        tell_object(this_object(), "\n你化做一股輕煙，消失了。\n" HIR "你已經魂飛魄散了！！！\n" NOR);
         message("vision", this_object()->name() + "化成一陣煙，消失了 ...\n",
             environment(this_object()), this_object());
         return;

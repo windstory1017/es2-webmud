@@ -1737,6 +1737,160 @@
       "area": "喬陰縣",
       "x": 0,
       "y": 3
+    },
+    {
+      "id": "/d/kangping/forest_exit",
+      "label": "樹林口",
+      "area": "康平村",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "/d/kangping/village_gate",
+      "label": "康平村",
+      "area": "康平村",
+      "x": 1,
+      "y": 0
+    },
+    {
+      "id": "/d/kangping/village",
+      "label": "康平村",
+      "area": "康平村",
+      "x": 1,
+      "y": -1
+    },
+    {
+      "id": "/d/kangping/valley_mouth",
+      "label": "谷口",
+      "area": "康平村",
+      "x": 2,
+      "y": -1
+    },
+    {
+      "id": "/d/kangping/inn",
+      "label": "小客店",
+      "area": "康平村",
+      "x": 3,
+      "y": -1
+    },
+    {
+      "id": "/d/kangping/square",
+      "label": "廣場",
+      "area": "康平村",
+      "x": 2,
+      "y": 0
+    },
+    {
+      "id": "/d/kangping/hut",
+      "label": "草廬",
+      "area": "康平村",
+      "x": 3,
+      "y": 0
+    },
+    {
+      "id": "/d/baihua/hillside",
+      "label": "山腰上",
+      "area": "百花村",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "/d/baihua/platform",
+      "label": "懸崖平台",
+      "area": "百花村",
+      "x": 1,
+      "y": -1
+    },
+    {
+      "id": "/d/baihua/cliff",
+      "label": "百花崖",
+      "area": "百花村",
+      "x": 1,
+      "y": 0
+    },
+    {
+      "id": "/d/baihua/tile_house",
+      "label": "瓦屋",
+      "area": "百花村",
+      "x": 2,
+      "y": 0
+    },
+    {
+      "id": "/d/baihua/stone_road1",
+      "label": "石子路",
+      "area": "百花村",
+      "x": 3,
+      "y": 0
+    },
+    {
+      "id": "/d/baihua/cliff_edge",
+      "label": "峭壁邊",
+      "area": "百花村",
+      "x": 4,
+      "y": 0
+    },
+    {
+      "id": "/d/baihua/school",
+      "label": "學堂",
+      "area": "百花村",
+      "x": 2,
+      "y": 1
+    },
+    {
+      "id": "/d/baihua/stone_road2",
+      "label": "石子路",
+      "area": "百花村",
+      "x": 3,
+      "y": 1
+    },
+    {
+      "id": "/d/baihua/wang_home",
+      "label": "老王的家",
+      "area": "百花村",
+      "x": 4,
+      "y": 1
+    },
+    {
+      "id": "/d/baihua/trail",
+      "label": "荒野小徑",
+      "area": "百花村",
+      "x": 2,
+      "y": 2
+    },
+    {
+      "id": "/d/baihua/road1",
+      "label": "常春道",
+      "area": "百花村",
+      "x": 3,
+      "y": 2
+    },
+    {
+      "id": "/d/baihua/alley",
+      "label": "小巷",
+      "area": "百花村",
+      "x": 4,
+      "y": 2
+    },
+    {
+      "id": "/d/baihua/road2",
+      "label": "常春道",
+      "area": "百花村",
+      "x": 3,
+      "y": 3
+    },
+    {
+      "id": "/d/baihua/inn",
+      "label": "紅燈客棧",
+      "area": "百花村",
+      "x": 4,
+      "y": 3
+    },
+    {
+      "id": "/d/baihua/temple",
+      "label": "破舊小廟",
+      "area": "百花村",
+      "x": 2,
+      "y": 4
     }
   ],
   "edges": [
@@ -4858,6 +5012,270 @@
       "from": "/d/wutang/three_way",
       "to": "/d/qiaoyin/highway",
       "direction": "southeast",
+      "resolved": true
+    },
+    {
+      "from": "/d/kangping/forest_exit",
+      "to": "/d/oldpine/grass1",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/kangping/forest_exit",
+      "to": "/d/kangping/village_gate",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/kangping/village_gate",
+      "to": "/d/kangping/forest_exit",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/kangping/village_gate",
+      "to": "/d/kangping/village",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/kangping/village",
+      "to": "/d/kangping/village_gate",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/kangping/village",
+      "to": "/d/kangping/valley_mouth",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/kangping/valley_mouth",
+      "to": "/d/kangping/village",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/kangping/valley_mouth",
+      "to": "/d/kangping/inn",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/kangping/valley_mouth",
+      "to": "/d/kangping/square",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/kangping/inn",
+      "to": "/d/kangping/valley_mouth",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/kangping/square",
+      "to": "/d/kangping/valley_mouth",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/kangping/square",
+      "to": "/d/kangping/hut",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/kangping/hut",
+      "to": "/d/kangping/square",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/hillside",
+      "to": "/d/oldpine/grass2",
+      "direction": "northwest",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/platform",
+      "to": "/d/baihua/cliff",
+      "direction": "eastup",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/cliff",
+      "to": "/d/baihua/tile_house",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/tile_house",
+      "to": "/d/baihua/cliff",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/tile_house",
+      "to": "/d/baihua/stone_road1",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/stone_road1",
+      "to": "/d/baihua/tile_house",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/stone_road1",
+      "to": "/d/baihua/cliff_edge",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/stone_road1",
+      "to": "/d/baihua/stone_road2",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/cliff_edge",
+      "to": "/d/baihua/stone_road1",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/school",
+      "to": "/d/baihua/stone_road2",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/stone_road2",
+      "to": "/d/baihua/stone_road1",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/stone_road2",
+      "to": "/d/baihua/school",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/stone_road2",
+      "to": "/d/baihua/wang_home",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/stone_road2",
+      "to": "/d/baihua/road1",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/wang_home",
+      "to": "/d/baihua/stone_road2",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/trail",
+      "to": "/d/baihua/hillside",
+      "direction": "northwest",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/trail",
+      "to": "/d/baihua/road1",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/road1",
+      "to": "/d/baihua/stone_road2",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/road1",
+      "to": "/d/baihua/trail",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/road1",
+      "to": "/d/baihua/alley",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/road1",
+      "to": "/d/baihua/road2",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/alley",
+      "to": "/d/baihua/road1",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/road2",
+      "to": "/d/baihua/road1",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/road2",
+      "to": "/d/baihua/inn",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/road2",
+      "to": "/d/baihua/temple",
+      "direction": "southwest",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/inn",
+      "to": "/d/baihua/road2",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/temple",
+      "to": "/d/baihua/road2",
+      "direction": "northeast",
+      "resolved": true
+    },
+    {
+      "from": "/d/oldpine/grass1",
+      "to": "/d/kangping/forest_exit",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/oldpine/grass2",
+      "to": "/d/baihua/hillside",
+      "direction": "southeast",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/hillside",
+      "to": "/d/baihua/trail",
+      "direction": "search",
+      "resolved": true
+    },
+    {
+      "from": "/d/baihua/cliff",
+      "to": "/d/baihua/platform",
+      "direction": "climb",
       "resolved": true
     }
   ],

@@ -94,6 +94,8 @@ int help()
 如果加上 -a 選項，所有的 Mud 都會被列出；否則只有使用 es2 mudlib 的 Mud
 會被列出。
 
+HELP
+	+ @HELP
 你可以指定單一的 MUD 名稱，mudlist 會列出該 MUD 的相關資訊。
 mudlist 可以在本地端修改其他 MUD 的屬性，典型的用途是設定一個 MUD 的中文編
 碼如：

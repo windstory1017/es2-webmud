@@ -48,12 +48,17 @@ private int move_or_destruct (object dest) {
 }
 
 private void reset() {
+  int n;
+
   // To prevent the master copy of user object error out by security
   // violation.
   if (!userp (this_object()))
     return;
 
-  gain_score("survive", (int)query("age") / 2 + 1 );
+  /* 江湖歷練：原本每 30 分鐘給 年齡/2 + 1；重置改為每 15 分鐘後每次給一半，
+   * 總量不變（奇數時隨機補 1，平均剛好一半；使用者定案，2026-10-23）。 */
+  n = (int)query("age") / 2 + 1;
+  gain_score("survive", n / 2 + ((n % 2) ? random(2) : 0));
 }
 
 int set_link(object link) {

@@ -1,3 +1,4 @@
+#include <ansi.h>
 #include <npc.h>
 
 inherit F_SOLDIER;
@@ -30,7 +31,7 @@ void create()
     carry_object("/obj/books/book_of_assault");   // 【奇兵精意】（使用者指定，2026-10-16）
 }
 
-/* 強力格擋劇情：軍人、人物 40 級以上、還沒學過強力格擋，走進大帳時觸發。
+/* 強力格擋劇情：軍人（不是武者轉任）、人物 40 級以上、還沒學過強力格擋，走進大帳時觸發。
  * 戰場功勳 10 萬以上當場傳授；不足時這次登入不再觸發，直到戰功達標或重新登入。 */
 #define HEAVY_PARRY_MERIT 100000
 
@@ -41,6 +42,7 @@ void init()
     ::init();
     if( !userp(me) || me->query_class() != "soldier" || me->query_level() < 40 ) return;
     if( me->query_learn("heavy_parry") ) return;
+    if( me->query("soldier/from_fighter") ) return;   // 武者轉任的軍人學不到軍人特殊技能
     if( me->query_temp("mee_pei/heavy_parry_refused")
     &&  me->query_score("military service") < HEAVY_PARRY_MERIT ) return;
     if( me->query_temp("mee_pei/heavy_parry_talking") ) return;
@@ -74,7 +76,7 @@ void heavy_parry_judge(object me)
     command("say 你戰功彪炳，我便傳你一套我在戰場上領悟的強力格擋之法，望你今後繼續保護百姓。");
     me->delete_temp("mee_pei/heavy_parry_refused");
     me->improve_skill_exact("heavy_parry", 1);
-    tell_object(me, "米沛將強力格擋的要訣傳授給你。\n");
+    tell_object(me, CYN + "米沛將強力格擋的要訣傳授給你。\n" NOR);
 }
 
 int accept_fight()

@@ -31,9 +31,10 @@ LONG
     );
     set("exits", ([
         "northwest" : __DIR__"grass1",
+        "southeast" : "/d/baihua/hillside",   // 百花村（2026-10-20）
     ]));
     set("objects", ([
-        __DIR__"npc/wolf" : 3,
+        __DIR__"npc/goat" : 3,   // 原為土狼（使用者指定改山羊，2026-10-24）
     ]));
     set("map/area", "老松林");
     setup();

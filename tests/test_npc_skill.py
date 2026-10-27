@@ -86,7 +86,7 @@ def test_sect_table_keys_and_arts():
     keys = re.findall(r'^    "([a-z]+\.[a-z]+)": \(\[', t, re.M)
     assert keys == ['fighter.lunmay', 'fighter.tiger', 'fighter.fonxan', 'fighter.chin', 'fighter.snow',
                     'fighter.ancient', 'scholar.sky', 'thief.longye', 'thief.hidden', 'taoist.fire',
-                    'taoist.freeze', 'taoist.storm', 'taoist.thunder', 'taoist.huanwu', 'taoist.yinfeng',
+                    'taoist.freeze', 'taoist.storm', 'taoist.thunder', 'taoist.fog', 'taoist.wind',
                     'taoist.lingyun']
     assert '"skill": "advance_lunmay", "map": "secondhand sword", "level": 30, "req": ([ "hainmay force": 100 ])' in t
     assert '"skill": "ksanmando", "map": "blade", "level": 1' in t

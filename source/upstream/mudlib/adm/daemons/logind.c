@@ -14,6 +14,8 @@ inherit F_DBASE;
 
 int wiz_lock_level = WIZ_LOCK_LEVEL;
 
+#define IPLIMIT_MSG "同一處來的俠客已然滿座，請稍候再來。\n"
+
 string *user_race = ({
     "human",
     "avatar",
@@ -64,6 +66,7 @@ private void count_creation(string ip) {
 private void get_id(string arg, object ob);
 private void confirm_id(string yn, mapping args, object ob);
 private void get_email(string email, object ob);
+private void show_race_menu(object ob);
 private void authorize(object ob);
 object make_body(object ob);
 private void init_new_body(object link, object user);
@@ -143,8 +146,24 @@ private void show_visitor_count() {
     printf ("從 %s 以來累計上線人次：%d 人次。\n", login_date_string(t), cnt);
 }
 
+// realipd 出錯時一律放行，不能因此擋住所有人登入。
+private int ip_can_enter(object ob, string id, object except) {
+    int ok;
+
+    if (catch (ok = REALIP_D->can_enter(ob, id, except)))
+        return 1;
+    return ok;
+}
+
 private void get_id (string arg, object ob) {
     object ppl;
+
+    // 網頁橋接程式在連線一開始送來的真實 IP（見 /adm/daemons/realipd.c），不顯示任何東西。
+    if (arg && arg[0..8] == "@@REALIP ") {
+        catch (REALIP_D->register_line(ob, arg));
+        input_to ("get_id", ob);
+        return;
+    }
 
     // user id will be used as object uid for all objects created by the user.
     // the id string must be converted too all lower case, while objects created by backend are assigned
@@ -197,6 +216,13 @@ private void get_id (string arg, object ob) {
             }
     }
 #endif
+
+    // 同一處來的角色已達上限（重新連線回原本還在世界裡的角色不受影響）。
+    if (!find_body(arg) && !ip_can_enter(ob, arg, 0)) {
+        write (IPLIMIT_MSG);
+        destruct (ob);
+        return;
+    }
 
 #ifdef WIZ_LOCK_LEVEL
     if ((int)wiz_level(arg) < (int)wiz_lock_level) {
@@ -298,7 +324,8 @@ void authorize (object ob) {
             ctime(time()), (string)user->query("id"), query_ip_name(ob) ) );
 
         if (wizhood(ob) == "(admin)") {
-            if ((query_ip_name(ob) != "localhost") && (query_ip_number(ob) != "127.0.0.1")) {
+            // 用連線本身的位址：admin 照舊只能從主機本機（含網頁橋接程式）登入。
+            if ((efun::query_ip_name(ob) != "localhost") && (efun::query_ip_number(ob) != "127.0.0.1")) {
                 write ("安全檢查失敗！強制登出。\n");
                 destruct (user);
                 destruct (ob);
@@ -309,6 +336,12 @@ void authorize (object ob) {
         enter_world (ob, user);
         return;
     } else {
+        if (file_size(user->query_save_file()) == -1 && ob->query("reincarnating")) {
+            // 魂飛魄散後還沒轉世就斷線：直接回到選種族（使用者定案，2026-10-22）。
+            destruct (user);
+            show_race_menu (ob);
+            return;
+        }
         if (file_size(user->query_save_file()) == -1) {
             write (cjk_wrap (@NOTICE
 系統找不到您的角色資料。
@@ -348,14 +381,7 @@ private void confirm_reincarnate (string yn, mapping opts, object ob) {
             return;
     }
     write ("\r" CLR "\n");
-
-    mapping race_opts = ([
-        "prompt": "選擇你的角色所屬的種族: ",
-        "options": user_race,
-        "option_hints": (: call_other, CHAR_D, "hint_user_race" :),
-        "cursor": 0
-    ]);
-    input_to ("get_race", race_opts, ob);
+    show_race_menu (ob);
 }
 
 private void confirm_relogin (string yn, mapping opts, object ob, object user) {
@@ -500,63 +526,130 @@ private void get_email (string email, object ob) {
 #endif
 
     // Complete non-body-specific initialization of new user here.
-    ob->set ("karma", 0);
-    mapping opts = ([
-        "prompt": "選擇你的角色所屬的種族: ",
-        "options": user_race,
-        "option_hints": (: call_other, CHAR_D, "hint_user_race" :),
-        "cursor": 0
-    ]);
-    input_to ("get_race", opts, ob);
+    // 新帳號有 20 點業力（使用者定案，2026-10-22）。
+    ob->set ("karma", 20);
+    show_race_menu (ob);
 }
 
-private void get_race (string race, mixed opts, object ob) {
-    string choice = cursor_translate (race, opts);
-    switch (choice ? choice : race) {
-        case "human":
-            race = "human";
-            break;
-        case "avatar":
-            race = "avatar";
-            break;
-        case "blackteeth":
-            race = "blackteeth";
-            break;
-        case "yenhold":
-            race = "yenhold";
-            break;
-        case "jiaojao":
-            race = "jiaojao";
-            break;
-        case "woochan":
-            race = "woochan";
-            break;
-        case "dingling":
-            race = "dingling";
-            break;
-        case "headless":
-            race = "headless";
-            break;
-        case "rainner":
-            race = "rainner";
-            break;
-        case "malik":
-            race = "malik";
-            break;
-        case "yaksa":
-            race = "yaksa";
-            break;
-        case "ashura":
-            race = "ashura";
-            break;
-        default:
-            input_to ("get_race", opts, ob);
-            return;
+/* 業力系統（使用者定案，2026-10-22）：
+ * 選種族時扣除該種族的業力；只列出業力足夠的種族，依業力由低到高、同業力依英文名排列。
+ * 人類族不能直接選，選人類時有 1% 機會自動成為人類族。
+ * 連最便宜的種族都選不起時，帳號消失。巫師不受業力限制。 */
+private int is_wizard_account (object ob) {
+    return wizhood(ob->query("id")) != "(player)";
+}
+
+private int race_karma (string race) {
+    return (int)RACE_D(race)->query("karma");
+}
+
+private int sort_race (string a, string b) {
+    int ka = race_karma(a), kb = race_karma(b);
+    if (ka != kb) return ka - kb;
+    return strcmp(a, b);
+}
+
+/* 顯示寬度：中文字算兩格。 */
+private int text_width (string str) {
+    int w = 0;
+    foreach (int ch in str) w += (ch >= 0x2E80) ? 2 : 1;
+    return w;
+}
+
+private string *affordable_races (object ob) {
+    int karma = ob->query("karma");
+    string *list = filter(user_race, (: $1 != "avatar" :));
+    if (!is_wizard_account(ob))
+        list = filter(list, (: race_karma($1) <= $2 :), karma);
+    return sort_array(list, (: sort_race :));
+}
+
+private void delete_account (object ob) {
+    string id = ob->query("id");
+
+    write ("\n你的業力已盡，再也無法轉世投胎。這段江湖路，就此走到了盡頭。\n");
+    log_file ("USAGE", sprintf("[%s] %s karma exhausted, account removed\n", ctime(time()), id));
+    if (stringp(id)) {
+        rm (login_data(id));
+        rm (user_data(id));
+    }
+    destruct (ob);
+}
+
+private void show_race_menu (object ob) {
+    string *list = affordable_races(ob), line;
+
+    if (!sizeof(list)) {
+        delete_account (ob);
+        return;
+    }
+    // 魂飛魄散後由這裡重新選種族：這時的 input_to 不會經過 input_prompt()，
+    // 直接通知網頁暫停背景狀態查詢（恢復見 feature/char/message.c 的 write_prompt()）。
+    if (ob->query_temp("webhud/client")) {
+        ob->set_temp("webhud/input_wait", 1);
+        write ("\n@@WEBHUD|INPUT\n");
+    }
+    write (sprintf("您現在共有 %d 點業力，可以選擇以下的種族：\n", (int)ob->query("karma")));
+    foreach (string race in list) {
+        line = to_chinese(race) + " (" + race + ")";
+        write (line + repeat_string(" ", 26 - text_width(line)) + race_karma(race) + " 點業力\n");
+    }
+    write ("您的選擇(用 '? <種族名>' 可查閱說明)﹕");
+    input_to ("get_race", ob, list);
+}
+
+/* 依英文名（不分大小寫）或中文名找種族。 */
+private string match_race (string arg, string *list) {
+    foreach (string r in list)
+        if (lower_case(arg) == r || arg == to_chinese(r)) return r;
+    return 0;
+}
+
+private void get_race (string arg, object ob, string *list) {
+    string race;
+
+    if (!stringp(arg)) arg = "";
+    arg = replace_string(arg, " ", "");
+    // 網頁背景的狀態查詢（webhud）不是玩家的答案，不要回「請重新輸入」。
+    if (arg == "" || arg == "webhud") {
+        write ("您的選擇(用 '? <種族名>' 可查閱說明)﹕");
+        input_to ("get_race", ob, list);
+        return;
+    }
+    if (arg[0] == '?') {
+        // 說明可以查任何可選的種族（人類族除外）。
+        race = match_race(arg[1..], filter(user_race, (: $1 != "avatar" :)));
+        if (race) {
+            // 和遊戲裡的 help <種族> 讀同一份檔案（使用者定案，2026-10-22）。
+            string doc = read_file(HELP_DIR + race + ".txt");
+            if (stringp(doc)) write ("\n" + doc + "\n");
+            else {
+                CHAR_D->hint_user_race(race);
+                write ("\n");
+            }
+        } else
+            write ("請重新輸入\n");
+        write ("您的選擇(用 '? <種族名>' 可查閱說明)﹕");
+        input_to ("get_race", ob, list);
+        return;
+    }
+    race = match_race(arg, list);
+    if (!race) {
+        // 種族存在但不在清單上＝業力不足；其他字串＝輸入錯誤（使用者定案，2026-10-22）。
+        if (match_race(arg, filter(user_race, (: $1 != "avatar" :))))
+            write ("你的業力不足。\n");
+        else
+            write ("請重新輸入\n");
+        write ("您的選擇(用 '? <種族名>' 可查閱說明)﹕");
+        input_to ("get_race", ob, list);
+        return;
     }
 
-    int kar = (int)RACE_D(race)->query("karma");
-    write ("\r" CLR HIY "選擇 " + choice + " 這個種族會累積 " + kar + " 點業力。\n" NOR);
-    ob->add ("karma", kar);
+    if (!is_wizard_account(ob))
+        ob->add ("karma", -race_karma(race));
+    if (race == "human" && random(100) < 1)
+        race = "avatar";
+    write (sprintf("你花費了 %d 點業力﹐投胎成為%s。\n", race_karma(race == "avatar" ? "human" : race), to_chinese(race)));
 
     mapping gender_opts = ([
         "prompt": "您要扮演的哪種性別的角色? ",
@@ -603,7 +696,7 @@ private void get_gender (string gender, mapping opts, object ob, string race) {
 }
 
 private void get_name (string arg, object ob, object user) {
-    if (!check_legal_name(arg)) {
+    if (arg == "webhud" || !check_legal_name(arg)) {
         write ("您的顯示名稱: ");
         input_to ("get_name", ob, user);
         return;
@@ -728,17 +821,28 @@ varargs void enter_world(object ob, object user, int silent) {
     object room;
     string startroom, err;
 
+    // 登入過程中其他角色可能已經先進入世界，進入前再檢查一次。
+    if (!silent && !ip_can_enter(ob, ob->query("id"), user)) {
+        write (IPLIMIT_MSG);
+        destruct (user);
+        destruct (ob);
+        return;
+    }
+
     user->set_link(ob);
     ob->set_body(user);
 
     // finished logon, transfer the interactive user from logon to user body
     exec (user, ob);
+    catch (REALIP_D->mark_body(user));
 
     if (!silent)
         write ("目前權限: " + wizhood(user) + "\n");
 
     user->setup();
     increment_visitor_count();
+
+    ob->delete ("reincarnating");   // 已經轉世進入遊戲
 
 #ifdef SAVE_USER
     // save newly created user
@@ -794,6 +898,7 @@ varargs void reconnect (object ob, object user, int silent) {
     user->set_link(ob);
     ob->set_body(user);
     exec(user, ob);
+    catch (REALIP_D->mark_body(user));
 
     user->reconnect();
     IDENT_D->query_userid((string)user->query("id"));   
@@ -932,6 +1037,16 @@ void reincarnate (object ob) {
         destruct(ob);
         return;
     }
+
+    /* 魂飛魄散的結算（使用者定案，2026-10-22）：角色業力 = 角色等級，
+     * 但不超過帳號上線時數 ÷ 6；加回帳號。 */
+    link->update_age();
+    int earned = ob->query_level();
+    int cap = (int)link->query("time_aged") / 3600 / 6;
+    if (earned > cap) earned = cap;
+    if (earned > 0) link->add ("karma", earned);
+    link->set ("reincarnating", 1);   // 轉世完成（進入遊戲）前斷線，重新登入直接選種族
+
 #ifdef	SAVE_USER
     link->save();
 #endif
@@ -942,13 +1057,7 @@ void reincarnate (object ob) {
 #endif
     destruct(ob);
 
-    mapping opts = ([
-        "prompt": "選擇你的角色所屬的種族: ",
-        "options": user_race,
-        "option_hints": (: call_other, CHAR_D, "hint_user_race" :),
-        "cursor": 0
-    ]);
-    input_to ("get_race", opts, ob);
+    show_race_menu (link);
 }
 
 #define VISITOR_COUNTER_FILE	"/adm/etc/visitor.cnt"

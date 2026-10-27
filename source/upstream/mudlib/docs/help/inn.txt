@@ -1,6 +1,5 @@
 【雪亭客棧】
 
 雪亭客棧是目前的重要安全地點，客棧內禁止戰鬥。
-使用 recall 可返回雪亭客棧。
 
-相關：help recall、help home_help
+相關：help home_help

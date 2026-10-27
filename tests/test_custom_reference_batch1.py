@@ -61,7 +61,7 @@ def test_scrolls_and_bag():
 
 
 def test_identify_labels():
-    for p in ('cmds/std/identify.c', 'cmds/wiz/analyze.c'):
+    for p in ('cmds/std/identify.c', 'cmds/usr/analyze.c'):
         s = read(MUD / p)
         for k in ('"move" : "行動力"', '"damage_vs_fire" : "火焰傷害力"', '"damage_vs_wind" : "風擊傷害力"'):
             assert k in s, (p, k)

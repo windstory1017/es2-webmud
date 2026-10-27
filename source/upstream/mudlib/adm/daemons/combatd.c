@@ -468,6 +468,7 @@ fight (object me, object victim, string skill, mapping action, object weapon)
 
         /* 若力道未完全被吸收﹐則產生傷害。 */
         /* 產生傷害﹐則視攻擊方式給予少數精熟度 -Dragoon */
+        /* 每次至少 1 點：1～悟性÷3（使用者指示，2026-10-24）。 */
         /* 新版武功的傷害百分比（action["damage_pct"]，100 = 不變），
          * 加上格擋減傷，由 inflict_damage() 在扣防具之前套用。 */
         pct = action["damage_pct"] > 0 ? action["damage_pct"] : 100;
@@ -488,10 +489,10 @@ fight (object me, object victim, string skill, mapping action, object weapon)
                 // 武器沒有定義 hit_ob() 時，這個呼叫什麼都不做。
                 if( damage > 0 && objectp(victim) )
                     weapon->hit_ob(me, victim, damage);
-                me->gain_score("weapon mastery", random(me->query_attr("int")/3));
+                me->gain_score("weapon mastery", random(me->query_attr("int")/3) + 1);
             } else {
                 damage = me->inflict_damage(strength, victim);
-                me->gain_score("unarmed mastery", random(me->query_attr("int")/3));
+                me->gain_score("unarmed mastery", random(me->query_attr("int")/3) + 1);
             }
         }
         else damage = 0;

@@ -1,4 +1,4 @@
-/* 精鋼砍刀 — ES2 原始武器資料。所屬 NPC 另行設定。 */
+/* 精鋼砍刀 — ES2 原始武器資料。振武軍營徵兵官魯熙年等 NPC 穿戴。 */
 #include <ansi.h>
 #include <weapon.h>
 

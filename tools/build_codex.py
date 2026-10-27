@@ -44,6 +44,22 @@ DIR_AREA = {  # 沒有 map/area 的房間，依目錄給區域名稱
 HIDDEN_DIRS = ['/custom/wizroom/', '/custom/home/']
 # 地圖手動調整（只影響圖鑑顯示）：房間 -> (參考房間, 往東格數, 往南格數)
 MAP_POS = {
+    # 百花村（d/baihua）：依設計表格位（相對於山腰上 F10）。懸崖平台靠 climb／eastup 進出、
+    # 荒野小徑靠 search 進入，自動排版會放錯，全部手動指定。
+    '/d/baihua/platform': ('/d/baihua/hillside', 1, -1),
+    '/d/baihua/cliff': ('/d/baihua/hillside', 1, 0),
+    '/d/baihua/tile_house': ('/d/baihua/hillside', 2, 0),
+    '/d/baihua/stone_road1': ('/d/baihua/hillside', 3, 0),
+    '/d/baihua/cliff_edge': ('/d/baihua/hillside', 4, 0),
+    '/d/baihua/school': ('/d/baihua/hillside', 2, 1),
+    '/d/baihua/stone_road2': ('/d/baihua/hillside', 3, 1),
+    '/d/baihua/wang_home': ('/d/baihua/hillside', 4, 1),
+    '/d/baihua/trail': ('/d/baihua/hillside', 2, 2),
+    '/d/baihua/road1': ('/d/baihua/hillside', 3, 2),
+    '/d/baihua/alley': ('/d/baihua/hillside', 4, 2),
+    '/d/baihua/road2': ('/d/baihua/hillside', 3, 3),
+    '/d/baihua/inn': ('/d/baihua/hillside', 4, 3),
+    '/d/baihua/temple': ('/d/baihua/hillside', 2, 4),
     # 五堂鎮：依設計表格子座標（相對於五堂鎮口 N8）；第四個數字是樓層（客棧二、三樓）。
     # 老松林／迷霧森林（d/oldpine）：依設計表格位，以各區入口為原點。
     '/d/oldpine/clearing_n': ('/d/oldpine/entrance', 8, 1),
@@ -586,6 +602,122 @@ def parse_room(p, src, code):
 
 # --------------------------------------------------------------------------- 技能
 
+# 技能「實裝」判定：技能檔以外，有 NPC、書籍、裝備、房間等遊戲內容用到這個技能代碼才算實裝。
+# 排除只是登記或載入用的檔案：技能檔本身、NPC 技能預設表、升級規則、武功引擎、範例、技能目錄裡的載入入口。
+GAME_REF_SKIP = ('daemon/skill/', 'daemon/misc/npc_skill.c', 'feature/char/skill.c', 'std/martial_art',
+                 'obj/example/', '/skill/')
+
+
+def game_refs():
+    refs = {}
+    for p in MUD.rglob('*.c'):
+        rel = str(p.relative_to(MUD)).replace('\\', '/')
+        if any(k in rel for k in GAME_REF_SKIP):
+            continue
+        for code in set(re.findall(r'"([a-z][a-z _\-]*)"', read(p))):
+            refs.setdefault(code, []).append(rel)
+    return refs
+
+
+def hand_growth():
+    """docs/catalog/玩家圖鑑_技能.md 手寫的精氣神與屬性成長：技能代碼 -> (精氣神, 屬性)。"""
+    out = {}
+    doc = ROOT / 'docs' / 'catalog' / '玩家圖鑑_技能.md'
+    if not doc.exists():
+        return out
+    for line in read(doc).splitlines():
+        cols = [c.strip() for c in line.strip().strip('|').split('|')]
+        if len(cols) in (4, 5) and cols[0] and not cols[0].startswith(('技能代碼', '---')) and line.startswith('|'):
+            out[cols[0]] = (cols[2], cols[3])
+    return out
+
+
+def attr_growth_map():
+    src = read(MUD / 'feature' / 'char' / 'skill.c')
+    m = re.search(r'ATTR_GROWTH\s*=\s*\(\[(.*?)\]\)', src, re.S)
+    return dict(re.findall(r'"([^"]+)"\s*:\s*"(\w+)"', m.group(1))) if m else {}
+
+
+SCORE_ZH = {'martial art': '武術造詣', 'martial mastery': '武學之道', 'cultivation': '修為', 'buddhology': '佛學',
+            'alchemy': '丹道造詣', 'literature': '文學', 'literature mastery': '文學之道', 'combat': '戰鬥', 'magic': '法術'}
+ATTR_ZH = {'str': '膂力', 'cor': '膽識', 'int': '悟性', 'spi': '靈性', 'cps': '定力', 'dex': '機敏', 'con': '根骨', 'wis': '慧根'}
+
+
+def base_threshold(level):
+    base = 100 if level <= 60 else 125 if level <= 90 else 150 if level <= 120 else 175 if level <= 160 else 200 if level <= 180 else 250
+    return level * level * base
+
+
+def skill_formula(code, src, grow_doc, attr_map, engine):
+    """這項技能自己的規則：升級門檻實際數字、武功引擎參數、屬性成長、精氣神與其他成長。"""
+    entry = re.search(r'query_entry_level\(\)\s*\{\s*return\s*(\d+)', src) or re.search(r'\bart_entry\s*=\s*(\d+)', src)
+    ethr = re.search(r'query_entry_threshold\(\)\s*\{\s*return\s*(\d+)', src) or re.search(r'\bart_entry_threshold\s*=\s*(\d+)', src)
+    pct = re.search(r'query_threshold_percent\(\)\s*\{\s*return\s*(\d+)', src)
+    e = int(entry.group(1)) if entry and int(entry.group(1)) > 1 else 1
+    et = int(ethr.group(1)) if ethr and int(ethr.group(1)) > 0 else 0
+    pc = int(pct.group(1)) if pct and int(pct.group(1)) > 0 else 100
+    levels = sorted({e, 10, 30, 50, 100, 150, 200} - set(range(1, e)))
+    pts = []
+    for lv in levels:
+        v = et if (lv == e and et) else base_threshold(lv) * pc // 100
+        pts.append(f'{lv} 級 {v:,}')
+    lines = ['【升級門檻】' + ('學成等級 %d 級' % e if e > 1 else '從 1 級開始') + ('；學成需累積 %s 點' % format(et, ',') if et else '')
+             + ('；門檻打 %d%%' % pc if pc != 100 else '')]
+    lines.append('累積點數：' + '、'.join(pts))
+    cap_m = re.search(r'query_skill_cap\([^)]*\)\s*\{[^}]*return\s*(\d+)', src)
+    if cap_m:
+        lines.append(f'本技能等級暫時上限 {cap_m.group(1)} 級')
+    # 武功引擎參數
+    if engine:
+        g = lambda k: (re.search(r'\b%s\s*=\s*(-?\d+)' % k, src) or [None, None])[1]
+        ma, ms, mn, mc, ab = g('ma_coef'), g('mm_start'), g('mm_minus'), g('mm_coef'), g('art_bonus')
+        eng = []
+        if ab is not None:
+            eng.append(f'整套傷害加成 {ab}%')
+        if ma and int(ma) > 0:
+            eng.append(f'升到第 lv 級給武術造詣 lv × {ma}')
+        if ms and mc and int(mc) > 0:
+            eng.append(f'lv ≥ {ms} 時再給武學之道 (lv − {mn}) × {mc}')
+        if eng:
+            lines.append('【武功引擎】' + '；'.join(eng))
+        mv = re.findall(r'"name":\s*"([^"]+)",\s*"lvl":\s*(\d+),\s*"attack":\s*(-?\d+),\s*"defense":\s*(-?\d+),\s*"force":\s*(-?\d+),\s*"bonus":\s*(-?\d+)', src)
+        if mv:
+            lines.append('【招式】名稱（需求等級；攻 / 防 / 力 / 加成）')
+            for n, lv, a, d, f, b in mv:
+                lines.append(f'  {n}（{lv} 級；{a} / {d} / {f} / {b}）')
+    else:
+        # 舊寫法：升級時直接給的造詣
+        sc = []
+        for name, expr in re.findall(r'gain_score\(\s*"([^"]+)"\s*,\s*([^;]*?)\)\s*;', src):
+            sc.append(f'{SCORE_ZH.get(name, name)} {expr.strip()}')
+        if sc:
+            lines.append('【升級獎勵】' + '；'.join(sc))
+    # 屬性成長（共用規則）
+    if code in attr_map:
+        a = ATTR_ZH.get(attr_map[code], attr_map[code])
+        lines.append(f'【屬性成長】技能每到 5 的倍數擲一次，成功則{a} +1（上限 50）；機率 = 該屬性目前值的基礎機率 × (100 + 等級) ÷ 200 × 1.2。'
+                     '基礎機率：屬性 1~10 100%、11~15 90%、16~20 80%、21~25 60%、26~30 40%、31~40 30%、41~45 15%、46 以上 10%。每個門檻一生只擲一次。')
+    return '\n'.join(lines)
+
+
+def skill_growth(code, src, grow_doc, attr_map):
+    """精氣神與屬性：回傳 (精氣神說明, 屬性說明)。手寫表優先，沒有的由程式整理。"""
+    gp, ga = grow_doc.get(code) or grow_doc.get(code.replace('_', ' ')) or ('', '')
+    if not gp:
+        pools = sorted(set(re.findall(r'advance_stat\(\s*"(\w+)"', src)))
+        if pools:
+            gp = '、'.join({'gin': '精', 'kee': '氣', 'sen': '神'}.get(x, x) for x in pools) + '上限會隨等級成長'
+    attrs = [ATTR_ZH.get(a, a) for a in re.findall(r'set_attr\(\s*"(\w+)"', src)]
+    if not ga:
+        parts = []
+        if code in attr_map:
+            parts.append(f'每練到 5 的倍數有機會提升{ATTR_ZH.get(attr_map[code], attr_map[code])} 1 點')
+        if attrs:
+            parts.append('達到特定等級時：' + '、'.join(sorted(set(attrs))))
+        ga = '；'.join(parts)
+    return gp or '無', ga or '無'
+
+
 def parse_skills(used_codes):
     # 技能升級規則（feature/char/skill.c）：點數累積在 learned，下 gain 時才判定，
     # 一次最多升一級；門檻 = 等級² × 基數，所有技能上限 200 級。
@@ -605,8 +737,21 @@ def parse_skills(used_codes):
                 continue
             reg[code] = (cat.strip(), name.strip())
     skills = {}
+    refs = game_refs()
+    grow_doc = hand_growth()
+    attr_map = attr_growth_map()
     for p in sorted((MUD / 'daemon' / 'skill').glob('*.c')):
         src = read(p)
+        entry_m = re.search(r'^inherit\s+"(/d/[^"]+/skill/[^"]+)"\s*;', strip_comments(src), re.M)
+        if entry_m and (MUD / (entry_m.group(1).lstrip('/') + '.c')).exists():
+            # 只是載入入口的技能檔：技能程式本體在 d/<區域>/skill/，代碼用空格寫法。
+            p = MUD / (entry_m.group(1).lstrip('/') + '.c')
+            src = read(p)
+            sid = re.search(r'#define\s+SKILL_ID\s+"([^"]+)"', src)
+            if sid:
+                src = src.replace('register_skill_daemon(SKILL_ID)', 'register_skill_daemon("%s")' % sid.group(1))
+            elif 'register_skill_daemon' not in src:
+                src += '\nregister_skill_daemon("%s")' % Path(p).stem.replace('_', ' ')
         code = p.stem.replace('_', ' ') if ' ' not in p.stem and p.stem in ('secondhand_axe',) else p.stem
         m = re.search(r'register_skill_daemon\("([^"]+)"\)', src)
         if m:
@@ -633,11 +778,18 @@ def parse_skills(used_codes):
             extra.append(f'門檻打 {pct.group(1)}%')
         if extra:
             form += '\n本技能：' + '；'.join(extra) + '。'
+        code_src = strip_comments(src)
+        gp, ga = skill_growth(code, code_src, grow_doc, attr_map)
+        live = code in refs
         skills[code] = {
             'code': code, 'name': zh(code), 'impl': True,
+            'status': 'live' if live else 'written',
+            'users': sorted(refs.get(code, []))[:6],
             'cat': reg.get(code, ('', ''))[0] or ({'spell': '法術', 'martial': '武學'}.get(typ.group(1), typ.group(1)) if typ else ''),
             'desc': desc.group(1).strip() if desc else '',
-            'formula': form, 'growth': sorted(set(grow)), 'notes': notes,
+            'formula': skill_formula(code, code_src, grow_doc, attr_map, 'inherit "/std/martial_art"' in src),
+            'common': form, 'gp': gp, 'ga': ga,
+            'growth': sorted(set(grow)), 'notes': notes,
             'file': str(p.relative_to(ROOT)).replace('\\', '/'),
         }
     # 沒有技能檔、而是用指令施展的技能（例如 berserk：cmds/std/berserk.c）。
@@ -649,9 +801,12 @@ def parse_skills(used_codes):
         learn = f'query_learn("{code}"' in src
         skills[code] = {
             'code': code, 'name': reg.get(code, ('', zh(code)))[1] or zh(code), 'impl': True,
+            'status': 'live' if code in refs else 'written', 'users': sorted(refs.get(code, []))[:6],
+            'common': formula, 'gp': skill_growth(code, strip_comments(src), grow_doc, attr_map)[0],
+            'ga': skill_growth(code, strip_comments(src), grow_doc, attr_map)[1],
             'cat': reg.get(code, ('', ''))[0] or '指令技能',
             'desc': f'用指令 {code} 施展。' + ('需要有這項技能的學習點數才算學會（只用巫師指令設定等級、沒有學習點數，會顯示「你不會這項技能」）。' if learn else ''),
-            'formula': formula, 'growth': [], 'notes': [],
+            'formula': skill_formula(code, strip_comments(src), grow_doc, attr_map, False), 'growth': [], 'notes': [],
             'file': str(p.relative_to(ROOT)).replace('\\', '/'),
         }
     for code in sorted(set(reg) | used_codes):
@@ -660,9 +815,10 @@ def parse_skills(used_codes):
                 skills[code]['cat'] = reg[code][0]
             continue
         skills[code] = {'code': code, 'name': reg.get(code, ('', zh(code)))[1] or zh(code), 'impl': False,
+                        'status': 'name', 'users': [], 'common': '', 'gp': '', 'ga': '',
                         'cat': reg.get(code, ('', ''))[0], 'desc': '', 'formula': '尚未實作（目前只有代碼與名稱）。',
                         'growth': [], 'notes': [], 'file': ''}
-    return sorted(skills.values(), key=lambda s: (not s['impl'], s['cat'] or '~', s['code']))
+    return sorted(skills.values(), key=lambda s: (['live', 'written', 'name'].index(s['status']), s['cat'] or '~', s['code']))
 
 
 # --------------------------------------------------------------------------- 地圖座標
@@ -717,7 +873,8 @@ def layout(rooms, ids):
 
 # --------------------------------------------------------------------------- 主程式
 
-def main(out):
+def collect():
+    """掃描 mudlib，傳回圖鑑資料（巫師版與玩家版共用）。"""
     weapons, armors, items, npcs, rooms = [], [], [], {}, {}
     for d in SCAN_DIRS:
         for p in sorted((MUD / d).rglob('*.c')):
@@ -821,6 +978,11 @@ def main(out):
         'counts': {'skills': len(skills), 'weapons': len(weapons), 'armors': len(armors), 'items': len(items),
                    'npcs': len(npcs), 'rooms': len(rooms), 'areas': len(area_list)},
     }
+    return data
+
+
+def main(out):
+    data = collect()
     blob = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
     html = read(TEMPLATE).replace('/*__CATALOG_DATA__*/null', blob, 1)
     out.parent.mkdir(parents=True, exist_ok=True)

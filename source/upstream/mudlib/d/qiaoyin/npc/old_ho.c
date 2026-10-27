@@ -2,7 +2,7 @@
 
 #include <npc.h>
 inherit F_VILLAGER;
-inherit F_VENDOR;
+inherit "/obj/alchemist/pill_vendor";   // 二階丹藥三倍價（使用者指示 #6，2026-10-23）
 
 void init()
 {

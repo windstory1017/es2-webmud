@@ -246,6 +246,9 @@ chat()
     &&	sizeof(msg) ) {
         if( random(100) > chance ) return 0;
         rnd = random(sizeof(msg));
+        // 平常（非戰鬥）的閒聊句子頻率降為五分之一（使用者指示，2026-10-20）；
+        // 走動等動作與戰鬥中的出招不受影響。
+        if( stringp(msg[rnd]) && !is_fighting() && random(5) ) return 0;
         if( stringp(msg[rnd]) )
             say(CYN + msg[rnd] + NOR);
         else if( functionp(msg[rnd]) )

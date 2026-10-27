@@ -9,6 +9,7 @@ import {TelnetCodec} from './telnet.js';
 import {spawn} from 'node:child_process';
 import crypto from 'node:crypto';
 import {AdminJobState} from './admin_jobs.js';
+import {loadBridgeSecret,realIpLine,scrubRealIp} from './real_ip.js';
 
 const __dirname=path.dirname(fileURLToPath(import.meta.url));
 const ROOT=path.resolve(__dirname,'..');
@@ -232,6 +233,7 @@ const bridgeLog=path.join(ROOT,'reports','bridge_runtime.log');
 // 每個指令封包都記一行只在除錯時需要（BRIDGE_TRACE_PACKETS=1）：平常 30 人在線每秒要寫幾十行，
 // 紀錄檔會長到數百 MB，而且同步寫檔會拖慢轉送。連線建立、關閉、錯誤照常記錄。
 const TRACE_PACKETS=process.env.BRIDGE_TRACE_PACKETS==='1';
+const BRIDGE_SECRET=loadBridgeSecret(MUDLIB);
 function bridgeTrace(line){
   const text=`${new Date().toISOString()} ${line}\n`;
   try{fsSync.mkdirSync(path.dirname(bridgeLog),{recursive:true});fsSync.appendFileSync(bridgeLog,text)}catch{}
@@ -249,6 +251,9 @@ wss.on('connection',(ws,req)=>{
   ws.isAlive=true;
   const tcp=net.createConnection({host:MUD_HOST,port:MUD_PORT});
   tcp.setNoDelay(true);
+  // 第一行先告訴遊戲玩家的真實 IP（排在玩家任何輸入之前）。
+  const realIp=realIpLine(req,BRIDGE_SECRET);
+  if(realIp)tcp.write(realIp);
   const codec=new TelnetCodec(b=>{if(!tcp.destroyed)tcp.write(b)});
   const row={id,started,remote:req.socket.remoteAddress||'',bytesIn:0,bytesOut:0,lastActivity:started,tcpConnected:false,closing:false};
   sessions.set(id,row);
@@ -271,7 +276,7 @@ wss.on('connection',(ws,req)=>{
   tcp.on('close',hadError=>{clearTimeout(connectTimer);bridgeTrace(`session ${id} TCP closed hadError=${hadError} bytesOut=${row.bytesOut} bytesIn=${row.bytesIn}`);cleanup();if(ws.readyState===1)ws.close(1011,'MUD TCP closed')});
   ws.on('pong',()=>{ws.isAlive=true});
   ws.on('message',m=>{
-    const b=Buffer.from(m);row.bytesIn+=b.length;row.lastActivity=Date.now();
+    const b=scrubRealIp(Buffer.from(m));row.bytesIn+=b.length;row.lastActivity=Date.now();
     // Length/timing only: useful for diagnosing pre-login automation without
     // ever recording usernames, passwords or command contents.
     if(TRACE_PACKETS)bridgeTrace(`session ${id} WS->MUD packet bytes=${b.length} total=${row.bytesIn}`);

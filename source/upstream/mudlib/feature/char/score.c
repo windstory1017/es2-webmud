@@ -69,6 +69,22 @@ gain_score(string course, int xp)
     /* 經驗只累積；人物等級要在使用 gain 時才會提升，見 try_level_up()。 */
 }
 
+/* CUSTOM A-H RACE RULE: per-race class level cap from race daemon.
+ * 已達種族的職業等級上限時傳回 1（不能再升級）。
+ * 平民不分種族一律上限 50（使用者定案，2026-10-20）。 */
+#define COMMONER_LEVEL_CAP  50
+
+int at_level_cap()
+{
+    int cap;
+
+    if( query_class() == "commoner" )
+        cap = COMMONER_LEVEL_CAP;
+    else
+        cap = RACE_D(query_race())->query("class_level_cap/" + query_class());
+    return cap != 0 && query_level() >= cap;
+}
+
 /* gain 指令呼叫：各項經驗都達到升級所需時，提升一級（每次 gain 最多一級）。
  * 傳回 1 表示有升級。 */
 int try_level_up()
@@ -84,9 +100,7 @@ int try_level_up()
     foreach(s, v in targ_sc)
 	if( sc[s] < v ) return 0;
 
-    /* CUSTOM A-H RACE RULE: per-race class level cap from race daemon. */
-    v = RACE_D(query_race())->query("class_level_cap/" + query_class());
-    if( v != 0 && query_level() >= v ) return 0;   // 已達上限，不提示
+    if( at_level_cap() ) return 0;   // 已達上限，不提示
 
     receive( HIY "你的等級提昇了﹗\n" NOR );
     RACE_D(query_race())->advance_level(this_object());

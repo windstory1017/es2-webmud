@@ -87,19 +87,9 @@ int main(object me, string arg) {
     return 1;
 }
 
+// 說明改讀 help 檔案，和其他種族看到的 help dance 相同（使用者定案，2026-10-22）。
 int help(object me) {
-    write(
-        "指令格式：dance for <glory|fury|sorrow|axe|rite>\n"
-        "刑天專屬戰舞，須手持斧頭，戰鬥中無法使用。1 tick = 2 秒。\n"
-        "glory 榮光之舞：傷害力 +5+膂力/2、防禦力 +5+定力/2，持續 悟性/2 tick。\n"
-        "fury  忿怒之舞：傷害力 +15、攻勢等級 +機敏/2，持續 膽識/2 tick。\n"
-        "axe   斧舞：所有斧術等級 +悟性+10，持續 慧根/2 tick。\n"
-        "glory、fury、axe 同時只能有一種，重新跳舞會覆蓋前一次效果；使用後 busy 2 tick。\n"
-        "sorrow 哀傷之舞：每次隨機恢復精／氣／神其中一項 3~5 點，另外兩項各減少 1~2 點，"
-        "並消耗食物、飲水各 1。\n"
-        "rite  祭舞：每次隨機恢復 2~3 精、3~5 氣或 1~2 神。\n"
-        "sorrow 與 rite 下指令時先作用一次，之後每 tick 再作用一次，共 慧根/2 次；"
-        "進入戰鬥、離開原地或放下斧頭就會中斷。\n"
-    );
+    string doc = read_file(HELP_DIR + "dance.txt");
+    write(stringp(doc) ? doc : usage());
     return 1;
 }

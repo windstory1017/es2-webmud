@@ -231,6 +231,8 @@ function parseWebHud(raw){
     if(a[1]==='MAPMETA'&&a.length>=3){setRoomMapMeta(a[2],a[3]||'',a[4]||'',a[5]||'');continue;}
     if(a[1]==='EXIT'&&a.length>=5){mergeRuntimeExit(a[2],a[3],a[4],a[5]||'');continue;}
     if(a[1]==='END'){finalizeRuntimeRoomSnapshot();continue;}
+    if(a[1]==='INPUT'){serverInputWait=true;continue;}
+    if(a[1]==='READY'){serverInputWait=false;continue;}
     if(a[1]==='INVBEGIN'){contextState.inventory=[];continue;}
     if(a[1]==='ITEM'&&a.length>=7){
       contextState.inventory.push({name:a[2],id:a[3],action:a[4],command:a[5],equipped:a[6]==='1'});
@@ -336,6 +338,9 @@ const passwordPrompts=['請輸入密碼:','請設定您的密碼:','請重設您
 // 留言／寫信的逐行編輯器：期間每一行輸入都會被收進內容，背景狀態查詢必須暫停，
 // 直到玩家輸入「.」（完成）或「~q」（取消）。
 let editorActive=false;
+// 伺服器說「正在等玩家輸入」（選單、Yes/No、寫文章、巫師 edit…）：@@WEBHUD|INPUT 暫停背景狀態查詢，
+// 回到指令提示時 @@WEBHUD|READY 恢復。查詢若在這時送出，會被當成玩家的回答或寫進檔案。
+let serverInputWait=false;
 function updateInputMode(chunk){
   if(cleanText(chunk).includes("結束離開用 '.'"))editorActive=true;
   tail=(tail+cleanText(chunk)).slice(-700);
@@ -544,6 +549,7 @@ function hudPollDue(){
 }
 function hudPollReady(force=false,allowNoRoom=false){
   if((!currentRoomId&&!allowNoRoom)||input.type==='password'||ws?.readyState!==1||hudPollInFlight)return false;
+  if(serverInputWait)return false;
   if(document.hidden)return false;
   if(!force&&!hudPollDue())return false;
   if(editorActive)return false;
@@ -552,7 +558,8 @@ function hudPollReady(force=false,allowNoRoom=false){
   // HUD must continue updating during combat even when no classic ">" prompt is emitted.
   // Only hold polling while the newest server text is an interactive login/choice prompt.
   const recent=tail.trim().split('\n').slice(-2).join(' ').slice(-220);
-  if(/請輸入(?:選項|.*數字)|請輸入\s*Y\s*或\s*N|密碼|是否.*[？?]|確定嗎/.test(recent))return false;
+  // 魂飛魄散後重新選種族、性別、名稱時，舊的房間代號還在；不擋的話背景查詢會被當成答案，畫面一直跳「請重新輸入」。
+  if(/請輸入(?:選項|.*數字)|請輸入\s*Y\s*或\s*N|密碼|是否.*[？?]|確定嗎|請重新輸入|您的選擇|種族名|\(Male \/ Female\)|\(Yes \/ No\)|顯示名稱|使用者代號|電子郵件/.test(recent))return false;
   return true;
 }
 function pollHud(force=false,allowNoRoom=false){
@@ -617,6 +624,8 @@ function print(s,system=false){
     if(!hudPollInFlight&&!String(s).includes('@@WEBHUD|'))sessionRecorder.appendResponse(s);
     captureChatMessages(s);
   }
+  // 萬一沒收到恢復記號：等待輸入中又看到一般的指令提示「>」結尾，就當作已回到指令狀態。
+  if(serverInputWait&&!system&&!String(s).includes('@@WEBHUD|INPUT')&&/(?:^|\n)[ \t]*>[ \t]*$/.test(cleanText(String(s))))serverInputWait=false;
   observer.consume(s);renderObserved();updateInputMode(s);observeRoomText(s);bootstrapExactRoomFromOutput(s);
 
   let shown=String(s);
@@ -1048,7 +1057,7 @@ function connect(){
       kickHudAfterServerText(forceMapRefresh);
     }
   };
-  ws.onclose=e=>{stopHudPolling();editorActive=false;if(mapBootstrapRetryTimer){clearTimeout(mapBootstrapRetryTimer);mapBootstrapRetryTimer=null;}pendingUserCommands=[];mapRefreshPending=false;hudBootstrapInFlight=false;hudBootstrapAttempts=0;currentRoomId=null;runtimeSnapshot=null;tail='';sessionRecorder.finishResponse();sessionRecorder.markTransportClose(e?.code??null,e?.reason||'');sessionRecorder.markReconnect();conn.textContent='DISCONNECTED';if(manualDisconnect){print('\n[已中斷連線，輸入 #con 重新連線]\n',true);return;}automation.cancelPending();if(!started)return;clearBg(retryResetTimer);retryResetTimer=null;const wait=reconnectDelay();print(`\n[${Math.round(wait/1000)} 秒後重新連線]\n`,true);reconnectTimer=bgTimeout(()=>{reconnectTimer=null;connect();},wait);};
+  ws.onclose=e=>{stopHudPolling();editorActive=false;serverInputWait=false;if(mapBootstrapRetryTimer){clearTimeout(mapBootstrapRetryTimer);mapBootstrapRetryTimer=null;}pendingUserCommands=[];mapRefreshPending=false;hudBootstrapInFlight=false;hudBootstrapAttempts=0;currentRoomId=null;runtimeSnapshot=null;tail='';sessionRecorder.finishResponse();sessionRecorder.markTransportClose(e?.code??null,e?.reason||'');sessionRecorder.markReconnect();conn.textContent='DISCONNECTED';if(manualDisconnect){print('\n[已中斷連線，輸入 #con 重新連線]\n',true);return;}automation.cancelPending();if(!started)return;clearBg(retryResetTimer);retryResetTimer=null;const wait=reconnectDelay();print(`\n[${Math.round(wait/1000)} 秒後重新連線]\n`,true);reconnectTimer=bgTimeout(()=>{reconnectTimer=null;connect();},wait);};
   ws.onerror=()=>conn.textContent='ERROR';
 }
 // Echo the player's own command into the transcript as its own line, the

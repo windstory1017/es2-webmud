@@ -252,6 +252,18 @@ void show_status(object target)
 }
 
 /* 打氣：傷害後顯示命中敘述與體力狀態，傳回實際傷害。 */
+/* 風符的攻擊對象：主要目標，加上同一格內正與自己交戰的其他 NPC。 */
+object *storm_targets(object me, object target)
+{
+    object *list = ({ target });
+
+    foreach(object ob in me->query_enemy())
+        if( objectp(ob) && ob != target && !userp(ob)
+        &&  environment(ob) == environment(me) && me->is_fighting(ob) )
+            list += ({ ob });
+    return list;
+}
+
 int strike_kee(object me, object target, string kind, int rank, int damage)
 {
     damage = target->receive_damage(damage, me, me);
@@ -440,12 +452,17 @@ varargs int cast_spell(object me, string spell, object target)
                 continue;
             }
             landed = 1;
-            n = elemental_damage(me, target, kind, power, rank == 2);
-            n = strike_kee(me, target, kind, rank, n);
-            dealt += n;
-            // 飛戮風：每一重另扣 random(慧根)/10 的形體。
-            if( rank == 3 && objectp(target) && wis >= 10 )
-                target->consume_stat("HP", random(wis) / 10, me);
+            // 多重攻擊（使用者定案，2026-10-22）：命中只看施放時這一次，
+            // 成功的話同一格內正與自己交戰的 NPC 全部都中；命中敘述只說一次，再逐一顯示傷勢。
+            say_line(me, target, hit_line(kind, rank));
+            foreach(object victim in storm_targets(me, target)) {
+                n = elemental_damage(me, victim, kind, power, rank == 2);
+                dealt += victim->receive_damage(n, me, me);
+                // 飛戮風：每一重另扣 random(慧根)/10 的形體。
+                if( rank == 3 && objectp(victim) && wis >= 10 )
+                    victim->consume_stat("HP", random(wis) / 10, me);
+                if( objectp(victim) ) show_status(victim);
+            }
         }
         // 疾風：random(慧根) > 25 時蓄風，下一發風符必定三重。
         if( rank == 1 && wis > 0 && random(wis) > 25 ) {

@@ -39,6 +39,9 @@ int do_enlist(string arg)
 
     me->set_class("soldier");
     me->set("title", "振武軍營軍人");
+    me->set("custom_faction", "soldier.ber");   // 振武軍營門派記號（使用者指示，2026-10-22）
+    // 武者轉任的軍人：可以當軍人，但學不到軍人的特殊技能（使用者定案，2026-10-22）。
+    if( origin_class == "fighter" ) me->set("soldier/from_fighter", 1);
 
     // Only a fresh commoner recruit gets the signature soldier skills. A
     // fighter who enlists already has their own combat background, so they

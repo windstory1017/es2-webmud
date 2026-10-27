@@ -77,8 +77,20 @@ for d in login user mail; do
 done
 cd "$APP_DIR/server"
 npm ci --omit=dev
+# 玩家版天朝圖鑑（web/codex.html）
+python3 "$APP_DIR/tools/build_player_codex.py" || echo "（圖鑑產生失敗，之後執行 update.sh 會再產生一次）"
 
 step "6/7 設定開機自動啟動（systemd）"
+# 自動安全更新（unattended-upgrades）裝完後，needrestart 會把用到更新程式庫的服務重開；
+# 遊戲與網頁橋接程式不要自動重開（會讓線上玩家斷線），由管理者自己選時間重開。
+if [ -d /etc/needrestart/conf.d ]; then
+    sudo tee /etc/needrestart/conf.d/es2-webmud.conf >/dev/null <<'NREOF'
+# 自動更新後不要自動重開遊戲與網頁橋接程式，由管理者自己選時間重開
+$nrconf{override_rc}{qr(^es2-mud\.service$)} = 0;
+$nrconf{override_rc}{qr(^es2-web\.service$)} = 0;
+NREOF
+fi
+
 sudo tee /etc/systemd/system/es2-mud.service >/dev/null <<EOF
 [Unit]
 Description=ES2 WebMUD - Neolith driver

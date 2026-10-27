@@ -51,17 +51,23 @@ for(const r of first){
   for(let j=1;j<=N;j++)if(r.label!==`burst-${j}`&&r.text.includes(`<burst-${j}>`)){crossTalk=true;break}
 }
 
+// The bridge frees a session when the websocket close handshake finishes, so on a
+// slow machine the previous round can still hold slots; wait (bounded) for it to drain.
+const health=()=>fetch(`http://127.0.0.1:${webPort}/api/multiplayer-health`).then(r=>r.json());
+async function waitIdle(){for(let i=0;i<100;i++){if((await health()).sessions.active===0)return;await wait(50)}}
+
 // Rapid connect/disconnect churn checks cleanup and re-use pressure.
 let churnOk=true;
 for(let round=1;round<=4;round++){
+  await waitIdle();
   const rows=await Promise.all(Array.from({length:20},(_,i)=>client(`churn-${round}-${i+1}`)));
   if(new Set(rows.map(x=>x.tcp)).size!==20)churnOk=false;
   await wait(100);
 }
-await wait(300);
-const health=await fetch(`http://127.0.0.1:${webPort}/api/multiplayer-health`).then(r=>r.json());
-const cleaned=health.sessions.active===0 && health.sessions.connected===0;
-const result={ok:unique&&!crossTalk&&churnOk&&cleaned,burstClients:N,uniqueTcpSessions:new Set(ids).size,crossTalk,churnRounds:4,churnClientsPerRound:20,cleanupAfterChurn:cleaned,health};
+await waitIdle();
+const finalHealth=await health();
+const cleaned=finalHealth.sessions.active===0 && finalHealth.sessions.connected===0;
+const result={ok:unique&&!crossTalk&&churnOk&&cleaned,burstClients:N,uniqueTcpSessions:new Set(ids).size,crossTalk,churnRounds:4,churnClientsPerRound:20,cleanupAfterChurn:cleaned,health:finalHealth};
 console.log(JSON.stringify(result,null,2));
 child.kill('SIGTERM');await wait(100);await new Promise(r=>mud.close(r));
 process.exit(result.ok?0:2);

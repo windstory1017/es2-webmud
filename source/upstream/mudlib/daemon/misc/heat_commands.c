@@ -3,7 +3,14 @@
 void create() { seteuid(getuid()); }
 
 // 自己看到的訊息依性別顯示你／妳（2026-10-15 使用者決定）。
-int fail(object me, string text) { tell_object(me, replace_string(text, "你", gender_self(me)) + "\n"); return 0; }
+// get all 時拿不起來的東西安靜跳過，照原版 get 的作法（使用者指示，2026-10-24）。
+private int quiet_fail;
+int fail(object me, string text)
+{
+    if (quiet_fail) return 0;
+    tell_object(me, replace_string(text, "你", gender_self(me)) + "\n");
+    return 0;
+}
 object direct_container(object me, string id)
 {
     object ob;
@@ -241,8 +248,10 @@ int execute(object me, string verb, string arg)
     if (item == "all") {
         if (verb == "get" && me->is_fighting()) return fail(me, "你還在戰鬥中﹗只能一次拿一樣。");
         inv = all_inventory(env);
+        quiet_fail = (verb == "get");
         foreach (ob in inv) if (ob && ob != dest && !(verb == "drop" && ob->query("keep_this")))
             transfer(me, verb, ob, dest, 0);
+        quiet_fail = 0;
         return 1;
     }
     if (sscanf(item, "%d %s", count, target) == 2) {

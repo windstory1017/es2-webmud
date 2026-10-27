@@ -89,6 +89,11 @@ int main(object me, string arg)
     object target;
     if (!me || !userp(me)) return 0;
 
+    // 會送 webhud 的就是網頁玩家：記下來，等待輸入時才會通知網頁暫停查詢（見 feature/user/input.c）。
+    // 連線物件也記，魂飛魄散後重新選種族時還用得到。
+    me->set_temp("webhud/client", 1);
+    if (objectp(me->link())) me->link()->set_temp("webhud/client", 1);
+
     write("@@WEBHUD|BEGIN\n");
     if (environment(me)) {
         mapping exits;

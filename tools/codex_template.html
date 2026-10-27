@@ -264,20 +264,29 @@ svg.map .ud { font-size: 10px; fill: var(--muted); }
   }
 
   // ---------------------------------------------------------------- 技能
+  const SKILL_STATUS = {
+    live: ['實裝', 'ok', '實裝在遊戲中：有 NPC、書籍或裝備用到，玩家拿得到。'],
+    written: ['寫完未實裝', 'gold', '技能程式已寫完，但目前沒有 NPC、書籍或裝備把它交給玩家。'],
+    name: ['僅有名字', '', '只登記了代碼與名稱，沒有技能程式。'],
+  };
   function renderSkills() {
-    const groups = [['all', '全部', D.skills.length], ['impl', '已實作', D.skills.filter(s => s.impl).length], ['code', '只有代碼', D.skills.filter(s => !s.impl).length]];
+    const cnt = k => D.skills.filter(s => s.status === k).length;
+    const groups = [['all', '全部', D.skills.length], ['live', '實裝', cnt('live')], ['written', '寫完未實裝', cnt('written')], ['name', '僅有名字', cnt('name')]];
     const cur = state.sub.skills || 'all';
-    const rows = D.skills.filter(s => (cur === 'all' || (cur === 'impl') === s.impl) && matches({ name: s.name, ids: [s.code], file: s.file }, s.cat))
+    const rows = D.skills.filter(s => (cur === 'all' || cur === s.status) && matches({ name: s.name, ids: [s.code], file: s.file }, s.cat))
       .map(s => row(s.code,
-        `<span class="nm">${esc(s.name)}<span class="en">${esc(s.code)}</span></span><span class="sum">${esc(s.cat || '')}${s.growth.length ? '・成長 ' + esc(s.growth.join('、')) : ''}</span><span class="num">${s.impl ? '<span class="tag ok">已實作</span>' : '<span class="tag">只有代碼</span>'}</span>`,
+        `<span class="nm">${esc(s.name)}<span class="en">${esc(s.code)}</span></span><span class="sum">${esc(s.cat || '')}${s.status !== 'name' ? '・精氣神：' + esc((s.gp || '無').slice(0, 24)) : ''}</span><span class="num"><span class="tag ${SKILL_STATUS[s.status][1]}">${SKILL_STATUS[s.status][0]}</span></span>`,
         () => `<dl class="kv"><dt>英文代碼</dt><dd><code>${esc(s.code)}</code></dd>` +
+          `<dt>狀態</dt><dd>${esc(SKILL_STATUS[s.status][0])}：${esc(SKILL_STATUS[s.status][2])}</dd>` +
+          (s.users && s.users.length ? `<dt>用到的檔案</dt><dd>${s.users.map(u => `<code>${esc(u)}</code>`).join('、')}${s.users.length >= 6 ? ' 等' : ''}</dd>` : '') +
           (s.cat ? `<dt>分類</dt><dd>${esc(s.cat)}</dd>` : '') +
           (s.desc ? `<dt>說明</dt><dd>${esc(s.desc)}</dd>` : '') +
-          `<dt>精氣神與屬性</dt><dd>${s.growth.length ? esc(s.growth.join('、')) + '（每升一級，細節見下方註解）' : '無'}</dd>` +
+          (s.status !== 'name' ? `<dt>精氣神</dt><dd>${esc(s.gp || '無')}</dd><dt>屬性</dt><dd>${esc(s.ga || '無')}</dd>` : '') +
           (s.file ? `<dt>檔案</dt><dd>${fileLine(s.file)}</dd>` : '') + `</dl>` +
-          `<div><h4 class="hint" style="margin:0 0 4px">升級公式</h4>${/\n/.test(s.formula) ? `<pre class="code">${esc(s.formula)}</pre>` : `<p style="margin:0">${esc(s.formula)}</p>`}</div>` +
-          (s.notes.length ? `<div><h4 class="hint" style="margin:0 0 4px">程式註解</h4><pre class="code">${esc(s.notes.join('\n\n'))}</pre></div>` : '')));
-    return listShell(subChips('skills', groups), rows, '已實作的技能列出程式裡的升級規則；只有代碼的技能已登記名稱，裝備或 NPC 會用到，但還沒有技能程式。');
+          `<div><h4 class="hint" style="margin:0 0 4px">本技能的公式</h4>${/\n/.test(s.formula) ? `<pre class="code">${esc(s.formula)}</pre>` : `<p style="margin:0">${esc(s.formula)}</p>`}</div>` +
+          (s.common ? `<div><h4 class="hint" style="margin:8px 0 4px">共用的升級規則</h4><p style="margin:0">${esc(s.common.split('\n')[0])}</p></div>` : '') +
+          (s.notes.length ? `<div><h4 class="hint" style="margin:8px 0 4px">程式註解</h4><pre class="code">${esc(s.notes.join('\n\n'))}</pre></div>` : '')));
+    return listShell(subChips('skills', groups), rows, '「實裝」是遊戲裡有 NPC、書籍或裝備用到的技能；「寫完未實裝」已有技能程式但還沒交給玩家；「僅有名字」只登記了代碼與名稱。每項技能列出自己的升級門檻、精氣神與屬性成長，與武功引擎的參數。');
   }
 
   // ---------------------------------------------------------------- 武器

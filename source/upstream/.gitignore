@@ -3,8 +3,10 @@
 /mudlib/bin
 /mudlib/static
 /mudlib/data/board
-/mudlib/data/login
-/mudlib/data/user
+/mudlib/data/login/*
+!/mudlib/data/login/.keep
+/mudlib/data/user/*
+!/mudlib/data/user/.keep
 /mudlib/data/daemon
 /mudlib/data/daemon.o
 /mudlib/adm/etc/visitor.cnt

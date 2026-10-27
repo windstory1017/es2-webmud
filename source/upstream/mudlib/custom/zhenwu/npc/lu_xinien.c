@@ -16,12 +16,17 @@ void create(){
     set_race("human");
     set_class("soldier"); set_level(25);
     set("gender","male");
-    set("nickname","徵兵官");
-    set("long", "魯熙年是一名身材微胖的中年武官，兩眼瞇成一條線，臉上總帶著似笑非笑的古怪表情。他同時也是振武營負責招募新兵的徵兵官，看起來約三十多歲。營中新兵入伍後的基本兵刃操練，多半也是他一手帶出來的。\n");
+    set("title","徵兵官");
+    set("long", "魯熙年是一個身材微胖的中年武官﹐兩眼瞇成一條線﹐臉上總是露出似笑非笑的古怪表情。魯熙年同時也是振武營負責招募新兵的募兵官，如果你想從軍，請向他，辦理入伍(enlist)手續。\n");
     set_power("B");
     setup();
     foreach(string sk in taught_skills)
         set_skill(sk, 70);
+    // 裝備（使用者指定，2026-10-19）
+    carry_object("/custom/weapon/blade/steelblade")->wield();
+    carry_object("/custom/armor/head/iron_helmet")->wear();
+    carry_object("/custom/armor/waist/iron_girth")->wear();
+    carry_object("/custom/armor/armor/ring_armor")->wear();
 }
 
 int accept_info(object ob, string type)
@@ -36,7 +41,7 @@ int acquire_skill(object who, string skill)
     command("say 好，這門兵刃底子我教你！");
     who->set_skill(skill, 1);
     who->set_learn(skill, 1);
-    tell_object(who, "魯熙年花了好一番功夫，把「" + to_chinese(skill) + "」的基本招式教給了你。\n");
+    tell_object(who, CYN + "魯熙年花了好一番功夫，把「" + to_chinese(skill) + "」的基本招式教給了你。\n" NOR);
     return 1;
 }
 

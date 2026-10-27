@@ -100,7 +100,7 @@ Neolith `HEARTBEAT_INTERVAL` is 2,000,000 microseconds, so 1 tick = one 2-second
 ## 阿修羅 (ashura)
 
 - Race numbers follow the original data: gin/kee/sen 80/80/80, karma 40, 基數 180.
-- Class caps: fighter 60, alchemist 50, taoist 60, soldier 70, thief 50, commoner 1. scholar and monk are -1 (cannot join).
+- Class caps: fighter 70 (raised from 60 by user, 2026-10-20), alchemist 50, taoist 60, soldier 70, thief 50, commoner 1. scholar and monk are -1 (cannot join).
 - Attributes: str 20-25, cor 25-40, int 13-18, spi 14-22, cps 5-10, dex 15-20, con 17-22, wis 13-18.
 - Hidden bonuses: 攻擊能力值 40 (`apply/attack`), 攻勢等級 30 (`apply/intimidate`), 咒術 15 (`apply/spells`, skill level), 陰陽眼 (`apply/vision_of_ghost`).
 - Auto fight: when an ashura player and an NPC first meet (either one walks into the room), `feature/char/attack.c` `init()` calls `COMBAT_D->start_ashura()`. Chance = 100 - cps x 3, minimum 30%. It uses `fight`, not `kill`, on both sides, so the loser only falls unconscious and the player can `halt`. Skipped when the ashura is already fighting, unconscious, net-dead or a ghost, when the NPC is unconscious, a ghost or not visible, and in no_fight rooms. Players are never targeted. It cannot be turned off.
@@ -122,6 +122,9 @@ On level-up, gin / kee / sen maximums grow by base dex / con / spi divided by th
 | 方士 alchemist | 江湖歷練 survive (lv-1)^2x100, 法術道行 magic mastery (lv-16)^2x100, 丹道修養 alchemy (lv-1)^2x100, 法術修為 magic (lv-6)^2x100 | dex/4, con/4, spi/4 |
 | 書生 scholar | 江湖歷練 survive (lv-1)^2x100, 實戰經驗 combat (lv-1)^2x100, 文書能力 literature (lv-1)^2x50, 文學造詣 literature mastery (lv-10)^2x50, 聲望 reputation (lv-10)^2x50 | dex/5, con/3, spi/3 |
 | 和尚 monk | 江湖歷練 survive (lv-1)^2x100, 佛學修為 buddhology (lv-1)^2x100, 禪定修養 cultivation (lv-10)^2x100, 文書能力 literature (lv-10)^2x100, 聲望 reputation (lv-30)^2x100 | dex/6, con/6, spi/6 |
+| 平民 commoner | 江湖歷練 survive (lv-1)^2x100 | none (user decision, 2026-10-20) |
+
+Commoner (user decision, 2026-10-20): may level up on 江湖歷練 alone; the commoner level cap is 50 for every race (`feature/char/score.c` `at_level_cap()`), overriding the `"commoner":1` entries still listed in the race daemons. A commoner who later joins a class keeps the current level.
 
 Soldier and taoist keep their earlier formulas. Joining thief / alchemist / scholar / monk is not implemented yet.
 

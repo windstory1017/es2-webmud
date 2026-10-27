@@ -1,3 +1,4 @@
+#include <ansi.h>
 // teacher.c
 
 #include <npc.h>
@@ -70,7 +71,7 @@ int do_sit(string arg)
 	
     if( this_player()->query_temp("pending/sit_learning_literate") )
         return notify_fail("你已經坐著專心聽講了。\n");
-    message_vision("$N找了一個空位坐了下來﹐開始跟著王老師唸書。\n",
+    message_vision(CYN + "$N找了一個空位坐了下來﹐開始跟著王老師唸書。\n" NOR,
         this_player() );
     this_player()->set_temp("pending/sit_learning_literate", 1);
     return 1;
@@ -99,7 +100,7 @@ void teach_literate()
 	/* 每句得到 智力 × random(智力) 的讀書識字點數。 */
 	ob->improve_skill_exact("literate",
 	    ob->query_attr("int") * random(ob->query_attr("int")));
-	message_vision("$N跟著念道﹕" + txt + "。\n", ob);
+	message_vision(CYN + "$N跟著念道﹕" + txt + "。\n" NOR, ob);
 
 	/* 挑選書生的條件 */
 	// 加個random, 不然每講一句就問 -Dragoon
@@ -183,7 +184,7 @@ void make_new_scholar(object ob)
     ob->set_class("scholar");
     command("smile");
     command("say 好好念書吧，我看你資質不錯，將來必有成就！");
-    tell_object(ob, "( 你成為一位書生 )\n");
+    tell_object(ob, CYN + "( 你成為一位書生 )\n" NOR);
 }
 
 void relay_say(object who, string msg)

@@ -109,7 +109,7 @@ SimulEfunFile /adm/obj/simul_efun.c
 DefaultErrorMsg Oops, you feel something weird just happend.
 DefaultFailMsg What?
 CleanupDuration 600
-ResetDuration 1800
+ResetDuration 900
 MaxInheritDepth 30
 MaxEvaluationCost 1000000
 MaxArraySize 15000

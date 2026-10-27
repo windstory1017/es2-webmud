@@ -16,6 +16,13 @@ author: Annihilator <taedlar@gmail.com>
  * The pager branch below still retains its original get_char() controls.
  */
 void input_prompt (mixed func, int flags, mixed data, mixed arg1) {
+    /* 網頁玩家進入等待輸入（選單、Yes/No、寫文章、翻頁……）：通知網頁暫停背景狀態查詢，
+     * 否則查詢會被當成玩家的回答。回到指令提示時由 write_prompt() 通知恢復。 */
+    if (this_object()->query_temp("webhud/client")) {
+        this_object()->set_temp("webhud/input_wait", 1);
+        receive ("\n@@WEBHUD|INPUT\n");
+    }
+
     if (mapp(data) && arrayp(data["options"]) && intp(data["cursor"])) {
         string prompt = data["prompt"] || "你的選擇：";
         int pos = 1;

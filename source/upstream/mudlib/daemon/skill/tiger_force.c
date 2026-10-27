@@ -29,7 +29,6 @@ int valid_enable(string usage)
  */
 private void level_reward(object me, int lv)
 {
-    int cap;
 
     if( !userp(me) ) return;
     if( me->query("tiger_force/growth_level") >= lv ) return;
@@ -38,11 +37,9 @@ private void level_reward(object me, int lv)
     me->gain_score("martial art", lv * 10);
     if( lv > 30 ) me->gain_score("martial mastery", (lv - 30) * 10);
 
-    cap = lv * 12;
-    if( me->query_stat_maximum("gin") <= cap )
-        me->advance_stat("gin", lv >= 161 ? 1 : 2 + (lv >= 141 && lv <= 160 ? 1 : 0));
-    if( me->query_stat_maximum("kee") <= cap )
-        me->advance_stat("kee", lv >= 161 ? 1 : 2 + (lv >= 141 && lv <= 160 ? 2 : 0));
+    // 精氣上限不再受「瘋虎功等級 × 12」限制（使用者定案，2026-10-23）。
+    me->advance_stat("gin", lv >= 161 ? 1 : 2 + (lv >= 141 && lv <= 160 ? 1 : 0));
+    me->advance_stat("kee", lv >= 161 ? 1 : 2 + (lv >= 141 && lv <= 160 ? 2 : 0));
 
     if( lv == 140 && !me->query("tiger_force/cor_bonus_140") ) {
         me->set_attr("cor", me->query_attr("cor", 1) + 2);
@@ -97,8 +94,7 @@ int do_exercise(object me)
 {
     if( me->query_stat("kee") < 3 || me->query_stat("gin") < 4 ) {
         tell_object(me, "你覺得氣血浮動、精力難繼，已無法再運轉瘋虎功。\n");
-        me->interrupt_me(me, "exhausted");
-        return 1;
+        return 0;   // 傳回 0 結束打坐（系統沒有 interrupt_me，舊寫法會一直重複這句；2026-10-23）
     }
 
     me->consume_stat("kee", 2);

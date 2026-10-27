@@ -13,8 +13,8 @@ for k,p in files.items():
     if not p.exists(): fail.append(f'missing:{k}')
 text={k:p.read_text(encoding='utf-8') for k,p in files.items() if p.exists()}
 checks={
- # 家園傳送師與林楓炎已依使用者要求移除；家園改由 recall home 進入
- 'recall_home':'/custom/home/room/home_hall' in (M/'cmds/usr/recall.c').read_text(encoding='utf-8'),
+ # 家園傳送師與林楓炎已依使用者要求移除；recall／recall home 也已取消（2026-10-23），家園入口另行設計
+ 'recall_removed': not (M/'cmds/usr/recall.c').exists(),
  'private_hall':'ob != home_owner' in text.get('hall',''),
  'chest_200':'sizeof(items) >= 200' in text.get('chest',''),
  'storage_saved':'custom_home/storage' in text.get('chest','') and 'me->save()' in text.get('chest',''),

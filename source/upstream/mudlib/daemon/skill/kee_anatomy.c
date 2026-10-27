@@ -1,13 +1,16 @@
-// 經脈穴道之學（kee anatomy）。依使用者設計表（2026-10-16）。
+// 經脈穴道之學（kee anatomy）。依使用者設計表（2026-10-16）；加成規則改版（使用者定案，2026-10-20）。
 //
-// 每升到 5 的倍數級，精、氣、神的最大值各加 10。只對玩家生效。
-// 已經給到哪一級記在 skill_bonus/kee anatomy，同一個門檻一生只給一次
-// （放棄後重練、重複升到同一級都不會重複給）。提升時不顯示訊息。
+// 每升到 5 的倍數級判定一次：成功時精、氣、神的最大值各加 5。
+// 成功機率 = 等級 × 10 ÷（等級 × 10 + 精氣神最大值中最高的一項），
+// 技能越高越容易成功，精氣神越厚越難成功。只對玩家生效。
+// 已經判定到哪一級記在 skill_bonus/kee anatomy，同一個門檻一生只判定一次
+// （放棄後重練、重複升到同一級都不會重複判定）。提升時不顯示訊息。
 
 inherit SKILL;
 
 #define STEP    5
-#define BONUS   10
+#define BONUS   5
+#define COEF    10
 
 private void create()
 {
@@ -21,9 +24,18 @@ void skill_improved(object me, string skill)
     me->apply_restored_skill_progression(skill);
 }
 
+private int highest_stat(object me)
+{
+    int top, v;
+
+    foreach(string stat in ({ "gin", "kee", "sen" }))
+        if( (v = me->query_stat_maximum(stat)) > top ) top = v;
+    return top;
+}
+
 void skill_advanced(object me, string skill)
 {
-    int done, now, gain;
+    int done, now, lv;
 
     if( !userp(me) ) return;
 
@@ -32,7 +44,9 @@ void skill_advanced(object me, string skill)
     if( now <= done ) return;
 
     me->set("skill_bonus/kee anatomy", now);
-    gain = (now - done) / STEP * BONUS;
-    foreach(string stat in ({ "gin", "kee", "sen" }))
-        me->set_stat_maximum(stat, me->query_stat_maximum(stat) + gain);
+    for(lv = done + STEP; lv <= now; lv += STEP) {
+        if( random(lv * COEF + highest_stat(me)) >= lv * COEF ) continue;
+        foreach(string stat in ({ "gin", "kee", "sen" }))
+            me->set_stat_maximum(stat, me->query_stat_maximum(stat) + BONUS);
+    }
 }

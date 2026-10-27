@@ -6,6 +6,6 @@
 交流：say、tell、reply、whisper、shout、emote
 戰鬥：fight、kill、guard、wimpy
 師門：apprentice、acquire、skills <師父>
-其他：recall、help
+其他：help
 
 可直接輸入 help <指令> 查看該指令本身的說明，例如 help who。

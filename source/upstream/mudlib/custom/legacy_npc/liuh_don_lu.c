@@ -1,3 +1,4 @@
+#include <ansi.h>
 // /custom/legacy_npc/liuh_don_lu.c — 舊站 NPC：柳東蘆（Liuh don-lu）。
 /*
 LEGACY NPC. 名稱、英文 ID、敘述、年紀、性別、種族、裝備取自舊站畫面紀錄（DOCUMENTED，
@@ -104,6 +105,60 @@ int acquire_skill(object me, string skill)
         return notify_fail("柳東蘆說道：入門的要訣已經傳給你了，往後全看你自己。\n");
 
     me->improve_skill_exact(skill, me->skill_threshold(skill, 1) - me->query_learn(skill));
-    tell_object(me, "柳東蘆將「" + to_chinese(skill) + "」的入門要訣傳授給你。\n");
+    tell_object(me, CYN + "柳東蘆將「" + to_chinese(skill) + "」的入門要訣傳授給你。\n" NOR);
     return 1;
+}
+
+// ------------------------------------------------------------------
+// 水雲劍法精義（使用者定案，2026-10-20）：水雲劍法 17 級以上、劍術 enable 水雲劍法，
+// 找柳東蘆比武並輸給他，他會演示自己整理過的精義，玩家直接學會（只發生一次）。
+// ------------------------------------------------------------------
+
+void win_fight(object ob)
+{
+    if( !objectp(ob) || !userp(ob) ) return;
+    if( ob->query("sayuensword/essence") ) return;
+    if( ob->query_skill("sayuensword", 1) < 17 ) return;
+    if( ob->skill_mapped("sword") != "sayuensword" ) return;
+    call_out("teach_essence", 1, ob, 0);
+}
+
+// 每行控制在一行內（約 36 字），依語氣斷句，整句顯示不自動換行。
+private void say_lines(object ob, string *lines)
+{
+    foreach(string line in lines)
+        message_vision(CYN + line + "\n" NOR, this_object(), ob, 1);
+}
+
+void teach_essence(object ob, int step)
+{
+    string who;
+
+    if( !objectp(ob) || environment(ob) != environment() ) return;
+    who = "這位" + ob->rank("respectful");
+    switch( step ) {
+    case 0:
+        say_lines(ob, ({
+            "$N收劍而立﹐望著$n方才的劍路﹐輕輕嘆了口氣。",
+            "$N說道﹕這套劍法﹐是小女閒來胡亂拼湊的玩意兒。",
+            "$N又道﹕老夫只當她孩子心性﹐由著她胡鬧﹐不想竟誤了" + who + "的功夫。",
+        }));
+        break;
+    case 1:
+        say_lines(ob, ({
+            "$N說道﹕這是老夫重新整理的水雲劍法精義﹐就當與" + who + "切磋一場罷。",
+        }));
+        break;
+    default:
+        say_lines(ob, ({
+            // 一整句；超過一行時在逗號處手動換行。
+            "$N長劍出鞘﹐將水雲劍法從頭到尾演示了一遍﹐\n" CYN "招式與小女孩所使一般無二﹐劍意卻已截然不同。",
+        }));
+        ob->set("sayuensword/essence", 1);
+        ob->improve_skill_exact("sayuensword essence",
+            ob->skill_threshold("sayuensword essence", 1) - ob->query_learn("sayuensword essence"));
+        tell_object(ob, CYN + "你掌握了水雲劍法的精義。\n" NOR);
+        return;
+    }
+    call_out("teach_essence", 2, ob, step + 1);
 }

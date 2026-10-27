@@ -27,6 +27,7 @@ void create()
 		"damage" :   -1,
 		]));
 		set("requirement", (["literate": 5, "alchemy-medication": 15]));
+		set("pill_grade", 3);   // 丹藥階級：一階最高、三階最低（使用者指示 #7，2026-10-23）
 	}
 	set_amount(1);
 	setup();

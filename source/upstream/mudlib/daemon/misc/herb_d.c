@@ -6,7 +6,7 @@ description: 龍圖 HERB 交易核心（HERB 房間專用）。以 HERB 0.1.0 he
              - 第一層同檔案成品／藥方拒購；單一堆疊、一次原生 move() 交付。
              - 額度不足才縮減；存款、負重不足整筆拒絕；負重交由原生 move() 判定。
              - 週期見 herb_cycle.c；資格見 herb_qualification.c。
-             - 買成藥、賣丹成功後 start_busy(2)；買藥方與被拒絕不進入忙碌。
+             - 買成藥、買藥方、賣丹成交後都不忙碌（2026-10-24 取消原本的 start_busy(2)）。
              - 失敗回復；回復失敗則以暫時標記鎖定該玩家的 HERB 交易。
 ---*/
 
@@ -264,7 +264,6 @@ private int buy_product(object me, string key, int want)
                 "new_mark": CYCLE->next_mark(mark, key, count) ])))
         return 1;
 
-    me->start_busy(2);
     if (cut)
         return say_to(me, sprintf("你的%s只剩%s%s可購買，你向藥鋪買下%s%s%s，已從錢莊扣款。",
             name, chinese_number(count), unit_of(pill), chinese_number(count), unit_of(pill), name));
@@ -365,7 +364,6 @@ int cmd_sell(object me, string arg)
                 "object": ob, "total": total, "old_bank": bank ])))
         return 1;
 
-    me->start_busy(2);
     return say_to(me, sprintf("你將%s%s%s賣給藥鋪，得到%s，已存入錢莊。",
         chinese_number(count), unit_of(pill), label, money(price * count)));
 }

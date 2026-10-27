@@ -13,7 +13,8 @@ LONG
     );
     set("objects", ([
         "/d/lee/npc/waiter" : 1,
-        "/d/lee/npc/li_ban_xian" : 1
+        "/d/lee/npc/li_ban_xian" : 1,
+        "/custom/legacy_npc/du_feng_ling" : 1     // 幻霧觀觀主（使用者指示，2026-10-25）
     ]));
     set("exits", ([
         "east" : __DIR__"street2"

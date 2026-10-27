@@ -22,6 +22,7 @@ void create()
 		"/d/snow/npc/obj/blue_jacket": 5,
 		"/obj/armor/fur_hat": 5,
 		"/obj/bottle": 5,
+		"/custom/item/scroll/blank": 1000,	// 空白符紙（2026-10-24）
 	]));
 	set("chat_chance", 5);
 	set("chat_msg", ({

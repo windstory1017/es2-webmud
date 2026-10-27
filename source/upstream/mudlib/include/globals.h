@@ -33,6 +33,7 @@ author: Annihilator <taedlar@gmail.com>
 #define FINGER_D "/adm/daemons/fingerd.c"
 #define IDENT_D "/adm/daemons/userid.c"
 #define LOGIN_D "/adm/daemons/logind.c"
+#define REALIP_D "/adm/daemons/realipd.c"
 #define NATURE_D "/adm/daemons/natured.c"
 #define PROFILE_D "/adm/daemons/profiled.c"
 #define SECURITY_D "/adm/daemons/securityd.c"
