@@ -3,6 +3,7 @@ import {PlayerStateObserver} from './player_state.js';
 import {Automation,setupAutomationUI} from './automation.js';
 import {setupChatWindow} from './chat_window.js';
 import {setupFloatWindow,setupSideSplitter,bringToFront} from './float_window.js';
+import {setupTextColor} from './text_color.js';
 import {bgTimeout,clearBg,keepPageAlive} from './bg_timer.js';
 
 const sessionRecorder = new SessionRecorder();
@@ -81,7 +82,7 @@ const HUD_ACTION_FLUSH_MS = 180;
 
 const esc = s => String(s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]));
 const baseColors = {
-  30:'#707770',31:'#ff7474',32:'#65df8b',33:'#efd06b',34:'#76a9ff',35:'#d98df0',36:'#69dbe5',37:'#e5ece7',
+  30:'#707770',31:'#ff7474',32:'#65df8b',33:'#efd06b',34:'#76a9ff',35:'#d98df0',36:'#69dbe5',37:'var(--term-fg)',
   90:'#8e978f',91:'#ff9999',92:'#8be9a6',93:'#f4dc8c',94:'#9bc0ff',95:'#e6abf5',96:'#93edf3',97:'#ffffff'
 };
 const bgColors = {40:'#090b0a',41:'#532020',42:'#1d4d2e',43:'#4e4219',44:'#1c3150',45:'#47244d',46:'#17464a',47:'#d7ddd9'};
@@ -1280,6 +1281,7 @@ document.querySelector('[data-ui-settings]')?.addEventListener('click',()=>docum
 document.querySelectorAll('[data-map-action]').forEach(b=>b.addEventListener('click',()=>{
   const a=b.dataset.mapAction;if(a==='in')setMapZoom(mapZoom+.12);else if(a==='out')setMapZoom(mapZoom-.12);else setMapZoom(1);
 }));
+setupTextColor(document.getElementById('textColorSettings'));
 const fontRange=document.querySelector('#terminalFontSize'),fontValue=document.querySelector('#terminalFontValue');
 fontRange?.addEventListener('input',()=>{document.documentElement.style.setProperty('--terminal-font-size',fontRange.value+'px');sideSplitter.refresh();if(fontValue)fontValue.textContent=fontRange.value+'px';localStorage.setItem('es2-ui-font',fontRange.value);});
 try{const f=localStorage.getItem('es2-ui-font');if(f&&fontRange){fontRange.value=f;document.documentElement.style.setProperty('--terminal-font-size',f+'px');sideSplitter.refresh();if(fontValue)fontValue.textContent=f+'px';}}catch(_){}

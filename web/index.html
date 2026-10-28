@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- 終端機中文字型：Noto Sans TC（思源黑體繁體），英文與符號用網站自帶的 ES2 Mono（更紗黑體） -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap">
-  <link rel="stylesheet" href="/styles.css?v=float-1027">
+  <link rel="stylesheet" href="/styles.css?v=color-1028">
 </head>
 <body class="game-body">
   <div id="gameApp" class="game-app">
@@ -200,11 +200,20 @@
       <form method="dialog">
         <div class="settings-head"><strong>介面設定</strong><button value="cancel" aria-label="關閉">×</button></div>
         <label>文字大小 <input id="terminalFontSize" type="range" min="13" max="20" value="15"><span id="terminalFontValue">15px</span></label>
+        <section class="text-color" id="textColorSettings" aria-label="文字顏色">
+          <div class="text-color-head"><span>文字顏色</span><button type="button" data-text-reset>恢復預設</button></div>
+          <div class="text-swatches" data-text-swatches role="group" aria-label="預設顏色"></div>
+          <label class="text-slider">紅 <input type="range" min="0" max="255" data-text-rgb="r"><output data-text-rgb-value="r"></output></label>
+          <label class="text-slider">綠 <input type="range" min="0" max="255" data-text-rgb="g"><output data-text-rgb-value="g"></output></label>
+          <label class="text-slider">藍 <input type="range" min="0" max="255" data-text-rgb="b"><output data-text-rgb-value="b"></output></label>
+          <label class="text-slider">明暗 <input type="range" min="20" max="100" data-text-bright><output data-text-bright-value></output></label>
+          <div class="text-preview" data-text-preview>這是一條寬闊的青石大街，兩旁店舖林立。<code data-text-hex></code></div>
+        </section>
         <p>這些設定只影響瀏覽器顯示，不修改 MUD Server。</p>
       </form>
     </dialog>
   </div>
 
-  <script type="module" src="/app.js?v=float-1027"></script>
+  <script type="module" src="/app.js?v=color-1028"></script>
 </body>
 </html>
