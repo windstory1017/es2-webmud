@@ -393,3 +393,18 @@ label{display:block;margin:12px 0 5px;color:#b6c9bb}.form input,.form textarea{w
 .float-resize-sw{left:0;bottom:0;cursor:nesw-resize}
 .float-resize-se::after{content:"";position:absolute;right:3px;bottom:3px;width:7px;height:7px;border-right:2px solid #557866;border-bottom:2px solid #557866}
 .float-window.is-resizing{user-select:none}
+
+/* 設定 → 文字顏色。--term-fg 是訊息欄與聊天視窗的基礎文字顏色（遊戲指定的白色也跟著它）。 */
+:root{--term-fg:#e3ece5}
+#terminal,.chat-window-log{color:var(--term-fg)}
+.text-color{display:grid;gap:8px;padding-top:12px;border-top:1px solid #24372f}
+.text-color-head{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#c9d6cd}
+.text-color-head button{padding:3px 10px;font-size:11px}
+.text-swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.text-swatch{height:26px;padding:0;border:2px solid #24372f;border-radius:5px;background:var(--swatch)}
+.text-swatch:hover{background:var(--swatch);border-color:#557866}
+.text-swatch.active{border-color:#f0ce76;box-shadow:0 0 0 1px #f0ce76}
+.ui-settings .text-slider{display:grid;grid-template-columns:2.4em 1fr 3em;align-items:center;gap:8px}
+.ui-settings .text-slider output{text-align:right;color:#98a99f;font-variant-numeric:tabular-nums}
+.text-preview{padding:10px 12px;border:1px solid #1e372d;border-radius:6px;background:#050806;font-size:var(--terminal-font-size,15px);line-height:1.6}
+.text-preview code{display:block;margin-top:4px;font-size:11px;color:#6f8077}
