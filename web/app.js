@@ -1269,7 +1269,13 @@ document.querySelector('#form')?.addEventListener('click',e=>{
 });
 document.querySelectorAll('[data-cmd]').forEach(b=>b.addEventListener('click',()=>{send(b.dataset.cmd);input.focus();}));
 
-document.querySelector('[data-ui-settings]')?.addEventListener('click',()=>document.querySelector('#uiSettings')?.showModal());
+// 介面設定：可拖曳的浮動視窗，不遮暗背景，邊調邊看得到訊息欄的效果；重新整理後不會自動打開。
+setupFloatWindow({
+  root:document.getElementById('uiSettings'),
+  openButton:document.querySelector('[data-ui-settings]'),
+  storageKey:'es2-settings-window-v1',rememberOpen:false,
+  defaultGeometry:()=>({left:Math.max(16,(window.innerWidth-430)/2),top:Math.max(16,window.innerHeight*.12)}),
+});
 // 地圖視窗大小改變（拉角落、打開視窗）時重畫，讓看得到的範圍跟著視窗大小走。
 {
   const mapEl=document.querySelector('#localMap');let mapResizeFrame=0;

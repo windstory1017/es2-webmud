@@ -1,11 +1,11 @@
-// 浮動視窗（地圖、角色狀態）：左側選單按鈕切換開關，拖曳標題列移動位置；
+// 浮動視窗（地圖、角色狀態、介面設定）：左側選單按鈕切換開關，拖曳標題列移動位置；
 // 地圖可拉四個角落調整大小，角色狀態大小固定。開關狀態、位置與大小記在瀏覽器。
 
 let topZ=40;
 // 按到哪個視窗，那個視窗就疊到最上面（聊天視窗也一起排）。
 export function bringToFront(el){if(el)el.style.zIndex=String(++topZ);}
 
-export function setupFloatWindow({root,openButton,storageKey,resizable=false,defaultGeometry,defaultOpen=false,onShow}){
+export function setupFloatWindow({root,openButton,storageKey,resizable=false,defaultGeometry,defaultOpen=false,rememberOpen=true,onShow}){
   if(!root)return {open(){},close(){},isOpen:()=>false};
   const head=root.querySelector('[data-float-drag]');
   let geometry=null,isOpen=defaultOpen;
@@ -13,7 +13,7 @@ export function setupFloatWindow({root,openButton,storageKey,resizable=false,def
   try{
     const saved=JSON.parse(localStorage.getItem(storageKey)||'null');
     if(saved&&typeof saved==='object'){
-      if(typeof saved.open==='boolean')isOpen=saved.open;
+      if(rememberOpen&&typeof saved.open==='boolean')isOpen=saved.open;
       if(saved.geometry&&typeof saved.geometry==='object')geometry=saved.geometry;
     }
   }catch(_){}
