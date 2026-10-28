@@ -108,10 +108,17 @@ int do_wuto(object me, string key, object target)
     needle_blank(me);
     needle_line(me, target, HIT_MSG[key]);
 
-    // W-11：可先出手、必中。已經在交手（fight 切磋或 kill 拼命）就維持原本的狀態；
-    // 還沒開打就下針，等於下 kill（使用者定案，2026-10-28），NPC 會下殺手。
-    if( !me->is_fighting(target) )
-        KILL_CMD->do_kill(me, target);
+    // W-11：可先出手、必中。已經在交手（fight 切磋或 kill 拼命）就維持原本的狀態。
+    // 還沒開打時：NPC 強制進入切磋（fight），不會下殺手；玩家照 kill 的規定
+    // （使用者定案，2026-10-28）。
+    if( !me->is_fighting(target) ) {
+        if( userp(target) )
+            KILL_CMD->do_kill(me, target);
+        else {
+            me->fight_ob(target);
+            target->fight_ob(me);
+        }
+    }
 
     // W-10：扣目前的值。
     foreach(string stat in n["stats"])
