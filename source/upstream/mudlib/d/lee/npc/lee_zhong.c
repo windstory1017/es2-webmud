@@ -20,6 +20,7 @@ void create()
         "/d/lee/obj/sugar" : 100,
         "/d/lee/obj/flour" : 100,
         "/custom/item/scroll/blank" : 1000,   // 空白符紙（2026-10-24）
+        "/custom/weapon/needle/silver_needle" : 10,   // 銀針
     ]));
     set_power("C");
     setup();
