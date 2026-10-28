@@ -51,7 +51,7 @@
 | 繡花針 | `needle/embroidery_needle.c` | embroidery needle | 500 | 550 | needle、secondhand needle | 價值隨機 |
 | 透骨釘 | `needle/iron_needle.c` | iron needle | 500 | 600 | needle、secondhand needle | 價值隨機 |
 | 附骨之蛆 | `needle/needle_of_bone_maggot.c` | needle of bone maggot | 500 | 1000 | needle | 唯一、劇毒 |
-| 銀針 | `needle/silver_needle.c` | silver needle | 500 | 800 | needle、secondhand needle | 價值隨機 |
+| 銀針 | `needle/silver_needle.c` | silver needle | 500 | 2 | needle、secondhand needle | 售價 200 文（使用者指定，2026-10-28） |
 | 鋼針 | `needle/steel_needle.c` | steel needle | 500 | 3 | needle、secondhand needle |  |
 
 ## 錘棒

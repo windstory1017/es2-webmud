@@ -13,7 +13,7 @@ void create()
     if( !clonep() ) {
         set("wield_as", "twohanded blade");
         set("unit", "把");
-        set("value", 80000);
+        set("value", 4000);
         set("long",
             "又厚又重的大刀，令人望而生畏，如果雙手握持的話，威力更是強大。\n");
     }
