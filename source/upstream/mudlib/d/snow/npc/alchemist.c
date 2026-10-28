@@ -81,6 +81,8 @@ int init_apprentice(object me)
                 seteuid(getuid());
 		me->set_class("alchemist");
 		me->set("title", "龍圖丹派弟子");
+		// 門派記號（使用者指示 #18，2026-10-28）：江述仁、竹上經心法憑此認定龍圖丹派弟子。
+		me->set("custom_faction", "alchemist.dragon");
 		do_chat(({
 			"陳維俠點了點頭﹐說道﹕你雖然入我門下﹐但是得先燒火採藥十年。\n",
 			"陳維俠說道﹕十年之後﹐如果為師看你還堪造就﹐這才傳你丹術。\n",
