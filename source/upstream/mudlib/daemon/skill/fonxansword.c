@@ -91,7 +91,7 @@ int do_bahuang(object me, object opponent, object weapon)
     int i, damage;
 
     message_vision(HIW "$N手中" + weapon_name(weapon) + "寒光一閃﹐『" HIY " 八 荒 " HIW "』劍式已然出手！\n" NOR,
-        me, opponent);
+        me, opponent, 1);
     for( i = 0; i < 3; i++ ) {
         if( !can_follow(me, opponent) ) break;
         damage = special_hit(me, opponent, weapon, pick_move(me), 100, 50, 0);
@@ -106,7 +106,7 @@ int do_fengzi(object me, object opponent, object weapon)
     int damage;
 
     message_vision(HIW "\n$N一聲清嘯﹐正是封山絕學『" HIY "封" HIW "』字訣﹐如虹劍氣自劍尖而出激得狂風驟起將$n逼退數步。\n\n" NOR,
-        me, opponent);
+        me, opponent, 1);
     damage = special_hit(me, opponent, weapon,
         ([ "name": "封字訣", "attack": 9, "defense": 3, "force": 2, "bonus": 0, "damage_type": "割傷",
            "action": "$N的劍氣直撲$n的$l" ]), 100, 100, 0);
@@ -157,7 +157,7 @@ void after_strike(object me, object opponent, object weapon, mapping m, int dama
      * 不能閃躲、格擋，防具照扣；傷害 = 內功等級 × 3/2（舊版劍芒）。 */
     if( lv >= 150 && me->skill_mapped("force") && opponent->is_busy() ) {
         message_vision(HIW "$N手中" + weapon_name(weapon) + "迸發出一道淩厲無儔的無形劍氣﹐勢如射日長虹向$n奔騰而去！\n" NOR,
-            me, opponent);
+            me, opponent, 1);
         n = me->query_skill("force") * 3 / 2;
         n -= opponent->resist_damage(n, me);
         if( n > 0 ) opponent->receive_damage(n, me, me);
@@ -170,23 +170,23 @@ void after_strike(object me, object opponent, object weapon, mapping m, int dama
      * 之後自己停頓 1 回合。發動時不再搶攻。 */
     if( lv >= 180 && random(100) < scaled_chance(me, 10) ) {
         message_vision(HIW "\n$N一躍而起﹐盡全身餘力揮出封山絕學『" HIY "上 弦 月" HIW "』﹐綿綿劍氣劃破天際席捲$n週身要害！\n\n" NOR,
-            me, opponent);
+            me, opponent, 1);
         special_hit(me, opponent, weapon, 0, 200, 100, HIT_MUST | HIT_SILENT);
         ratio = kee_ratio(opponent);
         show_status(opponent, ratio);
         if( !can_follow(me, opponent) ) return;
         opponent->start_busy(1);
         message_vision(HIW "\n借劍氣未散之力﹐$N迴轉手中" + weapon_name(weapon) + "半空之中順勢使出『" HIY "下 弦 月" HIW "』﹐道道劍氣衝入$n週身脈絡！\n\n" NOR,
-            me, opponent);
+            me, opponent, 1);
         opponent->consume_stat("gin", lv, me);
-        message_vision(HIW "\n劍氣過後﹐$N手中" + weapon_name(weapon) + "劍身入地半尺支撐$N﹐緩解施展劍氣對自身經脈的衝擊。\n\n" NOR, me);
+        message_vision(HIW "\n劍氣過後﹐$N手中" + weapon_name(weapon) + "劍身入地半尺支撐$N﹐緩解施展劍氣對自身經脈的衝擊。\n\n" NOR, me, 0, 1);
         me->start_busy(1);
         return;
     }
 
     /* 搶攻：封山劍法 60 級起，出劍後 15% × 等級/200；多出一招普通劍招。 */
     if( lv >= 60 && random(100) < scaled_chance(me, 15) ) {
-        message_vision(HIW "$N劍氣已過劍招尚未使老﹐身形飄然上前發起搶攻！\n" NOR, me);
+        message_vision(HIW "$N劍氣已過劍招尚未使老﹐身形飄然上前發起搶攻！\n" NOR, me, 0, 1);
         COMBAT_D->fight(me, opponent, art_id, make_action(pick_move(me), 100), weapon);
     }
 }
