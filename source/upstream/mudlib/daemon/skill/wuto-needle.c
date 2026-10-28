@@ -76,7 +76,8 @@ private string needle_key(string spl)
 /* W-11：比照 kill 的限制。 */
 private int can_attack(object me, object target)
 {
-    if( wizardp(target) ) return notify_fail("不行!!\n");
+    // 玩家不能對巫師下針；NPC（例如武道通）與巫師交手時照常施針。
+    if( userp(me) && wizardp(target) ) return notify_fail("不行!!\n");
     if( environment(me)->query("no_fight") && !target->query("unprotect_mark") )
         return notify_fail("這裡不准戰鬥。\n");
     if( target->query("no_fight") ) return notify_fail("不行。\n");
