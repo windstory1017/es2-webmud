@@ -21,7 +21,7 @@
   fighter.fonxan 封山派          taoist.fire    朱衣派
   taoist.storm   玄衣派          taoist.wind    隱風觀
   soldier.ber    振武軍營        alchemist.dragon 龍圖丹派
-  taoist.fog     幻霧觀
+  taoist.fog     幻霧觀          alchemist.wuto 武陀灸堂
 
 【 種族 】
   human        人類／人類族      blackteeth   黑齒
