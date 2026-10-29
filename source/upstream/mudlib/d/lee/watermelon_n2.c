@@ -4,6 +4,10 @@
 
 inherit ROOM;
 
+#define MAX_PICK 3
+
+int picked;   // 這一輪已經被摘走幾顆
+
 void create()
 {
     set("short", "西瓜田");
@@ -29,6 +33,12 @@ LONG
     // found and fixed in hunter.c / d/lee/pawnshop.c today.)
 }
 
+void reset()
+{
+    picked = 0;
+    ::reset();
+}
+
 void init()
 {
     ::init();
@@ -39,6 +49,12 @@ int do_pick(string arg)
 {
     object melon, farmer;
     if( !arg || (arg != "西瓜" && arg != "watermelon" && arg != "melon") ) return 0;
+    // 這片瓜田每次重生（reset）只有三顆成熟的西瓜可摘，所有人共用（使用者定案，2026-10-29）。
+    if( picked >= MAX_PICK ) {
+        write("田裡成熟的西瓜都被摘光了，剩下的全是青澀的小瓜。\n");
+        return 1;
+    }
+    picked++;
     melon = new("/d/lee/obj/watermelon");
     melon->move(this_player());
     message_vision("$N彎下腰，從瓜田裡摘起一顆西瓜。\n", this_player());
