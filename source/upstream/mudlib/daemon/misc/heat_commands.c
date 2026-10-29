@@ -16,7 +16,7 @@ object direct_container(object me, string id)
     object ob;
     ob = present(id, me);
     if (!ob && environment(me)) ob = present(id, environment(me));
-    if (ob && (ob->is_character() || living(ob))) return 0;
+    if (ob && living(ob)) return 0;
     return ob;
 }
 int put_limit(object me, object ob, object dest, int count)
