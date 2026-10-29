@@ -181,6 +181,7 @@ private mapping sect = ([
         "arts":        ({
             ([ "skill": "taoism of nature", "map": "spells", "level": 1 ]),
             ([ "skill": "mao-shan magic", "map": "magic", "level": 1 ]),
+            ([ "skill": "taoism of dunja", "map": "magic", "level": 30, "req": ([ "taoism of nature": 90 ]) ]),
         }),
     ]),
     "taoist.lingyun": ([
