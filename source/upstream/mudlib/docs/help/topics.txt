@@ -13,8 +13,7 @@
 
 【 角色成長 】
   character    角色資訊          skill_help   技能與學習
-  books        書籍與讀書
-  master       拜師與師父
+  master       拜師與師父        books        書籍與讀書
 
 【 門派 】
   fighter.lunmay 冷梅莊          fighter.tiger    虎刀門
