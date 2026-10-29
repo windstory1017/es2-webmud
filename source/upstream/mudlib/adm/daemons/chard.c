@@ -322,8 +322,6 @@ int make_living (object ob) {
                 if (cur < 1) cur = 1;
                 ob->set_stat_current (stat, cur);
             }
-        if (pct < 100)
-            tell_object (ob, "你的魂魄被積累的疲憊拖累，這一次復生只找回了一部分精氣神。\n");
     }
     return 1;
 }
