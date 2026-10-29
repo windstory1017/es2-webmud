@@ -35,9 +35,12 @@ private void record(string text)
 // 自己看到的訊息依性別顯示你／妳（2026-10-15 使用者決定）。
 private int say_to(object me, string text) { tell_object(me, replace_string(text, "你", gender_self(me)) + "\n"); return 1; }
 
+// 武陀灸堂弟子雖是方士、也學得到神農之術，但不能辨藥（使用者指示，2026-10-29）：
+// 藥鋪對他們照一般客人處理。
 private int is_alchemist(object me)
 {
-    return objectp(me) && userp(me) && me->query_class() == "alchemist";
+    return objectp(me) && userp(me) && me->query_class() == "alchemist"
+        && me->query("custom_faction") != "alchemist.wuto";
 }
 
 private string money(int amount) { return BALANCE_CMD->money_string(amount); }
