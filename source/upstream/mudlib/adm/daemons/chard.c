@@ -248,6 +248,7 @@ int make_mist (object victim) {
  */
 int make_ghost (object victim) {
     object corpse;
+    int fatigue;
 
     if( victim->query("life_form") != "living" )
         error ("鬼魂只能由生物轉換而成。\n");
@@ -257,6 +258,11 @@ int make_ghost (object victim) {
     victim->set ("living", ([
         "kee" : victim->query_stat_maximum("kee"),
     ]));
+
+    /* 死亡時疲勞超過 80：復活後精氣神只恢復 (100 - (疲勞 - 80) x 5)%（使用者定案，2026-10-29）。 */
+    fatigue = victim->query_stat("fatigue");
+    if (fatigue > 80) victim->set ("revive_pct", 100 - (fatigue - 80) * 5);
+    else victim->delete ("revive_pct");
 
     victim->supplement_stat("HP", 9999);
     victim->supplement_stat("gin", 9999);
@@ -276,7 +282,7 @@ int make_living (object ob) {
     object corpse;
     mapping living_stat;
     string stat;
-    int max;
+    int max, pct, cur;
 
     living_stat = ob->query ("living");
     corpse = ob->query_temp ("corpse");
@@ -305,6 +311,18 @@ int make_living (object ob) {
 
     ob->clear_temp_dbase();
     ob->setup();
+
+    /* 死亡時疲勞過高：精、氣、神只恢復一部分，最小為 1（最大值不變，之後可以慢慢補回）。 */
+    if (!undefinedp (ob->query ("revive_pct"))) {
+        pct = ob->query ("revive_pct");
+        ob->delete ("revive_pct");
+        if (pct < 100)
+            foreach (stat in ({ "gin", "kee", "sen" })) {
+                cur = ob->query_stat_maximum (stat) * pct / 100;
+                if (cur < 1) cur = 1;
+                ob->set_stat_current (stat, cur);
+            }
+    }
     return 1;
 }
 

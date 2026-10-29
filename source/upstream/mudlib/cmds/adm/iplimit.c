@@ -16,7 +16,7 @@ private string who(object ob)
 
 private string group_of(object ob)
 {
-    string g = ob->query_temp("realip_group");
+    string g = REALIP_D->query_body_group(ob);
     return g ? g : "(本機)";
 }
 
