@@ -22,6 +22,14 @@
   soldier.ber    振武軍營        alchemist.dragon 龍圖丹派
   taoist.fog     幻霧觀          alchemist.wuto   武陀灸堂
 
+【 茅山技能 】
+  mao-shan_magic     茅山法術      taoism_of_nature   茅山幻術
+  taoism_of_dunja    遁甲書        taoism_of_darkness 茅山奇術
+  mao-shan_mysticism 奇門術
+
+【 其他技能 】
+  kee_anatomy  經脈穴道之學
+
 【 種族 】
   human        人類／人類族      blackteeth   黑齒
   woochan      無腸              yenhold      厭火
