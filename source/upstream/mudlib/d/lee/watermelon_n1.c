@@ -4,6 +4,8 @@
 
 inherit ROOM;
 
+#define MAX_PICK 3
+
 void create()
 {
     set("short", "西瓜田");
@@ -34,6 +36,13 @@ int do_pick(string arg)
 {
     object melon, farmer;
     if( !arg || (arg != "西瓜" && arg != "watermelon" && arg != "melon") ) return 0;
+    // 每次轉世（魂飛魄散後重新建立角色）最多只能摘三次（使用者定案，2026-10-29）；
+    // 次數記在人物身上，角色檔重建後自然歸零。
+    if( this_player()->query("pick_watermelon") >= MAX_PICK ) {
+        write("你已經摘過好幾顆了，再摘下去農夫可要真的翻臉了。\n");
+        return 1;
+    }
+    this_player()->add("pick_watermelon", 1);
     melon = new("/d/lee/obj/watermelon");
     melon->move(this_player());
     message_vision("$N彎下腰，從瓜田裡摘起一顆西瓜。\n", this_player());
