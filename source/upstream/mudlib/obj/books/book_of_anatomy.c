@@ -12,7 +12,7 @@ void create()
     set("unit", "本");
     set("value", 200);
     set("long", "一本【脈穴內經】，書的封面上是人體的穴位圖。\n");
-    set("required/skill", (["literate": 25, "kee anatomy": 15]));
+    set("required/skill", (["literate": 25, "kee anatomy": 15, "cauterization": 1]));
     set("content", (["kee anatomy": 100]));
     setup();
 }

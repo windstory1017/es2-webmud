@@ -12,7 +12,7 @@ void create()
     set("unit", "本");
     set("value", 200);
     set("long", "一本【八脈注】，專論奇經八脈的循行與交會，註解艱深，是醫家與武人都夢寐以求的秘本。\n");
-    set("required/skill", (["literate": 120, "kee anatomy": 160]));
+    set("required/skill", (["literate": 120, "kee anatomy": 160, "cauterization": 1]));
     set("content", (["kee anatomy": 200]));
     setup();
 }

@@ -27,6 +27,9 @@
   taoism_of_dunja    遁甲書        taoism_of_darkness 茅山奇術
   mao-shan_mysticism 奇門術
 
+【 其他技能 】
+  kee_anatomy  經脈穴道之學
+
 【 種族 】
   human        人類／人類族      blackteeth   黑齒
   woochan      無腸              yenhold      厭火

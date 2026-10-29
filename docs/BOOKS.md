@@ -13,7 +13,7 @@
 | 【奇兵摘要】 | Book of ambush | 讀書識字 30 | 讀書識字 75、偷襲暗算技倆 60 | `obj/books/book_of_ambush.c` |
 | 【脈經注】 | Book | 讀書識字 30 | 經脈穴道之學 20 | `obj/books/book_of_pulse_notes.c` |
 | 【文心雕龍】 | The Literary Mind and Carving of Dragons | 讀書識字 25、古文造詣 10 | 讀書識字 70、古文造詣 70 | `obj/books/the_literary_mind_and_carving_of_dragons.c` |
-| 【脈穴內經】 | Book of anatomy | 讀書識字 25、經脈穴道之學 15 | 經脈穴道之學 100 | `obj/books/book_of_anatomy.c` |
+| 【脈穴內經】 | Book of anatomy | 讀書識字 25、經脈穴道之學 15、針灸之術 1 | 經脈穴道之學 100 | `obj/books/book_of_anatomy.c` |
 | 【無量壽經】 | Book of life | 讀書識字 20、古文造詣 10、善想禪要 25 | 讀書識字 90、古文造詣 80、善想禪要 60 | `obj/books/book_of_life.c` |
 | 【名山文考】 | Studies of Famous Mountains | 讀書識字 40、古文造詣 20 | 讀書識字 80、古文造詣 50 | `obj/books/studies_of_famous_mountains.c` |
 | 【五數】 | The Five Numbers | 讀書識字 50、古文造詣 20 | 五行陰陽之學 20 | `obj/books/the_five_numbers.c` |
@@ -23,7 +23,7 @@
 | 【大悲咒】 | Book of mercy | 讀書識字 70、善想禪要 50 | 讀書識字 100、善想禪要 90 | `obj/books/book_of_mercy.c` |
 | 【天朝異事錄】 | Strange Tales of the Celestial Court | 讀書識字 70、古文造詣 55 | 讀書識字 100、古文造詣 80 | `obj/books/strange_tales_of_the_celestial_court.c` |
 | 【往生經】 | Book of afterlife | 讀書識字 60、善想禪要 75 | 讀書識字 120、善想禪要 120 | `obj/books/book_of_afterlife.c` |
-| 【五脈內經】 | Book of five meridians | 讀書識字 60、經脈穴道之學 80 | 經脈穴道之學 160 | `obj/books/book_of_five_meridians.c` |
+| 【五脈內經】 | Book of five meridians | 讀書識字 60、經脈穴道之學 80、針灸之術 1 | 經脈穴道之學 160 | `obj/books/book_of_five_meridians.c` |
 | 【無字真經】 | Book of wordless sutra | 善想禪要 160 | 善想禪要 200 | `obj/books/book_of_wordless_sutra.c` |
 | 【六陰八卦譜】 | Manual of Six Yin and Eight Trigrams | 讀書識字 95、古文造詣 75 | 讀書識字 125、古文造詣 125、五行陰陽之學 90 | `obj/books/manual_of_six_yin_and_eight_trigrams.c` |
 | 【陰陽經】 | Book of advanced mysticism | 古文造詣 160、五行陰陽之學 40 | 古文造詣 200、五行陰陽之學 140 | `obj/books/yin_yang_canon.c` |
@@ -31,16 +31,16 @@
 | 【咬文嚼字】 | Advanced book of words | 讀書識字 120、古文造詣 110 | 讀書識字 170、古文造詣 200 | `obj/books/treatise_on_words.c` |
 | 【佛名經】 | Book of buddha | 讀書識字 100、古文造詣 60、善想禪要 100 | 讀書識字 130、古文造詣 90、善想禪要 150 | `obj/books/book_of_buddha.c` |
 | 【無名古籍】 | Nameless Ancient Tome | 古文造詣 120、五行陰陽之學 150 | 古文造詣 160、五行陰陽之學 185 | `obj/books/nameless_ancient_tome.c` |
-| 【八脈注】 | Book of eight meridians | 讀書識字 120、經脈穴道之學 160 | 經脈穴道之學 200 | `obj/books/book_of_eight_meridians.c` |
+| 【八脈注】 | Book of eight meridians | 讀書識字 120、經脈穴道之學 160、針灸之術 1 | 經脈穴道之學 200 | `obj/books/book_of_eight_meridians.c` |
 | 【真言經】 | Canon of True Words | 古文造詣 160、五行陰陽之學 145 | 古文造詣 200、五行陰陽之學 200 | `obj/books/canon_of_true_words.c` |
-| 【藥石脈錄】 | Book of herbal meridians | 讀書識字 125、經脈穴道之學 80、丹道【神農之術】 100 | 經脈穴道之學 160 | `obj/books/book_of_herbal_meridians.c` |
+| 【藥石脈錄】 | Book of herbal meridians | 讀書識字 125、經脈穴道之學 80、丹道【神農之術】 100、針灸之術 1 | 經脈穴道之學 160 | `obj/books/book_of_herbal_meridians.c` |
 | 【法華經】 | Book of almsdeed story | 讀書識字 120、古文造詣 80、善想禪要 130 | 讀書識字 160、古文造詣 120、善想禪要 180 | `obj/books/book_of_almsdeed_story.c` |
 
 ## 書本相關技能（2026-10-16 新增技能檔）
 
 | 技能 | 代碼 | 效果 | 技能檔 |
 |---|---|---|---|
-| 經脈穴道之學 | `kee anatomy` | 每升到 5 的倍數級，精、氣、神最大值各 +10（每個門檻一生只給一次，提升時不顯示訊息） | `daemon/skill/kee_anatomy.c` |
+| 經脈穴道之學 | `kee anatomy` | 每升到 5 的倍數級判定一次，成功時精、氣、神最大值各 +5，武陀灸堂弟子各 +10（每個門檻一生只給一次，提升時不顯示訊息）；成功機率 = 等級 × 10 ÷（等級 × 10 + 精氣神最高的最大值） | `daemon/skill/kee_anatomy.c` |
 | 善想禪要 | `absorption` | 每升到 5 的倍數級有機會增加慧根（沿用技能成長屬性規則）；每升到第 sk 級得 sk × 30 點禪定修養 | `daemon/skill/absorption.c` |
 
 只對玩家生效。給到哪一級記在人物的 `skill_bonus/<技能代碼>`。
@@ -69,3 +69,9 @@
 - 販售數量賣完後，要等商人重新出現才補貨。
 - 大觀和尚的數量設計表沒寫，比照名山書肆各 10 本。
 - 【般若波羅密多心經】限和尚研讀，但任何人都買得到。
+
+## 針灸之術與經驗（使用者定案，2026-10-29）
+
+- 【脈穴內經】【五脈內經】【藥石脈錄】【八脈注】都要針灸之術 1 級以上才能閱讀；針灸之術是武陀灸堂弟子的基本技能，所以這四本實際上是武陀灸堂弟子的書。【脈經注】沒有這個限制。
+- 經脈穴道之學的精氣神加成：武陀灸堂弟子（`custom_faction` 為 `alchemist.wuto`）每次 +10，其他人 +5。
+- 對應的說明檔：`help books`、`help kee_anatomy`、`help alchemist.wuto`。
