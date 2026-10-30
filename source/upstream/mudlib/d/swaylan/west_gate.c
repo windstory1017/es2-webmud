@@ -14,6 +14,7 @@ LONG
     set("exits", ([
         "north" : __DIR__"gambling_house",
         "east" : __DIR__"west_street",
+        "west" : "/d/ziyan/entrance",
     ]));
     set("map/area", "水嵐縣");
     setup();
