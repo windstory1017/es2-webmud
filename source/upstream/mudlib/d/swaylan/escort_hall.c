@@ -19,7 +19,7 @@ LONG
     set("objects", ([
         "/custom/legacy_npc/huang_tien_ba" : 1,
     ]));
-    set("map/area", "黃家鏢局");
+    set("map/area", "水嵐縣");
     setup();
     replace_program(ROOM);
 }

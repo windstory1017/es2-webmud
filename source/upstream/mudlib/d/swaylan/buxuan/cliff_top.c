@@ -36,6 +36,6 @@ LONG
     set("exits", ([
         "north" : __DIR__"hut",
     ]));
-    set("map/area", "落雲峰");
+    set("map/area", "水嵐縣");
     setup();
 }

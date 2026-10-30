@@ -17,7 +17,7 @@ LONG
     set("objects", ([
         __DIR__"npc/young_nun" : 1,
     ]));
-    set("map/area", "寶蓮寺");
+    set("map/area", "水嵐縣");
     setup();
     replace_program(ROOM);
 }

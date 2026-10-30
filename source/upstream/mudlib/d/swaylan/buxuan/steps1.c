@@ -16,7 +16,7 @@ LONG
         "east" : __DIR__"terrace",
         "south" : __DIR__"pond",
     ]));
-    set("map/area", "步玄派");
+    set("map/area", "水嵐縣");
     setup();
     replace_program(ROOM);
 }

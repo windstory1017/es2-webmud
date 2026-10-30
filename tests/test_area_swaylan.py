@@ -11,13 +11,14 @@ TEMPLE = S / 'temple'
 BUXUAN = S / 'buxuan'
 FOREST = S / 'forest'
 OPP = {'north': 'south', 'south': 'north', 'east': 'west', 'west': 'east', 'northeast': 'southwest',
-       'southwest': 'northeast', 'northwest': 'southeast', 'southeast': 'northwest', 'up': 'down', 'down': 'up'}
+       'southwest': 'northeast', 'northwest': 'southeast', 'southeast': 'northwest', 'up': 'down', 'down': 'up',
+       'enter': 'out', 'out': 'enter'}
 # 舊資料全文引用的房間不受長度限制。
 LEGACY = {'/d/swaylan/' + r for r in ('inn', 'inn2', 'north_street2', 'pawnshop', 'lunmay/front_yard',
                                        'lunmay/hall', 'temple/gate', 'buxuan/hut', 'buxuan/residence',
                                        'forest/chamber')}
 # 用指令進去、出口出來的單向出口（沐華居 out 回石階；進去要 enter 大廳）。
-ONE_WAY = {('/d/swaylan/buxuan/residence', 'out'), ('/d/swaylan/forest/entrance', 'out'),
+ONE_WAY = {('/d/swaylan/forest/entrance', 'out'),
            ('/d/swaylan/forest/tunnel', 'up'), ('/d/swaylan/forest/chamber', 'out')}
 
 
@@ -56,7 +57,8 @@ def test_rooms_and_npcs():
     assert len(list(FOREST.glob('*.c'))) == 9
     for p in all_rooms():
         s = read(p)
-        area = {L: '冷梅莊', TEMPLE: '寶蓮寺', BUXUAN: '(落雲峰|步玄派)', FOREST: '密林'}.get(p.parent, '(水嵐縣|黃家鏢局)')
+        # 水嵐這邊只有冷梅莊、密林是獨立區域，其他都算水嵐縣（使用者指示，2026-10-30）。
+        area = {L: '冷梅莊', FOREST: '密林'}.get(p.parent, '水嵐縣')
         assert re.search(r'set\("map/area", "' + area + r'"\);', s), p.stem
         for npc in re.findall(r'__DIR__"npc/([a-z_0-9]+)"', s):
             assert (p.parent / 'npc' / (npc + '.c')).exists(), (p.stem, npc)
@@ -174,6 +176,7 @@ def test_temple_and_buxuan():
     s = read(BUXUAN / 'cliff_top.c')
     assert 'arg != "峭壁"' in s and '"山壁" : "在山壁上有許多的刻痕' in s
     assert 'arg != "大廳"' in read(BUXUAN / 'steps2.c')
+    assert '"enter" : __DIR__"residence",' in read(BUXUAN / 'steps2.c')
     # 駱雲峰傳授雲峰筆招。
     s = read(BUXUAN / 'npc/luo_yun_feng.c')
     assert 'set_skill("uenfon", 80);' in s and 'SKILL_D("uenfon")->valid_learn(me)' in s
