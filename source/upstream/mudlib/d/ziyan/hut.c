@@ -17,7 +17,7 @@ LONG
     set("objects", ([
         "/custom/legacy_npc/cheng_huai" : 1,
     ]));
-    set("map/area", "紫煙鎮");
+    set("map/area", "水嵐縣");
     setup();
     replace_program(ROOM);
 }

@@ -16,7 +16,7 @@ LONG
         "south" : __DIR__"yamen_street",
         "west" : __DIR__"drugstore",
     ]));
-    set("map/area", "紫煙鎮");
+    set("map/area", "水嵐縣");
     setup();
     replace_program(ROOM);
 }

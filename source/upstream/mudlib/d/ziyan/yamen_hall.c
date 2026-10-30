@@ -57,7 +57,7 @@ LONG
         "north" : __DIR__"jail",
         "south" : __DIR__"inner_hall",
     ]));
-    set("map/area", "紫煙鎮");
+    set("map/area", "水嵐縣");
     // 大堂與內廳之間的木門，平時上鎖，用大堂金蟾掉出的石鑰匙打開。
     create_door("south", ([ "name" : "木門", "id" : ({ "south", "木門", "door" }), "other_side_dir" : "north",
         "status" : DOOR_CLOSED | DOOR_LOCKED, "lock" : "ziyan_inner_hall" ]));

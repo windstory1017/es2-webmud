@@ -15,6 +15,6 @@ LONG
         "south" : __DIR__"corner",
     ]));
     set("no_fight", 1);
-    set("map/area", "紫煙鎮");
+    set("map/area", "水嵐縣");
     setup();
 }

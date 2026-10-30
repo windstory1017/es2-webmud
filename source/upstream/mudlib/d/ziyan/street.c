@@ -15,7 +15,7 @@ LONG
         "east" : __DIR__"well",
         "west" : __DIR__"narrow_street",
     ]));
-    set("map/area", "紫煙鎮");
+    set("map/area", "水嵐縣");
     setup();
     replace_program(ROOM);
 }
