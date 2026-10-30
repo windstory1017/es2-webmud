@@ -8,9 +8,9 @@ void create()
 {
     set_name("\x1b[1;37m雙鬢鋏\x1b[m", ({ "needle sword", "sword" }));
     set_weight(7500);   // 重量同長劍
-    // 傷害照短劍的數值（obj/area/obj/shortsword.c 的 setup_sword(1, 15, 40, 1)）。
-    init_damage(1, 15, 40, 1, "sword");
-    init_damage(1, 15, 40, 1, "secondhand sword");
+    // 傷害：一下最高約 120（含傷害力 +5，使用者指示，2026-10-30）。
+    init_damage(3, 15, 150, 3, "sword");
+    init_damage(3, 15, 150, 3, "secondhand sword");
 
     if( !clonep() ) {
         set("wield_as", ({ "sword", "secondhand sword" }));

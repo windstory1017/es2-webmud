@@ -204,7 +204,7 @@ def test_forest():
     assert 'wolf_armor' not in read(FOREST / 'npc/bandit_captain.c')
     # 原資料物品改成設計表數值、敘述不變（使用者指示，2026-10-30）。
     s = read(MUD / 'custom/weapon/sword/needle_sword.c')
-    assert 'set_weight(7500);' in s and 'init_damage(1, 15, 40, 1, "sword");' in s and 'void miss_ob' in s
+    assert 'set_weight(7500);' in s and 'init_damage(3, 15, 150, 3, "sword");' in s and 'void miss_ob' in s
     assert 'random(100) >= 50' in s and 'consume_stat("kee", 10, me)' in s
     s = read(MUD / 'custom/weapon/axe/dragon_tiger_axe.c')
     assert 'set_weight(10000);' in s and 'set("value", 30000);' in s and '"damage": 10,' in s
