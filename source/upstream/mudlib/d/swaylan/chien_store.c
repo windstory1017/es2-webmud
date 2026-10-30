@@ -2,7 +2,7 @@
 
 #include <room.h>
 
-inherit ROOM;
+inherit HERB;   // 藥鋪：方士可在此 herblist／buy／sell 丹藥（使用者指示，2026-10-30）
 
 void create()
 {
@@ -19,5 +19,4 @@ LONG
     ]));
     set("map/area", "水嵐縣");
     setup();
-    replace_program(ROOM);
 }
