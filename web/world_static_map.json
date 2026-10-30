@@ -2235,6 +2235,139 @@
       "area": "冷梅莊",
       "x": 1,
       "y": -3
+    },
+    {
+      "id": "/d/swaylan/temple/gate",
+      "label": "寶蓮寺",
+      "area": "寶蓮寺",
+      "x": 3,
+      "y": -1
+    },
+    {
+      "id": "/d/swaylan/temple/side_hall",
+      "label": "側殿",
+      "area": "寶蓮寺",
+      "x": 4,
+      "y": -2
+    },
+    {
+      "id": "/d/swaylan/temple/main_hall",
+      "label": "正殿",
+      "area": "寶蓮寺",
+      "x": 4,
+      "y": -3
+    },
+    {
+      "id": "/d/swaylan/temple/dining",
+      "label": "齋堂",
+      "area": "寶蓮寺",
+      "x": 3,
+      "y": -3
+    },
+    {
+      "id": "/d/swaylan/temple/dorm",
+      "label": "寮房",
+      "area": "寶蓮寺",
+      "x": 5,
+      "y": -3
+    },
+    {
+      "id": "/d/swaylan/buxuan/slope",
+      "label": "山坡",
+      "area": "落雲峰",
+      "x": 6,
+      "y": 1
+    },
+    {
+      "id": "/d/swaylan/buxuan/mountain_path",
+      "label": "山間小路",
+      "area": "落雲峰",
+      "x": 7,
+      "y": 0
+    },
+    {
+      "id": "/d/swaylan/buxuan/peak_foot",
+      "label": "落雲峰底",
+      "area": "落雲峰",
+      "x": 11,
+      "y": -2
+    },
+    {
+      "id": "/d/swaylan/buxuan/cliff",
+      "label": "山壁",
+      "area": "落雲峰",
+      "x": 10,
+      "y": -2
+    },
+    {
+      "id": "/d/swaylan/buxuan/cliff_top",
+      "label": "山壁",
+      "area": "落雲峰",
+      "x": 10,
+      "y": -3
+    },
+    {
+      "id": "/d/swaylan/buxuan/hut",
+      "label": "小茅屋",
+      "area": "落雲峰",
+      "x": 10,
+      "y": -4
+    },
+    {
+      "id": "/d/swaylan/buxuan/gate",
+      "label": "步玄派",
+      "area": "步玄派",
+      "x": 8,
+      "y": -1
+    },
+    {
+      "id": "/d/swaylan/buxuan/steps1",
+      "label": "石階",
+      "area": "步玄派",
+      "x": 9,
+      "y": -1
+    },
+    {
+      "id": "/d/swaylan/buxuan/pond",
+      "label": "聚雲池",
+      "area": "步玄派",
+      "x": 9,
+      "y": 0
+    },
+    {
+      "id": "/d/swaylan/buxuan/terrace",
+      "label": "平台",
+      "area": "步玄派",
+      "x": 10,
+      "y": -1
+    },
+    {
+      "id": "/d/swaylan/buxuan/field1",
+      "label": "農田",
+      "area": "步玄派",
+      "x": 10,
+      "y": 0
+    },
+    {
+      "id": "/d/swaylan/buxuan/field2",
+      "label": "農田",
+      "area": "步玄派",
+      "x": 11,
+      "y": 0
+    },
+    {
+      "id": "/d/swaylan/buxuan/steps2",
+      "label": "石階",
+      "area": "步玄派",
+      "x": 11,
+      "y": -1
+    },
+    {
+      "id": "/d/swaylan/buxuan/residence",
+      "label": "沐華居",
+      "area": "步玄派",
+      "x": 12,
+      "y": -1
     }
   ],
   "edges": [
@@ -6238,6 +6371,246 @@
       "from": "/d/swaylan/crossroad",
       "to": "/d/swaylan/lunmay/gate",
       "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/temple/gate",
+      "to": "/d/swaylan/east_street3",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/temple/gate",
+      "to": "/d/swaylan/temple/side_hall",
+      "direction": "northeast",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/temple/side_hall",
+      "to": "/d/swaylan/temple/gate",
+      "direction": "southwest",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/temple/side_hall",
+      "to": "/d/swaylan/temple/main_hall",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/temple/main_hall",
+      "to": "/d/swaylan/temple/side_hall",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/temple/main_hall",
+      "to": "/d/swaylan/temple/dining",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/temple/main_hall",
+      "to": "/d/swaylan/temple/dorm",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/temple/dining",
+      "to": "/d/swaylan/temple/main_hall",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/temple/dorm",
+      "to": "/d/swaylan/temple/main_hall",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/slope",
+      "to": "/d/swaylan/hillside",
+      "direction": "northwest",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/slope",
+      "to": "/d/swaylan/buxuan/mountain_path",
+      "direction": "northeast",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/mountain_path",
+      "to": "/d/swaylan/buxuan/slope",
+      "direction": "southwest",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/mountain_path",
+      "to": "/d/swaylan/buxuan/gate",
+      "direction": "northeast",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/peak_foot",
+      "to": "/d/swaylan/buxuan/cliff",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/peak_foot",
+      "to": "/d/swaylan/buxuan/steps2",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/cliff",
+      "to": "/d/swaylan/buxuan/peak_foot",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/cliff",
+      "to": "/d/swaylan/buxuan/terrace",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/cliff_top",
+      "to": "/d/swaylan/buxuan/hut",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/hut",
+      "to": "/d/swaylan/buxuan/cliff_top",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/gate",
+      "to": "/d/swaylan/buxuan/mountain_path",
+      "direction": "southwest",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/gate",
+      "to": "/d/swaylan/buxuan/steps1",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/steps1",
+      "to": "/d/swaylan/buxuan/gate",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/steps1",
+      "to": "/d/swaylan/buxuan/terrace",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/steps1",
+      "to": "/d/swaylan/buxuan/pond",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/pond",
+      "to": "/d/swaylan/buxuan/steps1",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/terrace",
+      "to": "/d/swaylan/buxuan/steps1",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/terrace",
+      "to": "/d/swaylan/buxuan/steps2",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/terrace",
+      "to": "/d/swaylan/buxuan/cliff",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/terrace",
+      "to": "/d/swaylan/buxuan/field1",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/field1",
+      "to": "/d/swaylan/buxuan/terrace",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/field1",
+      "to": "/d/swaylan/buxuan/field2",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/field2",
+      "to": "/d/swaylan/buxuan/field1",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/field2",
+      "to": "/d/swaylan/buxuan/steps2",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/steps2",
+      "to": "/d/swaylan/buxuan/terrace",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/steps2",
+      "to": "/d/swaylan/buxuan/field2",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/steps2",
+      "to": "/d/swaylan/buxuan/peak_foot",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/steps2",
+      "to": "/d/swaylan/buxuan/residence",
+      "direction": "enter",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/buxuan/residence",
+      "to": "/d/swaylan/buxuan/steps2",
+      "direction": "out",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/east_street3",
+      "to": "/d/swaylan/temple/gate",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/hillside",
+      "to": "/d/swaylan/buxuan/slope",
+      "direction": "southeast",
       "resolved": true
     }
   ],

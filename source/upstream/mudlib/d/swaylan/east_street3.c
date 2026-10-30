@@ -14,6 +14,7 @@ LONG
     set("exits", ([
         "west" : __DIR__"east_street2",
         "east" : __DIR__"east_gate",
+        "north" : __DIR__"temple/gate",
     ]));
     set("map/area", "水嵐縣");
     setup();
