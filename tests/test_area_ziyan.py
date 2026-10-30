@@ -82,7 +82,9 @@ def test_mechanisms():
         assert '"lock" : "ziyan_inner_hall"' in read(Z / (r + '.c')), r
     assert 'set("lock", "ziyan_inner_hall");' in read(Z / 'obj/stone_key.c')
     s = read(Z / 'inner_hall.c')
-    assert '誰！來人啊～！' in s and 'called_help' in s and 'yamen_guard' in s and 'constable' in s
+    # 只叫捕快，補到兩名在場為止；每次房間重置只喊一次（使用者指示，2026-10-30）。
+    assert '誰！來人啊～！' in s and 'called_help' in s and 'yamen_guard' not in s
+    assert 'i = sizeof(constables); i < 2; i++' in s and 'delete_temp("called_help")' in s
     assert 'valid_leave' in read(Z / 'jail.c') and 'lin yu lun' in read(Z / 'jail.c')
     s = read(Z / 'house.c')
     assert '"血手印" :' in s and 'arg != "書櫃"' in s and 'bloody_letter' in s

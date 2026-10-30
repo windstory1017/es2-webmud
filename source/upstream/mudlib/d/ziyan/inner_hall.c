@@ -10,24 +10,34 @@ void init()
     if( userp(this_player()) ) call_out("call_for_help", 0, this_player());
 }
 
-/* 有人闖進內廳：趙弘春大喊，叫出 2 名衙役、2 名捕快出手。
- * 趙弘春每活一次只喊一次（記在他身上），多人進來也只叫一組。 */
+/* 有人闖進內廳：趙弘春大喊，叫捕快出手（使用者指示，2026-10-30）。
+ * 每次房間重置只喊一次，多人進來也只喊一次；喊的時候補到兩名捕快在場為止：
+ * 已有一名就多叫一名，已有兩名就不再叫。在場的捕快都會對闖入的人出手。 */
 void call_for_help(object me)
 {
-    object zhao, ob;
+    object zhao, ob, *constables;
     int i;
 
     if( !objectp(me) || environment(me) != this_object() ) return;
     if( !objectp(zhao = present("zhao hong chun", this_object())) || !living(zhao) ) return;
-    if( zhao->query_temp("called_help") ) return;
-    zhao->set_temp("called_help", 1);
+    if( query_temp("called_help") ) return;
+    set_temp("called_help", 1);
     message_vision("$N大喊：「誰！來人啊～！」\n", zhao);
-    for( i = 0; i < 4; i++ ) {
-        ob = new(i < 2 ? "/d/ziyan/npc/yamen_guard" : "/d/ziyan/npc/constable");
+    constables = filter(all_inventory(this_object()),
+        (: base_name($1) == "/d/ziyan/npc/constable" && living($1) :));
+    for( i = sizeof(constables); i < 2; i++ ) {
+        ob = new("/d/ziyan/npc/constable");
         ob->move(this_object());
         message_vision("$N聞聲衝了進來。\n", ob);
-        ob->kill_ob(me);
+        constables += ({ ob });
     }
+    foreach( ob in constables ) ob->kill_ob(me);
+}
+
+void reset()
+{
+    ::reset();
+    delete_temp("called_help");
 }
 
 void create()
