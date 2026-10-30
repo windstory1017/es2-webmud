@@ -1,4 +1,4 @@
-// /d/swaylan/crossroad.c — 水嵐縣（S12）。房間敘述依設計表需求撰寫。
+// /d/swaylan/crossroad.c — 水嵐縣（S12）。房間敘述依設計表需求撰寫。往北是冷梅莊大門。
 
 #include <room.h>
 
@@ -14,6 +14,7 @@ LONG
     set("exits", ([
         "west" : __DIR__"woods1",
         "southeast" : __DIR__"north_street2",
+        "north" : __DIR__"lunmay/gate",
     ]));
     set("objects", ([
         "/d/wutang/npc/apprentice" : 2,

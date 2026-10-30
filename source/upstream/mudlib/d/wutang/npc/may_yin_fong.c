@@ -1,8 +1,9 @@
 #include <ansi.h>
-// /d/wutang/npc/may_yin_fong.c — 五堂鎮 NPC：冷梅莊莊主 梅影風。
+// /d/wutang/npc/may_yin_fong.c — 冷梅莊莊主 梅影風（檔案沿用五堂鎮的位置，人在冷梅莊正廳）。
 /*
 CUSTOM NPC (NEW). 設定來源：使用者提供（外觀敘述、裝備、技能、拜師與傳授條件）。
-在交叉路口出生，只在五堂鎮內走動。武功見 docs/martial_arts/冷梅莊_劍士武功.md。
+在冷梅莊正廳出生，不走動（使用者指示，2026-10-30；原本在五堂鎮交叉路口走動）。
+冷梅劍法不再傳授，要到冷梅莊前院自行練穿環（d/swaylan/lunmay/front_yard.c）。武功見 docs/martial_arts/冷梅莊_劍士武功.md。
 戰鬥行為（使用者定案，2026-10-28）：開打即進入明鏡止水之境；氣或 HP 低於兩成時
 服九轉冰心丹補滿（每次重生最多四次）。
 */
@@ -11,15 +12,9 @@ CUSTOM NPC (NEW). 設定來源：使用者提供（外觀敘述、裝備、技�
 
 inherit F_FIGHTER;
 
-#define HOME_ROOM       "/d/wutang/crossroad"
-#define AREA_PREFIX     "/d/wutang/"
 #define FACTION         "fighter.lunmay"
 #define WHITE_GIRTH     "/custom/armor/waist/white_girth"
 #define SILVER_GIRTH    "/custom/armor/waist/silver_girth"
-
-// 每 2 tick（4 秒）擲一次，10% 機率移動。
-#define WANDER_INTERVAL 4
-#define WANDER_CHANCE   10
 
 #define FULL_HEAL_MAX   4       // 補滿的次數上限（每次重生重新計算）
 #define FULL_HEAL_RATIO 20      // 氣或 HP 低於上限的百分之幾時補滿
@@ -78,7 +73,6 @@ void create()
     carry_object("/custom/weapon/sword/sword_of_frost_edge")->wield();
     carry_object("/custom/weapon/dagger/dagger_of_frost_edge")->wield("secondhand dagger");
 
-    if( clonep() ) call_out("wander", WANDER_INTERVAL);
 }
 
 // ------------------------------------------------------------------
@@ -112,38 +106,6 @@ static void heart_beat()
 
     if( !query_temp("hainmay/mirror") && !is_busy() )
         exert_function("mirror");
-}
-
-// ------------------------------------------------------------------
-// 走動：只走往五堂鎮內的出口；人在五堂鎮外就直接回交叉路口。
-// ------------------------------------------------------------------
-
-void wander()
-{
-    object env;
-    mapping exits;
-    string *dirs = ({});
-
-    call_out("wander", WANDER_INTERVAL);
-
-    if( !living(this_object()) || is_fighting() || is_busy() ) return;
-    if( !objectp(env = environment()) ) return;
-
-    if( strsrch(base_name(env), AREA_PREFIX) != 0 ) {
-        message_vision(CYN + "$N身形一晃，轉眼便不見了蹤影。\n" NOR, this_object());
-        move(HOME_ROOM);
-        message_vision(CYN + "$N緩步走了過來。\n" NOR, this_object());
-        return;
-    }
-
-    if( random(100) >= WANDER_CHANCE ) return;
-    if( !mapp(exits = env->query("exits")) ) return;
-
-    foreach( string dir, mixed dest in exits )
-        if( stringp(dest) && strsrch(dest, AREA_PREFIX) == 0 )
-            dirs += ({ dir });
-    if( sizeof(dirs) )
-        GO_CMD->main(this_object(), dirs[random(sizeof(dirs))]);
 }
 
 // ------------------------------------------------------------------
@@ -192,6 +154,7 @@ int acquire_skill(object me, string skill)
 
     switch( skill ) {
     case "lunmay":
+        return notify_fail("梅影風說道：「冷梅劍法的要訣需要自行體會，等你能夠一劍七環時就算有所小成了。」\n");
     case "mayin":
     case "seven":
     case "sword":

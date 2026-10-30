@@ -2151,6 +2151,90 @@
       "area": "黃家鏢局",
       "x": -3,
       "y": 2
+    },
+    {
+      "id": "/d/swaylan/lunmay/gate",
+      "label": "冷梅莊大門",
+      "area": "冷梅莊",
+      "x": 0,
+      "y": 2
+    },
+    {
+      "id": "/d/swaylan/lunmay/path",
+      "label": "冷梅莊",
+      "area": "冷梅莊",
+      "x": 0,
+      "y": 1
+    },
+    {
+      "id": "/d/swaylan/lunmay/front_yard",
+      "label": "冷梅莊前院",
+      "area": "冷梅莊",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "/d/swaylan/lunmay/drill_s",
+      "label": "練武場",
+      "area": "冷梅莊",
+      "x": 1,
+      "y": 0
+    },
+    {
+      "id": "/d/swaylan/lunmay/drill_n",
+      "label": "練武場",
+      "area": "冷梅莊",
+      "x": 1,
+      "y": -1
+    },
+    {
+      "id": "/d/swaylan/lunmay/courtyard",
+      "label": "冷梅莊",
+      "area": "冷梅莊",
+      "x": 0,
+      "y": -1
+    },
+    {
+      "id": "/d/swaylan/lunmay/pavilion",
+      "label": "演武亭",
+      "area": "冷梅莊",
+      "x": -1,
+      "y": -1
+    },
+    {
+      "id": "/d/swaylan/lunmay/hall",
+      "label": "冷梅莊正廳",
+      "area": "冷梅莊",
+      "x": 0,
+      "y": -2
+    },
+    {
+      "id": "/d/swaylan/lunmay/corridor_w",
+      "label": "穿廊",
+      "area": "冷梅莊",
+      "x": -1,
+      "y": -2
+    },
+    {
+      "id": "/d/swaylan/lunmay/corridor_e",
+      "label": "穿廊",
+      "area": "冷梅莊",
+      "x": 1,
+      "y": -2
+    },
+    {
+      "id": "/d/swaylan/lunmay/side_hall",
+      "label": "側廳",
+      "area": "冷梅莊",
+      "x": -1,
+      "y": -3
+    },
+    {
+      "id": "/d/swaylan/lunmay/bedroom",
+      "label": "寢房",
+      "area": "冷梅莊",
+      "x": 1,
+      "y": -3
     }
   ],
   "edges": [
@@ -5998,6 +6082,162 @@
       "from": "/d/swaylan/escort_back",
       "to": "/d/swaylan/escort_hall",
       "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/gate",
+      "to": "/d/swaylan/lunmay/path",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/gate",
+      "to": "/d/swaylan/crossroad",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/path",
+      "to": "/d/swaylan/lunmay/front_yard",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/path",
+      "to": "/d/swaylan/lunmay/gate",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/front_yard",
+      "to": "/d/swaylan/lunmay/courtyard",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/front_yard",
+      "to": "/d/swaylan/lunmay/path",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/front_yard",
+      "to": "/d/swaylan/lunmay/drill_s",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/drill_s",
+      "to": "/d/swaylan/lunmay/drill_n",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/drill_s",
+      "to": "/d/swaylan/lunmay/front_yard",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/drill_n",
+      "to": "/d/swaylan/lunmay/drill_s",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/drill_n",
+      "to": "/d/swaylan/lunmay/courtyard",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/courtyard",
+      "to": "/d/swaylan/lunmay/hall",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/courtyard",
+      "to": "/d/swaylan/lunmay/front_yard",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/courtyard",
+      "to": "/d/swaylan/lunmay/pavilion",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/courtyard",
+      "to": "/d/swaylan/lunmay/drill_n",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/pavilion",
+      "to": "/d/swaylan/lunmay/courtyard",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/hall",
+      "to": "/d/swaylan/lunmay/corridor_w",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/hall",
+      "to": "/d/swaylan/lunmay/corridor_e",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/hall",
+      "to": "/d/swaylan/lunmay/courtyard",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/corridor_w",
+      "to": "/d/swaylan/lunmay/side_hall",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/corridor_w",
+      "to": "/d/swaylan/lunmay/hall",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/corridor_e",
+      "to": "/d/swaylan/lunmay/bedroom",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/corridor_e",
+      "to": "/d/swaylan/lunmay/hall",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/side_hall",
+      "to": "/d/swaylan/lunmay/corridor_w",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/lunmay/bedroom",
+      "to": "/d/swaylan/lunmay/corridor_e",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/crossroad",
+      "to": "/d/swaylan/lunmay/gate",
+      "direction": "north",
       "resolved": true
     }
   ],

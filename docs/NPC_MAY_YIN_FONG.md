@@ -22,11 +22,10 @@
 | force | 190 | |
 | parry / dodge / unarmed | 160 / 150 / 140 | |
 
-## 走動
+## 所在（2026-10-30 起）
 
-- 在 `/d/wutang/crossroad`（交叉路口）出生。
-- 每 2 tick（4 秒）擲一次，10% 機率移動；戰鬥或忙碌時不動。
-- 只走往 `/d/wutang/` 的出口，不會離開五堂鎮；若人在五堂鎮外，下一次擲骰時直接回交叉路口。
+- 在冷梅莊正廳 `/d/swaylan/lunmay/hall` 出生，**不走動**（使用者指示，2026-10-30）。
+- 檔案仍放在 `d/wutang/npc/may_yin_fong.c`。過去在五堂鎮交叉路口出生、在五堂鎮內走動，已取消。
 
 ## 拜師（apprentice may）
 
@@ -40,6 +39,10 @@
 
 | 條件 | 技能 |
 |---|---|
-| 拜師後 | 冷梅劍法、梅影身法、七巧如意手、sword、secondhand sword、secondhand dagger、parry、dodge、unarmed |
+| 拜師後 | 梅影身法、七巧如意手、sword、secondhand sword、secondhand dagger、parry、dodge、unarmed |
 | LV15 | 寒梅心法、force |
 | LV30 且寒梅心法 100 | 傲梅暗劍訣 |
+
+**冷梅劍法不傳授**（使用者指示，2026-10-30）：求教時梅影風說
+「冷梅劍法的要訣需要自行體會，等你能夠一劍七環時就算有所小成了。」
+冷梅莊弟子要到冷梅莊前院練穿環學成，見 `docs/AREA_SWAYLAN.md` 第二批。
