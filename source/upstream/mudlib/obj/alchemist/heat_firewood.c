@@ -45,8 +45,8 @@ void set_burning(int state)
     burning = state;
     if (!state) phase = 0;
     if (state)
-        set_name("燃燒中的松柴", ({"burning firewood", "firewood", "pine firewood"}));
-    else set_name("松柴", ({"firewood", "pine firewood"}));
+        set_name("燃燒中的松柴", ({"burning firewood", "firewood"}));
+    else set_name("松柴", ({"firewood"}));
     HEAT_D->track_wood(this_object());
     HEAT_D->refresh_holder(environment());
     HEAT_D->refresh_furnace(environment());
