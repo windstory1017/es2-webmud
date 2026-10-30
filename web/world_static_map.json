@@ -2372,155 +2372,155 @@
     {
       "id": "/d/ziyan/entrance",
       "label": "紫煙鎮口",
-      "area": "紫煙鎮",
-      "x": 0,
+      "area": "水嵐縣",
+      "x": -3,
       "y": 0
     },
     {
       "id": "/d/ziyan/inn_street",
       "label": "客棧街",
-      "area": "紫煙鎮",
-      "x": 0,
+      "area": "水嵐縣",
+      "x": -3,
       "y": -1
     },
     {
       "id": "/d/ziyan/inn_gate",
       "label": "紫煙小棧門口",
-      "area": "紫煙鎮",
-      "x": -1,
+      "area": "水嵐縣",
+      "x": -4,
       "y": -1
     },
     {
       "id": "/d/ziyan/inn",
       "label": "紫煙小棧",
-      "area": "紫煙鎮",
-      "x": -2,
+      "area": "水嵐縣",
+      "x": -5,
       "y": -1
     },
     {
       "id": "/d/ziyan/market",
       "label": "菜市",
-      "area": "紫煙鎮",
-      "x": 0,
+      "area": "水嵐縣",
+      "x": -3,
       "y": -2
     },
     {
       "id": "/d/ziyan/lane",
       "label": "小街",
-      "area": "紫煙鎮",
-      "x": 0,
+      "area": "水嵐縣",
+      "x": -3,
       "y": -3
     },
     {
       "id": "/d/ziyan/house",
       "label": "民宅",
-      "area": "紫煙鎮",
-      "x": -1,
+      "area": "水嵐縣",
+      "x": -4,
       "y": -3
     },
     {
       "id": "/d/ziyan/corner",
       "label": "街角",
-      "area": "紫煙鎮",
-      "x": 0,
+      "area": "水嵐縣",
+      "x": -3,
       "y": -4
     },
     {
       "id": "/d/ziyan/pawnshop",
       "label": "當鋪",
-      "area": "紫煙鎮",
-      "x": 0,
+      "area": "水嵐縣",
+      "x": -3,
       "y": -5
     },
     {
       "id": "/d/ziyan/well",
       "label": "井邊",
-      "area": "紫煙鎮",
-      "x": -1,
+      "area": "水嵐縣",
+      "x": -4,
       "y": -4
     },
     {
       "id": "/d/ziyan/street",
       "label": "紫煙鎮大街",
-      "area": "紫煙鎮",
-      "x": -2,
+      "area": "水嵐縣",
+      "x": -5,
       "y": -4
     },
     {
       "id": "/d/ziyan/narrow_street",
       "label": "窄街",
-      "area": "紫煙鎮",
-      "x": -3,
+      "area": "水嵐縣",
+      "x": -6,
       "y": -4
     },
     {
       "id": "/d/ziyan/hut",
       "label": "茅屋",
-      "area": "紫煙鎮",
-      "x": -3,
+      "area": "水嵐縣",
+      "x": -6,
       "y": -5
     },
     {
       "id": "/d/ziyan/yamen_street",
       "label": "縣衙前街",
-      "area": "紫煙鎮",
-      "x": -4,
+      "area": "水嵐縣",
+      "x": -7,
       "y": -4
     },
     {
       "id": "/d/ziyan/yamen_gate",
       "label": "縣衙大門",
-      "area": "紫煙鎮",
-      "x": -4,
+      "area": "水嵐縣",
+      "x": -7,
       "y": -3
     },
     {
       "id": "/d/ziyan/yamen_hall",
       "label": "大堂",
-      "area": "紫煙鎮",
-      "x": -5,
+      "area": "水嵐縣",
+      "x": -8,
       "y": -3
     },
     {
       "id": "/d/ziyan/inner_hall",
       "label": "內廳",
-      "area": "紫煙鎮",
-      "x": -5,
+      "area": "水嵐縣",
+      "x": -8,
       "y": -2
     },
     {
       "id": "/d/ziyan/jail",
       "label": "牢房",
-      "area": "紫煙鎮",
-      "x": -5,
+      "area": "水嵐縣",
+      "x": -8,
       "y": -4
     },
     {
       "id": "/d/ziyan/dirt_road",
       "label": "泥土路",
-      "area": "紫煙鎮",
-      "x": -4,
+      "area": "水嵐縣",
+      "x": -7,
       "y": -5
     },
     {
       "id": "/d/ziyan/ferry",
       "label": "渡口",
-      "area": "紫煙鎮",
-      "x": -4,
+      "area": "水嵐縣",
+      "x": -7,
       "y": -6
     },
     {
       "id": "/d/ziyan/drugstore",
       "label": "藥鋪",
-      "area": "紫煙鎮",
-      "x": -5,
+      "area": "水嵐縣",
+      "x": -8,
       "y": -5
     },
     {
       "id": "/d/ziyan/herb_yard",
       "label": "後院",
-      "area": "紫煙鎮",
-      "x": -5,
+      "area": "水嵐縣",
+      "x": -8,
       "y": -6
     },
     {

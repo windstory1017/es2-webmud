@@ -17,6 +17,6 @@ LONG
     set("objects", ([
         __DIR__"npc/waiter" : 1,
     ]));
-    set("map/area", "紫煙鎮");
+    set("map/area", "水嵐縣");
     setup();
 }

@@ -44,7 +44,8 @@ def test_rooms_and_npcs():
     assert len(rooms) == 22
     for p in rooms:
         s = read(p)
-        assert 'set("map/area", "紫煙鎮");' in s, p.stem
+        # 與水嵐縣同一個地圖區域，西城門往紫煙鎮口不當成區域轉換（使用者指示，2026-10-30）。
+        assert 'set("map/area", "水嵐縣");' in s, p.stem
         for npc in re.findall(r'__DIR__"npc/([a-z_]+)"', s):
             assert (Z / 'npc' / (npc + '.c')).exists(), (p.stem, npc)
         for f in re.findall(r'"(/[a-z_/]+)" : \d', s):

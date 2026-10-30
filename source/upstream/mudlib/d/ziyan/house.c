@@ -52,6 +52,6 @@ LONG
     set("exits", ([
         "east" : __DIR__"lane",
     ]));
-    set("map/area", "紫煙鎮");
+    set("map/area", "水嵐縣");
     setup();
 }

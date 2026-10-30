@@ -16,7 +16,7 @@ LONG
         "south" : __DIR__"entrance",
         "west" : __DIR__"inn_gate",
     ]));
-    set("map/area", "紫煙鎮");
+    set("map/area", "水嵐縣");
     setup();
     replace_program(ROOM);
 }

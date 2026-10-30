@@ -17,7 +17,7 @@ LONG
     set("objects", ([
         __DIR__"npc/herb_boy" : 2,
     ]));
-    set("map/area", "紫煙鎮");
+    set("map/area", "水嵐縣");
     setup();
     replace_program(ROOM);
 }
