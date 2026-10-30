@@ -7,14 +7,19 @@ ROOT = Path(__file__).resolve().parents[1]
 MUD = ROOT / 'source' / 'upstream' / 'mudlib'
 S = MUD / 'd' / 'swaylan'
 L = S / 'lunmay'
+TEMPLE = S / 'temple'
+BUXUAN = S / 'buxuan'
 OPP = {'north': 'south', 'south': 'north', 'east': 'west', 'west': 'east', 'northeast': 'southwest',
        'southwest': 'northeast', 'northwest': 'southeast', 'southeast': 'northwest', 'up': 'down', 'down': 'up'}
 # 舊資料全文引用的房間不受長度限制。
-LEGACY = {'inn', 'inn2', 'north_street2', 'pawnshop', 'front_yard', 'hall'}
+LEGACY = {'/d/swaylan/' + r for r in ('inn', 'inn2', 'north_street2', 'pawnshop', 'lunmay/front_yard',
+                                       'lunmay/hall', 'temple/gate', 'buxuan/hut', 'buxuan/residence')}
+# 用指令進去、出口出來的單向出口（沐華居 out 回石階；進去要 enter 大廳）。
+ONE_WAY = {('/d/swaylan/buxuan/residence', 'out')}
 
 
 def all_rooms():
-    return sorted(S.glob('*.c')) + sorted(L.glob('*.c'))
+    return sorted(S.glob('*.c')) + sorted(L.glob('*.c')) + sorted(TEMPLE.glob('*.c')) + sorted(BUXUAN.glob('*.c'))
 
 
 def rid(p):
@@ -43,9 +48,11 @@ def long_text(p):
 def test_rooms_and_npcs():
     assert len(list(S.glob('*.c'))) == 37
     assert len(list(L.glob('*.c'))) == 12
+    assert len(list(TEMPLE.glob('*.c'))) == 5
+    assert len(list(BUXUAN.glob('*.c'))) == 14
     for p in all_rooms():
         s = read(p)
-        area = '冷梅莊' if p.parent == L else '(水嵐縣|黃家鏢局)'
+        area = {L: '冷梅莊', TEMPLE: '寶蓮寺', BUXUAN: '(落雲峰|步玄派)'}.get(p.parent, '(水嵐縣|黃家鏢局)')
         assert re.search(r'set\("map/area", "' + area + r'"\);', s), p.stem
         for npc in re.findall(r'__DIR__"npc/([a-z_0-9]+)"', s):
             assert (p.parent / 'npc' / (npc + '.c')).exists(), (p.stem, npc)
@@ -56,6 +63,8 @@ def test_rooms_and_npcs():
 def test_exits_are_two_way():
     for p in all_rooms():
         for d, t in exits(rid(p)).items():
+            if (rid(p), d) in ONE_WAY:
+                continue
             assert exits(t).get(OPP[d]) == rid(p), (rid(p), d, t)
 
 
@@ -80,7 +89,7 @@ def test_description_length():
     for p in all_rooms():
         widths = wrapped_widths(long_text(p))
         assert max(widths) <= 70, (p.stem, widths)
-        if p.stem not in LEGACY:
+        if rid(p) not in LEGACY:
             assert len(widths) in (3, 4) and widths[-1] >= 12, (p.stem, widths)
 
 
@@ -141,6 +150,31 @@ def test_lunmay_manor():
         assert part in s, part
     # tell_room 的排除對象一定要是陣列；直接傳人物會讓遊戲當機（2026-10-30 實機測到）。
     assert ', me);' not in s and s.count('({ me }));') == 2
+
+
+def test_temple_and_buxuan():
+    # 東大街往北接寶蓮寺、山坡地往東南接落雲峰的山坡。
+    assert '"north" : __DIR__"temple/gate",' in read(S / 'east_street3.c')
+    assert '"southeast" : __DIR__"buxuan/slope",' in read(S / 'hillside.c')
+    for r in ('gate', 'main_hall'):
+        assert 'set("no_fight", 1);' in read(TEMPLE / (r + '.c')), r
+    # 經書照寶蓮寺售價五兩銀子（使用者指示，2026-10-30）。
+    for b in ('almsdeed_story', 'mercy', 'afterlife', 'buddha'):
+        assert 'set("value", 500);' in read(MUD / 'obj/books' / ('book_of_' + b + '.c')), b
+        assert '/obj/books/book_of_' + b in read(TEMPLE / 'npc/abbot.c'), b
+    s = read(TEMPLE / 'npc/young_nun.c')
+    assert '#define AREA_PREFIX     "/d/swaylan/temple/"' in s
+    # 爬山壁：基本閃躲 60 或機敏 25；上面用 climb 峭壁下來；石階 enter 大廳進沐華居。
+    s = read(BUXUAN / 'cliff.c')
+    assert 'arg != "山壁"' in s and 'query_skill("dodge", 1) < 60' in s and 'query_attr("dex") < 25' in s
+    s = read(BUXUAN / 'cliff_top.c')
+    assert 'arg != "峭壁"' in s and '"山壁" : "在山壁上有許多的刻痕' in s
+    assert 'arg != "大廳"' in read(BUXUAN / 'steps2.c')
+    # 駱雲峰傳授雲峰筆招。
+    s = read(BUXUAN / 'npc/luo_yun_feng.c')
+    assert 'set_skill("uenfon", 80);' in s and 'SKILL_D("uenfon")->valid_learn(me)' in s
+    assert (MUD / 'daemon/skill/uenfon.c').exists()
+    assert '"/custom/legacy_npc/ro_yi" : 1,' in read(BUXUAN / 'residence.c')
 
 
 if __name__ == '__main__':

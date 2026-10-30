@@ -1,7 +1,7 @@
 ◎ 雲峰筆招（uenfon）
 　技能種類：匕法、左手匕法
 　學習條件：讀書識字 >=90，不限種族、職業、性別
-　任務起始：尚未開放
+　任務起始：落雲峰小茅屋 駱雲峰
 　安裝：enable dagger with uenfon
 　　　　enable secondhand dagger with uenfon
 　特殊能力：
