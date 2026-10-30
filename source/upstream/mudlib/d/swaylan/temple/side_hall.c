@@ -15,7 +15,7 @@ LONG
         "southwest" : __DIR__"gate",
         "north" : __DIR__"main_hall",
     ]));
-    set("map/area", "寶蓮寺");
+    set("map/area", "水嵐縣");
     setup();
     replace_program(ROOM);
 }

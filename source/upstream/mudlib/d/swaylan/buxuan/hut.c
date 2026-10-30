@@ -17,7 +17,7 @@ LONG
     set("objects", ([
         __DIR__"npc/luo_yun_feng" : 1,
     ]));
-    set("map/area", "落雲峰");
+    set("map/area", "水嵐縣");
     setup();
     replace_program(ROOM);
 }

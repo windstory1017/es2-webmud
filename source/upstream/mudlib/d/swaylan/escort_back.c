@@ -15,7 +15,7 @@ LONG
         "north" : __DIR__"escort_yard",
         "east" : __DIR__"escort_hall",
     ]));
-    set("map/area", "黃家鏢局");
+    set("map/area", "水嵐縣");
     setup();
     replace_program(ROOM);
 }

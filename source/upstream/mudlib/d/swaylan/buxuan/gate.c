@@ -18,7 +18,7 @@ LONG
     set("objects", ([
         __DIR__"npc/apprentice" : 2,
     ]));
-    set("map/area", "落雲峰");
+    set("map/area", "水嵐縣");
     setup();
     replace_program(ROOM);
 }

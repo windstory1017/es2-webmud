@@ -17,7 +17,7 @@ LONG
         "east" : __DIR__"dorm",
     ]));
     set("no_fight", 1);
-    set("map/area", "寶蓮寺");
+    set("map/area", "水嵐縣");
     setup();
     replace_program(ROOM);
 }

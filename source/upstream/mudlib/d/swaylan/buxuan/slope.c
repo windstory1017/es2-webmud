@@ -15,7 +15,7 @@ LONG
         "northwest" : "/d/swaylan/hillside",
         "northeast" : __DIR__"mountain_path",
     ]));
-    set("map/area", "落雲峰");
+    set("map/area", "水嵐縣");
     setup();
     replace_program(ROOM);
 }

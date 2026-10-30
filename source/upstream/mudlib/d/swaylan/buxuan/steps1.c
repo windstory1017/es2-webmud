@@ -16,7 +16,7 @@ LONG
         "east" : __DIR__"terrace",
         "south" : __DIR__"pond",
     ]));
-    set("map/area", "落雲峰");
+    set("map/area", "水嵐縣");
     setup();
     replace_program(ROOM);
 }

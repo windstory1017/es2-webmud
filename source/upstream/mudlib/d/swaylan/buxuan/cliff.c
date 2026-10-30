@@ -37,6 +37,6 @@ LONG
         "east" : __DIR__"peak_foot",
         "south" : __DIR__"terrace",
     ]));
-    set("map/area", "落雲峰");
+    set("map/area", "水嵐縣");
     setup();
 }

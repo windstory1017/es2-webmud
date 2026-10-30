@@ -2120,35 +2120,35 @@
     {
       "id": "/d/swaylan/escort_gate",
       "label": "黃家鏢局",
-      "area": "黃家鏢局",
+      "area": "水嵐縣",
       "x": -1,
       "y": 2
     },
     {
       "id": "/d/swaylan/escort_hall",
       "label": "正廳",
-      "area": "黃家鏢局",
+      "area": "水嵐縣",
       "x": -2,
       "y": 2
     },
     {
       "id": "/d/swaylan/escort_side",
       "label": "側廳",
-      "area": "黃家鏢局",
+      "area": "水嵐縣",
       "x": -2,
       "y": 1
     },
     {
       "id": "/d/swaylan/escort_yard",
       "label": "後院",
-      "area": "黃家鏢局",
+      "area": "水嵐縣",
       "x": -3,
       "y": 1
     },
     {
       "id": "/d/swaylan/escort_back",
       "label": "後廳",
-      "area": "黃家鏢局",
+      "area": "水嵐縣",
       "x": -3,
       "y": 2
     },
@@ -2239,133 +2239,133 @@
     {
       "id": "/d/swaylan/temple/gate",
       "label": "寶蓮寺",
-      "area": "寶蓮寺",
+      "area": "水嵐縣",
       "x": 3,
       "y": -1
     },
     {
       "id": "/d/swaylan/temple/side_hall",
       "label": "側殿",
-      "area": "寶蓮寺",
+      "area": "水嵐縣",
       "x": 4,
       "y": -2
     },
     {
       "id": "/d/swaylan/temple/main_hall",
       "label": "正殿",
-      "area": "寶蓮寺",
+      "area": "水嵐縣",
       "x": 4,
       "y": -3
     },
     {
       "id": "/d/swaylan/temple/dining",
       "label": "齋堂",
-      "area": "寶蓮寺",
+      "area": "水嵐縣",
       "x": 3,
       "y": -3
     },
     {
       "id": "/d/swaylan/temple/dorm",
       "label": "寮房",
-      "area": "寶蓮寺",
+      "area": "水嵐縣",
       "x": 5,
       "y": -3
     },
     {
       "id": "/d/swaylan/buxuan/slope",
       "label": "山坡",
-      "area": "落雲峰",
+      "area": "水嵐縣",
       "x": 6,
       "y": 1
     },
     {
       "id": "/d/swaylan/buxuan/mountain_path",
       "label": "山間小路",
-      "area": "落雲峰",
+      "area": "水嵐縣",
       "x": 7,
       "y": 0
     },
     {
       "id": "/d/swaylan/buxuan/peak_foot",
       "label": "落雲峰底",
-      "area": "落雲峰",
+      "area": "水嵐縣",
       "x": 11,
       "y": -2
     },
     {
       "id": "/d/swaylan/buxuan/cliff",
       "label": "山壁",
-      "area": "落雲峰",
+      "area": "水嵐縣",
       "x": 10,
       "y": -2
     },
     {
       "id": "/d/swaylan/buxuan/cliff_top",
       "label": "山壁",
-      "area": "落雲峰",
+      "area": "水嵐縣",
       "x": 10,
       "y": -3
     },
     {
       "id": "/d/swaylan/buxuan/hut",
       "label": "小茅屋",
-      "area": "落雲峰",
+      "area": "水嵐縣",
       "x": 10,
       "y": -4
     },
     {
       "id": "/d/swaylan/buxuan/gate",
       "label": "步玄派",
-      "area": "落雲峰",
+      "area": "水嵐縣",
       "x": 8,
       "y": -1
     },
     {
       "id": "/d/swaylan/buxuan/steps1",
       "label": "石階",
-      "area": "落雲峰",
+      "area": "水嵐縣",
       "x": 9,
       "y": -1
     },
     {
       "id": "/d/swaylan/buxuan/pond",
       "label": "聚雲池",
-      "area": "落雲峰",
+      "area": "水嵐縣",
       "x": 9,
       "y": 0
     },
     {
       "id": "/d/swaylan/buxuan/terrace",
       "label": "平台",
-      "area": "落雲峰",
+      "area": "水嵐縣",
       "x": 10,
       "y": -1
     },
     {
       "id": "/d/swaylan/buxuan/field1",
       "label": "農田",
-      "area": "落雲峰",
+      "area": "水嵐縣",
       "x": 10,
       "y": 0
     },
     {
       "id": "/d/swaylan/buxuan/field2",
       "label": "農田",
-      "area": "落雲峰",
+      "area": "水嵐縣",
       "x": 11,
       "y": 0
     },
     {
       "id": "/d/swaylan/buxuan/steps2",
       "label": "石階",
-      "area": "落雲峰",
+      "area": "水嵐縣",
       "x": 11,
       "y": -1
     },
     {
       "id": "/d/swaylan/buxuan/residence",
       "label": "沐華居",
-      "area": "落雲峰",
+      "area": "水嵐縣",
       "x": 12,
       "y": -1
     },

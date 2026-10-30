@@ -18,7 +18,7 @@ LONG
     set("objects", ([
         __DIR__"npc/escort_guard" : 2,
     ]));
-    set("map/area", "黃家鏢局");
+    set("map/area", "水嵐縣");
     setup();
     replace_program(ROOM);
 }

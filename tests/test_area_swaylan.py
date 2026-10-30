@@ -57,7 +57,8 @@ def test_rooms_and_npcs():
     assert len(list(FOREST.glob('*.c'))) == 9
     for p in all_rooms():
         s = read(p)
-        area = {L: '冷梅莊', TEMPLE: '寶蓮寺', BUXUAN: '落雲峰', FOREST: '密林'}.get(p.parent, '(水嵐縣|黃家鏢局)')
+        # 水嵐這邊只有冷梅莊、密林是獨立區域，其他都算水嵐縣（使用者指示，2026-10-30）。
+        area = {L: '冷梅莊', FOREST: '密林'}.get(p.parent, '水嵐縣')
         assert re.search(r'set\("map/area", "' + area + r'"\);', s), p.stem
         for npc in re.findall(r'__DIR__"npc/([a-z_0-9]+)"', s):
             assert (p.parent / 'npc' / (npc + '.c')).exists(), (p.stem, npc)
