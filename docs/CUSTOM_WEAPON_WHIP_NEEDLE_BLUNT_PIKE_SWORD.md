@@ -119,7 +119,7 @@
 | 冷玉寶劍 | `sword/jade_sword.c` | jade sword | 3300 | 600 | sword、secondhand sword | 價值隨機 |
 | 殘煙劍 | `sword/legendary_sword_of_smoke.c` | legendary sword of smoke | 6200 | 250 | sword、secondhand sword | 價值隨機 |
 | 藥王神劍 | `sword/medication_king_sword.c` | medication-king sword | 8700 | 1000 | sword |  |
-| 雙鬢鋏 | `sword/needle_sword.c` | needle sword | 2500 | 400 | sword、secondhand sword | 價值隨機 |
+| 雙鬢鋏 | `sword/needle_sword.c` | needle sword | 7500 | 400 | sword、secondhand sword | 數值照水嵐縣設計表（2026-10-30，敘述照原資料）：一下最高約 120、攻擊能力值 10、傷害力 5、膂力 +1；落空時 50% 射針傷氣 10；密林賊帥 |
 | 水月劍 | `sword/night_sword.c` | night sword | 7200 | 100 | sword | 價值隨機 |
 | 虛靈劍 | `sword/numinous_sword.c` | numinous sword | 7200 | 550 | sword | 唯一、價值隨機 |
 | 桃木劍 | `sword/peachwood_sword.c` | peachwood sword | 2600 | 40 | sword |  |

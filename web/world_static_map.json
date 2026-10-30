@@ -2522,6 +2522,72 @@
       "area": "紫煙鎮",
       "x": -5,
       "y": -6
+    },
+    {
+      "id": "/d/swaylan/forest/entrance",
+      "label": "密林入口",
+      "area": "密林",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "/d/swaylan/forest/forest1",
+      "label": "密林",
+      "area": "密林",
+      "x": 1,
+      "y": 0
+    },
+    {
+      "id": "/d/swaylan/forest/forest2",
+      "label": "密林",
+      "area": "密林",
+      "x": 2,
+      "y": 0
+    },
+    {
+      "id": "/d/swaylan/forest/stele",
+      "label": "密林",
+      "area": "密林",
+      "x": 3,
+      "y": 0
+    },
+    {
+      "id": "/d/swaylan/forest/clearing",
+      "label": "空地",
+      "area": "密林",
+      "x": 3,
+      "y": 1
+    },
+    {
+      "id": "/d/swaylan/forest/kitchen",
+      "label": "廚房",
+      "area": "密林",
+      "x": 4,
+      "y": 1
+    },
+    {
+      "id": "/d/swaylan/forest/tunnel",
+      "label": "地下密道",
+      "area": "密林",
+      "x": 3,
+      "y": 2,
+      "layer": "地下"
+    },
+    {
+      "id": "/d/swaylan/forest/hideout",
+      "label": "地下密道",
+      "area": "密林",
+      "x": 2,
+      "y": 3,
+      "layer": "地下"
+    },
+    {
+      "id": "/d/swaylan/forest/chamber",
+      "label": "密室",
+      "area": "密林",
+      "x": 3,
+      "y": 3,
+      "layer": "地下"
     }
   ],
   "edges": [
@@ -7023,6 +7089,114 @@
       "from": "/d/swaylan/west_gate",
       "to": "/d/ziyan/entrance",
       "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/forest/entrance",
+      "to": "/d/swaylan/forest/forest1",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/forest/entrance",
+      "to": "/d/swaylan/forest_edge",
+      "direction": "out",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/forest/forest1",
+      "to": "/d/swaylan/forest/entrance",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/forest/forest1",
+      "to": "/d/swaylan/forest/forest2",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/forest/forest2",
+      "to": "/d/swaylan/forest/forest1",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/forest/forest2",
+      "to": "/d/swaylan/forest/stele",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/forest/stele",
+      "to": "/d/swaylan/forest/forest2",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/forest/stele",
+      "to": "/d/swaylan/forest/clearing",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/forest/clearing",
+      "to": "/d/swaylan/forest/stele",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/forest/clearing",
+      "to": "/d/swaylan/forest/kitchen",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/forest/kitchen",
+      "to": "/d/swaylan/forest/clearing",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/forest/tunnel",
+      "to": "/d/swaylan/forest/stele",
+      "direction": "up",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/forest/tunnel",
+      "to": "/d/swaylan/forest/hideout",
+      "direction": "southwest",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/forest/hideout",
+      "to": "/d/swaylan/forest/tunnel",
+      "direction": "northeast",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/forest/chamber",
+      "to": "/d/swaylan/forest/hideout",
+      "direction": "out",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/forest_edge",
+      "to": "/d/swaylan/forest/entrance",
+      "direction": "enter",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/forest/stele",
+      "to": "/d/swaylan/forest/tunnel",
+      "direction": "down",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/forest/hideout",
+      "to": "/d/swaylan/forest/chamber",
+      "direction": "enter",
       "resolved": true
     }
   ],

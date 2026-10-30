@@ -9,17 +9,20 @@ S = MUD / 'd' / 'swaylan'
 L = S / 'lunmay'
 TEMPLE = S / 'temple'
 BUXUAN = S / 'buxuan'
+FOREST = S / 'forest'
 OPP = {'north': 'south', 'south': 'north', 'east': 'west', 'west': 'east', 'northeast': 'southwest',
        'southwest': 'northeast', 'northwest': 'southeast', 'southeast': 'northwest', 'up': 'down', 'down': 'up'}
 # 舊資料全文引用的房間不受長度限制。
 LEGACY = {'/d/swaylan/' + r for r in ('inn', 'inn2', 'north_street2', 'pawnshop', 'lunmay/front_yard',
-                                       'lunmay/hall', 'temple/gate', 'buxuan/hut', 'buxuan/residence')}
+                                       'lunmay/hall', 'temple/gate', 'buxuan/hut', 'buxuan/residence',
+                                       'forest/chamber')}
 # 用指令進去、出口出來的單向出口（沐華居 out 回石階；進去要 enter 大廳）。
-ONE_WAY = {('/d/swaylan/buxuan/residence', 'out')}
+ONE_WAY = {('/d/swaylan/buxuan/residence', 'out'), ('/d/swaylan/forest/entrance', 'out'),
+           ('/d/swaylan/forest/tunnel', 'up'), ('/d/swaylan/forest/chamber', 'out')}
 
 
 def all_rooms():
-    return sorted(S.glob('*.c')) + sorted(L.glob('*.c')) + sorted(TEMPLE.glob('*.c')) + sorted(BUXUAN.glob('*.c'))
+    return sorted(S.glob('*.c')) + sorted(L.glob('*.c')) + sorted(TEMPLE.glob('*.c')) + sorted(BUXUAN.glob('*.c')) + sorted(FOREST.glob('*.c'))
 
 
 def rid(p):
@@ -50,9 +53,10 @@ def test_rooms_and_npcs():
     assert len(list(L.glob('*.c'))) == 12
     assert len(list(TEMPLE.glob('*.c'))) == 5
     assert len(list(BUXUAN.glob('*.c'))) == 14
+    assert len(list(FOREST.glob('*.c'))) == 9
     for p in all_rooms():
         s = read(p)
-        area = {L: '冷梅莊', TEMPLE: '寶蓮寺', BUXUAN: '(落雲峰|步玄派)'}.get(p.parent, '(水嵐縣|黃家鏢局)')
+        area = {L: '冷梅莊', TEMPLE: '寶蓮寺', BUXUAN: '(落雲峰|步玄派)', FOREST: '密林'}.get(p.parent, '(水嵐縣|黃家鏢局)')
         assert re.search(r'set\("map/area", "' + area + r'"\);', s), p.stem
         for npc in re.findall(r'__DIR__"npc/([a-z_0-9]+)"', s):
             assert (p.parent / 'npc' / (npc + '.c')).exists(), (p.stem, npc)
@@ -175,6 +179,39 @@ def test_temple_and_buxuan():
     assert 'set_skill("uenfon", 80);' in s and 'SKILL_D("uenfon")->valid_learn(me)' in s
     assert (MUD / 'daemon/skill/uenfon.c').exists()
     assert '"/custom/legacy_npc/ro_yi" : 1,' in read(BUXUAN / 'residence.c')
+
+
+def test_forest():
+    # 密林邊緣 enter 密林；石碑 push 掉進密道、密道 up 回石碑；大廳 kick 石頭進密室、密室 out 回來。
+    assert 'arg != "密林"' in read(S / 'forest_edge.c') and 'forest/entrance' in read(S / 'forest_edge.c')
+    s = read(FOREST / 'stele.c')
+    assert 'arg != "石碑"' in s and 'move("/d/swaylan/forest/tunnel")' in s
+    assert '"up" : __DIR__"stele",' in read(FOREST / 'tunnel.c')
+    assert 'south' not in exits('/d/swaylan/forest/clearing') and 'north' not in exits('/d/swaylan/forest/tunnel')
+    s = read(FOREST / 'hideout.c')
+    assert 'arg != "石頭"' in s and 'move("/d/swaylan/forest/chamber")' in s
+    # 戰場功勳與隨機 5～30 兩。
+    for npc, merit in (('bandit', 45), ('bandit_leader', 100), ('bandit_chief', 150),
+                       ('bandit_captain', 750), ('bandit_general', 1000)):
+        s = read(FOREST / 'npc' / (npc + '.c'))
+        assert f'"military service": {merit} ]' in s, npc
+        assert 'carry_money("silver", 5 + random(26));' in s, npc
+        for f in re.findall(r'carry_object\("(/[a-z_/]+)"\)', s):
+            assert (MUD / (f.lstrip('/') + '.c')).exists(), (npc, f)
+    assert 'kill_ob(ob);' in read(FOREST / 'npc/bandit.c')
+    assert '右眼卻罩著一只黑皮眼罩' in read(FOREST / 'npc/bandit_general.c')
+    assert 'bi_jade_armor' in read(FOREST / 'npc/bandit_chief.c')
+    assert 'wolf_armor' not in read(FOREST / 'npc/bandit_captain.c')
+    # 原資料物品改成設計表數值、敘述不變（使用者指示，2026-10-30）。
+    s = read(MUD / 'custom/weapon/sword/needle_sword.c')
+    assert 'set_weight(7500);' in s and 'init_damage(3, 15, 150, 3, "sword");' in s and 'void miss_ob' in s
+    assert 'random(100) >= 50' in s and 'consume_stat("kee", 10, me)' in s
+    s = read(MUD / 'custom/weapon/axe/dragon_tiger_axe.c')
+    assert 'set_weight(10000);' in s and 'set("value", 30000);' in s and '"damage": 10,' in s
+    s = read(MUD / 'custom/armor/armor/dragon_jade_robe.c')
+    assert '"defense": 10,' in s and '"armor_vs_fire": 10,' in s and '"armor_vs_ice": 20,' in s
+    s = read(FOREST / 'obj/bi_jade_armor.c')
+    assert '"armor": 15,' in s and '"con": 1,' in s and '"wis": 1,' in s
 
 
 if __name__ == '__main__':
