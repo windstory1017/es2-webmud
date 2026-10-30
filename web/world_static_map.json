@@ -2316,56 +2316,56 @@
     {
       "id": "/d/swaylan/buxuan/gate",
       "label": "步玄派",
-      "area": "步玄派",
+      "area": "落雲峰",
       "x": 8,
       "y": -1
     },
     {
       "id": "/d/swaylan/buxuan/steps1",
       "label": "石階",
-      "area": "步玄派",
+      "area": "落雲峰",
       "x": 9,
       "y": -1
     },
     {
       "id": "/d/swaylan/buxuan/pond",
       "label": "聚雲池",
-      "area": "步玄派",
+      "area": "落雲峰",
       "x": 9,
       "y": 0
     },
     {
       "id": "/d/swaylan/buxuan/terrace",
       "label": "平台",
-      "area": "步玄派",
+      "area": "落雲峰",
       "x": 10,
       "y": -1
     },
     {
       "id": "/d/swaylan/buxuan/field1",
       "label": "農田",
-      "area": "步玄派",
+      "area": "落雲峰",
       "x": 10,
       "y": 0
     },
     {
       "id": "/d/swaylan/buxuan/field2",
       "label": "農田",
-      "area": "步玄派",
+      "area": "落雲峰",
       "x": 11,
       "y": 0
     },
     {
       "id": "/d/swaylan/buxuan/steps2",
       "label": "石階",
-      "area": "步玄派",
+      "area": "落雲峰",
       "x": 11,
       "y": -1
     },
     {
       "id": "/d/swaylan/buxuan/residence",
       "label": "沐華居",
-      "area": "步玄派",
+      "area": "落雲峰",
       "x": 12,
       "y": -1
     },

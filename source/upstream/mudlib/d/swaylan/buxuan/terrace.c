@@ -17,7 +17,7 @@ LONG
         "north" : __DIR__"cliff",
         "south" : __DIR__"field1",
     ]));
-    set("map/area", "步玄派");
+    set("map/area", "落雲峰");
     setup();
     replace_program(ROOM);
 }

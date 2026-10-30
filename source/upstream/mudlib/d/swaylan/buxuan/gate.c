@@ -18,7 +18,7 @@ LONG
     set("objects", ([
         __DIR__"npc/apprentice" : 2,
     ]));
-    set("map/area", "步玄派");
+    set("map/area", "落雲峰");
     setup();
     replace_program(ROOM);
 }

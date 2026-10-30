@@ -14,7 +14,7 @@ LONG
     set("exits", ([
         "north" : __DIR__"steps1",
     ]));
-    set("map/area", "步玄派");
+    set("map/area", "落雲峰");
     setup();
     replace_program(ROOM);
 }
