@@ -60,7 +60,7 @@ void depart(object who, string dest)
     boat = load_object(boat_room());
     message_vision("$N收下錢，笑道：「客倌請上船，坐穩嘍！」\n", this_object());
     message_vision("$N領著$n跳上小船，竹篙一點，小船便離了岸。\n", this_object(), who);
-    move(boat);
+    this_object()->move(boat);
     who->move(boat);
     call_out("arrive", CROSS_TICKS * TICK, who, dest);
 }
@@ -69,12 +69,15 @@ void arrive(object who, string dest)
 {
     object bank = load_object(dest);
 
-    move(bank);
+    // 先在船上說靠岸，再一起上岸，乘客才不會先看到岸上的景色。
     if( objectp(who) && environment(who) == load_object(boat_room()) ) {
-        who->move(bank);
         message_vision("小船靠了岸，$N把纜繩繫在木樁上，說道：「到嘍，客倌慢走。」\n", this_object());
-    } else
+        this_object()->move(bank);
+        who->move(bank);
+    } else {
+        this_object()->move(bank);
         message_vision("一條小船靠了岸，$N把纜繩繫在木樁上，跳上岸來。\n", this_object());
+    }
     crossing = 0;
 }
 
@@ -86,13 +89,13 @@ void cross_alone(string leave_msg, string arrive_msg)
     if( crossing || !dest ) return;
     crossing = 1;
     message_vision(leave_msg, this_object());
-    move(load_object(boat_room()));
+    this_object()->move(load_object(boat_room()));
     call_out("arrive_alone", CROSS_TICKS * TICK, dest, arrive_msg);
 }
 
 void arrive_alone(string dest, string arrive_msg)
 {
-    move(load_object(dest));
+    this_object()->move(load_object(dest));
     message_vision(arrive_msg, this_object());
     crossing = 0;
 }
