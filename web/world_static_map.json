@@ -2588,6 +2588,20 @@
       "x": 3,
       "y": 3,
       "layer": "地下"
+    },
+    {
+      "id": "/d/wutang/ferry_boat_ro",
+      "label": "渡船上",
+      "area": "羿水",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "/d/wutang/ferry_boat_huang",
+      "label": "渡船上",
+      "area": "羿水",
+      "x": 2,
+      "y": 0
     }
   ],
   "edges": [
