@@ -15,7 +15,7 @@ LONG
         "south" : __DIR__"street2",
     ]));
     set("objects", ([
-        __DIR__"npc/pawn_guard" : 1,
+        __DIR__"npc/pawn_guard" : 2,
     ]));
     set("no_fight", 1);
     set("map/area", "水嵐縣");
