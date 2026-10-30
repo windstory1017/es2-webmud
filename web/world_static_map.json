@@ -1891,6 +1891,266 @@
       "area": "百花村",
       "x": 2,
       "y": 4
+    },
+    {
+      "id": "/d/swaylan/ferry",
+      "label": "渡口",
+      "area": "水嵐縣",
+      "x": 0,
+      "y": -4
+    },
+    {
+      "id": "/d/swaylan/north_gate",
+      "label": "北城門",
+      "area": "水嵐縣",
+      "x": 0,
+      "y": -3
+    },
+    {
+      "id": "/d/swaylan/old_ferry",
+      "label": "舊渡口",
+      "area": "水嵐縣",
+      "x": 1,
+      "y": -3
+    },
+    {
+      "id": "/d/swaylan/woods2",
+      "label": "樹林",
+      "area": "水嵐縣",
+      "x": -2,
+      "y": -3
+    },
+    {
+      "id": "/d/swaylan/woods1",
+      "label": "樹林",
+      "area": "水嵐縣",
+      "x": -2,
+      "y": -2
+    },
+    {
+      "id": "/d/swaylan/crossroad",
+      "label": "路口",
+      "area": "水嵐縣",
+      "x": -1,
+      "y": -2
+    },
+    {
+      "id": "/d/swaylan/north_street1",
+      "label": "街道",
+      "area": "水嵐縣",
+      "x": 0,
+      "y": -2
+    },
+    {
+      "id": "/d/swaylan/dirt_road",
+      "label": "泥土路",
+      "area": "水嵐縣",
+      "x": 1,
+      "y": -2
+    },
+    {
+      "id": "/d/swaylan/bank",
+      "label": "景隆錢莊",
+      "area": "水嵐縣",
+      "x": -1,
+      "y": -1
+    },
+    {
+      "id": "/d/swaylan/gambling_house",
+      "label": "賭場",
+      "area": "水嵐縣",
+      "x": -2,
+      "y": -1
+    },
+    {
+      "id": "/d/swaylan/north_street2",
+      "label": "北大街",
+      "area": "水嵐縣",
+      "x": 0,
+      "y": -1
+    },
+    {
+      "id": "/d/swaylan/smithy",
+      "label": "鐵匠鋪",
+      "area": "水嵐縣",
+      "x": 1,
+      "y": -1
+    },
+    {
+      "id": "/d/swaylan/west_gate",
+      "label": "西城門",
+      "area": "水嵐縣",
+      "x": -2,
+      "y": 0
+    },
+    {
+      "id": "/d/swaylan/west_street",
+      "label": "西大街",
+      "area": "水嵐縣",
+      "x": -1,
+      "y": 0
+    },
+    {
+      "id": "/d/swaylan/inn",
+      "label": "五陵客棧",
+      "area": "水嵐縣",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "/d/swaylan/inn2",
+      "label": "五陵客棧二樓",
+      "area": "水嵐縣",
+      "x": 0,
+      "y": 0,
+      "layer": "二樓"
+    },
+    {
+      "id": "/d/swaylan/east_street1",
+      "label": "東大街",
+      "area": "水嵐縣",
+      "x": 1,
+      "y": 0
+    },
+    {
+      "id": "/d/swaylan/east_street2",
+      "label": "東大街",
+      "area": "水嵐縣",
+      "x": 2,
+      "y": 0
+    },
+    {
+      "id": "/d/swaylan/east_street3",
+      "label": "東大街",
+      "area": "水嵐縣",
+      "x": 3,
+      "y": 0
+    },
+    {
+      "id": "/d/swaylan/east_gate",
+      "label": "東城門",
+      "area": "水嵐縣",
+      "x": 4,
+      "y": 0
+    },
+    {
+      "id": "/d/swaylan/hillside",
+      "label": "山坡地",
+      "area": "水嵐縣",
+      "x": 5,
+      "y": 0
+    },
+    {
+      "id": "/d/swaylan/forest_edge",
+      "label": "密林邊緣",
+      "area": "水嵐縣",
+      "x": 5,
+      "y": -1
+    },
+    {
+      "id": "/d/swaylan/south_street1",
+      "label": "南大街",
+      "area": "水嵐縣",
+      "x": 0,
+      "y": 1
+    },
+    {
+      "id": "/d/swaylan/chien_store",
+      "label": "錢記商號",
+      "area": "水嵐縣",
+      "x": 1,
+      "y": 1
+    },
+    {
+      "id": "/d/swaylan/pawnshop",
+      "label": "高陽當鋪",
+      "area": "水嵐縣",
+      "x": 2,
+      "y": 1
+    },
+    {
+      "id": "/d/swaylan/street_se",
+      "label": "街道",
+      "area": "水嵐縣",
+      "x": 4,
+      "y": 1
+    },
+    {
+      "id": "/d/swaylan/south_street2",
+      "label": "南大街",
+      "area": "水嵐縣",
+      "x": 0,
+      "y": 2
+    },
+    {
+      "id": "/d/swaylan/street1",
+      "label": "街道",
+      "area": "水嵐縣",
+      "x": 1,
+      "y": 2
+    },
+    {
+      "id": "/d/swaylan/street2",
+      "label": "街道",
+      "area": "水嵐縣",
+      "x": 2,
+      "y": 2
+    },
+    {
+      "id": "/d/swaylan/alley",
+      "label": "小巷子",
+      "area": "水嵐縣",
+      "x": 3,
+      "y": 2
+    },
+    {
+      "id": "/d/swaylan/south_street3",
+      "label": "南大街",
+      "area": "水嵐縣",
+      "x": 0,
+      "y": 3
+    },
+    {
+      "id": "/d/swaylan/south_gate",
+      "label": "南城門",
+      "area": "水嵐縣",
+      "x": 0,
+      "y": 4
+    },
+    {
+      "id": "/d/swaylan/escort_gate",
+      "label": "黃家鏢局",
+      "area": "黃家鏢局",
+      "x": -1,
+      "y": 2
+    },
+    {
+      "id": "/d/swaylan/escort_hall",
+      "label": "正廳",
+      "area": "黃家鏢局",
+      "x": -2,
+      "y": 2
+    },
+    {
+      "id": "/d/swaylan/escort_side",
+      "label": "側廳",
+      "area": "黃家鏢局",
+      "x": -2,
+      "y": 1
+    },
+    {
+      "id": "/d/swaylan/escort_yard",
+      "label": "後院",
+      "area": "黃家鏢局",
+      "x": -3,
+      "y": 1
+    },
+    {
+      "id": "/d/swaylan/escort_back",
+      "label": "後廳",
+      "area": "黃家鏢局",
+      "x": -3,
+      "y": 2
     }
   ],
   "edges": [
@@ -5276,6 +5536,468 @@
       "from": "/d/baihua/cliff",
       "to": "/d/baihua/platform",
       "direction": "climb",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/ferry",
+      "to": "/d/swaylan/north_gate",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/north_gate",
+      "to": "/d/swaylan/ferry",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/north_gate",
+      "to": "/d/swaylan/north_street1",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/north_gate",
+      "to": "/d/swaylan/old_ferry",
+      "direction": "enter",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/old_ferry",
+      "to": "/d/swaylan/dirt_road",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/woods2",
+      "to": "/d/swaylan/woods1",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/woods1",
+      "to": "/d/swaylan/woods2",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/woods1",
+      "to": "/d/swaylan/crossroad",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/crossroad",
+      "to": "/d/swaylan/woods1",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/crossroad",
+      "to": "/d/swaylan/north_street2",
+      "direction": "southeast",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/north_street1",
+      "to": "/d/swaylan/north_gate",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/north_street1",
+      "to": "/d/swaylan/north_street2",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/north_street1",
+      "to": "/d/swaylan/dirt_road",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/dirt_road",
+      "to": "/d/swaylan/old_ferry",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/dirt_road",
+      "to": "/d/swaylan/north_street1",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/bank",
+      "to": "/d/swaylan/west_street",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/gambling_house",
+      "to": "/d/swaylan/west_gate",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/north_street2",
+      "to": "/d/swaylan/north_street1",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/north_street2",
+      "to": "/d/swaylan/inn",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/north_street2",
+      "to": "/d/swaylan/smithy",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/north_street2",
+      "to": "/d/swaylan/crossroad",
+      "direction": "northwest",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/smithy",
+      "to": "/d/swaylan/north_street2",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/west_gate",
+      "to": "/d/swaylan/gambling_house",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/west_gate",
+      "to": "/d/swaylan/west_street",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/west_street",
+      "to": "/d/swaylan/west_gate",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/west_street",
+      "to": "/d/swaylan/inn",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/west_street",
+      "to": "/d/swaylan/bank",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/inn",
+      "to": "/d/swaylan/west_street",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/inn",
+      "to": "/d/swaylan/east_street1",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/inn",
+      "to": "/d/swaylan/north_street2",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/inn",
+      "to": "/d/swaylan/south_street1",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/inn",
+      "to": "/d/swaylan/inn2",
+      "direction": "up",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/inn2",
+      "to": "/d/swaylan/inn",
+      "direction": "down",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/east_street1",
+      "to": "/d/swaylan/inn",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/east_street1",
+      "to": "/d/swaylan/east_street2",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/east_street1",
+      "to": "/d/swaylan/chien_store",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/east_street2",
+      "to": "/d/swaylan/east_street1",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/east_street2",
+      "to": "/d/swaylan/east_street3",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/east_street3",
+      "to": "/d/swaylan/east_street2",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/east_street3",
+      "to": "/d/swaylan/east_gate",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/east_gate",
+      "to": "/d/swaylan/east_street3",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/east_gate",
+      "to": "/d/swaylan/hillside",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/east_gate",
+      "to": "/d/swaylan/street_se",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/east_gate",
+      "to": "/d/swaylan/forest_edge",
+      "direction": "northeast",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/hillside",
+      "to": "/d/swaylan/east_gate",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/forest_edge",
+      "to": "/d/swaylan/east_gate",
+      "direction": "southwest",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/south_street1",
+      "to": "/d/swaylan/inn",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/south_street1",
+      "to": "/d/swaylan/south_street2",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/chien_store",
+      "to": "/d/swaylan/east_street1",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/pawnshop",
+      "to": "/d/swaylan/street2",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/street_se",
+      "to": "/d/swaylan/east_gate",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/street_se",
+      "to": "/d/swaylan/alley",
+      "direction": "southwest",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/south_street2",
+      "to": "/d/swaylan/south_street1",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/south_street2",
+      "to": "/d/swaylan/south_street3",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/south_street2",
+      "to": "/d/swaylan/escort_gate",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/south_street2",
+      "to": "/d/swaylan/street1",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/street1",
+      "to": "/d/swaylan/south_street2",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/street1",
+      "to": "/d/swaylan/street2",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/street2",
+      "to": "/d/swaylan/street1",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/street2",
+      "to": "/d/swaylan/alley",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/street2",
+      "to": "/d/swaylan/pawnshop",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/alley",
+      "to": "/d/swaylan/street2",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/alley",
+      "to": "/d/swaylan/street_se",
+      "direction": "northeast",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/south_street3",
+      "to": "/d/swaylan/south_street2",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/south_street3",
+      "to": "/d/swaylan/south_gate",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/south_gate",
+      "to": "/d/swaylan/south_street3",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/escort_gate",
+      "to": "/d/swaylan/south_street2",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/escort_gate",
+      "to": "/d/swaylan/escort_hall",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/escort_hall",
+      "to": "/d/swaylan/escort_gate",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/escort_hall",
+      "to": "/d/swaylan/escort_side",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/escort_hall",
+      "to": "/d/swaylan/escort_back",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/escort_side",
+      "to": "/d/swaylan/escort_hall",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/escort_side",
+      "to": "/d/swaylan/escort_yard",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/escort_yard",
+      "to": "/d/swaylan/escort_side",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/escort_yard",
+      "to": "/d/swaylan/escort_back",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/escort_back",
+      "to": "/d/swaylan/escort_yard",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/escort_back",
+      "to": "/d/swaylan/escort_hall",
+      "direction": "east",
       "resolved": true
     }
   ],
