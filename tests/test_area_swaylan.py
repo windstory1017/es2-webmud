@@ -202,6 +202,14 @@ def test_forest():
     assert '右眼卻罩著一只黑皮眼罩' in read(FOREST / 'npc/bandit_general.c')
     assert 'bi_jade_armor' in read(FOREST / 'npc/bandit_chief.c')
     assert 'wolf_armor' not in read(FOREST / 'npc/bandit_captain.c')
+    # 原資料物品改成設計表數值、敘述不變（使用者指示，2026-10-30）。
+    s = read(MUD / 'custom/weapon/sword/needle_sword.c')
+    assert 'set_weight(7500);' in s and 'init_damage(1, 15, 40, 1, "sword");' in s and 'void miss_ob' in s
+    assert 'random(100) >= 50' in s and 'consume_stat("kee", 10, me)' in s
+    s = read(MUD / 'custom/weapon/axe/dragon_tiger_axe.c')
+    assert 'set_weight(10000);' in s and 'set("value", 30000);' in s and '"damage": 10,' in s
+    s = read(MUD / 'custom/armor/armor/dragon_jade_robe.c')
+    assert '"defense": 10,' in s and '"armor_vs_fire": 10,' in s and '"armor_vs_ice": 20,' in s
     s = read(FOREST / 'obj/bi_jade_armor.c')
     assert '"armor": 15,' in s and '"con": 1,' in s and '"wis": 1,' in s
 
