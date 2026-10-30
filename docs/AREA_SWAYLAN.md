@@ -857,7 +857,7 @@ NPC 敘述（新寫）：
 **AQ14 石階**（`steps2.c`）
 
 - 來源：新寫
-- 出口：west 平台、south 農田、north 落雲峰底；**enter 大廳** → 沐華居
+- 出口：west 平台、south 農田、north 落雲峰底、enter 沐華居（出口列表顯示 enter，2026-10-30；`enter 大廳` 也可以）
 - NPC／功能：步玄派弟子 ×2
 
 ```

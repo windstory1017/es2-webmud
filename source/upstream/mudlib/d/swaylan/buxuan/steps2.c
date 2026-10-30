@@ -34,6 +34,7 @@ LONG
         "west" : __DIR__"terrace",
         "south" : __DIR__"field2",
         "north" : __DIR__"peak_foot",
+        "enter" : __DIR__"residence",   // 出口列表顯示 enter（使用者指示，2026-10-30）；enter 大廳 也可以
     ]));
     set("objects", ([
         __DIR__"npc/apprentice" : 2,
