@@ -14,6 +14,7 @@ LONG
     set("exits", ([
         "south" : __DIR__"dirt_road",
     ]));
+    set("no_fight", 1);   // 渡口一律非戰區（使用者指示，2026-10-30）
     set("map/area", "水嵐縣");
     setup();
     replace_program(ROOM);
