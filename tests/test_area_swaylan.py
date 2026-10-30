@@ -46,13 +46,29 @@ def test_exits_are_two_way():
             assert exits(t).get(OPP[d]) == p.stem, (p.stem, d, t)
 
 
+NO_LINE_START = '﹗！？﹖，﹐。﹒、；﹔：﹕」』）】〉》…'
+
+
+def wrapped_widths(text, width=70, first=4):
+    # 照 adm/simul_efun/utf8.c 的 cjk_wrap()：收尾標點不放行首，會掛在上一行尾端。
+    widths = [first]
+    for ch in text:
+        w = 2 if unicodedata.east_asian_width(ch) in 'WF' else 1
+        if widths[-1] + w > width and ch not in NO_LINE_START:
+            widths.append(0)
+        widths[-1] += w
+    return widths
+
+
 def test_description_length():
-    # 自寫敘述三～四行：首行空四格、每行 70 寬（中文算 2），最後一行至少六個字。
+    # 自寫敘述三～四行：首行空四格、每行 70 寬（中文算 2），最後一行至少六個字；
+    # 標點不可剛好掛在行尾凸出去（使用者指示，2026-10-30）。
+    # 舊資料不受行數限制，但同樣要對齊（使用者指示：對齊為主，可微調舊文）。
     for p in S.glob('*.c'):
-        if p.stem in LEGACY:
-            continue
-        n = sum(2 if unicodedata.east_asian_width(c) in 'WF' else 1 for c in long_text(p.stem)) // 2
-        assert 74 <= n <= 103 or 109 <= n <= 138, (p.stem, n)
+        widths = wrapped_widths(long_text(p.stem))
+        assert max(widths) <= 70, (p.stem, widths)
+        if p.stem not in LEGACY:
+            assert len(widths) in (3, 4) and widths[-1] >= 12, (p.stem, widths)
 
 
 def test_no_command_hints():
@@ -67,6 +83,7 @@ def test_special_rooms():
     assert 'inherit HOCKSHOP;' in read(S / 'pawnshop.c')
     assert 'inherit ROOM;' in read(S / 'chien_store.c')   # 錢記商號不是銀行
     assert 'set("map/layer", "二樓");' in read(S / 'inn2.c')
+    assert '__DIR__"npc/pawn_guard" : 2,' in read(S / 'pawnshop.c')   # 守衛兩名（使用者指示，2026-10-30）
     for r in ('ferry', 'bank', 'inn2', 'pawnshop'):
         assert 'set("no_fight", 1);' in read(S / (r + '.c')), r
     s = read(S / 'north_gate.c')
