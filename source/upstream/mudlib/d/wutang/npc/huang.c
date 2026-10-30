@@ -1,6 +1,7 @@
 // /d/wutang/npc/huang.c — 五堂鎮 NPC：小黃（依五堂鎮設計表）。
 
 #include <npc.h>
+#include <ansi.h>
 inherit F_VILLAGER;
 inherit "/d/wutang/npc/ferryman";   // 羿水擺渡（使用者指示，2026-10-30）
 
@@ -17,8 +18,8 @@ void check_partner()
     if( !objectp(ro) || ro->is_crossing() ) { together = 0; return; }
     if( ++together < 3 ) return;
     together = 0;
-    cross_alone("$N伸了個懶腰，對老駱笑道：「駱伯，既然您在這兒顧著，我就撐船到對岸候著，"
-        + "兩頭都有人才好做生意。」說罷跳上小船，撐篙往對岸去了。\n",
+    // 換岸訊息用青色（使用者定稿，2026-10-30）。
+    cross_alone(CYN "$N笑道：「駱伯，我到對岸候著」說罷便跳上小船，撐篙往對岸去了。\n" NOR,
         "一條小船從對岸緩緩靠了過來，$N跳上岸，把纜繩往木樁上一繫。\n");
 }
 

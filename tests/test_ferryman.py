@@ -39,6 +39,9 @@ def test_web_map():
     g = json.loads((ROOT / 'web/world_static_map.json').read_text(encoding='utf-8'))
     ids = {n['id'] for n in g['nodes']}
     assert {'/d/wutang/ferry_boat_ro', '/d/wutang/ferry_boat_huang'} <= ids
+    # 兩艘船各自一層，地圖上一次只顯示一艘（使用者指示，2026-10-30）。
+    layers = {n['id']: n.get('layer') for n in g['nodes'] if n['id'].startswith('/d/wutang/ferry_boat_')}
+    assert layers == {'/d/wutang/ferry_boat_ro': '老駱的船', '/d/wutang/ferry_boat_huang': '小黃的船'}
 
 
 if __name__ == '__main__':
