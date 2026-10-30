@@ -44,13 +44,13 @@ int do_practise(string arg)
     if( count < RINGS_DONE ) {
         write("你調整氣息、聚精凝神，一劍使出共穿過了" + chinese_number(rings) + "個環。\n");
         tell_room(this_object(), me->name() + "調整氣息、聚精凝神，一劍使出共穿過了"
-            + chinese_number(rings) + "個環。\n", me);
+            + chinese_number(rings) + "個環。\n", ({ me }));
         return 1;
     }
 
     write("你調整氣息、聚精凝神，一劍穿過了七個環的中心，劍尖竟未碰到半點環壁！\n");
     tell_room(this_object(), me->name() + "調整氣息、聚精凝神，一劍穿過了七個環的中心，"
-        + "劍尖竟未碰到半點環壁！\n", me);
+        + "劍尖竟未碰到半點環壁！\n", ({ me }));
     // 直接學成：補足到學成那一級所需的點數並當場升級（冷梅劍法顯示「你終於練成了冷梅劍法。」）。
     me->set_learn("lunmay", me->skill_threshold("lunmay", me->skill_entry_level("lunmay")));
     me->apply_gain_progression(([ "lunmay" : 1 ]));
