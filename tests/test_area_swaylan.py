@@ -148,7 +148,7 @@ def test_lunmay_manor():
                  '#define RINGS_DONE  36', '#define GIN_COST    10', 'me->start_busy(1);',
                  'rings = 1 + to_int(sqrt(to_float(count)));', 'apply_gain_progression'):
         assert part in s, part
-    # tell_room 的排除對象一定要是陣列；直接傳人物會讓遊戲當機（2026-10-30 實機測到）。
+    # tell_room 的排除對象照其他程式的慣例寫成陣列 ({ me })。
     assert ', me);' not in s and s.count('({ me }));') == 2
 
 
