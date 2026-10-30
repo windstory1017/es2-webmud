@@ -14,6 +14,7 @@ LONG
     );
     set("no_fight", 1);
     set("map/area", "羿水");
+    set("map/layer", "老駱的船");   // 兩艘船各一層，地圖上只顯示自己這一艘
     setup();
     replace_program(ROOM);
 }
