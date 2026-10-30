@@ -63,12 +63,12 @@ def wrapped_widths(text, width=70, first=4):
 def test_description_length():
     # 自寫敘述三～四行：首行空四格、每行 70 寬（中文算 2），最後一行至少六個字；
     # 標點不可剛好掛在行尾凸出去（使用者指示，2026-10-30）。
+    # 舊資料不受行數限制，但同樣要對齊（使用者指示：對齊為主，可微調舊文）。
     for p in S.glob('*.c'):
-        if p.stem in LEGACY:
-            continue
         widths = wrapped_widths(long_text(p.stem))
-        assert len(widths) in (3, 4) and widths[-1] >= 12, (p.stem, widths)
         assert max(widths) <= 70, (p.stem, widths)
+        if p.stem not in LEGACY:
+            assert len(widths) in (3, 4) and widths[-1] >= 12, (p.stem, widths)
 
 
 def test_no_command_hints():
