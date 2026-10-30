@@ -17,7 +17,7 @@ void create()
     set("merchandise", ([
         "/obj/alchemist/black_pill" : 50,
         "/obj/medication/boar_berry" : 40,
-        "/obj/alchemist/heat_firewood" : 30,
+        "/obj/alchemist/heat_firewood" : 3000,   // 松柴 3000 根（使用者指示 #21，2026-10-30）
         "/obj/alchemist/heat_reactor" : 10,
         "/obj/alchemist/heat_furnace" : 5,
         "/d/lee/obj/medicine_bottle" : 20,
