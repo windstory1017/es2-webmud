@@ -109,7 +109,8 @@ def test_special_rooms():
     assert 'inherit INN;' in read(S / 'inn.c')
     assert 'inherit BANK;' in read(S / 'bank.c')
     assert 'inherit HOCKSHOP;' in read(S / 'pawnshop.c')
-    assert 'inherit ROOM;' in read(S / 'chien_store.c')   # 錢記商號不是銀行
+    s = read(S / 'chien_store.c')   # 錢記商號不是銀行，是藥鋪（使用者指示，2026-10-30）
+    assert 'inherit HERB;' in s and 'replace_program' not in s
     assert 'set("map/layer", "二樓");' in read(S / 'inn2.c')
     assert '__DIR__"npc/pawn_guard" : 2,' in read(S / 'pawnshop.c')   # 守衛兩名（使用者指示，2026-10-30）
     for r in ('ferry', 'bank', 'inn2', 'pawnshop'):
