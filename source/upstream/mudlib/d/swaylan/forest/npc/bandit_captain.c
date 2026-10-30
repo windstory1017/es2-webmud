@@ -32,6 +32,5 @@ LONG
     setup();
     carry_object("/custom/weapon/axe/large_axe")->wield();
     carry_object("/custom/weapon/axe/dragon_tiger_axe")->wield("secondhand axe");   // 青龍白虎斧
-    carry_object("/custom/armor/armor/wolf_armor")->wear();
     carry_money("silver", 5 + random(26));
 }

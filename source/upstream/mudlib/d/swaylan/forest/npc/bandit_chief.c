@@ -30,6 +30,6 @@ LONG
     set_power("A");
     setup();
     carry_object("/obj/area/obj/longsword")->wield();
-    carry_object("/d/swaylan/forest/obj/jade_armor")->wear();
+    carry_object("/d/swaylan/forest/obj/bi_jade_armor")->wear();   // 璧玉甲（使用者指示，2026-10-30）
     carry_money("silver", 5 + random(26));
 }

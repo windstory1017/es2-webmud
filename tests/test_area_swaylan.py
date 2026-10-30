@@ -200,6 +200,10 @@ def test_forest():
             assert (MUD / (f.lstrip('/') + '.c')).exists(), (npc, f)
     assert 'kill_ob(ob);' in read(FOREST / 'npc/bandit.c')
     assert '右眼卻罩著一只黑皮眼罩' in read(FOREST / 'npc/bandit_general.c')
+    assert 'bi_jade_armor' in read(FOREST / 'npc/bandit_chief.c')
+    assert 'wolf_armor' not in read(FOREST / 'npc/bandit_captain.c')
+    s = read(FOREST / 'obj/bi_jade_armor.c')
+    assert '"armor": 15,' in s and '"con": 1,' in s and '"wis": 1,' in s
 
 
 if __name__ == '__main__':
