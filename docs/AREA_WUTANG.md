@@ -44,7 +44,7 @@
 | H12 | `gravel_road_n.c` | 碎石路 | 擴寫 | 楊子陵、冷梅莊二代弟子 |
 | J12 | `west_street2.c` | 街道 | 擴寫 |  |
 | L12 | `west_street1.c` | 街道 | 擴寫 |  |
-| N12 | `crossroad.c` | 交叉路口 | 原文 | 賣餅大叔、郭布、梅影風（會在五堂鎮內走動） |
+| N12 | `crossroad.c` | 交叉路口 | 原文 | 賣餅大叔、郭布（梅影風已搬回冷梅莊正廳，2026-10-30） |
 | P12 | `east_street1.c` | 街道 | 擴寫 |  |
 | R12 | `east_street2.c` | 街道 | 擴寫 |  |
 | T12 | `east_street3.c` | 街道 | 擴寫 |  |
