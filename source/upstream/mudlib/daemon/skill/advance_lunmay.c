@@ -125,9 +125,8 @@ private void love_frost(object me, object victim, object weapon)
     me->delete_temp("advance_lunmay/points");
     message_vision("$N意猶未盡﹐手上" + (objectp(weapon) ? weapon->name() : "劍")
         + "突然斜裡翻出劍尖急顫！\n"
-        HIW "$N施展傲梅暗劍訣中的殺招「愛霜恨雪」！\n"
-        "一股無形的冷冽氣勁朝著$n直射而出！\n" NOR,
-        me, victim);
+        HIW "$N施展傲梅暗劍訣中的殺招「愛霜恨雪」！一股無形的冷冽氣勁朝著$n直射而出！\n" NOR,
+        me, victim, 1);   // 整句一行、不自動斷行（使用者指示，2026-10-31）
     silent_hits(me, victim, weapon, 1, 300, 150, HIT_MUST | HIT_NO_ARMOR);
 }
 
