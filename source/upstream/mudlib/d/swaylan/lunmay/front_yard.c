@@ -42,8 +42,8 @@ int do_practice(string arg)
     if( rings > 7 ) rings = 7;
 
     if( count < RINGS_DONE ) {
-        write(gender_self(me) + "調整氣息、聚精凝神，一劍使出共穿過了" + chinese_number(rings) + "個環。\n");
-        tell_room(this_object(), me->name() + "調整氣息、聚精凝神，一劍使出共穿過了"
+        write(gender_self(me) + "調整氣息、聚精凝神一劍使出，結果穿過了" + chinese_number(rings) + "個環。\n");
+        tell_room(this_object(), me->name() + "調整氣息、聚精凝神一劍使出，結果穿過了"
             + chinese_number(rings) + "個環。\n", ({ me }));
         return 1;
     }
