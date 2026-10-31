@@ -143,15 +143,16 @@ def test_lunmay_manor():
     assert 'may_yin_fong' not in read(MUD / 'd/wutang/crossroad.c')
     s = read(MUD / 'd/wutang/npc/may_yin_fong.c')
     assert 'wander' not in s
-    assert '冷梅劍法的要訣需要自行體會，等你能夠一劍七環時就算有所小成了。' in s
+    assert '冷梅劍法的要訣需要自行體會，到前院去練習，等你能夠一劍七環時就算有所小成了。' in s
     assert '"north" : __DIR__"lunmay/gate",' in read(S / 'crossroad.c')
     for r in ('side_hall', 'bedroom', 'corridor_w', 'corridor_e'):
         assert 'create_door(' in read(L / (r + '.c')), r
     # 前院穿環：冷梅莊弟子、手上有劍、已會就不用練；耗精 10、忙碌 1；36 次學成。
     s = read(L / 'front_yard.c')
-    for part in ('add_action("do_practise", "practise");', 'arg != "lunmay"',
+    for part in ('add_action("do_practice", "practice");', 'arg != "lunmay"',
                  '"fighter.lunmay"', 'query_temp("weapon/sword")',
-                 '你已經練成冷梅劍法，不用再在這裡練習了。',
+                 '已經練成冷梅劍法，不用再在這裡練習了。', 'gender_self(me)',
+                 '"環" : "在前院的橫樑中，懸掛著七個空心的鐵環，讓弟子可以練習 (practice) 冷梅劍法。"',
                  '#define RINGS_DONE  36', '#define GIN_COST    10', 'me->start_busy(1);',
                  'rings = 1 + to_int(sqrt(to_float(count)));', 'apply_gain_progression'):
         assert part in s, part

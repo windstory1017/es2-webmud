@@ -154,7 +154,7 @@ int acquire_skill(object me, string skill)
 
     switch( skill ) {
     case "lunmay":
-        return notify_fail("梅影風說道：「冷梅劍法的要訣需要自行體會，等你能夠一劍七環時就算有所小成了。」\n");
+        return notify_fail("梅影風說道：「冷梅劍法的要訣需要自行體會，到前院去練習，等你能夠一劍七環時就算有所小成了。」\n");
     case "mayin":
     case "seven":
     case "sword":
