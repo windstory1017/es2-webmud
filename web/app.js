@@ -337,6 +337,9 @@ function ansi(s){
   const emit=(text,fg,bg,bold,underline)=>{
     if(!text)return;
     if(isBarRun(text,fg,bg)){ html+=barCells(text,fg,bg); return; }
+    // 粗體的白色（遊戲的亮白 HIW＝1;37，或只有粗體沒指定顏色）顯示成最亮的白，
+    // 跟一般文字（--term-fg）區分；其他顏色的粗體照舊（2026-10-31）。
+    if(bold&&(!fg||fg===baseColors[37]))fg=baseColors[97];
     const st=(underline?'text-decoration:underline;':'')+(fg?`color:${fg};`:'')+(bg?`background:${bg};`:'');
     html+= st? `<span style="${st}">${esc(text)}</span>` : esc(text);
   };
