@@ -69,7 +69,7 @@ void attack_using(object me, object opponent, object weapon)
     if( opponent && me->query_skill("lunmay", 1) >= 100 && in_mirror(me)
     &&  random(100) < scaled_chance(me, 30) ) {
         message_vision(HIW "\n$N催運寒梅心法使出【寒霜三千里】劍氣﹐"
-            + (objectp(weapon) ? weapon->name() : "劍") + "劍刃嗤嗤做響﹐"
+            + (objectp(weapon) ? weapon->name() : "劍") + "劍刃嗤嗤做響﹐\n"
             + "$n全身瞬間蒙上一層白霜！\n\n" NOR, me, opponent);
         opponent->start_busy(2);
     }
