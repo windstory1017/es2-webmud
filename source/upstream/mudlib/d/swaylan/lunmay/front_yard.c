@@ -48,8 +48,8 @@ int do_practice(string arg)
         return 1;
     }
 
-    write(gender_self(me) + "調整氣息、聚精凝神，一劍穿過了七個環的中心，劍尖竟未碰到半點環壁！\n");
-    tell_room(this_object(), me->name() + "調整氣息、聚精凝神，一劍穿過了七個環的中心，"
+    write(gender_self(me) + "調整氣息聚精凝神，一劍穿過了七個環的中心，劍尖竟未碰到半點環壁！\n");
+    tell_room(this_object(), me->name() + "調整氣息聚精凝神，一劍穿過了七個環的中心，"
         + "劍尖竟未碰到半點環壁！\n", ({ me }));
     // 直接學成：補足到學成那一級所需的點數並當場升級（冷梅劍法顯示「你終於練成了冷梅劍法。」）。
     me->set_learn("lunmay", me->skill_threshold("lunmay", me->skill_entry_level("lunmay")));
