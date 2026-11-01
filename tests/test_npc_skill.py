@@ -87,7 +87,7 @@ def test_sect_table_keys_and_arts():
     assert keys == ['fighter.lunmay', 'fighter.tiger', 'fighter.fonxan', 'fighter.chin', 'fighter.snow',
                     'fighter.ancient', 'scholar.sky', 'thief.longye', 'thief.hidden', 'taoist.fire',
                     'taoist.freeze', 'taoist.storm', 'taoist.thunder', 'taoist.fog', 'taoist.wind',
-                    'taoist.lingyun']
+                    'taoist.lingyun', 'alchemist.wuto']
     assert '"skill": "advance_lunmay", "map": "secondhand sword", "level": 30, "req": ([ "hainmay force": 100 ])' in t
     assert '"skill": "ksanmando", "map": "blade", "level": 1' in t
 

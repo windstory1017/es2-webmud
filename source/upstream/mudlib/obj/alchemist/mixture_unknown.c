@@ -99,6 +99,17 @@ varargs string short(int raw)
         text += "＜" + chinese_number(query_grade()) + "分火候＞";
     return text;
 }
+// 配方敘述依火候分三段（使用者指示 #24，2026-10-30）；不知名配方照原敘述。
+varargs string long(int raw)
+{
+    string name;
+    if (recipe == "unknown") return ::long(raw);
+    name = local_recipe()[0] + "配方";
+    if (heat <= 0) return "這是一份尚未入爐煉製的" + name + "。\n";
+    if (heat < local_recipe()[4])
+        return "這是一份煉製過的" + name + "，但尚未到達可成丹的火候。\n";
+    return "這是一份已經煉製完成的" + name + "，可使用 prepare mixture 來進行成丹。\n";
+}
 void init()
 {
     if (this_player() && environment() == this_player())

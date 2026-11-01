@@ -36,7 +36,8 @@ def test_launchers_are_separated():
     assert 'http://127.0.0.1:8080' not in start
     assert 'http://127.0.0.1:8080' in opener
 
-def test_manual_save_shortcut_became_equipment_inventory_shortcut():
+def test_quick_action_panel_removed():
+    # 快捷操作欄已移除（2026-10-27），手動存檔也不能回來。
     html=text("web/index.html")
-    assert '<button data-cmd="inventory">裝備欄</button>' in html
+    assert '快捷操作' not in html
     assert '<button data-cmd="save">手動存檔</button>' not in html

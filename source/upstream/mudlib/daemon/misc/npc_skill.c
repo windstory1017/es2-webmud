@@ -181,6 +181,7 @@ private mapping sect = ([
         "arts":        ({
             ([ "skill": "taoism of nature", "map": "spells", "level": 1 ]),
             ([ "skill": "mao-shan magic", "map": "magic", "level": 1 ]),
+            ([ "skill": "taoism of dunja", "map": "magic", "level": 30, "req": ([ "taoism of nature": 90 ]) ]),
         }),
     ]),
     "taoist.lingyun": ([
@@ -191,6 +192,20 @@ private mapping sect = ([
             ([ "skill": "taoism of purify", "map": "spells", "level": 1 ]),
             ([ "skill": "mao-shan magic", "map": "magic", "level": 1 ]),
             ([ "skill": "mao-shan lightning", "map": "magic", "level": 1, "req": ([ "taoism of purify": 91 ]) ]),
+        }),
+    ]),
+    // 武陀灸堂（docs/martial_arts/武陀灸堂_門派設計.md，2026-10-27）。
+    // 引源針法、三自回針法要經脈穴道之學 80，NPC 一併給經脈穴道之學。
+    "alchemist.wuto": ([
+        "name":        "武陀灸堂",
+        "force":       0,
+        "force_level": 0,
+        "arts":        ({
+            ([ "skill": "amazing-needle", "map": "cauterization", "level": 1 ]),
+            ([ "skill": "wuto-needle", "map": "cauterization", "level": 1 ]),
+            ([ "skill": "kee anatomy", "map": 0, "level": 1 ]),
+            ([ "skill": "potency-needle", "map": "cauterization", "level": 1, "req": ([ "kee anatomy": 80 ]) ]),
+            ([ "skill": "recovery-needle", "map": "cauterization", "level": 1, "req": ([ "kee anatomy": 80 ]) ]),
         }),
     ]),
 ]);

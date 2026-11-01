@@ -70,7 +70,7 @@ void attack_using(object me, object opponent, object weapon)
     &&  random(100) < scaled_chance(me, 30) ) {
         message_vision(HIW "\n$N催運寒梅心法使出【寒霜三千里】劍氣﹐"
             + (objectp(weapon) ? weapon->name() : "劍") + "劍刃嗤嗤做響﹐"
-            + "$n全身瞬間蒙上一層白霜！\n\n" NOR, me, opponent);
+            + "$n全身瞬間蒙上一層白霜！" NOR "\n\n", me, opponent, 1);   // 整句一行、不自動斷行（2026-10-31）
         opponent->start_busy(2);
     }
     ::attack_using(me, opponent, weapon);

@@ -83,11 +83,9 @@ int do_fate(object me)
     return 1;
 }
 
-/* 心眼：耗神 30、停頓 1 回合；保持到渡一次經驗為止。 */
+/* 心眼：耗神 30、停頓 1 回合；保持到渡一次經驗為止。心眼中可以再施展（重新開啟，照樣耗神）。 */
 int do_experience(object me)
 {
-    if( me->query_temp("dunja/experience") )
-        return notify_fail("你的心眼早已開啟。\n");
     if( !spend_sen(me, 30) ) return 0;
     me->delete_temp("dunja/fate");
     me->set_temp("dunja/experience", 1);
@@ -141,6 +139,9 @@ int give_experience(object me, object target, string skill)
 {
     int wis, spi, gain;
 
+    /* 遁甲書 60 級起才渡得出經驗（使用者定案，2026-10-29）；不夠時不用掉心眼。 */
+    if( me->query_skill("taoism of dunja", 1) < 60 )
+        return notify_fail("你的遁甲書火候未到﹐還渡不出清氣。\n");
     if( me->query_score("magic") <= 10000 )
         return notify_fail("你的法術修為還淺﹐分不出餘力渡給旁人。\n");
     if( target->query_skill(skill, 1) <= 30 )

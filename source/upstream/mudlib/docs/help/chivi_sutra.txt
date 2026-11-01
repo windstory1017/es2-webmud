@@ -1,0 +1,21 @@
+◎ 天師道法【紫薇心經】（chivi sutra）
+　技能種類：法術
+　學習條件：道士共通，解謎習得
+　任務起始：尚未製作
+　安裝：enable magic with chivi sutra
+　特殊能力：
+　　‧禦火術：conjure fire defence
+　　　　　　　消耗神 10，短時間提高對火系法術的防禦。
+　　‧禦風術：conjure storm defence
+　　　　　　　消耗神 10，短時間提高對風系法術的防禦。
+　　‧禦冰術：conjure freeze defence
+　　　　　　　消耗神 10，短時間提高對冰系法術的防禦。
+　　‧禦雷術：conjure thunder defence
+　　　　　　　消耗神 10，短時間提高對雷系法術的防禦。
+　　‧防禦效果：紫薇心經加上 random(靈性)，持續時間為紫薇心經的三分
+　　　　　　　之一個 tick。同一系的禦術生效中不能重複施展，四系可以
+　　　　　　　同時存在。
+　　‧逆運心經：conjure dispel
+　　　　　　　消耗神 5，強行逆運紫薇心經，把身上所有禦術的效果消除。
+　　‧光暈：施法的敘述與光暈顏色同天師道法，火紅、風紫、冰白、雷黃。
+　能力提昇：無

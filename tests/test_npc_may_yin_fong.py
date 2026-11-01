@@ -8,7 +8,8 @@ def read(p):
 
 
 def test_spawn_and_power():
-    assert '__DIR__"npc/may_yin_fong" : 1,' in read('d/wutang/crossroad.c')
+    # 2026-10-30 起在冷梅莊正廳出生（d/swaylan/lunmay/hall.c）。
+    assert '"/d/wutang/npc/may_yin_fong" : 1,' in read('d/swaylan/lunmay/hall.c')
     s = read('d/wutang/npc/may_yin_fong.c')
     for line in ['set_name("梅影風", ({ "may yin fong", "may", "fong" }));', 'set_race("human");',
                  'set_class("fighter");', 'set_level(60);', 'set("age", 55);', 'set_power("S");']:
@@ -37,11 +38,10 @@ def test_equipment():
     assert s.count('boots_of_flying_cloud') == 1
 
 
-def test_wander_stays_in_wutang():
+def test_stays_in_hall():
+    # 搬回冷梅莊後不走動（使用者指示，2026-10-30）。
     s = read('d/wutang/npc/may_yin_fong.c')
-    assert '#define WANDER_INTERVAL 4' in s and '#define WANDER_CHANCE   10' in s
-    assert 'strsrch(dest, AREA_PREFIX) == 0' in s
-    assert 'move(HOME_ROOM);' in s
+    assert 'wander' not in s and 'call_out' not in s
 
 
 def test_apprentice_rules():

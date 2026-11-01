@@ -36,7 +36,7 @@
 | 闇之絲甲 | `armor/dark_armor.c` | dark armor | 3000 | 100 | 原資料 | 限盜賊 |
 | 兩儀雲龍甲 | `armor/double_cloudy_plate.c` | double cloudy plate | 12000 | 200 | 原資料 |  |
 | 怒龍錦冑 | `armor/dragon_armor.c` | dragon armor | 5000 | 1000 | 原資料 |  |
-| 龍鱗璧玉袍 | `armor/dragon_jade_robe.c` | dragon armor | 5000 | 200 | 原資料 |  |
+| 龍鱗璧玉袍 | `armor/dragon_jade_robe.c` | dragon armor | 5000 | 200 | 原資料（敘述）；數值照水嵐縣設計表 | 防禦力 20、防禦能力值 10、火焰防禦 10、冰防禦 20（2026-10-30）；密林賊帥 |
 | 龍騎戰甲 | `armor/dragon_plate_of_knights.c` | dragon plate of knights | 12000 | 300 | 原資料 |  |
 | 火鷹戰鎧 | `armor/full_plate_of_fire_hawk.c` | full plate of fire hawk | 12000 | 1000 | 原資料 | 唯一 |
 | 冥魂戰鎧 | `armor/ghost_hell_plate.c` | ghost-hell plate | 12000 | 300 | 原資料 |  |

@@ -10,9 +10,10 @@ int main(object me, string arg)
     object *inv, ob;
 
     if( wizardp(me) && arg ) {
-        ob = find_player(arg);
-        if( !ob ) ob = find_living(arg);
-        if( !ob ) ob = present(arg, environment(me));
+        // 先找同一格裡的對象；遠端只允許查玩家（find_player），
+        // 不再用 find_living，避免在任何地方都能看到 NPC（如過路客）身上的東西。
+        ob = present(arg, environment(me));
+        if( !ob ) ob = find_player(arg);
         if( !ob ) return notify_fail("你要看誰的物品？\n");
     }
     else ob = me;

@@ -88,7 +88,25 @@ int ordinary_main(object me, string arg)
 
     return do_get(me, obj);
 }
-    
+
+// 看守：地上的道具（或容器）被玩家 guard 後，只有看守者能拿；容器連裡面的東西與容器本身都受保護。
+// 看守者要在同一個房間才有效，離開後失效，回到房間不必重新下指令。
+// 回傳擋住 me 的看守訊息，沒人看守回傳 0。
+string guard_block(object me, object obj)
+{
+    object cur, owner;
+    string id;
+
+    for( cur = obj; cur && !living(cur); cur = environment(cur) ) {
+        if( !stringp(id = cur->query_temp("guard_owner")) ) continue;
+        if( id == getuid(me) ) continue;
+        owner = find_player(id);
+        if( owner && environment(owner) == environment(cur) )
+            return owner->name() + "正看守著" + cur->name() + "，你無法拿取。\n";
+    }
+    return 0;
+}
+
 int do_get(object me, object obj)
 {
     object from_ob, *enemy, *guard;
@@ -103,6 +121,8 @@ int do_get(object me, object obj)
 
     notify_fail("這樣東西拿不出來。\n");
     if( from_ob->hold_object(obj) ) return 0;
+
+    if( stringp(msg = guard_block(me, obj)) ) return notify_fail(msg);
 
     if( guard = obj->query_temp("guarded") ) {
 	guard = filter_array(guard, (:
@@ -124,6 +144,7 @@ int do_get(object me, object obj)
     if( obj->query("equipped") ) equipped = 1;
 
     if( ! obj->move(me) ) return 0;
+    obj->delete_temp("guard_owner");
     if( me->is_fighting() ) me->start_busy(1);
     if( obj->is_character() )
 	message_vision( "$N將$n扶了起來揹在背上。\n", me, obj );

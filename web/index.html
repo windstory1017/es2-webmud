@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- 終端機中文字型：Noto Sans TC（思源黑體繁體），英文與符號用網站自帶的 ES2 Mono（更紗黑體） -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap">
-  <link rel="stylesheet" href="/styles.css?v=codex-1023">
+  <link rel="stylesheet" href="/styles.css?v=settings-1028">
 </head>
 <body class="game-body">
   <div id="gameApp" class="game-app">
@@ -24,10 +24,14 @@
           </div>
           <nav class="nav-menu">
             <button type="button" class="nav-item" data-ui-chat aria-pressed="false"><span class="nav-icon">言</span><span>聊天</span></button>
+            <button type="button" class="nav-item" data-ui-map aria-pressed="false"><span class="nav-icon">圖</span><span>地圖</span></button>
+            <button type="button" class="nav-item" data-ui-status aria-pressed="false"><span class="nav-icon">身</span><span>狀態</span></button>
             <button type="button" class="nav-item" data-ui-automation="triggers"><span class="nav-icon">觸</span><span>觸發</span></button>
             <button type="button" class="nav-item" data-ui-automation="timers"><span class="nav-icon">時</span><span>計時器</span></button>
-            <button type="button" class="nav-item" data-cmd="help"><span class="nav-icon">?</span><span>說明</span></button>
             <a class="nav-item" href="/codex.html" target="_blank" rel="noopener"><span class="nav-icon">鑑</span><span>圖鑑</span></a>
+          </nav>
+          <nav class="nav-menu nav-menu-bottom">
+            <button type="button" class="nav-item" data-cmd="help"><span class="nav-icon">?</span><span>說明</span></button>
             <button type="button" class="nav-item" data-ui-settings><span class="nav-icon">⚙</span><span>設定</span></button>
           </nav>
           <div class="nav-footer">
@@ -56,53 +60,47 @@
 
       </div>
 
-      <aside class="game-side">
-        <section class="side-card map-card" id="mapPanel">
-          <div class="side-title map-title-row">
-            <div><span>周邊地圖<span id="mapAreaTitle"></span></span><small id="mapLayerHud">MAP V7 唯讀全圖｜等待定位</small></div>
-            <div class="map-compass" aria-label="方向"><b>北</b><span>西 ┼ 東</span><em>南</em></div>
-          </div>
-          <div id="localMap" class="local-map topology-map" aria-label="周邊房間地圖">
-            <div class="map-empty">等待辨識所在房間</div>
-          </div>
-          <div class="map-toolbar" aria-label="地圖控制">
-            <button type="button" data-map-action="out" title="縮小">−</button>
-            <span id="mapZoomLabel">100%</span>
-            <button type="button" data-map-action="in" title="放大">＋</button>
-            <button type="button" data-map-action="center">置中</button>
-          </div>
-          <div class="map-legend">
-            <span><i class="legend-current"></i>你的位置</span>
-            <span><i class="legend-known"></i>已探索</span>
-            <span><i class="legend-special"></i>重要地點</span>
-            <span><i class="legend-boundary"></i>跨區出口</span>
-          </div>
-          <div id="mapTransitions" class="map-transitions" hidden></div>
-        </section>
-
-        <section class="side-card status-card" id="statusPanel">
-          <div class="side-title"><span>角色狀態</span><b id="levelHud">Lv.--</b></div>
-          <div id="scoreHud" class="hud-grid muted">等待 score / hp 輸出</div>
-        </section>
-
-        <section class="side-card quick-card">
-          <div class="side-title"><span>快捷操作</span><small>仍送出原生 ES2 指令</small></div>
-          <div class="quick-grid">
-            <button data-cmd="look">觀察</button>
-            <button data-cmd="who">在線</button>
-            <button data-cmd="hp">即時狀態</button>
-            <button data-cmd="inventory">物品</button>
-            <button data-cmd="inventory">裝備欄</button>
-          </div>
-        </section>
-
-        <section class="reserved-grid" aria-label="保留欄位">
-          <div class="reserved-slot"><span>+</span><small>空白欄位</small></div>
-          <div class="reserved-slot"><span>+</span><small>空白欄位</small></div>
-          <div class="reserved-slot"><span>+</span><small>空白欄位</small></div>
-        </section>
-      </aside>
+      <div class="side-splitter" id="sideSplitter" role="separator" aria-orientation="vertical" aria-label="拖曳調整訊息欄寬度" title="拖曳調整訊息欄寬度（按兩下恢復預設）"></div>
+      <aside class="game-side" aria-label="空白區域（可放地圖、角色狀態等視窗）"></aside>
     </div>
+
+    <section id="mapWindow" class="float-window map-window" aria-label="地圖視窗" hidden>
+      <div class="float-head map-title-row" data-float-drag title="拖曳這裡移動視窗">
+        <div><span>周邊地圖<span id="mapAreaTitle"></span></span><small id="mapLayerHud">MAP V7 唯讀全圖｜等待定位</small></div>
+        <div class="float-head-actions">
+          <div class="map-compass" aria-label="方向"><b>北</b><span>西 ┼ 東</span><em>南</em></div>
+          <button type="button" data-float-close class="float-close" aria-label="關閉">×</button>
+        </div>
+      </div>
+      <div class="float-body map-body">
+        <div id="localMap" class="local-map topology-map" aria-label="周邊房間地圖">
+          <div class="map-empty">等待辨識所在房間</div>
+        </div>
+        <div class="map-toolbar" aria-label="地圖控制">
+          <button type="button" data-map-action="out" title="縮小">−</button>
+          <span id="mapZoomLabel">100%</span>
+          <button type="button" data-map-action="in" title="放大">＋</button>
+          <button type="button" data-map-action="center">置中</button>
+        </div>
+        <div class="map-legend">
+          <span><i class="legend-current"></i>你的位置</span>
+          <span><i class="legend-known"></i>已探索</span>
+          <span><i class="legend-special"></i>重要地點</span>
+          <span><i class="legend-boundary"></i>跨區出口</span>
+        </div>
+        <div id="mapTransitions" class="map-transitions" hidden></div>
+      </div>
+    </section>
+
+    <section id="statusWindow" class="float-window status-window" aria-label="角色狀態視窗" hidden>
+      <div class="float-head" data-float-drag title="拖曳這裡移動視窗">
+        <div class="side-title"><span>角色狀態</span><b id="levelHud">Lv.--</b></div>
+        <button type="button" data-float-close class="float-close" aria-label="關閉">×</button>
+      </div>
+      <div class="float-body">
+        <div id="scoreHud" class="hud-grid muted">等待 score / hp 輸出</div>
+      </div>
+    </section>
 
     <section id="chatWindow" class="chat-window" aria-label="聊天視窗" hidden>
       <div class="chat-window-head" data-chat-drag title="拖曳這裡移動視窗">
@@ -198,15 +196,24 @@
       </section>
     </dialog>
 
-    <dialog id="uiSettings" class="ui-settings">
-      <form method="dialog">
-        <div class="settings-head"><strong>介面設定</strong><button value="cancel" aria-label="關閉">×</button></div>
+    <section id="uiSettings" class="float-window ui-settings" aria-label="介面設定" hidden>
+      <div class="float-head settings-head" data-float-drag title="拖曳這裡移動視窗"><strong>介面設定</strong><button type="button" data-float-close class="float-close" aria-label="關閉">×</button></div>
+      <div class="float-body settings-body">
         <label>文字大小 <input id="terminalFontSize" type="range" min="13" max="20" value="15"><span id="terminalFontValue">15px</span></label>
+        <section class="text-color" id="textColorSettings" aria-label="文字顏色">
+          <div class="text-color-head"><span>文字顏色</span><button type="button" data-text-reset>恢復預設</button></div>
+          <div class="text-swatches" data-text-swatches role="group" aria-label="預設顏色"></div>
+          <label class="text-slider">紅 <input type="range" min="0" max="255" data-text-rgb="r"><output data-text-rgb-value="r"></output></label>
+          <label class="text-slider">綠 <input type="range" min="0" max="255" data-text-rgb="g"><output data-text-rgb-value="g"></output></label>
+          <label class="text-slider">藍 <input type="range" min="0" max="255" data-text-rgb="b"><output data-text-rgb-value="b"></output></label>
+          <label class="text-slider">明暗 <input type="range" min="20" max="100" data-text-bright><output data-text-bright-value></output></label>
+          <div class="text-preview" data-text-preview>這是一條寬闊的青石大街，兩旁店舖林立。<code data-text-hex></code></div>
+        </section>
         <p>這些設定只影響瀏覽器顯示，不修改 MUD Server。</p>
-      </form>
-    </dialog>
+      </div>
+    </section>
   </div>
 
-  <script type="module" src="/app.js?v=reconnect-1019"></script>
+  <script type="module" src="/app.js?v=settings-1028"></script>
 </body>
 </html>

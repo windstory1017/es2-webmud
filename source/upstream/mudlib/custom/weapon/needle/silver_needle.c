@@ -14,7 +14,7 @@ void create()
     if( !clonep() ) {
         set("wield_as", ({ "needle", "secondhand needle" }));
         set("unit", "把");
-        set("value", 80000);
+        set("value", 200);
         set("long",
             "一支銀色的短灸針。\n");
     }

@@ -1,6 +1,6 @@
 /*---
 description: 封山劍法（NEW 新版武功寫法）。封山派劍法，可 enable 在劍術與雙手劍，不能 enable 在招架上。
-             特殊招式已製作但先不開放（SPECIALS_OPEN）；越鬥越長已開放。
+             特殊招式已製作但先不開放（SPECIALS_OPEN），柳東蘆例外；越鬥越長已開放。
              攻守兼備、變化多端，爆發不足；招式敘述取自「梅影風 vs 柳東蘆」對戰紀錄。
              設計見 docs/martial_arts/封山派_封山劍法與倒亂七星步法.md。
 ---*/
@@ -12,6 +12,13 @@ inherit "/std/martial_art";
 /* 特殊招式（搶攻、八荒、封字訣、無形劍氣、上弦月／下弦月）已製作但先不開放
  * （使用者定案，2026-10-17）。改成 1 即開放。越鬥越長不受這個開關影響。 */
 #define SPECIALS_OPEN 0
+
+/* 特殊招式是否可用：開關打開，或是設了 fonxan/npc_specials 的 NPC（例如柳東蘆，
+ * 使用者定案，2026-10-28）。 */
+private int specials_open(object me)
+{
+    return SPECIALS_OPEN || (!userp(me) && me->query("fonxan/npc_specials"));
+}
 
 private void create()
 {
@@ -84,7 +91,7 @@ int do_bahuang(object me, object opponent, object weapon)
     int i, damage;
 
     message_vision(HIW "$N手中" + weapon_name(weapon) + "寒光一閃﹐『" HIY " 八 荒 " HIW "』劍式已然出手！\n" NOR,
-        me, opponent);
+        me, opponent, 1);
     for( i = 0; i < 3; i++ ) {
         if( !can_follow(me, opponent) ) break;
         damage = special_hit(me, opponent, weapon, pick_move(me), 100, 50, 0);
@@ -99,7 +106,7 @@ int do_fengzi(object me, object opponent, object weapon)
     int damage;
 
     message_vision(HIW "\n$N一聲清嘯﹐正是封山絕學『" HIY "封" HIW "』字訣﹐如虹劍氣自劍尖而出激得狂風驟起將$n逼退數步。\n\n" NOR,
-        me, opponent);
+        me, opponent, 1);
     damage = special_hit(me, opponent, weapon,
         ([ "name": "封字訣", "attack": 9, "defense": 3, "force": 2, "bonus": 0, "damage_type": "割傷",
            "action": "$N的劍氣直撲$n的$l" ]), 100, 100, 0);
@@ -114,7 +121,7 @@ void attack_using(object me, object opponent, object weapon)
     if( !opponent ) return;
     if( !objectp(weapon) ) weapon = 0;
 
-    if( SPECIALS_OPEN ) {
+    if( specials_open(me) ) {
         lv = me->query_skill("fonxansword", 1);
         if( lv >= 100 && random(100) < scaled_chance(me, 20) ) {
             damage = do_bahuang(me, opponent, weapon);
@@ -144,13 +151,13 @@ void after_strike(object me, object opponent, object weapon, mapping m, int dama
         me->supplement_stat("gin", lv / 2);
     }
 
-    if( !SPECIALS_OPEN ) return;
+    if( !specials_open(me) ) return;
 
     /* 無形劍氣：封山劍法 150 級起、有 enable 內功；對方停頓中時必定發動。
      * 不能閃躲、格擋，防具照扣；傷害 = 內功等級 × 3/2（舊版劍芒）。 */
     if( lv >= 150 && me->skill_mapped("force") && opponent->is_busy() ) {
         message_vision(HIW "$N手中" + weapon_name(weapon) + "迸發出一道淩厲無儔的無形劍氣﹐勢如射日長虹向$n奔騰而去！\n" NOR,
-            me, opponent);
+            me, opponent, 1);
         n = me->query_skill("force") * 3 / 2;
         n -= opponent->resist_damage(n, me);
         if( n > 0 ) opponent->receive_damage(n, me, me);
@@ -163,23 +170,23 @@ void after_strike(object me, object opponent, object weapon, mapping m, int dama
      * 之後自己停頓 1 回合。發動時不再搶攻。 */
     if( lv >= 180 && random(100) < scaled_chance(me, 10) ) {
         message_vision(HIW "\n$N一躍而起﹐盡全身餘力揮出封山絕學『" HIY "上 弦 月" HIW "』﹐綿綿劍氣劃破天際席捲$n週身要害！\n\n" NOR,
-            me, opponent);
+            me, opponent, 1);
         special_hit(me, opponent, weapon, 0, 200, 100, HIT_MUST | HIT_SILENT);
         ratio = kee_ratio(opponent);
         show_status(opponent, ratio);
         if( !can_follow(me, opponent) ) return;
         opponent->start_busy(1);
         message_vision(HIW "\n借劍氣未散之力﹐$N迴轉手中" + weapon_name(weapon) + "半空之中順勢使出『" HIY "下 弦 月" HIW "』﹐道道劍氣衝入$n週身脈絡！\n\n" NOR,
-            me, opponent);
+            me, opponent, 1);
         opponent->consume_stat("gin", lv, me);
-        message_vision(HIW "\n劍氣過後﹐$N手中" + weapon_name(weapon) + "劍身入地半尺支撐$N﹐緩解施展劍氣對自身經脈的衝擊。\n\n" NOR, me);
+        message_vision(HIW "\n劍氣過後﹐$N手中" + weapon_name(weapon) + "劍身入地半尺支撐$N﹐緩解施展劍氣對自身經脈的衝擊。\n\n" NOR, me, 0, 1);
         me->start_busy(1);
         return;
     }
 
     /* 搶攻：封山劍法 60 級起，出劍後 15% × 等級/200；多出一招普通劍招。 */
     if( lv >= 60 && random(100) < scaled_chance(me, 15) ) {
-        message_vision(HIW "$N劍氣已過劍招尚未使老﹐身形飄然上前發起搶攻！\n" NOR, me);
+        message_vision(HIW "$N劍氣已過劍招尚未使老﹐身形飄然上前發起搶攻！\n" NOR, me, 0, 1);
         COMBAT_D->fight(me, opponent, art_id, make_action(pick_move(me), 100), weapon);
     }
 }

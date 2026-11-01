@@ -15,6 +15,7 @@ LONG
         "east" : __DIR__"boardwalk_w",
         "northdown" : __DIR__"ferry_dock",
     ]));
+    set("no_fight", 1);   // 渡口一律非戰區（使用者指示，2026-10-30）
     set("map/area", "五堂鎮");
     setup();
     replace_program(ROOM);

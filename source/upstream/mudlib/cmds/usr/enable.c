@@ -21,7 +21,8 @@ int main(object me, string arg)
 
         write("以下是你目前使用中的特殊技能。\n");
         foreach( skill, map_to in map ) {
-            printf("%-20s：%s\n", to_chinese(skill),
+            // 用全形空白補齊（cjk_align），網頁版中英字型寬度不同時也能對齊（2026-10-31）。
+            printf("%s：%s\n", cjk_align(to_chinese(skill), 8, 0),
                 map_to ? to_chinese(map_to) : "不使用");
         }
         return 1;

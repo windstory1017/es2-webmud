@@ -67,11 +67,11 @@ a{color:#9bd7a6}
 .map-cell.path::after{content:"";position:absolute;inset:50% -4px auto -4px;border-top:1px solid #547268;z-index:-1}.map-cell.vertical::before{content:"";position:absolute;left:50%;top:-4px;bottom:-4px;border-left:1px solid #547268;z-index:-1}
 .map-empty{grid-column:1/-1;align-self:center;text-align:center;color:#75877e;font-size:12px}
 .action-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.action-grid button{padding:9px 6px;font-size:13px}
-.reserved-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.reserved-slot{height:104px;border:1px solid #2b473b;border-radius:10px;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;color:#53685e;background:#0a110e}.reserved-slot span{font-size:28px;font-weight:200}.reserved-slot small{font-size:11px}
+
 
 @media(max-width:980px){.game-shell{grid-template-columns:minmax(0,1fr) 360px}.brand small{display:none}.local-map{grid-auto-rows:30px}.map-cell{font-size:9px}}
 @media(max-width:760px){.game-body{overflow:auto}.game-app{height:auto;min-height:100vh}.game-shell{grid-template-columns:1fr}.console-panel{height:68vh;border-right:0;border-bottom:1px solid #294238}.game-side{overflow:visible}.brand span{display:none}.hud-grid{grid-template-columns:1fr 1fr}.local-map{grid-auto-rows:32px}}
-@media(max-width:520px){.input-mode{display:none}.hud-grid{grid-template-columns:1fr}.reserved-grid{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:520px){.input-mode{display:none}.hud-grid{grid-template-columns:1fr}}
 
 .editor{display:grid;grid-template-columns:280px 1fr;min-height:100vh}.roomlist{border-right:1px solid #28322d;padding:12px;overflow:auto}.form{padding:18px;max-width:1000px}
 label{display:block;margin:12px 0 5px;color:#b6c9bb}.form input,.form textarea{width:100%;background:#080c0a;color:#fff;border:1px solid #38463e;padding:9px;border-radius:7px}
@@ -197,9 +197,11 @@ label{display:block;margin:12px 0 5px;color:#b6c9bb}.form input,.form textarea{w
   --ui-panel:rgba(8,17,14,.94);
   --ui-line:#29483d;
   --terminal-font-size:15px;
+  /* 訊息欄最窄寬度：score 最寬一行 72 個半形字（36 個字寬）× 125%，加上左右留白 40px。 */
+  --console-min:calc(var(--terminal-font-size) * 45 + 40px);
 }
 .game-app{height:100vh;display:block;background:radial-gradient(circle at 70% 0%,#12211a 0,#080d0b 28%,#050806 72%)}
-.game-shell{height:100vh;min-height:0;display:grid;grid-template-columns:236px minmax(540px,1fr) 420px;background:transparent}
+.game-shell{height:100vh;min-height:0;display:grid;grid-template-columns:236px minmax(var(--console-min),1fr) 6px var(--side-width,420px);background:transparent}
 .game-nav{position:relative;min-height:0;overflow:hidden;border-right:1px solid rgba(224,184,93,.42);background:#090e0c}
 .nav-art{position:absolute;inset:0;background-image:url('/title_bg.png');background-size:auto 100%;background-position:19% center;filter:saturate(.72) brightness(.5);transform:scale(1.04)}
 .nav-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,5,4,.28),rgba(3,8,6,.62) 28%,rgba(3,8,6,.78) 62%,rgba(3,7,5,.94)),linear-gradient(90deg,rgba(0,0,0,.05),rgba(0,0,0,.54));backdrop-filter:blur(.3px)}
@@ -213,7 +215,7 @@ label{display:block;margin:12px 0 5px;color:#b6c9bb}.form input,.form textarea{w
 .nav-item:hover,.nav-item:focus-visible{background:linear-gradient(90deg,rgba(30,52,41,.88),rgba(13,26,20,.7));border-color:#557866;color:#fff}
 .nav-item.active{border-color:#a88839;background:linear-gradient(90deg,rgba(87,72,28,.52),rgba(28,42,30,.72));color:#f0ce76;box-shadow:inset 3px 0 #d4aa4b,0 0 18px rgba(185,144,49,.08)}
 .nav-icon{display:grid;place-items:center;width:27px;height:27px;border:1px solid rgba(202,173,96,.34);border-radius:5px;color:#d8b85e;font-size:13px;background:rgba(5,10,8,.34)}
-.nav-footer{margin-top:auto;padding:16px 8px 4px;border-top:1px solid rgba(224,184,93,.18);display:grid;gap:7px;color:#9aaca2}
+.nav-footer{margin-top:12px;padding:16px 8px 4px;border-top:1px solid rgba(224,184,93,.18);display:grid;gap:7px;color:#9aaca2}
 .nav-footer small{font-size:9px;letter-spacing:.15em;color:#6f8077}.conn-dot{font-size:10px;letter-spacing:.12em;color:#7dd7a5}.conn-dot::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:currentColor;margin-right:7px;box-shadow:0 0 8px currentColor}
 .center-stack{min-width:0;min-height:0;display:grid;grid-template-rows:minmax(0,1fr);background:rgba(3,7,5,.82)}
 .console-panel{border-right:0;padding:0;display:grid;grid-template-rows:auto minmax(0,1fr) auto;background:linear-gradient(180deg,rgba(3,7,5,.86),rgba(3,7,5,.98));cursor:text}
@@ -238,40 +240,44 @@ label{display:block;margin:12px 0 5px;color:#b6c9bb}.form input,.form textarea{w
 .local-map.topology-map{display:block;position:relative;height:330px;min-height:330px;border:1px solid #1e372d;border-radius:7px;overflow:hidden;background:radial-gradient(circle at 50% 50%,rgba(24,54,42,.28),rgba(4,10,8,.82) 62%),linear-gradient(rgba(77,112,96,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(77,112,96,.025) 1px,transparent 1px);background-size:auto,22px 22px,22px 22px}
 .topology-svg{width:100%;height:100%;display:block;transform-origin:center;transition:transform .16s ease}.map-edge{stroke:#728b80;stroke-width:1.2;opacity:.86;vector-effect:non-scaling-stroke}.map-edge.diagonal{stroke:#647d73}.map-node-rect{fill:#0a1511;stroke:#b7c7bf;stroke-width:1.4;vector-effect:non-scaling-stroke}.map-node-known .map-node-rect{stroke:#aebdb6}.map-node-special .map-node-rect{stroke:#65c9a7;fill:#0e211a}.map-node-current .map-node-rect{stroke:#f4c642;stroke-width:3;fill:#241e0c;filter:drop-shadow(0 0 5px rgba(244,198,66,.42))}.map-node-unknown .map-node-rect{stroke:#6f7f77;stroke-dasharray:3 3}.map-node-boundary .map-node-rect{stroke:#c792ea;stroke-width:2}.map-node-label{font:600 11px/1.2 "Noto Sans TC","Microsoft JhengHei",sans-serif;fill:#dce5df;paint-order:stroke;stroke:#07100d;stroke-width:3px;stroke-linejoin:round}.map-node-current .map-node-label{fill:#ffd95f}.map-node-special .map-node-label{fill:#8ce1c1}.map-node-boundary .map-node-label{fill:#c792ea}.map-node-unknown .map-node-label{fill:#7d8b84}.map-current-dot{fill:#f4c642}.map-empty{height:100%;display:grid;place-items:center;color:#71857a}
 .map-toolbar{display:flex;align-items:center;justify-content:flex-end;gap:4px;margin-top:7px}.map-toolbar button{min-width:30px;padding:4px 8px;border-radius:5px;background:#0c1713;border-color:#324c42;font-size:11px}.map-toolbar span{min-width:42px;text-align:center;font-size:10px;color:#98a99f}.map-legend{display:flex;gap:13px;flex-wrap:wrap;margin-top:7px;color:#81958a;font-size:10px}.map-legend span{display:flex;align-items:center;gap:5px}.map-legend i{width:9px;height:9px;border:1px solid #aebdb6;background:#0a1511}.map-legend .legend-current{border:2px solid #f4c642;background:#241e0c}.map-legend .legend-known{border-color:#aebdb6}.map-legend .legend-special{border-color:#65c9a7;background:#0e211a}.map-legend .legend-boundary{border:2px solid #c792ea;background:#0a1511}
-.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.quick-grid button{padding:7px;font-size:12px;background:#0d1a15}.reserved-grid{gap:6px}.reserved-slot{height:72px;border-radius:7px;background:#08110e}.reserved-slot span{font-size:20px}
-.ui-settings{width:min(430px,calc(100vw - 30px));border:1px solid #6d5b2c;border-radius:10px;background:#0a120f;color:#dfe8e3;padding:0;box-shadow:0 24px 80px #000}.ui-settings::backdrop{background:rgba(0,0,0,.72)}.ui-settings form{padding:16px;display:grid;gap:16px}.settings-head{display:flex;justify-content:space-between;align-items:center;color:#e2c46f}.settings-head button{padding:2px 8px}.ui-settings label{display:flex;align-items:center;gap:10px;font-size:12px}.ui-settings input[type=range]{flex:1}.ui-settings p{margin:0;color:#768a7f;font-size:11px}.toggle-line{justify-content:flex-start}
+.ui-settings{width:min(430px,calc(100vw - 30px));border:1px solid #6d5b2c;border-radius:10px;background:#0a120f;color:#dfe8e3;padding:0;box-shadow:0 24px 80px #000}.ui-settings .settings-body{padding:4px 16px 16px;display:grid;gap:16px;overflow:auto}.settings-head{display:flex;justify-content:space-between;align-items:center;color:#e2c46f;padding:12px 16px 8px}.ui-settings label{display:flex;align-items:center;gap:10px;font-size:12px}.ui-settings input[type=range]{flex:1}.ui-settings p{margin:0;color:#768a7f;font-size:11px}.toggle-line{justify-content:flex-start}
 
 .ui-focus-flash{animation:uiFocusFlash .72s ease}@keyframes uiFocusFlash{0%{box-shadow:0 0 0 0 rgba(238,195,85,.65)}100%{box-shadow:0 0 0 13px rgba(238,195,85,0)}}
-@media(max-width:1450px){.game-shell{grid-template-columns:205px minmax(500px,1fr) 385px}.nav-content{padding-left:10px;padding-right:10px}.nav-brand strong{font-size:21px}.local-map.topology-map{height:300px;min-height:300px}.center-stack{grid-template-rows:minmax(0,1fr)}}
-@media(max-width:1180px){.game-shell{grid-template-columns:188px minmax(0,1fr) 350px}.context-panel{display:none}.center-stack{grid-template-rows:minmax(0,1fr)}.nav-item{height:46px}.nav-brand{padding-bottom:16px}.local-map.topology-map{height:275px;min-height:275px}}
-@media(max-width:900px){.game-body{overflow:auto}.game-app{height:auto;min-height:100vh}.game-shell{height:auto;min-height:100vh;grid-template-columns:78px minmax(0,1fr)}.game-nav{position:sticky;top:0;height:100vh}.nav-brand strong{font-size:17px}.nav-brand span,.nav-brand small,.nav-item span:last-child,.nav-footer small{display:none}.nav-item{grid-template-columns:1fr;padding:0;place-items:center}.nav-icon{width:32px;height:32px}.game-side{grid-column:2;border-left:0;border-top:1px solid rgba(224,184,93,.34);overflow:visible}.center-stack{min-height:70vh}.console-panel{min-height:70vh}.game-side{display:grid;grid-template-columns:1fr 1fr;gap:10px}.side-card,.reserved-grid{margin:0}.reserved-grid{grid-column:1/-1}}
-@media(max-width:620px){.game-shell{grid-template-columns:58px minmax(0,1fr)}.nav-content{padding:12px 5px}.nav-brand{padding:2px 0 12px}.nav-brand strong{font-size:12px;writing-mode:vertical-rl;display:inline-block}.nav-item{height:42px}.game-side{grid-template-columns:1fr}.commandbar{margin:0 7px 7px}.console-heading{padding-left:10px;padding-right:10px}#terminal{padding-left:10px;padding-right:10px}.input-mode{display:none}.local-map.topology-map{height:300px;min-height:300px}}
+@media(max-width:1450px){.game-shell{grid-template-columns:205px minmax(var(--console-min),1fr) 6px var(--side-width,385px)}.nav-content{padding-left:10px;padding-right:10px}.nav-brand strong{font-size:21px}.local-map.topology-map{height:300px;min-height:300px}.center-stack{grid-template-rows:minmax(0,1fr)}}
+@media(max-width:1180px){.game-shell{grid-template-columns:188px minmax(var(--console-min),1fr) 6px var(--side-width,350px)}.context-panel{display:none}.center-stack{grid-template-rows:minmax(0,1fr)}.nav-item{height:46px}.nav-brand{padding-bottom:16px}.local-map.topology-map{height:275px;min-height:275px}}
+@media(max-width:900px){.game-body{overflow:auto}.game-app{height:auto;min-height:100vh}.game-shell{height:auto;min-height:100vh;grid-template-columns:78px minmax(0,1fr)}.game-nav{position:sticky;top:0;height:100vh}.nav-brand strong{font-size:17px}.nav-brand span,.nav-brand small,.nav-item span:last-child,.nav-footer small{display:none}.nav-item{grid-template-columns:1fr;padding:0;place-items:center}.nav-icon{width:32px;height:32px}.game-side,.side-splitter{display:none!important}.center-stack{min-height:70vh}.console-panel{min-height:70vh}.side-card{margin:0}}
+@media(max-width:620px){.game-shell{grid-template-columns:58px minmax(0,1fr)}.nav-content{padding:12px 5px}.nav-brand{padding:2px 0 12px}.nav-brand strong{font-size:12px;writing-mode:vertical-rl;display:inline-block}.nav-item{height:42px}.commandbar{margin:0 7px 7px}.console-heading{padding-left:10px;padding-right:10px}#terminal{padding-left:10px;padding-right:10px}.input-mode{display:none}.local-map.topology-map{height:300px;min-height:300px}}
 
 .map-node-label-inside{font-size:10px;stroke-width:2px;pointer-events:none}.map-node-current .map-node-label-inside{font-weight:800}
 /* MAP V5: fixed-world tile labels. */
-.map-node-label-inside{font-size:11px!important;font-weight:700!important;stroke:none!important;fill:#dce5df!important;dominant-baseline:middle}
+.map-node-label-inside{font-size:12px!important;font-weight:700!important;stroke:none!important;fill:#dce5df!important;dominant-baseline:central}
 .map-node-current .map-node-label-inside{fill:#ffd95f!important;font-weight:900!important}
 .map-node-special .map-node-label-inside{fill:#8ce1c1!important}
 .map-node-boundary .map-node-label-inside{fill:#c792ea!important}
+.map-node-label-inside.map-node-label-long{font-size:9.5px!important}
 
 /* 角色狀態：版面跟 score 一致。名稱與數字在左、正方形格子在右；食物／飲水／疲勞只顯示文字放在最下面一行，整體寬度以這一行為準。 */
 #scoreHud.hud-grid{display:block}
-#scoreHud .hud-vitals{display:flex;flex-direction:column;gap:6px}
-#scoreHud .hud-vital{display:grid;grid-template-columns:2.4em 8.5ch 1fr;align-items:center;column-gap:6px;font-size:13px}
+/* 所有行共用同一組欄位（名稱｜數字｜方格），數字一律靠右，最大值的個位數上下對齊。 */
+#scoreHud .hud-vitals{display:grid;grid-template-columns:2.4em max-content minmax(0,1fr);align-items:center;gap:6px;font-size:13px}
+#scoreHud .hud-vital{display:contents}
+#scoreHud .hud-num{justify-self:end;text-align:right}
+/* 最下面一行：食物在數字欄，飲水與疲勞在方格欄（疲勞靠右，飲水在食物與疲勞中間）。
+   中文字與等寬數字字型不同，以基線對齊才會在同一條線上。 */
+#scoreHud .hud-needs>*{align-self:baseline;margin-top:4px;line-height:1.4}
+#scoreHud .hud-needs-rest{display:flex;align-items:baseline;min-width:0}
+#scoreHud .hud-need{display:flex;align-items:baseline;gap:6px;white-space:nowrap;line-height:1.4}
+#scoreHud .hud-need.hud-water{margin:0 auto}
+#scoreHud .hud-need.hud-fatigue{margin-left:auto}
+#scoreHud .hud-need.hud-water+.hud-need.hud-fatigue{margin-left:0}
 #scoreHud .hud-label{color:#e5ece7;white-space:nowrap}
 #scoreHud .hud-num{color:#65df8b;font-weight:500;font-family:ui-monospace,Consolas,"Courier New",monospace;white-space:pre;font-variant-numeric:tabular-nums}
 #scoreHud .hud-cells{display:grid;grid-template-columns:repeat(15,1fr);gap:2px;min-width:0}
 #scoreHud .hud-cell{display:block;aspect-ratio:1/1;border:1px solid color-mix(in srgb,var(--hud-color) 60%,#203129);background:#101a16;box-sizing:border-box}
 #scoreHud .hud-cell.filled{background:var(--hud-color);border-color:var(--hud-color)}
 #scoreHud .hud-hp .hud-cell{border-color:#3f8f5c}
-#scoreHud .hud-needs{display:flex;justify-content:space-between;gap:8px;margin-top:10px;font-size:13px}
-#scoreHud .hud-need{display:flex;gap:6px;white-space:nowrap}
 #scoreHud .hud-cell.gone{visibility:hidden}
 #scoreHud .hud-hp .hud-cell:not(.filled){background:#532020;border-color:#7a3030}
-/* 食物／飲水／疲勞：中文字與等寬數字字型不同，以基線對齊才會在同一條線上。 */
-#scoreHud .hud-need{align-items:baseline;line-height:1.4}
-#scoreHud .hud-need .hud-label,#scoreHud .hud-need .hud-num{font-size:13px;line-height:1.4}
-#scoreHud .hud-vital{grid-template-columns:2.4em 9ch 1fr}
 
 /* 終端機字型：英文／數字／符號用 ES2 Mono（更紗黑體，半形 0.5em），中文用 Noto Sans TC（全形 1em），
    一個中文字剛好等於兩個英文字，who、score 等排版才會對齊。中文字型沒載入時退回細明體或其他中文字型，
@@ -352,3 +358,54 @@ label{display:block;margin:12px 0 5px;color:#b6c9bb}.form input,.form textarea{w
 .chat-empty{color:#667d72;padding:8px 0}
 /* 訊息欄行頭：按一下反白並複製整行 */
 #terminal.line-pick{cursor:pointer}
+
+/* 左側選單：說明與設定放在最下面。 */
+.nav-menu-bottom{margin-top:auto;padding-top:12px}
+
+/* 訊息欄與最右側空白欄之間的分隔線，左右拖曳分配寬度。 */
+.side-splitter{position:relative;min-height:0;cursor:col-resize;touch-action:none;background:linear-gradient(90deg,transparent 2px,rgba(224,184,93,.34) 2px,rgba(224,184,93,.34) 3px,transparent 3px)}
+.side-splitter:hover,.is-resizing-side .side-splitter{background:rgba(224,184,93,.38)}
+.is-resizing-side{cursor:col-resize;user-select:none}
+.game-side{border-left:0;overflow:hidden}
+
+/* 浮動視窗：地圖（可調大小）、角色狀態（大小固定）。 */
+.float-window{position:fixed;z-index:40;display:flex;flex-direction:column;max-width:calc(100vw - 8px);max-height:calc(100vh - 8px);overflow:hidden;border:1px solid #345448;border-radius:8px;background:linear-gradient(180deg,rgba(10,23,18,.98),rgba(7,16,13,.98));color:#dfe8e3;box-shadow:0 14px 44px rgba(0,0,0,.6)}
+.float-window[hidden]{display:none}
+.float-window.is-dragging{opacity:.92;user-select:none}
+.float-head{flex:none;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:10px 11px 8px;cursor:move;touch-action:none;font-family:"Noto Serif TC","PMingLiU",serif}
+.float-head>div:first-child>span{font-size:16px;color:#e5e8e6}
+.float-head-actions{display:flex;align-items:flex-start;gap:6px}
+.float-close{width:26px;height:26px;padding:0;border-radius:50%;font-size:16px;line-height:1;border-color:#31564a;background:#0b1510;color:#a9c7b1;font-family:inherit}
+.float-body{flex:1;min-height:0;padding:0 11px 11px}
+.map-window{width:400px;height:470px;min-width:260px;min-height:240px}
+.map-body{display:flex;flex-direction:column}
+.map-window .local-map.topology-map{flex:1;height:auto;min-height:120px}
+.map-window .map-toolbar,.map-window .map-legend,.map-window .map-transitions{flex:none}
+.status-window{width:400px;border-color:#7e6630}
+.status-window .side-title{display:flex;align-items:baseline;gap:12px;margin:0}
+.status-window .side-title b{color:#d8bd70}
+.map-window .float-head small{display:block;font-size:11px;color:#789085}
+/* 四個角落的縮放把手 */
+.float-resize{position:absolute;width:14px;height:14px;z-index:2;touch-action:none}
+.float-resize-nw{left:0;top:0;cursor:nwse-resize}
+.float-resize-se{right:0;bottom:0;cursor:nwse-resize}
+.float-resize-ne{right:0;top:0;cursor:nesw-resize}
+.float-resize-sw{left:0;bottom:0;cursor:nesw-resize}
+.float-resize-se::after{content:"";position:absolute;right:3px;bottom:3px;width:7px;height:7px;border-right:2px solid #557866;border-bottom:2px solid #557866}
+.float-window.is-resizing{user-select:none}
+
+/* 設定 → 文字顏色。--term-fg 是訊息欄與聊天視窗的基礎文字顏色（遊戲指定的白色也跟著它）。 */
+:root{--term-fg:#e3ece5}
+#terminal,.chat-window-log{color:var(--term-fg)}
+.text-color{display:grid;gap:8px;padding-top:12px;border-top:1px solid #24372f}
+.text-color-head{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#c9d6cd}
+.text-color-head button{padding:3px 10px;font-size:11px}
+.text-swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.text-swatch{height:26px;padding:0;border:2px solid #24372f;border-radius:5px;background:var(--swatch)}
+.text-swatch:hover{background:var(--swatch);border-color:#557866}
+.text-swatch.active{border-color:#f0ce76;box-shadow:0 0 0 1px #f0ce76}
+.ui-settings .text-slider{display:grid;grid-template-columns:2.4em 1fr 3em;align-items:center;gap:8px}
+.ui-settings .text-slider output{text-align:right;color:#98a99f;font-variant-numeric:tabular-nums}
+.text-preview{padding:10px 12px;border:1px solid #1e372d;border-radius:6px;background:#050806;font-size:var(--terminal-font-size,15px);line-height:1.6}
+.text-preview code{display:block;margin-top:4px;font-size:11px;color:#6f8077}
+.float-window.ui-settings{border-color:#6d5b2c;border-radius:10px;background:#0a120f}

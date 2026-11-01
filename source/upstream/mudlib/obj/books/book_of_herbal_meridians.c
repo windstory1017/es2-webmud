@@ -12,7 +12,7 @@ void create()
     set("unit", "本");
     set("value", 200);
     set("long", "一本【藥石脈錄】，將藥石之性與經脈之理相互參照，記載何種藥材能通何處經脈，非精通藥理者難以讀懂。\n");
-    set("required/skill", (["literate": 125, "kee anatomy": 80, "alchemy-medication": 100]));
+    set("required/skill", (["literate": 125, "kee anatomy": 80, "alchemy-medication": 100, "cauterization": 1]));
     set("content", (["kee anatomy": 160]));
     setup();
 }

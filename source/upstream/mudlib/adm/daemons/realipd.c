@@ -24,6 +24,7 @@ int limit = DEFAULT_LIMIT;
 mapping allow = ([]);
 
 static mapping conn = ([]);	// 來源埠號 : ({ 真實IP, 同一戶代表 })
+static mapping bodies = ([]);	// 玩家身體 : ({ 真實IP, 同一戶代表 })；不放在身體的暫時資料裡，死亡、復活清暫時資料時才不會掉
 static string secret;
 
 string query_save_file() { return DATA_DIR + "iplimit"; }
@@ -103,8 +104,25 @@ void mark_body(object body)
     string key;
 
     if (!objectp(body) || !(key = port_of(body)) || !conn[key]) return;
+    {	// 清掉已經消失的身體
+        mapping alive = ([]);
+        mixed k, v;
+
+        foreach (k, v in bodies)
+            if (objectp(k)) alive[k] = v;
+        bodies = alive;
+    }
+    bodies[body] = copy(conn[key]);
     body->set_temp("realip", conn[key][0]);
     body->set_temp("realip_group", conn[key][1]);
+}
+
+// 身體的同一戶代表：先看這裡的紀錄（死亡、復活清掉暫時資料也不受影響），沒有再看暫時資料。
+string query_body_group(object body)
+{
+    if (!objectp(body)) return 0;
+    if (bodies[body]) return bodies[body][1];
+    return body->query_temp("realip_group");
 }
 
 int query_limit() { return limit; }
@@ -127,7 +145,7 @@ object *world_bodies()
 object *bodies_of(string group, object except)
 {
     return filter_array(world_bodies(),
-        (: $1 != $3 && !wizardp($1) && $1->query_temp("realip_group") == $2 :),
+        (: $1 != $3 && !wizardp($1) && query_body_group($1) == $2 :),
         group, except);
 }
 

@@ -37,7 +37,7 @@ def test_npc_settings_follow_list():
 def test_user_decisions():
     aggressive = {5, 6, 7, 8, 10, 16, 17, 19, 38, 41, 50, 51, 59, 60, 70, 125, 126}
     assert {int(r[0]) for r in ROWS if '主動攻擊' in r[7]} == aggressive
-    assert {int(r[0]) for r in ROWS if '巡邏' in r[7]} == {15, 16, 17, 19}
+    assert {int(r[0]) for r in ROWS if '巡邏' in r[7]} == {15, 16, 17, 19, 80}
     assert '"si-ma lei"' in read(DIR / 'si_ma_lei.c')
     assert '"madam han"' in read(DIR / 'madam_han.c')
     assert 'set_class("commoner");' in read(DIR / 'yan_she.c')

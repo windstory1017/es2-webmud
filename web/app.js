@@ -2,6 +2,8 @@ import {SessionRecorder} from './session_recorder.js';
 import {PlayerStateObserver} from './player_state.js';
 import {Automation,setupAutomationUI} from './automation.js';
 import {setupChatWindow} from './chat_window.js';
+import {setupFloatWindow,setupSideSplitter,bringToFront} from './float_window.js';
+import {setupTextColor} from './text_color.js';
 import {bgTimeout,clearBg,keepPageAlive} from './bg_timer.js';
 
 const sessionRecorder = new SessionRecorder();
@@ -80,7 +82,7 @@ const HUD_ACTION_FLUSH_MS = 180;
 
 const esc = s => String(s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]));
 const baseColors = {
-  30:'#707770',31:'#ff7474',32:'#65df8b',33:'#efd06b',34:'#76a9ff',35:'#d98df0',36:'#69dbe5',37:'#e5ece7',
+  30:'#707770',31:'#ff7474',32:'#65df8b',33:'#efd06b',34:'#76a9ff',35:'#d98df0',36:'#69dbe5',37:'var(--term-fg)',
   90:'#8e978f',91:'#ff9999',92:'#8be9a6',93:'#f4dc8c',94:'#9bc0ff',95:'#e6abf5',96:'#93edf3',97:'#ffffff'
 };
 const bgColors = {40:'#090b0a',41:'#532020',42:'#1d4d2e',43:'#4e4219',44:'#1c3150',45:'#47244d',46:'#17464a',47:'#d7ddd9'};
@@ -96,6 +98,33 @@ let chatParseBuffer='';
 const chatWindow=setupChatWindow({
   root:document.getElementById('chatWindow'),
   openButton:document.querySelector('[data-ui-chat]'),
+});
+document.getElementById('chatWindow')?.addEventListener('pointerdown',e=>bringToFront(e.currentTarget));
+// 最右欄是空白區域，用來擺地圖、角色狀態等浮動視窗；訊息欄與它之間的分隔線可左右拖曳。
+// 訊息欄最窄 = score 最寬的一行（72 個半形字寬）× 125%，加上左右留白；跟著文字大小設定變動（同 styles.css 的 --console-min）。
+const SCORE_COLUMNS=72;
+const consoleMinWidth=()=>(parseFloat(getComputedStyle(term).fontSize)||15)*SCORE_COLUMNS/2*1.25+40;
+const sideSplitter=setupSideSplitter({shell:document.querySelector('.game-shell'),splitter:document.getElementById('sideSplitter'),storageKey:'es2-side-width-v1',minCenter:consoleMinWidth});
+// 第一次打開時，地圖與角色狀態放在最右欄（最右欄被拉到很窄時改靠畫面右邊）。
+function sideArea(){
+  const r=document.querySelector('.game-side')?.getBoundingClientRect();
+  return r&&r.width>=200?{left:r.left+12,width:r.width-24}:{left:window.innerWidth-412,width:400};
+}
+setupFloatWindow({
+  root:document.getElementById('mapWindow'),
+  openButton:document.querySelector('[data-ui-map]'),
+  storageKey:'es2-map-window-v1',resizable:true,defaultOpen:true,
+  defaultGeometry:()=>{const a=sideArea();return {left:a.left,top:12,width:Math.max(300,a.width),height:Math.min(470,window.innerHeight-280)};},
+});
+setupFloatWindow({
+  root:document.getElementById('statusWindow'),
+  openButton:document.querySelector('[data-ui-status]'),
+  storageKey:'es2-status-window-v1',defaultOpen:true,
+  defaultGeometry:()=>{
+    const a=sideArea(),m=document.getElementById('mapWindow');
+    const top=m&&!m.hidden?m.getBoundingClientRect().bottom+10:12;
+    return {left:a.left,top:Math.min(top,window.innerHeight-240)};
+  },
 });
 function extractChatMessage(plain){
   let text=String(plain||'').trim();
@@ -308,6 +337,9 @@ function ansi(s){
   const emit=(text,fg,bg,bold,underline)=>{
     if(!text)return;
     if(isBarRun(text,fg,bg)){ html+=barCells(text,fg,bg); return; }
+    // 粗體的白色（遊戲的亮白 HIW＝1;37，或只有粗體沒指定顏色）顯示成最亮的白，
+    // 跟一般文字（--term-fg）區分；其他顏色的粗體照舊（2026-10-31）。
+    if(bold&&(!fg||fg===baseColors[37]))fg=baseColors[97];
     const st=(underline?'text-decoration:underline;':'')+(fg?`color:${fg};`:'')+(bg?`background:${bg};`:'');
     html+= st? `<span style="${st}">${esc(text)}</span>` : esc(text);
   };
@@ -721,13 +753,14 @@ function renderObserved(){
     const cells=Array.from({length:CELLS},(_,i)=>`<i class="hud-cell${i<filled?' filled':i<effCells?'':' gone'}" aria-hidden="true"></i>`).join('');
     vitals.push(`<div class="hud-vital hud-${key}" style="--hud-color:${colors[key]}"><span class="hud-label">${labels[key]}</span><b class="hud-num">${num(v)}</b><div class="hud-cells" role="img" aria-label="${labels[key]} ${pct}%">${cells}</div></div>`);
   }
-  for(const key of ['food','water','fatigue']){
-    const v=parsePairFromState(key);if(!v)continue;
-    needs.push(`<span class="hud-need hud-${key}"><span class="hud-label">${labels[key]}</span><b class="hud-num">${num(v)}</b></span>`);
-  }
+  // 最下面一行跟上面共用欄位：食物的數字靠右對齊精氣神的最大值，疲勞的數字靠右對齊方格的最右邊，飲水在兩者中間。
+  const need=key=>{const v=parsePairFromState(key);return v?`<span class="hud-need hud-${key}"><span class="hud-label">${labels[key]}</span><b class="hud-num">${num(v)}</b></span>`:'';};
+  const food=parsePairFromState('food');
+  const rest=need('water')+need('fatigue');
+  if(food||rest)needs.push(`<div class="hud-vital hud-needs"><span class="hud-label">${food?labels.food:''}</span><b class="hud-num">${food?num(food):''}</b><div class="hud-needs-rest">${rest}</div></div>`);
   const hud=document.querySelector('#scoreHud');
   if(hud&&(vitals.length||needs.length)){
-    const html=`<div class="hud-vitals">${vitals.join('')}</div>${needs.length?`<div class="hud-needs">${needs.join('')}</div>`:''}`;
+    const html=`<div class="hud-vitals">${vitals.join('')}${needs.join('')}</div>`;
     if(html!==lastScoreHudHtml){hud.innerHTML=html;lastScoreHudHtml=html;}
     hud.classList.remove('muted');
   }
@@ -912,6 +945,12 @@ function safeMapLabel(raw){
   if(!s||s.includes('/')||/^\.?\.?\//.test(s)||/^[/\\]/.test(s)||/^[A-Za-z0-9_.:-]+$/.test(s))return '';
   return s;
 }
+// 地圖格子裡顯示完整房名：兩個字一行，最多四行（八個字）。
+function mapLabelLines(raw){
+  const chars=[...safeMapLabel(raw).replace(/[\s　·・()（）【】\[\]]/g,'')].slice(0,8);
+  const lines=[];for(let i=0;i<chars.length;i+=2)lines.push(chars.slice(i,i+2).join(''));
+  return lines;
+}
 function twoCharMapLabel(raw){
   let s=safeMapLabel(raw);if(!s)return '';
   const rules=[
@@ -932,7 +971,7 @@ function mapNodeClass(raw){return safeMapLabel(raw)?'map-node-special':'map-node
 let mapZoom=1;
 function setMapZoom(next){
   mapZoom=Math.max(.72,Math.min(1.45,next));
-  const svg=document.querySelector('#localMap .topology-svg');if(svg)svg.style.transform=`scale(${mapZoom})`;
+  renderLocalMap();
   const lab=document.querySelector('#mapZoomLabel');if(lab)lab.textContent=`${Math.round(mapZoom*100)}%`;
 }
 const stableWorldPos=new Map();
@@ -955,14 +994,18 @@ function renderLocalMap(){
     return;
   }
   exploredRooms.add(currentRoomId);
-  const meta=mapMeta(currentRoomId),center=stableWorldPos.get(currentRoomId)||[0,0],radius=3;
+  // 房間格子的大小固定（格子中心相距 62 像素）；地圖視窗拉大就看到更多格，不會把整張圖放大。
+  // 縮放按鈕縮小時同樣多看幾格。
+  const NS='http://www.w3.org/2000/svg',W=Math.max(120,el.clientWidth||360),H=Math.max(100,el.clientHeight||314),cx=W/2,cy=H/2,sx=62,sy=62;
+  const radiusX=Math.ceil(W/2/mapZoom/sx),radiusY=Math.ceil(H/2/mapZoom/sy);
+  const meta=mapMeta(currentRoomId),center=stableWorldPos.get(currentRoomId)||[0,0];
   if(layerHud)layerHud.textContent=`MAP V8 唯讀全圖 ｜ ${meta.area?meta.area+' ｜ ':''}${meta.layer||'地面'}`;
   const areaTitle=document.querySelector('#mapAreaTitle');
   if(areaTitle)areaTitle.textContent=meta.area?` - ${meta.area}`:'';
   const visible=new Map();
   for(const [id,p] of stableWorldPos){
     if(!nodeById.has(id)||!sameMapLayer(currentRoomId,id)||!sameMapArea(currentRoomId,id))continue;
-    const dx=p[0]-center[0],dy=p[1]-center[1];if(Math.abs(dx)<=radius&&Math.abs(dy)<=radius)visible.set(id,[dx,dy]);
+    const dx=p[0]-center[0],dy=p[1]-center[1];if(Math.abs(dx)<=radiusX&&Math.abs(dy)<=radiusY)visible.set(id,[dx,dy]);
   }
   // Cross-area exits (e.g. the snow-town gate that leads into the Zhenwu camp)
   // don't carry a meaningful shared x/y with the current area -- each area is
@@ -977,7 +1020,6 @@ function renderLocalMap(){
       boundarySet.add(id);boundarySet.add(e.to);
     }
   }
-  const NS='http://www.w3.org/2000/svg',W=360,H=314,cx=W/2,cy=H/2,sx=54,sy=46;
   const svg=document.createElementNS(NS,'svg');svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.setAttribute('class','topology-svg');svg.style.transform=`scale(${mapZoom})`;
   const xy=(id)=>{const p=visible.get(id);return p?[cx+p[0]*sx,cy+p[1]*sy]:null;};
   const edgeSeen=new Set();
@@ -987,14 +1029,18 @@ function renderLocalMap(){
     line.setAttribute('x1',a[0]);line.setAttribute('y1',a[1]);line.setAttribute('x2',b[0]);line.setAttribute('y2',b[1]);line.setAttribute('class','map-edge'+((a[0]!==b[0]&&a[1]!==b[1])?' diagonal':''));svg.appendChild(line);
   }
   for(const [id] of visible){
-    const [x,y]=xy(id),raw=nodeById.get(id)?.label||'',label=twoCharMapLabel(raw),g=document.createElementNS(NS,'g');
+    const [x,y]=xy(id),raw=nodeById.get(id)?.label||'',lines=mapLabelLines(raw),g=document.createElementNS(NS,'g');
     const cls=id===currentRoomId?'map-node-current':(boundarySet.has(id)?'map-node-boundary':mapNodeClass(raw));g.setAttribute('class',`map-node ${cls}`);
-    // Two-character labels live inside a fixed-size room tile. This prevents labels
-    // from colliding with neighbouring rooms and makes every visible room readable.
-    const tileW=34,tileH=22;
-    const r=document.createElementNS(NS,'rect');r.setAttribute('x',x-tileW/2);r.setAttribute('y',y-tileH/2);r.setAttribute('width',tileW);r.setAttribute('height',tileH);r.setAttribute('rx',3);r.setAttribute('class','map-node-rect');g.appendChild(r);
-    if(label){const t=document.createElementNS(NS,'text');t.setAttribute('x',x);t.setAttribute('y',y+4);t.setAttribute('text-anchor','middle');t.setAttribute('class','map-node-label map-node-label-inside');t.textContent=label;g.appendChild(t);}
-    if(id===currentRoomId){const dot=document.createElementNS(NS,'circle');dot.setAttribute('cx',x);dot.setAttribute('cy',y-7);dot.setAttribute('r',2.4);dot.setAttribute('class','map-current-dot');g.appendChild(dot);}svg.appendChild(g);
+    // 房間格是 1:1 的正方形，房名完整顯示：兩個字一行、上下左右置中；
+    // 一、二行（四個字以內）用一般字級，三、四行（五到八個字）字縮小一點，一樣放進同大小的格子。
+    const tile=44,long=lines.length>2,lineH=long?10:14;
+    const r=document.createElementNS(NS,'rect');r.setAttribute('x',x-tile/2);r.setAttribute('y',y-tile/2);r.setAttribute('width',tile);r.setAttribute('height',tile);r.setAttribute('rx',4);r.setAttribute('class','map-node-rect');g.appendChild(r);
+    if(lines.length){
+      const t=document.createElementNS(NS,'text');t.setAttribute('text-anchor','middle');t.setAttribute('class','map-node-label map-node-label-inside'+(long?' map-node-label-long':''));
+      lines.forEach((line,i)=>{const ts=document.createElementNS(NS,'tspan');ts.setAttribute('x',x);ts.setAttribute('y',y+(i-(lines.length-1)/2)*lineH);ts.textContent=line;t.appendChild(ts);});
+      g.appendChild(t);
+    }
+    if(id===currentRoomId){const dot=document.createElementNS(NS,'circle');dot.setAttribute('cx',x);dot.setAttribute('cy',y-tile/2);dot.setAttribute('r',2.6);dot.setAttribute('class','map-current-dot');g.appendChild(dot);}svg.appendChild(g);
   }
   el.replaceChildren(svg);
   const vertical=(adjacency.get(currentRoomId)||[]).filter(e=>verticalDirs.has(e.direction)||!vec[e.direction]||!sameMapLayer(currentRoomId,e.to));
@@ -1203,8 +1249,8 @@ document.querySelector('#form')?.addEventListener('submit',e=>{
 // input box just to keep typing. Real controls (buttons, links, other inputs,
 // the settings dialog which lives outside .game-shell) keep their own click
 // behaviour; only non-interactive space redirects focus.
-const commandHotZone=document.querySelector('.game-shell');
-commandHotZone?.addEventListener('click',e=>{
+// 地圖、角色狀態、聊天這些浮動視窗在 .game-shell 外面，也一起算進來。
+function focusCommandFromClick(e){
   if(!input||input.disabled)return;
   const target=e.target instanceof Element?e.target:null;
   if(!target)return;
@@ -1212,7 +1258,8 @@ commandHotZone?.addEventListener('click',e=>{
   const selection=window.getSelection?.();
   if(selection&&String(selection).trim())return;
   try{input.focus({preventScroll:true});}catch(_){input.focus();}
-});
+}
+for(const zone of document.querySelectorAll('.game-shell,#mapWindow,#statusWindow,#chatWindow'))zone.addEventListener('click',focusCommandFromClick);
 
 // The padding/background of the command bar is part of the same hot-zone.  This
 // explicit handler also covers browsers where a form/background click does not
@@ -1225,13 +1272,28 @@ document.querySelector('#form')?.addEventListener('click',e=>{
 });
 document.querySelectorAll('[data-cmd]').forEach(b=>b.addEventListener('click',()=>{send(b.dataset.cmd);input.focus();}));
 
-document.querySelector('[data-ui-settings]')?.addEventListener('click',()=>document.querySelector('#uiSettings')?.showModal());
+// 介面設定：可拖曳的浮動視窗，不遮暗背景，邊調邊看得到訊息欄的效果；重新整理後不會自動打開。
+setupFloatWindow({
+  root:document.getElementById('uiSettings'),
+  openButton:document.querySelector('[data-ui-settings]'),
+  storageKey:'es2-settings-window-v1',rememberOpen:false,
+  defaultGeometry:()=>({left:Math.max(16,(window.innerWidth-430)/2),top:Math.max(16,window.innerHeight*.12)}),
+});
+// 地圖視窗大小改變（拉角落、打開視窗）時重畫，讓看得到的範圍跟著視窗大小走。
+{
+  const mapEl=document.querySelector('#localMap');let mapResizeFrame=0;
+  if(mapEl&&typeof ResizeObserver==='function')new ResizeObserver(()=>{
+    if(mapResizeFrame)return;
+    mapResizeFrame=requestAnimationFrame(()=>{mapResizeFrame=0;renderLocalMap();});
+  }).observe(mapEl);
+}
 document.querySelectorAll('[data-map-action]').forEach(b=>b.addEventListener('click',()=>{
   const a=b.dataset.mapAction;if(a==='in')setMapZoom(mapZoom+.12);else if(a==='out')setMapZoom(mapZoom-.12);else setMapZoom(1);
 }));
+setupTextColor(document.getElementById('textColorSettings'));
 const fontRange=document.querySelector('#terminalFontSize'),fontValue=document.querySelector('#terminalFontValue');
-fontRange?.addEventListener('input',()=>{document.documentElement.style.setProperty('--terminal-font-size',fontRange.value+'px');if(fontValue)fontValue.textContent=fontRange.value+'px';localStorage.setItem('es2-ui-font',fontRange.value);});
-try{const f=localStorage.getItem('es2-ui-font');if(f&&fontRange){fontRange.value=f;document.documentElement.style.setProperty('--terminal-font-size',f+'px');if(fontValue)fontValue.textContent=f+'px';}}catch(_){}
+fontRange?.addEventListener('input',()=>{document.documentElement.style.setProperty('--terminal-font-size',fontRange.value+'px');sideSplitter.refresh();if(fontValue)fontValue.textContent=fontRange.value+'px';localStorage.setItem('es2-ui-font',fontRange.value);});
+try{const f=localStorage.getItem('es2-ui-font');if(f&&fontRange){fontRange.value=f;document.documentElement.style.setProperty('--terminal-font-size',f+'px');sideSplitter.refresh();if(fontValue)fontValue.textContent=f+'px';}}catch(_){}
 
 
 
@@ -1263,7 +1325,24 @@ function insertTab(){
   const pos=start+pad.length;input.setSelectionRange(pos,pos);
   repeatArmed=false;historyPrefix=null;hi=history.length;
 }
+// 輸入列按 PageUp／PageDown 翻訊息欄；End 照常把游標移到文字最後面，0.5 秒內連按兩下才回到最新訊息並繼續跟著捲動。
+function pageTerminal(dir){
+  const line=parseFloat(getComputedStyle(term).lineHeight)||24;
+  term.scrollTop+=dir*Math.max(line,term.clientHeight-line*2);
+}
+let lastEndPress=0;
+function followLatest(){stickToBottom=true;term.scrollTop=term.scrollHeight;autoScrollTop=term.scrollTop;updateScrollLatest();}
 input?.addEventListener('keydown',e=>{
+  if(!e.shiftKey&&!e.ctrlKey&&!e.altKey&&!e.metaKey&&!e.isComposing){
+    if(e.key==='PageUp'){e.preventDefault();pageTerminal(-1);return;}
+    if(e.key==='PageDown'){e.preventDefault();pageTerminal(1);return;}
+    if(e.key==='End'&&!e.repeat){
+      const now=Date.now();
+      if(now-lastEndPress<=500){lastEndPress=0;followLatest();}
+      else lastEndPress=now;
+      return;
+    }
+  }
   if(e.key==='Tab'&&!e.shiftKey&&!e.ctrlKey&&!e.altKey&&!e.metaKey&&!e.isComposing){
     e.preventDefault();insertTab();return;
   }
@@ -1324,4 +1403,4 @@ term?.addEventListener('scroll',()=>{
   if(term.scrollTop!==autoScrollTop)stickToBottom=isNearBottom();
   updateScrollLatest();
 });
-scrollLatest?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();stickToBottom=true;term.scrollTop=term.scrollHeight;autoScrollTop=term.scrollTop;updateScrollLatest();input?.focus();});
+scrollLatest?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();followLatest();input?.focus();});

@@ -6,10 +6,15 @@ docs/LEGACY_ROOM_NPC_COMPENDIUM.md）；職業、等級、強度、門派、行�
 「舊有 NPC 待製作清單」（2026-10-15）。放在喬陰縣正廳（d/qiaoyin/fonxan_hall.c）。
 封山派師父（使用者定案，2026-10-17）：平民可拜師，拜師後成為「封山派弟子」。
 武功見 docs/martial_arts/封山派_封山劍法與倒亂七星步法.md。
+戰鬥行為（使用者定案，2026-10-28）：凝神專注、使用未開放的封山劍法特殊招式、
+氣或 HP 低於兩成時補滿（每次重生最多四次）。
 */
 inherit "/custom/legacy_npc/legacy_npc";
 
 #define FACTION "fighter.fonxan"
+
+#define FULL_HEAL_MAX   4       // 補滿的次數上限（每次重生重新計算）
+#define FULL_HEAL_RATIO 20      // 氣或 HP 低於上限的百分之幾時補滿
 
 void create()
 {
@@ -29,6 +34,7 @@ void create()
         "白髮老者似乎仍然精神矍鑠，不像是身有重病的樣子。\n");
     // 武功等級依門派自動配置（daemon/misc/npc_skill.c）；玄蘇劍是雙手劍，另外指定雙手劍也用封山劍法。
     map_skill("twohanded sword", "fonxansword");
+    set("fonxan/npc_specials", 1);   // 封山劍法未開放的特殊招式他照樣使用（fonxansword.c）
 
     set("custom_faction", FACTION);   // 封山派（docs/martial_arts/門派武功對照表.md）
     set_power("S");
@@ -41,6 +47,39 @@ void create()
     carry_object("/custom/armor/armor/red_scale_plate")->wear();   // 火鱗胸鎧
     carry_object("/custom/armor/cloth/red_scale_cloth")->wear();   // 火鱗衣
     carry_object("/custom/weapon/sword/blackthorn")->wield();   // 玄蘇劍
+}
+
+// ------------------------------------------------------------------
+// 戰鬥行為：凝神專注（效果結束後再運）；氣或 HP 低於兩成時以封山真氣補滿，最多四次。
+// ------------------------------------------------------------------
+
+private int low_stat(string what)
+{
+    int max = query_stat_maximum(what);
+    return max > 0 && query_stat(what) * 100 < max * FULL_HEAL_RATIO;
+}
+
+private void full_heal()
+{
+    foreach( string what in ({ "kee", "HP" }) ) {
+        if( query_stat_maximum(what) <= 0 ) continue;
+        set_stat_effective(what, query_stat_maximum(what));
+        set_stat_current(what, query_stat_maximum(what));
+    }
+    add_temp("liuh/full_heal", 1);
+    message_vision(HIC "$N一聲清嘯，精純的封山真氣灌注週身經脈，氣色頓時好了許多。\n" NOR, this_object());
+}
+
+static void heart_beat()
+{
+    ::heart_beat();
+    if( !this_object() || !living(this_object()) || !is_fighting() ) return;
+
+    if( query_temp("liuh/full_heal") < FULL_HEAL_MAX && (low_stat("kee") || low_stat("HP")) )
+        full_heal();
+
+    if( !query_temp("fonxan/focus") && !is_busy() )
+        exert_function("focus");
 }
 
 // ------------------------------------------------------------------

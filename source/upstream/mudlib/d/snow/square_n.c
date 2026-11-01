@@ -17,7 +17,9 @@ LONG
 	]));
 	set("objects", ([
 		__DIR__"npc/child1" : 1,
-		__DIR__"npc/child2" : 1
+		__DIR__"npc/child2" : 1,
+		// 武陀灸堂堂主武道通，武陀灸堂房間做好前暫放這裡（使用者決定，2026-10-27）
+		"/custom/legacy_npc/wu_dauton" : 1,
 	]) );
 	set("outdoors", "snow");
 

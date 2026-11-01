@@ -40,3 +40,13 @@ source/upstream/mudlib/data/iplimit.o
 
 # 玩家版天朝圖鑑：部署時由 tools/build_player_codex.py 產生
 web/codex.html
+
+# Neolith 編譯中間檔（每台機器自己編譯產生，不放進 git）
+# 例外：Windows 單機測試版直接使用 build-vs2022 的 neolith.exe，朋友不必自己編譯，所以保留這一個檔
+source/upstream/neolith/build-linux/
+source/upstream/neolith/build-vs2022/*
+!source/upstream/neolith/build-vs2022/src/
+source/upstream/neolith/build-vs2022/src/*
+!source/upstream/neolith/build-vs2022/src/Release/
+source/upstream/neolith/build-vs2022/src/Release/*
+!source/upstream/neolith/build-vs2022/src/Release/neolith.exe

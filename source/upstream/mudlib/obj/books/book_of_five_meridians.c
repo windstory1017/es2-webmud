@@ -12,7 +12,7 @@ void create()
     set("unit", "本");
     set("value", 200);
     set("long", "一本【五脈內經】，詳細記載五臟所屬經脈的走向與相生相剋之理，書中附有許多精細的經絡圖。\n");
-    set("required/skill", (["literate": 60, "kee anatomy": 80]));
+    set("required/skill", (["literate": 60, "kee anatomy": 80, "cauterization": 1]));
     set("content", (["kee anatomy": 160]));
     setup();
 }

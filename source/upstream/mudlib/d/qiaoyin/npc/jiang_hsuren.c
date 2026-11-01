@@ -50,8 +50,15 @@ void init()
 
 #define ALCHEMY_FEE 50000   // 柴火錢：五萬文（五兩黃金；等值貨幣、超過都可以）
 
-// 煉丹房的柴火錢：方士給江述仁五萬文以上，本次登入期間可以進出北邊的煉丹房，
-// 也可以跟江述仁學神農之術、黃白之術、竹上經心法。
+// 煉丹房的柴火錢：方士給江述仁五萬文以上，本次登入期間可以進出北邊的煉丹房；
+// 付過錢的龍圖丹派弟子還可以跟江述仁學神農之術、黃白之術、竹上經心法
+// （其他門派的方士照樣能付錢煉丹，但不傳授技能，使用者指示 #18，2026-10-28）。
+
+// 對玩家說話時「你」依性別顯示你／妳（使用者指示，2026-10-28）。
+void say_to(object who, string text)
+{
+    command("say " + replace_string(text, "你", gender_self(who)));
+}
 int accept_object(object who, object ob)
 {
     if( !ob->query("money_id") ) return 0;
@@ -60,7 +67,7 @@ int accept_object(object who, object ob)
         return 0;
     }
     if( who->query_temp("qiaoyin/alchemy_paid") ) {
-        command("say 你方才已經付過了，進去吧。");
+        say_to(who, "你方才已經付過了，進去吧。");
         return 0;
     }
     if( ob->value() < ALCHEMY_FEE ) {
@@ -68,22 +75,38 @@ int accept_object(object who, object ob)
         return 0;
     }
     who->set_temp("qiaoyin/alchemy_paid", 1);
-    command("say 嘿嘿，好說好說，丹房就在後頭，請便；如果還不會丹道之術的話，也可以跟我學習。");
+    if( SKILL_D("zushang")->is_longtu_disciple(who) )
+        command("say 嘿嘿，好說好說，丹房就在後頭，請便；如果還不會丹道之術的話，也可以跟我學習。");
+    else if( who->query("custom_faction") == "alchemist.wuto" )
+        command("say 嘿嘿，好說好說，丹房就在後頭，請便；如果還不會神農之術的話，也可以跟我學習。");
+    else
+        command("say 嘿嘿，好說好說，丹房就在後頭，請便。");
     return 1;
 }
 
 // 江述仁修改紀錄 #5、#6（2026-10-22 執行；docs/martial_arts/龍圖丹派_江述仁修改紀錄.md）：付過柴火錢的玩家可以學這三項技能，
 // 每項各自最多學到經驗值 50（不是等級 50）。
+// #18（2026-10-28）：只傳授龍圖丹派弟子；竹上經心法另須人物等級 15。
+// #10（2026-10-29）：武陀灸堂弟子也能學神農之術（只有這一項）；但不能在藥鋪辨藥（見 herb_d.c）。
 int acquire_skill(object me, string skill)
 {
     if( member_array(skill, ({ "alchemy-medication", "alchemy-wealth", "zushang" })) < 0 )
         return 0;
+    if( !SKILL_D("zushang")->is_longtu_disciple(me)
+    &&  !(skill == "alchemy-medication" && me->query("custom_faction") == "alchemist.wuto") ) {
+        say_to(me, "你不是龍圖丹派弟子，我不能教你" + to_chinese(skill) + "。");
+        return 1;
+    }
     if( !me->query_temp("qiaoyin/alchemy_paid") ) {
         command("say 想學？先把柴火錢付了再說。");
         return 1;
     }
+    if( skill == "zushang" && me->query_level() < 15 ) {
+        say_to(me, "你的根基尚淺，恐怕無法瞭解竹上經心法的修練方式。");
+        return 1;
+    }
     if( me->query_learn(skill) >= 50 ) {
-        command("say 我會的都教你了，剩下的自己練去。");
+        say_to(me, "我會的都教你了，剩下的自己練去。");
         return 1;
     }
     message_vision(CYN + "$N將「" + to_chinese(skill) + "」的入門要訣傳授給$n。\n" NOR,

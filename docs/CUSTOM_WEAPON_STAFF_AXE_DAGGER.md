@@ -62,7 +62,7 @@
 | 闇雲雙刃斧 | `axe/blackcloud_axe.c` | blackcloud axe | 6800 | 50 | twohanded axe、axe | 價值隨機 |
 | 嗜血巨斧 | `axe/blood_axe.c` | blood axe | 16500 | 400 | twohanded axe | 價值隨機 |
 | 斬龍斧 | `axe/dragon_killer_axe.c` | dragon-killer axe | 24900 | 550 | twohanded axe | 價值隨機 |
-| 青龍白虎斧 | `axe/dragon_tiger_axe.c` | dragon-tiger axe | 5000 | 450 | axe、secondhand axe | 價值隨機 |
+| 青龍白虎斧 | `axe/dragon_tiger_axe.c` | dragon-tiger axe | 10000 | 300 | axe、secondhand axe | 數值照水嵐縣設計表（2026-10-30，敘述照原資料）：單手、左手都是膂力 +1、傷害力 10；密林大統領 |
 | 八鬼牙斧 | `axe/eight_ghost_axe.c` | eight-ghost axe | 24900 | 900 | twohanded axe | 價值隨機 |
 | 萬夫巨斧 | `axe/ghost_axe.c` | ghost axe | 20000 | 3 | twohanded axe |  |
 | 十石大斧 | `axe/grandaxe.c` | grandaxe | 32000 | 200 | twohanded axe |  |

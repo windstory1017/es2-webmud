@@ -35,9 +35,12 @@ private void record(string text)
 // 自己看到的訊息依性別顯示你／妳（2026-10-15 使用者決定）。
 private int say_to(object me, string text) { tell_object(me, replace_string(text, "你", gender_self(me)) + "\n"); return 1; }
 
+// 武陀灸堂弟子雖是方士、也學得到神農之術，但不能辨藥（使用者指示，2026-10-29）：
+// 藥鋪對他們照一般客人處理。
 private int is_alchemist(object me)
 {
-    return objectp(me) && userp(me) && me->query_class() == "alchemist";
+    return objectp(me) && userp(me) && me->query_class() == "alchemist"
+        && me->query("custom_faction") != "alchemist.wuto";
 }
 
 private string money(int amount) { return BALANCE_CMD->money_string(amount); }
@@ -98,16 +101,19 @@ int cmd_herblist(object me, string arg)
         st = QUALIFY->status(me, pill);
         if (st < 0) continue;
         if (st == 0)
-            rows += ({ cjk_pad(pill->name(), 14) + cjk_pad(money(CATALOG->price(key, "recipe") * CATALOG->recipe_count(key)), 24)
-                       + money(CATALOG->price(key, "buy")) });
+            rows += ({ cjk_pad(pill->name() + "(" + pill->query("id") + ")", 27)
+                       + cjk_pad(money(CATALOG->price(key, "recipe") * CATALOG->recipe_count(key)), 20)
+                       + cjk_pad(money(CATALOG->price(key, "buy")), 13)
+                       + money(CATALOG->price(key, "sell")) });
         else
             groups[st] += ({ pill->name() });
     }
 
     if (!sizeof(rows)) return say_to(me, "你目前還無法購買任何丹藥。");
 
-    msg = cjk_pad("丹藥名稱", 14) + cjk_pad("配方", 24) + "成丹\n";
-    msg += "------------------------------------------------------------\n";
+    // 四欄：丹藥名稱(ID)、一套配方（一次購買總價）、成丹販售價、成丹收購價（使用者指示 #19，2026-10-30）。
+    msg = cjk_pad("丹藥名稱", 27) + cjk_pad("一套配方", 20) + cjk_pad("成丹販售價", 13) + "成丹收購價\n";
+    msg += "--------------------------------------------------------------------------------\n";
     msg += implode(rows, "\n") + "\n";
     if (sizeof(groups[1])) msg += "※ " + implode(groups[1], "、") + "：讀書識字不足，無法購買。\n";
     if (sizeof(groups[2])) msg += "※ " + implode(groups[2], "、") + "：神農之術不足，無法購買。\n";

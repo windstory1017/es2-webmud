@@ -4,6 +4,7 @@ description: 竹上經心法（zushang）。龍圖丹派方士的內功，安裝
              exert regenerate 消耗精、氣，回復神與受傷減少的神上限。
 design: docs/martial_arts/龍圖丹派_竹上經心法.md（2026-10-22）
 note: 1～9 級不存在，累積到門檻後 gain 直接練成 10 級。門檻不打折。
+      學習條件：龍圖丹派弟子、人物等級 15（使用者指示 #18，2026-10-28），由江述仁傳授前檢查。
 ---*/
 
 #include <ansi.h>
@@ -11,6 +12,7 @@ note: 1～9 級不存在，累積到門檻後 gain 直接練成 10 級。門檻�
 inherit SKILL;
 
 #define SKILL_ID "zushang"
+#define FACTION  "alchemist.dragon"   // 龍圖丹派的門派記號（陳維俠收徒時記上，2026-10-28）
 
 void create()
 {
@@ -19,6 +21,24 @@ void create()
 }
 
 int valid_enable(string usage) { return usage == "force"; }
+
+// 龍圖丹派弟子：有門派記號；或記號補上前就拜師的舊弟子（職業方士、稱號「龍圖丹派弟子」）。
+int is_longtu_disciple(object me)
+{
+    if( me->query("custom_faction") == FACTION ) return 1;
+    return me->query_class() == "alchemist" && me->query("title") == "龍圖丹派弟子";
+}
+
+// 學習條件（使用者指示 #18，2026-10-28）：龍圖丹派弟子、人物等級 15。
+// 傳回 0 時 notify_fail 帶著原因；江述仁傳授前呼叫。
+int valid_learn(object me)
+{
+    if( !is_longtu_disciple(me) )
+        return notify_fail(gender_self(me) + "不是龍圖丹派弟子，無法修練竹上經心法。\n");
+    if( me->query_level() < 15 )
+        return notify_fail(gender_self(me) + "的根基尚淺，恐怕無法瞭解竹上經心法的修練方式。\n");
+    return 1;
+}
 
 // 練成等級 10；門檻沿用系統預設（10^2 x 100 = 10,000）。
 int query_entry_level() { return 10; }

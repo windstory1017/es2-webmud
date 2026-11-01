@@ -251,6 +251,9 @@ unconcious (string reason)
         return;
     }
 
+    /* 昏倒疲勞 +10（使用者定案，2026-10-29）；疲勞超過 80 時死亡，復活補不滿，見 CHAR_D->make_living */
+    me->supplement_stat("fatigue", 10);
+
     /* 停止所有 fight 中的敵人 */
     remove_all_enemy();
 
