@@ -2556,14 +2556,16 @@
       "label": "空地",
       "area": "密林",
       "x": 3,
-      "y": 1
+      "y": 1,
+      "layer": "地下"
     },
     {
       "id": "/d/swaylan/forest/kitchen",
       "label": "廚房",
       "area": "密林",
       "x": 4,
-      "y": 1
+      "y": 1,
+      "layer": "地下"
     },
     {
       "id": "/d/swaylan/forest/tunnel",
