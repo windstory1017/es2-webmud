@@ -106,6 +106,7 @@
 | 櫻吹雪 | `sword/cherry_blossoms_sword.c` | cherry blossoms sword | 7200 | 400 | sword、secondhand sword | 價值隨機 |
 | 紫炎劍 | `sword/cloud_magfire_sword.c` | cloud magfire sword | 6100 | 950 | sword | 價值隨機 |
 | 落雲刃 | `sword/cloudslay_sword.c` | cloudslay sword | 8700 | 150 | sword、secondhand sword |  |
+| 逐風刃 | `sword/windfury_sword.c` | windfury sword | 8700 | 150 | sword、secondhand sword | 2026-11-01 新做（使用者定案），數值同落雲刃，特性左手 50、右手 25 |
 | 巨劍 | `sword/colosus_sword.c` | colosus sword | 16900 | 350 | twohanded sword | 價值隨機 |
 | 古銅重劍 | `sword/copper_sword.c` | copper sword | 13000 | 650 | twohanded sword | 價值隨機 |
 | 指南劍 | `sword/daoist_sword.c` | daoist sword | 3300 | 1000 | sword | 價值隨機 |
@@ -145,7 +146,7 @@
 | 蠻龍 | `sword/sword_of_mighty_dragon.c` | sword of mighty dragon | 21200 | 250 | twohanded sword | 唯一、價值隨機 |
 | 黃雀寶劍 | `sword/sword_of_raven.c` | sword of raven | 2600 | 450 | sword、secondhand sword | 唯一、價值隨機 |
 | 咒劍紅羽 | `sword/sword_of_redrune.c` | sword of redrune | 3300 | 50 | sword |  |
-| 風泉之劍 | `sword/sword_of_wind_spring.c` | sword of wind spring | 9400 | 800 | sword | 唯一、價值隨機 |
+| 風泉之劍 | `sword/sword_of_wind_spring.c` | sword of wind spring | 15000 | 1200 | sword、twohanded sword | 唯一；2026-11-01 依使用者定案重做（見步玄派設計文件），被取走後駱易改拿逐風刃 |
 | 白龍牙 | `sword/white_dragon_fang.c` | dragon sword | 7900 | 500 | sword |  |
 | 白色長劍 | `sword/white_sword.c` | white sword | 3300 | 50 | sword | 價值隨機 |
 | 易羅大劍 | `sword/yiluo_sword.c` | yiluo sword | 16100 | 90 | twohanded sword |  |

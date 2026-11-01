@@ -114,6 +114,17 @@ private mapping sect = ([
             ([ "skill": "advance-sky sword", "map": "sword", "level": 1 ]),
         }),
     ]),
+    "scholar.myst": ([   // 步玄派（使用者定案，2026-11-01）
+        "name":        "步玄派",
+        "force":       "myst-force",
+        "force_level": 5,
+        "arts":        ({
+            ([ "skill": "myst-steps", "map": "dodge", "level": 1 ]),
+            ([ "skill": "close myst-sword", "map": "sword", "level": 1 ]),
+            ([ "skill": "close myst-sword", "map": "secondhand sword", "level": 1 ]),
+            ([ "skill": "close myst-sword", "map": "parry", "level": 1 ]),
+        }),
+    ]),
     "thief.longye": ([
         "name":        "瑯夷派",
         "force":       "longyeforce",
