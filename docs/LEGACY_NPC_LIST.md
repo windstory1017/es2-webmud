@@ -100,7 +100,7 @@
 | 76 | 黑無常 | Black hell agent | `custom/legacy_npc/black_hell_agent.c` | 未能判定／— | 巫首族 | 道士 | 50 | A | 朱衣派（`taoist.fire`） | — |
 | 77 | 李儒 | Li ru | `custom/legacy_npc/li_ru.c` | 柳家／民宅 | 人類 | 書生 | 20 | B | — | — |
 | 78 | 劉開 | Liu kei | `custom/legacy_npc/liu_kei.c` | 檒城／街道 | 人類 | 軍人 | 30 | B | — | — |
-| 79 | 駱易 | Ro yi | `custom/legacy_npc/ro_yi.c` | 步玄派／— | 人類 | 書生 | 65 | S | 步玄派（未列入對照表） | — |
+| 79 | 駱易 | Ro yi | `custom/legacy_npc/ro_yi.c` | 步玄派／沐華居 | 人類 | 書生 | 65 | S | 步玄派（`scholar.myst`） | — |
 | 80 | 武道通 | Wu dauton | `custom/legacy_npc/wu_dauton.c` | 武陀灸堂／武陀灸堂 | 人類 | 方士 | 60 | S | 武陀灸堂（`alchemist.wuto`） | 巡邏（暫放雪亭鎮廣場北邊） |
 | 81 | 張小簽 | Zhang xiao qian | `custom/legacy_npc/zhang_xiao_qian.c` | 水嵐縣／街道 | 人類 | 平民 | 1 | C | — | — |
 | 82 | 白劍飛 | Bai jian fei | `custom/legacy_npc/bai_jian_fei.c` | 漕幫／小船 | 夜叉族 | 武者 | 25 | B | 封山派（`fighter.fonxan`） | — |
@@ -196,7 +196,7 @@
 
 | 門派 | NPC |
 |---|---|
-| 步玄派 | 歐陽芝、駱易 |
+| 步玄派 | 歐陽芝（駱易已設 `scholar.myst`，2026-11-01） |
 | 天邪派 | 於蘭兼毅、蕭朗生 |
 | 武陀灸堂 | 雷同、武道通 |
 | 白象寺 | 無念大師 |
