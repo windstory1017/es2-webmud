@@ -12,7 +12,8 @@ void create()
 LONG
     );
     set("exits", ([
-        "north" : __DIR__"stele",
+        "up" : __DIR__"stele",
+        "south" : __DIR__"tunnel",
         "east" : __DIR__"kitchen",
     ]));
     set("objects", ([

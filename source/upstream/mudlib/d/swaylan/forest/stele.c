@@ -10,7 +10,7 @@ void init()
     add_action("do_push", "push");
 }
 
-/* 推石碑：地板一翻，跌進地下密道（回來走密道的 up）。 */
+/* 推石碑：地板一翻，跌進空地（空地 up 回來；使用者指示，2026-11-01）。 */
 int do_push(string arg)
 {
     object me = this_player();
@@ -19,7 +19,7 @@ int do_push(string arg)
     if( me->is_busy() || me->is_fighting() )
         return notify_fail("你現在沒有辦法這麼做。\n");
     message_vision("$N用力推了推石碑，只聽喀喇一聲，腳下的地板猛地一翻，$N整個人便跌進了地底。\n", me);
-    if( !me->move("/d/swaylan/forest/tunnel") ) return 0;
+    if( !me->move("/d/swaylan/forest/clearing") ) return 0;
     message("vision", replace_string("頭頂的地板一翻，$N從上頭跌了下來。", "$N", me->name()) + "\n", environment(me), ({ me }));
     return 1;
 }
@@ -33,7 +33,6 @@ LONG
     );
     set("exits", ([
         "west" : __DIR__"forest2",
-        "south" : __DIR__"clearing",
     ]));
     set("objects", ([
         __DIR__"npc/bandit" : 2,

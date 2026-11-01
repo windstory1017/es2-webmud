@@ -12,7 +12,7 @@ void create()
 LONG
     );
     set("exits", ([
-        "up" : __DIR__"stele",
+        "north" : __DIR__"clearing",
         "southwest" : __DIR__"hideout",
     ]));
     set("objects", ([
