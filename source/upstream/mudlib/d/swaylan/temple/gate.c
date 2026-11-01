@@ -1,8 +1,9 @@
 // /d/swaylan/temple/gate.c — 寶蓮寺（AA14）。舊資料全文引用。
+// 房間基底改為 TEMPLE（復活點）：鬼魂狀態的玩家可在此 enter 漩渦復活（使用者指示，2026-11-01）。
 
 #include <room.h>
 
-inherit ROOM;
+inherit TEMPLE;
 
 void create()
 {
@@ -21,5 +22,5 @@ LONG
     set("no_fight", 1);
     set("map/area", "水嵐縣");
     setup();
-    replace_program(ROOM);
+    replace_program(TEMPLE);
 }
