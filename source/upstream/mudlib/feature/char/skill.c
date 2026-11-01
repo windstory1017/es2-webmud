@@ -409,7 +409,7 @@ improve_skill(string skill, int amount)
 /* 技能成長屬性
  *
  * 對應表 ATTR_GROWTH：技能代碼 → 屬性代碼。
- * 技能等級每到 5 的倍數擲一次，成功則該屬性（裸值）+1，上限 50。
+ * 技能等級每到 5 的倍數擲一次（偷襲暗算：盜賊逢 5、其他職業逢 10），成功則該屬性（裸值）+1，上限 50。
  *   基礎機率：屬性 1~10 100%、11~15 90%、16~20 80%、21~25 60%、26~30 40%、
  *             31~40 30%、41~45 15%、46~49 10%
  *   技能等級倍率：(50 + 等級/2)%，lv5 約 0.5 倍、lv100 1 倍、lv200 1.5 倍
@@ -449,15 +449,18 @@ private int attr_growth_base(int value)
 private void roll_attr_growth(string skill, int old_level, int new_level)
 {
     string attr, cname;
-    int last, lv, value;
+    int last, lv, value, step;
 
     if( !userp(this_object()) ) return;
     if( !stringp(attr = ATTR_GROWTH[skill]) ) return;
 
+    // 偷襲暗算（backstab）增加膽識：盜賊逢 5 擲一次，其他職業逢 10 擲一次（使用者定案，2026-10-30）。
+    step = (skill == "backstab" && this_object()->query_class() != "thief") ? 10 : 5;
+
     last = this_object()->query("attr_growth/" + skill);
     if( last < old_level ) last = old_level;
 
-    for(lv = (last / 5 + 1) * 5; lv <= new_level; lv += 5) {
+    for(lv = (last / step + 1) * step; lv <= new_level; lv += step) {
         this_object()->set("attr_growth/" + skill, lv);
         // 善想禪要 100 級改為固定慧根 +3，這一級不再擲機率（使用者定案，2026-10-19）。
         if( skill == "absorption" && lv == 100 ) continue;
