@@ -1,4 +1,4 @@
-// /d/swaylan/forest/kitchen.c — 密林（AK25）。房間敘述依設計表需求撰寫；2026-11-01 改為地底的空地。
+// /d/swaylan/forest/kitchen.c — 密林（AK25）。房間敘述依設計表需求撰寫；2026-11-01 改為地底的灶房。
 
 #include <room.h>
 
