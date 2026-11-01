@@ -3,8 +3,8 @@
 LEGACY NPC. 名稱、英文 ID、敘述、年紀、性別、種族、裝備取自舊站畫面紀錄（DOCUMENTED，
 docs/LEGACY_ROOM_NPC_COMPENDIUM.md）；職業、等級、強度、門派、行為依使用者提供的
 「舊有 NPC 待製作清單」（2026-10-15）。放在步玄派沐華居（d/swaylan/buxuan/residence.c）。
-步玄派師父（使用者定案，2026-11-01）：種族、性別不限，平民且讀書識字 30 以上可拜師，
-拜師後成為書生、「步玄派弟子」（門派代碼 scholar.myst）。
+步玄派師父（使用者定案，2026-11-01）：種族、性別不限；讀書識字 30 以上的平民，或已是書生，
+可拜師，拜師後成為書生、「步玄派弟子」（門派代碼 scholar.myst）。
 武功見 docs/martial_arts/步玄派_門派設計.md。
 尚未製作的裝備（先空著）：逐風刃(Windfury sword)。
 */
@@ -41,7 +41,8 @@ void create()
 }
 
 // ------------------------------------------------------------------
-// 拜師：種族、性別不限；平民且讀書識字 30 以上，拜師後成為書生、步玄派弟子。
+// 拜師：種族、性別不限；讀書識字 30 以上的平民，或已是書生（使用者定案，2026-11-01）。
+// 拜師後成為書生、步玄派弟子。
 // ------------------------------------------------------------------
 
 int accept_info(object ob, string type)
@@ -51,7 +52,10 @@ int accept_info(object ob, string type)
 
 int accept_apprentice(object me)
 {
-    if( me->query_class() != "commoner" ) {
+    string cls = me->query_class();
+
+    if( cls == "scholar" ) return 1;
+    if( cls != "commoner" ) {
         command("say 閣下已有師承，駱某不敢奪人所好。");
         return 0;
     }
@@ -70,7 +74,7 @@ int init_apprentice(object me)
         me->set("custom_faction", FACTION);
         do_chat(({
             "駱易溫言道：好，從今日起，你便是我步玄派弟子。\n",
-            "駱易說道：本門武功以身法為先，一步一步都要走得從容，切莫急躁。\n",
+            "駱易說道：本門武功以身法為先，進退之間都要從容，切莫急躁。\n",
         }));
     }
     return 1;
