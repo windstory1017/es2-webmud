@@ -6,7 +6,7 @@ docs/LEGACY_ROOM_NPC_COMPENDIUM.md）；職業、等級、強度、門派、行�
 步玄派師父（使用者定案，2026-11-01）：種族、性別不限；讀書識字 30 以上的平民，或已是書生，
 可拜師，拜師後成為書生、「步玄派弟子」（門派代碼 scholar.myst）。
 武功見 docs/martial_arts/步玄派_門派設計.md。
-尚未製作的裝備（先空著）：逐風刃(Windfury sword)。
+兵器（使用者定案，2026-11-01）：右手風泉之劍（唯一；被取走後重生改拿逐風刃）、左手落雲刃。
 */
 #include <ansi.h>
 inherit "/custom/legacy_npc/legacy_npc";
@@ -37,11 +37,13 @@ void create()
     carry_object("/custom/armor/waist/white_jade_girth")->wear();   // 流雲清玉帶
     carry_object("/custom/armor/cloth/golden_robe")->wear();   // 金絲長袍
     carry_object("/custom/armor/head/headgear")->wear();   // 紫紗逍遙巾
-    carry_object("/custom/weapon/sword/cloudslay_sword")->wield();   // 落雲刃
+    carry_object("/custom/weapon/sword/sword_of_wind_spring")->wield("sword");   // 風泉之劍（唯一；已被取走時換成逐風刃）
+    carry_object("/custom/weapon/sword/cloudslay_sword")->wield("secondhand sword");   // 落雲刃
 }
 
 // ------------------------------------------------------------------
 // 拜師：種族、性別不限；讀書識字 30 以上的平民，或已是書生（使用者定案，2026-11-01）。
+// 已拜入其他書生門派（例如玄天派，custom_faction 為 scholar.sky）的不收（使用者定案，2026-11-01）。
 // 拜師後成為書生、步玄派弟子。
 // ------------------------------------------------------------------
 
@@ -52,9 +54,16 @@ int accept_info(object ob, string type)
 
 int accept_apprentice(object me)
 {
-    string cls = me->query_class();
+    string cls = me->query_class(), faction = me->query("custom_faction"), title = me->query("title");
 
-    if( cls == "scholar" ) return 1;
+    if( cls == "scholar" ) {
+        if( (stringp(faction) && faction != "" && faction != FACTION)
+        ||  (stringp(title) && strsrch(title, "玄天") != -1) ) {
+            command("say 閣下已是別派門下，駱某不敢奪人所好。");
+            return 0;
+        }
+        return 1;
+    }
     if( cls != "commoner" ) {
         command("say 閣下已有師承，駱某不敢奪人所好。");
         return 0;

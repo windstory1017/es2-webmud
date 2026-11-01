@@ -1,6 +1,6 @@
 /*---
 description: 步玄心法（NEW 新版武功寫法）。步玄派內功，enable 在 force 上使用。
-             exert myst-force（修習）／balance（調息）。120 級大成時屬性提昇並全服公告。
+             exert myst-force（修習）／refresh（回精）／balance（調息）。120 級大成時屬性提昇並全服公告。
              設計見 docs/martial_arts/步玄派_門派設計.md。
 ---*/
 #include <ansi.h>
@@ -146,6 +146,26 @@ int do_balance(object me)
     return 1;
 }
 
+/* refresh（回精）：回復精 步玄心法 + 10（只回復現在值）；
+ * 消耗氣 步玄心法/20，自身停頓 1 回合，比照封山派內功（使用者定案，2026-11-01：回復量 = 等級 + 10）。 */
+int do_refresh(object me)
+{
+    int sk, cost;
+
+    sk = me->query_skill("myst-force", 1);
+    cost = sk / 20;
+    if( me->query_stat("kee") <= cost )
+        return notify_fail("你的氣不夠﹐無法運起步玄心法回復精神。\n");
+    if( me->query_stat("gin") >= me->query_stat_effective("gin") )
+        return notify_fail("你的精神飽滿﹐用不著運功。\n");
+
+    if( cost > 0 ) me->consume_stat("kee", cost);
+    me->supplement_stat("gin", sk + 10);
+    message_vision("$N運起步玄心法﹐一股清和的真氣直透靈台﹐精神為之一振。\n", me);
+    me->start_busy(1);
+    return 1;
+}
+
 varargs int exert_function(object me, string func, object target)
 {
     switch(func) {
@@ -153,6 +173,8 @@ varargs int exert_function(object me, string func, object target)
         message_vision(HIY "$N盤膝坐定﹐默運步玄心法﹐一股清和的真氣在週身經脈緩緩流轉。\n" NOR, me);
         me->start_busy((: do_exercise, me :), (: halt_exercise, me :));
         return 1;
+    case "refresh":
+        return do_refresh(me);
     case "balance":
         return do_balance(me);
     default:
