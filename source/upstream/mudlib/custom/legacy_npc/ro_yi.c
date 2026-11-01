@@ -42,6 +42,7 @@ void create()
 
 // ------------------------------------------------------------------
 // 拜師：種族、性別不限；讀書識字 30 以上的平民，或已是書生（使用者定案，2026-11-01）。
+// 已拜入其他書生門派（例如玄天派，custom_faction 為 scholar.sky）的不收（使用者定案，2026-11-01）。
 // 拜師後成為書生、步玄派弟子。
 // ------------------------------------------------------------------
 
@@ -52,9 +53,16 @@ int accept_info(object ob, string type)
 
 int accept_apprentice(object me)
 {
-    string cls = me->query_class();
+    string cls = me->query_class(), faction = me->query("custom_faction"), title = me->query("title");
 
-    if( cls == "scholar" ) return 1;
+    if( cls == "scholar" ) {
+        if( (stringp(faction) && faction != "" && faction != FACTION)
+        ||  (stringp(title) && strsrch(title, "玄天") != -1) ) {
+            command("say 閣下已是別派門下，駱某不敢奪人所好。");
+            return 0;
+        }
+        return 1;
+    }
     if( cls != "commoner" ) {
         command("say 閣下已有師承，駱某不敢奪人所好。");
         return 0;
