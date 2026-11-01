@@ -85,7 +85,7 @@ def test_sect_table_keys_and_arts():
     t = table(read('daemon/misc/npc_skill.c'), 'private mapping sect = ([')
     keys = re.findall(r'^    "([a-z]+\.[a-z]+)": \(\[', t, re.M)
     assert keys == ['fighter.lunmay', 'fighter.tiger', 'fighter.fonxan', 'fighter.chin', 'fighter.snow',
-                    'fighter.ancient', 'scholar.sky', 'thief.longye', 'thief.hidden', 'taoist.fire',
+                    'fighter.ancient', 'scholar.sky', 'scholar.myst', 'thief.longye', 'thief.hidden', 'taoist.fire',
                     'taoist.freeze', 'taoist.storm', 'taoist.thunder', 'taoist.fog', 'taoist.wind',
                     'taoist.lingyun', 'alchemist.wuto']
     assert '"skill": "advance_lunmay", "map": "secondhand sword", "level": 30, "req": ([ "hainmay force": 100 ])' in t
