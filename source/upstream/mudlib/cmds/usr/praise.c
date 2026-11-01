@@ -53,8 +53,14 @@ int main(object me, string arg)
         CLASS_D(pro)->brother_praise(me, ob);
     me->set("praise_done", 1);
 
-    shout( sprintf(YEL "%s對%s的讚揚獲得了許多人的認同，並提高了%s的聲望！\n" NOR,
-            me->name(), ob->name(), ob->name() ));
+    // 全服公告改走可開關的 event 頻道（使用者指示，2026-11-01）：
+    // 顯示維持原本的黃字、不加頻道標籤，只是歸在 event 頻道底下受 tune 過濾，
+    // 關掉 event 的玩家（tune event）就不會收到。排除讚揚者本人，與原本 shout 行為一致。
+    // 日後的全服戰役廣播也送這個頻道，tune event 便一併生效。
+    message("channel:event",
+            sprintf(YEL "%s對%s的讚揚獲得了許多人的認同，並提高了%s的聲望！\n" NOR,
+            me->name(), ob->name(), ob->name() ),
+            users(), me);
     write("Ok.\n");
 
     return 1;
