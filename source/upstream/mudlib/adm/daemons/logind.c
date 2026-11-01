@@ -707,7 +707,8 @@ private void get_name (string arg, object ob, object user) {
     if (!ob->query ("creation_time")) {
         ob->set ("creation_time", time());
         // default open chat and rumor channel -- by dragoon
-        ob->set ("channels", ({ "chat", "rumor" }));
+        // event：全服公告頻道，新玩家預設收聽（使用者指示，2026-11-01）。
+        ob->set ("channels", ({ "chat", "rumor", "event" }));
     }
 
     mapping opts = ([
@@ -820,6 +821,7 @@ private void init_new_body(object link, object user) {
 varargs void enter_world(object ob, object user, int silent) {
     object room;
     string startroom, err;
+    string *chs;   // event 頻道遷移用
 
     // 登入過程中其他角色可能已經先進入世界，進入前再檢查一次。
     if (!silent && !ip_can_enter(ob, ob->query("id"), user)) {
@@ -841,6 +843,18 @@ varargs void enter_world(object ob, object user, int silent) {
 
     user->setup();
     increment_visitor_count();
+
+    // event 頻道一次性遷移（使用者指示，2026-11-01）：event 公告頻道是新加的，
+    // 既有玩家的收聽清單裡不會有它。第一次登入時替他們補上 event（預設收聽），
+    // 並記下已遷移；之後若玩家自己 tune event 關掉，不會再被重新打開。
+    if( objectp(user->link())
+    &&  !user->link()->query("event_channel_migrated") ) {
+        chs = user->link()->query("channels");
+        if( !pointerp(chs) ) chs = ({});
+        if( member_array("event", chs) == -1 )
+            user->link()->set("channels", chs + ({ "event" }));
+        user->link()->set("event_channel_migrated", 1);
+    }
 
     ob->delete ("reincarnating");   // 已經轉世進入遊戲
 
