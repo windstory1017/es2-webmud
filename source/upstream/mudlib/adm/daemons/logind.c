@@ -410,6 +410,9 @@ private void confirm_relogin (string yn, mapping opts, object ob, object user) {
     old_link = user->link();
     if (old_link) {
         seteuid (getuid());
+        // 舊連線物件裡有 alias 等最新資料，先存檔再踢掉，reconnect() 會重新讀進新連線。
+        if (!old_link->is_character())
+            old_link->save();
         if (user.interactive())
             exec (old_link, user);
         destruct (old_link);
@@ -908,6 +911,9 @@ NOTICE
 }
 
 varargs void reconnect (object ob, object user, int silent) {
+    // ob 是輸入代號當下讀的存檔；之後舊連線可能又存過（save、自動存檔、斷線、
+    // 被取代），重新讀一次，才不會拿舊資料蓋掉玩家剛設的 alias 等設定。
+    ob->restore();
 
     user->set_link(ob);
     ob->set_body(user);
