@@ -18,6 +18,7 @@ int query_threshold_percent() { return 80; }
 /* 升級獎勵（每一級只給一次，berserk/growth_level 記錄已給到第幾級）：
  *   90 級：膂力 +1、膽識 +1、精氣上限各 +40
  *   120 級：膂力 +2、膽識 +2、精氣上限各 +80
+ *   140 級：根骨 +7（使用者定案，2026-11-02）
  *   160 級：膂力 +4、膽識 +4、精氣上限各 +120
  *   100 級起每 10 級（100、110……200）：精氣上限各 +10，與上面分開計算 */
 private void level_reward(object me, int lv)
@@ -30,6 +31,12 @@ private void level_reward(object me, int lv)
     case 160: attr = 4; stat = 120; break;
     }
     if( lv >= 100 && lv % 10 == 0 ) stat += 10;
+
+    if( lv == 140 ) {
+        me->set_attr("con", me->query_attr("con", 1) + 7);
+        tell_object(me, HIY "多年來你在陣前捨身狂攻﹐挨過的刀槍、受過的震盪不知凡幾﹐\n"
+            "一身筋骨在這般千錘百鍊之下脫胎換骨﹐根骨變得堅實強健了！\n" NOR);
+    }
 
     if( attr ) {
         me->set_attr("str", me->query_attr("str", 1) + attr);
