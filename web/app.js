@@ -4,6 +4,7 @@ import {Automation,setupAutomationUI} from './automation.js';
 import {setupChatWindow} from './chat_window.js';
 import {setupFloatWindow,setupSideSplitter,bringToFront} from './float_window.js';
 import {setupTextColor} from './text_color.js';
+import {setupBoard} from './board.js';
 import {bgTimeout,clearBg,keepPageAlive} from './bg_timer.js';
 
 const sessionRecorder = new SessionRecorder();
@@ -100,6 +101,32 @@ const chatWindow=setupChatWindow({
   openButton:document.querySelector('[data-ui-chat]'),
 });
 document.getElementById('chatWindow')?.addEventListener('pointerdown',e=>bringToFront(e.currentTarget));
+// 回報板（問題回報與建議）：請求排隊，跟著下一次背景狀態查詢送出（webhud board …）。
+// 遊戲限制每秒指令數（webhud 本身不算，帶留言板請求的會算），所以請求之間至少隔 0.4 秒；
+// 萬一還是被擋（回覆是「你下指令的速度太快了」），等 2 秒自動重送，最多兩次。
+const hudRequestQueue=[];
+const BOARD_GAP_MS=400,BOARD_RETRY_MS=2000;
+let lastBoardSentAt=0,inflightBoardCmd=null;
+function boardRequestDue(){return hudRequestQueue.length>0&&Date.now()-lastBoardSentAt>=BOARD_GAP_MS;}
+function settleBoardRequest(text){
+  const cmd=inflightBoardCmd;inflightBoardCmd=null;
+  if(!cmd||/@@WEBHUD\|BOARDBEGIN/.test(text)||!/下指令的速度太快/.test(cleanText(text)))return;
+  if((cmd.tries=(cmd.tries||0)+1)>2)return;
+  setTimeout(()=>{hudRequestQueue.unshift(cmd);kickHudAfterServerText(true);},BOARD_RETRY_MS);
+}
+const board=setupBoard({
+  root:document.getElementById('boardWindow'),
+  badge:document.querySelector('[data-board-badge]'),
+  isReady:()=>!!currentRoomId&&ws?.readyState===1,
+  sendRequest:cmd=>{hudRequestQueue.push({cmd});kickHudAfterServerText(true);},
+});
+setupFloatWindow({
+  root:document.getElementById('boardWindow'),
+  openButton:document.querySelector('[data-ui-board]'),
+  storageKey:'es2-board-window-v1',resizable:true,rememberOpen:false,
+  defaultGeometry:()=>{const w=Math.min(560,window.innerWidth-32),h=Math.min(560,window.innerHeight-60);return {left:Math.max(16,(window.innerWidth-w)/2),top:Math.max(16,(window.innerHeight-h)/3),width:w,height:h};},
+  onShow:()=>board.onOpen(),
+});
 // 最右欄是空白區域，用來擺地圖、角色狀態等浮動視窗；訊息欄與它之間的分隔線可左右拖曳。
 // 訊息欄最窄 = score 最寬的一行（72 個半形字寬）× 125%，加上左右留白；跟著文字大小設定變動（同 styles.css 的 --console-min）。
 const SCORE_COLUMNS=72;
@@ -256,6 +283,7 @@ function parseWebHud(raw){
   for(const line of cleanText(String(raw)).split(/\r?\n/)){
     if(!line.startsWith('@@WEBHUD|'))continue;
     const a=line.split('|');
+    if(board.onHud(a))continue;
     if(a[1]==='ROOM'&&a.length>=3){beginRuntimeRoomSnapshot(a[2],a[3]||a[2]);continue;}
     if(a[1]==='MAPMETA'&&a.length>=3){setRoomMapMeta(a[2],a[3]||'',a[4]||'',a[5]||'');continue;}
     if(a[1]==='EXIT'&&a.length>=5){mergeRuntimeExit(a[2],a[3],a[4],a[5]||'');continue;}
@@ -520,7 +548,7 @@ function stripWebHudLines(whole){
     const plain=cleanText(line).trim();
     if(!plain)return false;
     if(/^>\s*$/.test(plain))return false;
-    if(/^webhud$/i.test(plain))return false;
+    if(/^webhud(?:\s|$)/i.test(plain))return false;
     return true;
   });
 }
@@ -564,6 +592,8 @@ function consumeHudPollOutputRaw(s){
   hudPollInFlight=false;hudBootstrapInFlight=false;hudPollBuffer='';hudPollStartedAt=0;
   if(hudResponseTimer){clearBg(hudResponseTimer);hudResponseTimer=null;}
   flushPendingUserCommands();
+  settleBoardRequest(whole);
+  if(hudRequestQueue.length)setTimeout(()=>kickHudAfterServerText(true),BOARD_GAP_MS);
   const kept=stripWebHudLines(whole);
   // HUD polling is a silent transport. Internal payload/prompt whitespace must never
   // create a visible terminal line. Real asynchronous text is still preserved.
@@ -583,10 +613,12 @@ function hudPollReady(force=false,allowNoRoom=false){
   if((!currentRoomId&&!allowNoRoom)||input.type==='password'||ws?.readyState!==1||hudPollInFlight)return false;
   if(serverInputWait)return false;
   if(document.hidden)return false;
-  if(!force&&!hudPollDue())return false;
+  // 排隊中的回報板請求等同強制查詢：之後到的遊戲文字可能把立即查詢換成一般查詢，閒置時要等好幾秒。
+  const urgent=force||boardRequestDue();
+  if(!urgent&&!hudPollDue())return false;
   if(editorActive)return false;
   // Real player input has priority over internal HUD telemetry.
-  if(!force && Date.now()-lastUserCommandAt<HUD_USER_GRACE_MS)return false;
+  if(!urgent && Date.now()-lastUserCommandAt<HUD_USER_GRACE_MS)return false;
   // HUD must continue updating during combat even when no classic ">" prompt is emitted.
   // Only hold polling while the newest server text is an interactive login/choice prompt.
   const recent=tail.trim().split('\n').slice(-2).join(' ').slice(-220);
@@ -601,7 +633,11 @@ function pollHud(force=false,allowNoRoom=false){
   hudPollBuffer='';
   hudPollStartedAt=Date.now();
   lastHudPollAt=hudPollStartedAt;
-  ws.send('webhud\r\n');
+  const extra=boardRequestDue()?hudRequestQueue.shift():null;
+  inflightBoardCmd=extra;
+  if(extra)lastBoardSentAt=Date.now();
+  else if(hudRequestQueue.length)setTimeout(()=>kickHudAfterServerText(true),BOARD_GAP_MS);
+  ws.send((extra?'webhud '+extra.cmd:'webhud')+'\r\n');
   if(allowNoRoom)hudBootstrapInFlight=true;
   if(hudResponseTimer)clearBg(hudResponseTimer);
   // 背景計時：網頁不在最上層時也要準時放行排隊中的指令（觸發、計時器送出的指令也在這裡排隊）。
@@ -622,6 +658,7 @@ function pollHud(force=false,allowNoRoom=false){
 // 之後才到的半段 HUD 回覆由 consumeHudPollOutput 的最後防線過濾。
 function releaseHudPoll(){
   const whole=holdTrailingHudPartial(hudPollBuffer);
+  settleBoardRequest(whole);
   hudPollInFlight=false;hudPollBuffer='';hudPollStartedAt=0;
   if(hudResponseTimer){clearBg(hudResponseTimer);hudResponseTimer=null;}
   if(!whole)return;

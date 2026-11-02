@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- 終端機中文字型：Noto Sans TC（思源黑體繁體），英文與符號用網站自帶的 ES2 Mono（更紗黑體） -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap">
-  <link rel="stylesheet" href="/styles.css?v=settings-1028">
+  <link rel="stylesheet" href="/styles.css?v=board-1102">
 </head>
 <body class="game-body">
   <div id="gameApp" class="game-app">
@@ -26,6 +26,7 @@
             <button type="button" class="nav-item" data-ui-chat aria-pressed="false"><span class="nav-icon">言</span><span>聊天</span></button>
             <button type="button" class="nav-item" data-ui-map aria-pressed="false"><span class="nav-icon">圖</span><span>地圖</span></button>
             <button type="button" class="nav-item" data-ui-status aria-pressed="false"><span class="nav-icon">身</span><span>狀態</span></button>
+            <button type="button" class="nav-item" data-ui-board aria-pressed="false"><span class="nav-icon">報</span><span>回報</span><b class="nav-badge" data-board-badge hidden></b></button>
             <button type="button" class="nav-item" data-ui-automation="triggers"><span class="nav-icon">觸</span><span>觸發</span></button>
             <button type="button" class="nav-item" data-ui-automation="timers"><span class="nav-icon">時</span><span>計時器</span></button>
             <a class="nav-item" href="/codex.html" target="_blank" rel="noopener"><span class="nav-icon">鑑</span><span>圖鑑</span></a>
@@ -196,6 +197,14 @@
       </section>
     </dialog>
 
+    <section id="boardWindow" class="float-window board-window" aria-label="問題回報與建議" hidden>
+      <div class="float-head" data-float-drag title="拖曳這裡移動視窗">
+        <div class="side-title"><span>問題回報與建議</span><small data-board-title></small></div>
+        <button type="button" data-float-close class="float-close" aria-label="關閉">×</button>
+      </div>
+      <div class="float-body board-body" data-board-body></div>
+    </section>
+
     <section id="uiSettings" class="float-window ui-settings" aria-label="介面設定" hidden>
       <div class="float-head settings-head" data-float-drag title="拖曳這裡移動視窗"><strong>介面設定</strong><button type="button" data-float-close class="float-close" aria-label="關閉">×</button></div>
       <div class="float-body settings-body">
@@ -214,6 +223,6 @@
     </section>
   </div>
 
-  <script type="module" src="/app.js?v=settings-1028"></script>
+  <script type="module" src="/app.js?v=board-1102"></script>
 </body>
 </html>
