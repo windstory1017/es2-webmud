@@ -49,6 +49,24 @@ void more (string cmd, string *text, int line) {
     }
 }
 /*
+ * 分段送出：遊戲伺服器一次只能印 8192 個字元（位元組），超過會出錯、整段都看不到
+ * （例如 more 一個超過 8KB 的檔案）。這裡把多行文字湊成每段不超過 4096 字元再送。
+ */
+private void write_lines (string *lines) {
+    string buf = "";
+
+    foreach (string line in lines) {
+        if (strlen (buf) + strlen (line) + 1 > 4096 && buf != "") {
+            write (buf);
+            buf = "";
+        }
+        buf += line + "\n";
+    }
+    if (buf != "")
+        write (buf);
+}
+
+/*
  * Start the pager with the given text.
  *
  * WebMUD：取消強制分頁，長文章一次顯示完整（使用者核准）。網頁終端機可以自己捲動，
@@ -61,7 +79,7 @@ varargs void start_more (mixed msg, int start_line) {
         error ("Invalid argument to start_more: expected string or array of strings.");
     if (start_line > 0 && start_line < sizeof (msg))
         msg = msg[start_line..];
-    write (implode (msg, "\n") + "\n");
+    write_lines (msg);
 }
 
 void start_more_if_needed (mixed msg) {
@@ -69,5 +87,5 @@ void start_more_if_needed (mixed msg) {
         msg = explode (msg, "\n");
     else if (!arrayp (msg))
         error ("Invalid argument to start_more_if_needed: expected string or array of strings.");
-    write (implode (msg, "\n") + "\n");
+    write_lines (msg);
 }
