@@ -95,6 +95,9 @@ int main(object me, string arg)
     if (objectp(me->link())) me->link()->set_temp("webhud/client", 1);
 
     write("@@WEBHUD|BEGIN\n");
+    // 網頁「回報」視窗的留言板請求跟著狀態查詢一起送來：webhud board <動作> …（見 daemon/misc/web_board.c）。
+    if (stringp(arg) && arg[0..5] == "board ")
+        catch("/daemon/misc/web_board"->handle(me, arg[6..]));
     if (environment(me)) {
         mapping exits;
         string dir, dest;
