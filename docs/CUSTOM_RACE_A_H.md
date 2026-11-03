@@ -91,6 +91,7 @@ Neolith `HEARTBEAT_INTERVAL` is 2,000,000 microseconds, so 1 tick = one 2-second
 - Class caps: fighter 65, alchemist 50, taoist 50, soldier 50, thief 70, commoner 1. scholar and monk are -1 (cannot join).
 - Attributes: str 16-25, cor 17-25, int 13-18, spi 13-18, cps 13-18, dex 13-18, con 16-25, wis 13-18.
 - Hidden bonuses: 防禦力 15 (`apply/armor`), 攻擊能力值 10 (`apply/attack`), 陰陽眼 (`apply/vision_of_ghost`).
+- **Sealed (2026-11-03, user decision):** `devour` is disabled by `#define DEVOUR_SEALED 1` in `devour.c`; a yaksa only gets "你體內的噬魂凶性已被封住，再也吞不下任何魂魄。" The rules below are kept for reference. To restore, set it to 0 and `update /daemon/race/yaksa/devour`. Stats already gained from past devours are kept.
 - `devour <ghost>` (`daemon/race/yaksa/devour.c`): targets anything whose `life_form` is `ghost` (ghost NPCs and dead players). Not in combat, not in no_fight rooms, not on wizards.
   - One bite per tick. Bite = cor + dex + random(own current gin) / 10, taken from the ghost's current gin. At 0 the ghost is devoured. The yaksa and a ghost NPC are busy while devouring. A player ghost can still move and escapes by leaving the room. It stops if the yaksa enters combat, dies, or either side leaves the room.
   - Ghost NPC: destroyed. The yaksa heals gin and sen (current and damaged maximum) by the total amount devoured.
