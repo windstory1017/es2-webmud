@@ -26,7 +26,15 @@ def test_devour_is_sealed():
     assert 'devour' not in seal.split('notify_fail', 1)[1]   # 給玩家看的話不提指令
 
 
+def test_help_block_fits_driver_limit():
+    # 驅動程式的 @ 文字區塊上限是 1024 位元組（neolith lib/lpc/lex.h MAXLINE），超過會編譯失敗。
+    s = (MUD / 'daemon/race/yaksa/devour.c').read_text(encoding='utf-8')
+    block = s[s.index('@HELP\n') + len('@HELP\n'):s.index('\nHELP);')]
+    assert len(block.encode('utf-8')) < 1000
+
+
 if __name__ == '__main__':
     test_devoured_player_reincarnates_in_own_context()
     test_devour_is_sealed()
+    test_help_block_fits_driver_limit()
     print('ok')
