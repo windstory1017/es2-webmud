@@ -33,8 +33,49 @@ def test_help_block_fits_driver_limit():
     assert len(block.encode('utf-8')) < 1000
 
 
+def test_threshold_rules():
+    s = (MUD / 'daemon/race/yaksa/devour.c').read_text(encoding='utf-8')
+    assert 'int extra = count >= 10 ? count - 9 : 0;' in s
+    assert 'return yaksa_ghost ? 250 + 25 * extra : 500 + 50 * extra;' in s
+    assert '#define COUNT_KEY "yaksa/devour_count"' in s
+    body = s[s.index('private void reward_player'):s.index('private void finish')]
+    # 未達門檻：不計數、不加成；達到門檻才 add 次數，且比完門檻才加倍。
+    miss = body[body.index('if (ghost_gin < need)'):body.index('} else {')]
+    assert 'COUNT_KEY' not in miss and 'grow(' not in miss
+    assert body.index('if (ghost_gin < need)') < body.index('ghost_gin *= 2')
+    assert 'devour_log(' in body
+    # 未達門檻一樣魂飛魄散。
+    fin = s[s.index('private void finish'):]
+    fin = fin[fin.index('if (userp(victim)) {'):]
+    fin = fin[:fin.index('return;')]
+    assert 'reward_player(' in fin and 'consume_stat("HP"' in fin
+
+
+def test_devour_log_path_is_writable_by_mudlib():
+    s = (MUD / 'daemon/race/yaksa/devour.c').read_text(encoding='utf-8')
+    assert '#define DEVOUR_LOG "/data/daemon/yaksa_devour.log"' in s
+    sec = (MUD / 'adm/daemons/securityd.c').read_text(encoding='utf-8')
+    assert '"/data/daemon":\t({ MUDLIB_UID }),' in sec
+
+
+def test_first_bite_delayed_two_ticks():
+    s = (MUD / 'daemon/race/yaksa/devour.c').read_text(encoding='utf-8')
+    main = s[s.index('int main(object me, string arg)'):]
+    assert 'call_out("devour_tick", TICK_SECONDS * 2, me, victim, serial);' in main
+    assert 'devour_tick(me, victim, serial);' not in main
+
+
+def test_small_temple_is_no_fight():
+    s = (MUD / 'd/snow/small_temple.c').read_text(encoding='utf-8')
+    assert 'set ("no_fight", 1);' in s
+
+
 if __name__ == '__main__':
     test_devoured_player_reincarnates_in_own_context()
     test_devour_is_sealed()
     test_help_block_fits_driver_limit()
+    test_threshold_rules()
+    test_devour_log_path_is_writable_by_mudlib()
+    test_first_bite_delayed_two_ticks()
+    test_small_temple_is_no_fight()
     print('ok')

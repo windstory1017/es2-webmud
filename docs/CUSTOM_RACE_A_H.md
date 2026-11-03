@@ -91,12 +91,25 @@ Neolith `HEARTBEAT_INTERVAL` is 2,000,000 microseconds, so 1 tick = one 2-second
 - Class caps: fighter 65, alchemist 50, taoist 50, soldier 50, thief 70, commoner 1. scholar and monk are -1 (cannot join).
 - Attributes: str 16-25, cor 17-25, int 13-18, spi 13-18, cps 13-18, dex 13-18, con 16-25, wis 13-18.
 - Hidden bonuses: 防禦力 15 (`apply/armor`), 攻擊能力值 10 (`apply/attack`), 陰陽眼 (`apply/vision_of_ghost`).
-- **Sealed (2026-11-03, user decision):** `devour` is disabled by `#define DEVOUR_SEALED 1` in `devour.c`; a yaksa only gets "你體內的噬魂凶性已被封住，再也吞不下任何魂魄。" The rules below are kept for reference. To restore, set it to 0 and `update /daemon/race/yaksa/devour`. Stats already gained from past devours are kept.
+- **Sealed (2026-11-03, user decision):** `devour` is disabled by `#define DEVOUR_SEALED 1` in `devour.c`; a yaksa only gets "你體內的噬魂凶性已被封住，再也吞不下任何魂魄。" The rules below (revised 2026-11-04) are already in the code and take effect once unsealed. To restore, set it to 0 and `update /daemon/race/yaksa/devour`. Stats gained under the old rules are kept.
 - `devour <ghost>` (`daemon/race/yaksa/devour.c`): targets anything whose `life_form` is `ghost` (ghost NPCs and dead players). Not in combat, not in no_fight rooms, not on wizards.
-  - One bite per tick. Bite = cor + dex + random(own current gin) / 10, taken from the ghost's current gin. At 0 the ghost is devoured. The yaksa and a ghost NPC are busy while devouring. A player ghost can still move and escapes by leaving the room. It stops if the yaksa enters combat, dies, or either side leaves the room.
+  - **Delay (2026-11-04):** after the command the yaksa grabs the ghost (the ghost is told to flee) and is busy for 2 ticks (4 seconds); the first bite comes after that. The ghost can leave the room during the delay to escape.
+  - One bite per tick (2 seconds). Bite = cor + dex + random(own current gin) / 10, taken from the ghost's current gin. At 0 the ghost is devoured. The yaksa and a ghost NPC are busy while devouring. A player ghost can still move and escapes by leaving the room. It stops if the yaksa enters combat, dies, or either side leaves the room.
   - Ghost NPC: destroyed. The yaksa heals gin and sen (current and damaged maximum) by the total amount devoured.
-  - Player ghost: 魂飛魄散 through the existing `CHAR_D->make_mist()` reincarnation. The account (id, password, total online time `time_aged`) is kept, the character file is deleted, and the player picks a race again.
-  - Player ghost reward (no backlash, even when the ghost is stronger): "ghost gin" G = the ghost's current gin when devouring started, doubled for a yaksa ghost. The yaksa permanently gains maximum gin 1 + G/40, kee 1 + random(G/40), sen 1 + random(G/80). The first 10 player devours always give this large gain. After that the chance is 10 / (10 + random(count)); otherwise the gain is gin 1~2, kee 0~1. The count is stored in `yaksa/devoured_players`.
+  - Player ghost: always 魂飛魄散 through the existing `CHAR_D->make_mist()` reincarnation, whether or not the threshold below is met. The account (id, password, total online time `time_aged`) is kept, the character file is deleted, and the player picks a race again.
+  - **Threshold (2026-11-04):** "ghost gin" G = the ghost's current gin when devouring started. Let n = valid devours so far (`yaksa/devour_count`; the old `yaksa/devoured_players` is no longer used, so every yaksa starts from 0).
+
+    | Devour | Human etc. ghost needs G ≥ | Yaksa ghost needs G ≥ |
+    |---|---|---|
+    | 1st–10th | 500 | 250 |
+    | 11th | 550 | 275 |
+    | 12th | 600 | 300 |
+    | (n+1)th, n ≥ 10 | 500 + 50 × (n − 9) | 250 + 25 × (n − 9) |
+
+    Below the threshold: no stat gain and not counted; the yaksa sees "這縷魂魄太過稀薄，沒能為你增添半分力量。"
+  - Reward when the threshold is met (formula unchanged, no backlash): for a yaksa ghost G is doubled after the threshold check. The yaksa permanently gains maximum gin 1 + G/40, kee 1 + random(G/40), sen 1 + random(G/80). The first 10 valid devours always give this large gain. After that the chance is 10 / (10 + random(n)); otherwise the gain is gin 1~2, kee 0~1.
+  - **Log (2026-11-04):** every player devour writes one line to `data/daemon/yaksa_devour.log` (time, yaksa, victim and race, G, threshold, counted or not, gains). It is not in `log/` because the command runs as `Mudlib`, which the security daemon only lets write under `/data/daemon`.
+- 雪亭鎮土地公廟 (`d/snow/small_temple.c`, where ghosts revive) is a no_fight room (2026-11-04), so nobody can wait there to kill or devour reviving ghosts.
 
 ## 阿修羅 (ashura)
 
