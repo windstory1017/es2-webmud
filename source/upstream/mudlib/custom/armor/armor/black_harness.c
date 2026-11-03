@@ -30,3 +30,13 @@ void create()
     }
     setup();
 }
+
+/* 沒有基本內功時，用戰甲自己的說法拒絕（使用者定案，2026-11-03），不用書本共用的「不足以閱讀這本書」。 */
+int study_ob(object me)
+{
+    if( me->query_skill("force", 1) < 1 ) {
+        tell_object(me, "你無法理解玄晦戰甲上記載的內容。\n");
+        return 1;
+    }
+    return study::study_ob(me);
+}

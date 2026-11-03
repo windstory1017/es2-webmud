@@ -27,6 +27,7 @@ def test_unique_restricted_and_study():
     s = read(ARMOR / 'armor' / 'black_harness.c')
     assert 'inherit F_STUDY;' in s and 'set("content", ([ "force": 100 ]));' in s
     assert 'set("required/skill", ([ "force": 1 ]));' in s   # 要先有基本內功（2026-11-03）
+    assert '你無法理解玄晦戰甲上記載的內容。' in s
 
 
 def test_new_skill_codes_and_zhenwu_items():
