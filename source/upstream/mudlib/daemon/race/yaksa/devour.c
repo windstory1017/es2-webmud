@@ -4,6 +4,10 @@ inherit F_CLEAN_UP;
 
 #define TICK_SECONDS 2
 
+// 吞魂已封印（使用者指示，2026-11-03）：夜叉不能再吞食任何鬼魂。
+// 程式與設計保留；要恢復時把 DEVOUR_SEALED 改成 0，再 update 本檔即可。
+#define DEVOUR_SEALED 1
+
 private void create() { seteuid(getuid()); }
 
 // 吞食期間以 call_out 每 tick 吞一口，保持載入。
@@ -116,6 +120,8 @@ int main(object me, string arg) {
     int serial;
 
     if (me->query_race() != "yaksa") return notify_fail("你不是夜叉，無法吞食鬼魂。\n");
+    if (DEVOUR_SEALED)
+        return notify_fail("你體內的噬魂凶性已被封住，再也吞不下任何魂魄。\n");
     if (me->query("life_form") == "ghost") return notify_fail("你自己已經是鬼魂了。\n");
     if (me->query_temp("yaksa_devour")) return notify_fail("你正在吞食鬼魂。\n");
     if (me->is_busy()) return notify_fail("你正忙著。\n");
@@ -139,6 +145,9 @@ int main(object me, string arg) {
 int help(object me) {
     write(@HELP
 指令格式：devour <鬼魂>
+
+【目前已封印】夜叉的噬魂凶性已被封住，暫時無法吞食任何鬼魂。
+以下為封印前的說明，留作參考。
 
 夜叉吞食鬼魂（鬼魂 NPC 或死去玩家的鬼魂）。每 tick 吞一口，
 每口吞食量 = 膽識 + 機敏 + random(精)/10，從鬼魂的精扣除，扣到 0 即吞完。
