@@ -118,6 +118,14 @@ main(object me, string arg, int remote)
             target = filter(all, (:($1->query_level()-1)/10==4 && !wizardp($1) :));
             msg_format("1");
             break;
+        case "-6":   // 51～60 級（#30，2026-11-04）
+            target = filter(all, (:($1->query_level()-1)/10==5 && !wizardp($1) :));
+            msg_format("1");
+            break;
+        case "-7":   // 61～70 級（#30，2026-11-04）
+            target = filter(all, (:($1->query_level()-1)/10==6 && !wizardp($1) :));
+            msg_format("1");
+            break;
         case "-w":
             target = filter(all, (: wizardp :));
             msg_format("5");
@@ -318,6 +326,8 @@ int help(object me)
     write("無選項時, 列出與你等級相差 5 級以內之使用者。\n");
     write("-1    列出等級 1 到等級 10 的使用者。\n");
     write("-5    列出等級 41 到等級 50 的使用者。\n");
+    write("-6    列出等級 51 到等級 60 的使用者。\n");
+    write("-7    列出等級 61 到等級 70 的使用者。\n");
     write("-w    只列出巫師, 有系統設計上的問題請與巫師溝通。\n");
     write("-i    只列出使用者英文 id。\n");
     write("-n    只列出使用者中文名稱。\n");
