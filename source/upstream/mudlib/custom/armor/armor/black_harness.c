@@ -4,6 +4,7 @@
 
 inherit F_ARMOR;
 // 原資料「可以讀內功」：用 study 研讀，基本內功最高讀到 100。
+// 閱讀條件（使用者定案，2026-11-03）：要先有基本內功（1 級以上）才能研讀。
 inherit F_STUDY;
 
 void create()
@@ -19,6 +20,7 @@ void create()
             "這是一副黑色有如長袍的甲冑，摸起來非絲非革，而且出乎意料之外的沉重。\n"
             "甲冑上刻著許多密密麻麻的古文。\n");
         set("content", ([ "force": 100 ]));
+        set("required/skill", ([ "force": 1 ]));
         set("wear_as", "armor");
         set("apply_armor/armor", ([
             "cps": 2,
