@@ -885,13 +885,6 @@
       "y": 1
     },
     {
-      "id": "/d/wutang/pavilion",
-      "label": "涼亭",
-      "area": "五堂鎮",
-      "x": -4,
-      "y": 2
-    },
-    {
       "id": "/d/wutang/gravel_road_n",
       "label": "碎石路",
       "area": "五堂鎮",
@@ -4141,18 +4134,6 @@
       "from": "/d/wutang/cloth_shop",
       "to": "/d/wutang/east_street3",
       "direction": "south",
-      "resolved": true
-    },
-    {
-      "from": "/d/wutang/pavilion",
-      "to": "/d/wutang/gravel_road_n",
-      "direction": "east",
-      "resolved": true
-    },
-    {
-      "from": "/d/wutang/gravel_road_n",
-      "to": "/d/wutang/pavilion",
-      "direction": "west",
       "resolved": true
     },
     {

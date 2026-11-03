@@ -165,44 +165,6 @@
     "npcs": []
   },
   {
-    "file": "/d/snow/herb_shop",
-    "area": "雪亭鎮",
-    "short": "小藥鋪",
-    "long": "這裡是一間小藥鋪﹐連像樣一點的招牌都沒有﹐只在門邊掛著一塊\n不甚起眼的木牌﹐上面寫著「順生堂」三個字﹐老舊的櫃臺後面陳列著\n一列藥櫃﹐藥櫃的每個抽屜按藥鋪的規矩都沒有任何標籤﹐西面的牆上\n吊著幾束曬乾的甘草﹐像這種小藥鋪沒有錢燒檀香祛除藥味﹐只好用甘\n草替代。\n",
-    "exits": {
-      "north": "/d/snow/epath"
-    },
-    "npcs": [
-      {
-        "path": "/d/snow/npc/herbalist",
-        "count": 1,
-        "display": "藥鋪掌櫃(Herbalist)",
-        "name": "藥鋪掌櫃",
-        "id": "herbalist",
-        "title": null,
-        "nickname": null,
-        "race": "human",
-        "age": 44,
-        "long": "藥鋪掌櫃的是位胖胖的中年男子﹐雖然年紀有四五十歲了﹐不過看起\n來依然紅光滿面、精神煥發﹐你可以用 list 問他店裡有哪些藥。\n",
-        "look": "藥鋪掌櫃的是位胖胖的中年男子﹐雖然年紀有四五十歲了﹐不過看起\n來依然紅光滿面、精神煥發﹐你可以用 list 問他店裡有哪些藥。\n藥鋪掌櫃屬於人類族。他的外表看起來約四十多歲。\n他身上帶著﹕\nＶ布衣 (Cloth)\nＶ毛皮帽 (Fur hat)",
-        "inventory": [
-          {
-            "path": "/obj/area/obj/cloth",
-            "name": "布衣",
-            "id": "cloth",
-            "equipped": true
-          },
-          {
-            "path": "/d/snow/npc/obj/fur_hat",
-            "name": "毛皮帽",
-            "id": "fur hat",
-            "equipped": true
-          }
-        ]
-      }
-    ]
-  },
-  {
     "file": "/d/snow/inn_hall",
     "area": "雪亭鎮",
     "short": "客棧大堂",
@@ -1026,6 +988,45 @@
             "equipped": true
           }
         ]
+      },
+      {
+        "path": "/custom/legacy_npc/wu_dauton",
+        "count": 1,
+        "display": "武陀灸堂堂主「鬼華陀」武道通(Wu dauton)",
+        "name": "武道通",
+        "id": "wu dauton",
+        "title": "武陀灸堂堂主",
+        "nickname": "鬼華陀",
+        "race": "human",
+        "age": 75,
+        "long": "武道通年輕時本為龍圖丹派的方士, 因為一次因緣際會結識了一位江湖異人, 習得\n了幾手針灸之術, 從此便不再苦煉丹道, 開始如著魔般浸淫於施針下灸之學。之後\n竟因久疏龍圖丹派本門功夫, 而遭致開革之禍。武道通離開龍圖丹派之後, 便隱居\n於斐縣縣郊, 為當地居民針灸治病, 沒有想到卻聲名大噪起來, 由於醫術高明, 行\n事瘋癲乖張, 得了個「鬼華陀」的稱號。到了晚年, 乃自行開宗立派, 創設「武陀\n灸堂」, 傳授附近居民武藝與防身灸術, 門下弟子不下百人, 多雲遊四海, 行醫救\n世。\n",
+        "look": "武道通年輕時本為龍圖丹派的方士, 因為一次因緣際會結識了一位江湖異人, 習得\n了幾手針灸之術, 從此便不再苦煉丹道, 開始如著魔般浸淫於施針下灸之學。之後\n竟因久疏龍圖丹派本門功夫, 而遭致開革之禍。武道通離開龍圖丹派之後, 便隱居\n於斐縣縣郊, 為當地居民針灸治病, 沒有想到卻聲名大噪起來, 由於醫術高明, 行\n事瘋癲乖張, 得了個「鬼華陀」的稱號。到了晚年, 乃自行開宗立派, 創設「武陀\n灸堂」, 傳授附近居民武藝與防身灸術, 門下弟子不下百人, 多雲遊四海, 行醫救\n世。\n武道通屬於人類族。他的外表看起來約七十多歲。\n他身上帶著﹕\nＶ\\x1b[1;37m塵不沾\\x1b[m (Boots of cleanse)\nＶ蜂尾針 (Bee needle)\nＶ\\x1b[0;33m虎紋戒指\\x1b[m (Tiger ring)\n  \\x1b[1;30m附骨之蛆\\x1b[m (Needle of bone maggot)",
+        "inventory": [
+          {
+            "path": "/custom/armor/feet/boots_of_cleanse",
+            "name": "\\x1b[1;37m塵不沾\\x1b[m",
+            "id": "boots of cleanse",
+            "equipped": true
+          },
+          {
+            "path": "/custom/weapon/needle/bee_needle",
+            "name": "蜂尾針",
+            "id": "bee needle",
+            "equipped": true
+          },
+          {
+            "path": "/custom/armor/finger/tiger_ring",
+            "name": "\\x1b[0;33m虎紋戒指\\x1b[m",
+            "id": "tiger ring",
+            "equipped": true
+          },
+          {
+            "path": "/custom/weapon/needle/needle_of_bone_maggot",
+            "name": "\\x1b[1;30m附骨之蛆\\x1b[m",
+            "id": "needle of bone maggot",
+            "equipped": false
+          }
+        ]
       }
     ]
   },
@@ -1516,31 +1517,6 @@
     ]
   },
   {
-    "file": "/d/lee/herb_shop",
-    "area": "李家村",
-    "short": "藥鋪",
-    "long": "這是一間不大的藥鋪，木櫃裡分門別類收著藥材與丹藥，空氣中混著草根與藥香。掌櫃李岩守著櫃臺，店門朝東開向石子路。牆上掛著幾串曬乾的藥草，屋樑上懸著一副舊招牌，字跡已經有些斑駁老舊。鋪子裡賣的丹藥多是聶晟閒暇時煉的，價格公道，村民生病時多半先來這裡瞧瞧。\n",
-    "exits": {
-      "east": "/d/lee/nroad1"
-    },
-    "npcs": [
-      {
-        "path": "/d/lee/npc/lee_yen",
-        "count": 1,
-        "display": "李岩(Lee yen)",
-        "name": "李岩",
-        "id": "lee yen",
-        "title": null,
-        "nickname": null,
-        "race": "human",
-        "age": 43,
-        "long": "李家村藥鋪的掌櫃，熟悉常用藥材與丹藥。你可以用 list 查看目前已恢復且功能可核對的商品。\n",
-        "look": "李家村藥鋪的掌櫃，熟悉常用藥材與丹藥。你可以用 list 查看目前已恢復且功能可核對的商品。\n李岩屬於人類族。他的外表看起來約四十多歲。",
-        "inventory": []
-      }
-    ]
-  },
-  {
     "file": "/d/lee/hunter",
     "area": "李家村",
     "short": "木屋",
@@ -1620,6 +1596,39 @@
         "long": "一位常在小旅店落腳的說書先生，鬍鬚微白，說起江湖舊聞時總是愛故意壓低聲音。目前階段只保留已經確認的角色與位置，完整的說書關鍵字和能力成長事件都待後續逐條復原。\n",
         "look": "一位常在小旅店落腳的說書先生，鬍鬚微白，說起江湖舊聞時總是愛故意壓低聲音。目前階段只保留已經確認的角色與位置，完整的說書關鍵字和能力成長事件都待後續逐條復原。\n李半仙屬於人類族。他的外表看起來約五十多歲。",
         "inventory": []
+      },
+      {
+        "path": "/custom/legacy_npc/du_feng_ling",
+        "count": 1,
+        "display": "幻霧觀觀主 杜風凌(Du feng ling)",
+        "name": "杜風凌",
+        "id": "du feng ling",
+        "title": "幻霧觀觀主",
+        "nickname": null,
+        "race": "malik",
+        "age": 75,
+        "long": "杜風凌本是西方大漠的巫首族人﹐自幼拜林遠為師﹐修習茅山道法。也許是\n因為天賦異常﹐入門十數年就熟練的掌握了茅山道法的精髓並將其融會貫通,\n漸漸將一些不受重視的小把戲發展起來﹐當時盛傳杜風凌將會是下任茅山的\n掌門人。怎料當時的茅山掌門人﹐林遠﹐為了追查茅山劍法竟然屍橫荒野﹐\n一時間茅山派一片大亂。不少人因鄙視杜風凌所擅長的『茅山奇術』竟然離\n開茅山自成流派﹐而杜風凌也因其家族牽扯到黃泉村一事﹐而不得不暫回西\n方大漠。當他返回天朝以後﹐無法說服他的師兄弟重歸茅山﹐便憤然再返大\n漠﹐借助他家族在大漠的勢力自創『幻霧觀』。此次不知是為何事﹐竟然又\n來到天朝境內。\n",
+        "look": "杜風凌本是西方大漠的巫首族人﹐自幼拜林遠為師﹐修習茅山道法。也許是\n因為天賦異常﹐入門十數年就熟練的掌握了茅山道法的精髓並將其融會貫通,\n漸漸將一些不受重視的小把戲發展起來﹐當時盛傳杜風凌將會是下任茅山的\n掌門人。怎料當時的茅山掌門人﹐林遠﹐為了追查茅山劍法竟然屍橫荒野﹐\n一時間茅山派一片大亂。不少人因鄙視杜風凌所擅長的『茅山奇術』竟然離\n開茅山自成流派﹐而杜風凌也因其家族牽扯到黃泉村一事﹐而不得不暫回西\n方大漠。當他返回天朝以後﹐無法說服他的師兄弟重歸茅山﹐便憤然再返大\n漠﹐借助他家族在大漠的勢力自創『幻霧觀』。此次不知是為何事﹐竟然又\n來到天朝境內。\n杜風凌屬於馬立克族。他的外表看起來約七十多歲。\n他身上帶著﹕\nＶ青衣道袍 (Green robe)\nＶ桃木劍 (Peachwood sword)\nＶ\\x1b[1;32m漢玉戒指\\x1b[m (Jade ring)",
+        "inventory": [
+          {
+            "path": "/custom/armor/cloth/green_robe",
+            "name": "青衣道袍",
+            "id": "green robe",
+            "equipped": true
+          },
+          {
+            "path": "/custom/weapon/sword/peachwood_sword",
+            "name": "桃木劍",
+            "id": "peachwood sword",
+            "equipped": true
+          },
+          {
+            "path": "/custom/armor/finger/han_jade_ring",
+            "name": "\\x1b[1;32m漢玉戒指\\x1b[m",
+            "id": "jade ring",
+            "equipped": true
+          }
+        ]
       }
     ]
   },
@@ -2299,7 +2308,7 @@
     "file": "/d/oldpine/cave_deep",
     "area": "迷霧森林",
     "short": "山洞深處",
-    "long": "山洞的最深處，空間突然開闊起來，洞頂高得看不見，四周的岩壁上掛著水珠，在黑暗中閃著微光。地上散落著大量獸骨，還有幾件破爛的衣物和一隻生鏽的鐵鍋，不知是哪個倒楣的獵人留下的。洞的一角有一塊巨大的石頭，石面上有幾處被踩出來的凹痕，看起來可以攀爬上去。往北和往西可以回到洞內其他地方。\n",
+    "long": "山洞的最深處，空間突然開闊起來，洞頂高得看不見，四周的岩壁上掛著水珠，在黑暗中閃著微光。地上散落著大量獸骨，還有幾件破爛的衣物和一只生鏽的鐵鍋，不知是哪個倒楣的獵人留下的。洞的一角有一塊巨大的石頭，石面上有幾處被踩出來的凹痕，看起來可以攀爬上去。\n",
     "exits": {
       "north": "/d/oldpine/cave2",
       "west": "/d/oldpine/cave3"
@@ -2616,7 +2625,8 @@
     "exits": {
       "northwest": "/d/oldpine/forest_n3",
       "north": "/d/oldpine/clearing_n",
-      "southeast": "/d/oldpine/grass2"
+      "southeast": "/d/oldpine/grass2",
+      "east": "/d/kangping/forest_exit"
     },
     "npcs": []
   },
@@ -2626,21 +2636,22 @@
     "short": "草叢",
     "long": "這裡的野草長得比人還高，四周只聽得見草葉摩擦的沙沙聲，根本看不清三步以外的東西。草叢中被壓出了一條條獸徑，泥地上滿是爪印，草根處還散落著幾撮灰黃色的獸毛。北邊的山壁下有一個黑黝黝的洞穴，裡頭不時傳出低沉的吼聲。往西北可以回到較矮的草叢。\n",
     "exits": {
-      "northwest": "/d/oldpine/grass1"
+      "northwest": "/d/oldpine/grass1",
+      "southeast": "/d/baihua/hillside"
     },
     "npcs": [
       {
-        "path": "/d/oldpine/npc/wolf",
+        "path": "/d/oldpine/npc/goat",
         "count": 3,
-        "display": "土狼(Wolf)",
-        "name": "土狼",
-        "id": "wolf",
+        "display": "山羊(Goat)",
+        "name": "山羊",
+        "id": "goat",
         "title": null,
         "nickname": null,
         "race": "beast",
         "age": null,
-        "long": "一口白森森的利牙，正虎視眈眈的盯著你。\n",
-        "look": "一口白森森的利牙，正虎視眈眈的盯著你。",
+        "long": "在山壁上到處爬來爬去，低頭吃著為數不多的野草。\n",
+        "look": "在山壁上到處爬來爬去，低頭吃著為數不多的野草。",
         "inventory": []
       }
     ]
@@ -2735,7 +2746,8 @@
     "short": "官道",
     "long": "老松林南邊的官道，路面寬闊平坦，兩旁種著整齊的柳樹，與林中崎嶇的小路相比，走起來輕鬆許多。路邊立著一塊里程碑，刻著往喬陰縣的方向與里數。由於近來老松林土匪橫行，官道上往來的旅人寥寥無幾，只有幾隻烏鴉停在柳枝上啞啞叫著。往北可以進入老松林，往南的官道通往喬陰縣。\n",
     "exits": {
-      "north": "/d/oldpine/gravel_road"
+      "north": "/d/oldpine/gravel_road",
+      "south": "/d/qiaoyin/ngate"
     },
     "npcs": []
   },
@@ -3319,12 +3331,18 @@
         "race": "blackteeth",
         "age": 20,
         "long": "肌肉虯結一身橫肉，看起來並不好惹的樣子。\n",
-        "look": "肌肉虯結一身橫肉，看起來並不好惹的樣子。\n護院武師屬於黑齒族。他的外表看起來約二十多歲。\n他身上帶著﹕\nＶ牛皮背心 (Leather vest)",
+        "look": "肌肉虯結一身橫肉，看起來並不好惹的樣子。\n護院武師屬於黑齒族。他的外表看起來約二十多歲。\n他身上帶著﹕\nＶ牛皮背心 (Leather vest)\nＶ單刀 (Blade)",
         "inventory": [
           {
             "path": "/custom/armor/cloth/cowhide_vest",
             "name": "牛皮背心",
             "id": "leather vest",
+            "equipped": true
+          },
+          {
+            "path": "/obj/area/obj/blade",
+            "name": "單刀",
+            "id": "blade",
             "equipped": true
           }
         ]
@@ -3372,7 +3390,7 @@
         "race": "human",
         "age": 70,
         "long": "看起來在這裡但感覺不到他在這裡，只見一翁一竿在草船上坐著，彷彿時間就這樣停止了。\n",
-        "look": "看起來在這裡但感覺不到他在這裡，只見一翁一竿在草船上坐著，彷彿時間就這樣停止了。\n煙波釣叟屬於人類族。他的外表看起來約七十多歲。\n他身上帶著﹕\nＶ青絲釣竿 (Fishing stick)\nＶ簑衣 (Cloth)",
+        "look": "看起來在這裡但感覺不到他在這裡，只見一翁一竿在草船上坐著，彷彿時間就這樣停止了。\n煙波釣叟屬於人類族。他的外表看起來約七十多歲。\n他身上帶著﹕\nＶ青絲釣竿 (Fishing stick)\nＶ簑衣 (Cloth)\nＶ玄蛛皂白靴 (Spider boots)",
         "inventory": [
           {
             "path": "/custom/weapon/whip/silk_fishing_stick",
@@ -3384,6 +3402,12 @@
             "path": "/custom/armor/cloth/straw_cloth",
             "name": "簑衣",
             "id": "cloth",
+            "equipped": true
+          },
+          {
+            "path": "/custom/armor/feet/spider_boots",
+            "name": "玄蛛皂白靴",
+            "id": "spider boots",
             "equipped": true
           }
         ]
@@ -3660,6 +3684,22 @@
       "east": "/d/wutang/boardwalk_w",
       "northdown": "/d/wutang/ferry_dock"
     },
+    "npcs": []
+  },
+  {
+    "file": "/d/wutang/ferry_boat_huang",
+    "area": "羿水",
+    "short": "渡船上",
+    "long": "一條新漆過的小舢舨，船頭貼著一張褪了色的紅紙，寫著「順風順水」四個字。小黃在船尾使勁搖著櫓，小船走得又快又急，濺起的水花不時打上船舷，水面的涼意一陣陣撲上臉來。\n",
+    "exits": {},
+    "npcs": []
+  },
+  {
+    "file": "/d/wutang/ferry_boat_ro",
+    "area": "羿水",
+    "short": "渡船上",
+    "long": "一條老舊的烏篷小船，船身被河水浸得發黑，篷頂的竹篾修補過好幾回。老駱站在船尾，竹篙一點一撐，小船便穩穩地在羿水上滑行，兩岸的景物緩緩向後退去，只聽得見篙尖入水的輕響。\n",
+    "exits": {},
     "npcs": []
   },
   {
@@ -3980,72 +4020,12 @@
     "short": "碎石路",
     "long": "一條鋪滿碎石的小路，走起來沙沙作響。西側不遠就是羿水河邊，路旁長著一大叢茂密的草叢，旁邊還有一片竹蘆，風一吹便沙沙作響，似乎可以從草叢穿過去。往東是五堂鎮的街道，往北是菜田前的空地。\n",
     "exits": {
-      "west": "/d/wutang/pavilion",
+      "enter": "/d/wutang/pavilion",
       "east": "/d/wutang/west_street2",
       "north": "/d/wutang/clearing",
       "southwest": "/d/wutang/gravel_road_s"
     },
-    "npcs": [
-      {
-        "path": "/d/wutang/npc/yang_zlin",
-        "count": 1,
-        "display": "冷梅莊一代弟子 楊子陵(Yang zlin)",
-        "name": "楊子陵",
-        "id": "yang zlin",
-        "title": "冷梅莊一代弟子",
-        "nickname": null,
-        "race": "human",
-        "age": 30,
-        "long": "楊子陵在冷梅派第一代弟子中排行第四, 為梅影風某日出外於路上所遇到的棄嬰, 因機緣而入冷梅派, 目前劍術內功已略有小成, 一手真冷梅劍法在武林中也頗有微名。\n",
-        "look": "楊子陵在冷梅派第一代弟子中排行第四, 為梅影風某日出外於路上所遇到的棄嬰, 因機緣而入冷梅派, 目前劍術內功已略有小成, 一手真冷梅劍法在武林中也頗有微名。\n楊子陵屬於人類族。他的外表看起來約三十多歲。\n他身上帶著﹕\nＶ黑劍 (Black sword)\nＶ黑鋼短刃 (Black iron dagger)\nＶ\\x1b[1;37m天蠶寶衣\\x1b[m (Silk cloth)\nＶ狼皮靴 (Wolf boots)\nＶ狼皮帽 (Woof hat)",
-        "inventory": [
-          {
-            "path": "/custom/weapon/sword/black_sword",
-            "name": "黑劍",
-            "id": "black sword",
-            "equipped": true
-          },
-          {
-            "path": "/custom/weapon/dagger/black_iron_dagger",
-            "name": "黑鋼短刃",
-            "id": "black iron dagger",
-            "equipped": true
-          },
-          {
-            "path": "/custom/armor/cloth/silk_cloth",
-            "name": "\\x1b[1;37m天蠶寶衣\\x1b[m",
-            "id": "silk cloth",
-            "equipped": true
-          },
-          {
-            "path": "/custom/armor/feet/wolf_boots",
-            "name": "狼皮靴",
-            "id": "wolf boots",
-            "equipped": true
-          },
-          {
-            "path": "/custom/armor/head/woof_hat",
-            "name": "狼皮帽",
-            "id": "woof hat",
-            "equipped": true
-          }
-        ]
-      },
-      {
-        "path": "/d/wutang/npc/apprentice",
-        "count": 1,
-        "display": "冷梅莊二代弟子(Apprentice)",
-        "name": "冷梅莊二代弟子",
-        "id": "apprentice",
-        "title": null,
-        "nickname": null,
-        "race": "human",
-        "age": 20,
-        "long": "冷梅莊弟子，在劍法、內功上已經有相當火侯。\n",
-        "look": "冷梅莊弟子，在劍法、內功上已經有相當火侯。\n冷梅莊二代弟子屬於人類族。他的外表看起來約二十多歲。",
-        "inventory": []
-      }
-    ]
+    "npcs": []
   },
   {
     "file": "/d/wutang/gravel_road_s",
@@ -4310,11 +4290,71 @@
     "file": "/d/wutang/pavilion",
     "area": "五堂鎮",
     "short": "涼亭",
-    "long": "一座建在小丘上的木造涼亭，四周種著幾株垂柳，微風吹過時柳枝輕輕搖曳。站在亭中向西望去，可以眺望寬闊的羿水在遠方緩緩流過，河面上點點帆影，景色十分宜人。往東是一條碎石路。\n",
+    "long": "一座建在小丘上的木造涼亭，四周種著幾株垂柳，微風吹過時柳枝輕輕搖曳。站在亭中向西望去，可以眺望寬闊的羿水在遠方緩緩流過，河面上點點帆影，景色十分宜人。亭外便是一條碎石路。\n",
     "exits": {
-      "east": "/d/wutang/gravel_road_n"
+      "out": "/d/wutang/gravel_road_n"
     },
-    "npcs": []
+    "npcs": [
+      {
+        "path": "/d/wutang/npc/yang_zlin",
+        "count": 1,
+        "display": "冷梅莊一代弟子 楊子陵(Yang zlin)",
+        "name": "楊子陵",
+        "id": "yang zlin",
+        "title": "冷梅莊一代弟子",
+        "nickname": null,
+        "race": "human",
+        "age": 30,
+        "long": "楊子陵在冷梅派第一代弟子中排行第四, 為梅影風某日出外於路上所遇到的棄嬰, 因機緣而入冷梅派, 目前劍術內功已略有小成, 一手真冷梅劍法在武林中也頗有微名。\n",
+        "look": "楊子陵在冷梅派第一代弟子中排行第四, 為梅影風某日出外於路上所遇到的棄嬰, 因機緣而入冷梅派, 目前劍術內功已略有小成, 一手真冷梅劍法在武林中也頗有微名。\n楊子陵屬於人類族。他的外表看起來約三十多歲。\n他身上帶著﹕\nＶ黑劍 (Black sword)\nＶ黑鋼短刃 (Black iron dagger)\nＶ\\x1b[1;37m天蠶寶衣\\x1b[m (Silk cloth)\nＶ狼皮靴 (Wolf boots)\nＶ狼皮帽 (Woof hat)",
+        "inventory": [
+          {
+            "path": "/custom/weapon/sword/black_sword",
+            "name": "黑劍",
+            "id": "black sword",
+            "equipped": true
+          },
+          {
+            "path": "/custom/weapon/dagger/black_iron_dagger",
+            "name": "黑鋼短刃",
+            "id": "black iron dagger",
+            "equipped": true
+          },
+          {
+            "path": "/custom/armor/cloth/silk_cloth",
+            "name": "\\x1b[1;37m天蠶寶衣\\x1b[m",
+            "id": "silk cloth",
+            "equipped": true
+          },
+          {
+            "path": "/custom/armor/feet/wolf_boots",
+            "name": "狼皮靴",
+            "id": "wolf boots",
+            "equipped": true
+          },
+          {
+            "path": "/custom/armor/head/woof_hat",
+            "name": "狼皮帽",
+            "id": "woof hat",
+            "equipped": true
+          }
+        ]
+      },
+      {
+        "path": "/d/wutang/npc/apprentice",
+        "count": 1,
+        "display": "冷梅莊二代弟子(Apprentice)",
+        "name": "冷梅莊二代弟子",
+        "id": "apprentice",
+        "title": null,
+        "nickname": null,
+        "race": "human",
+        "age": 20,
+        "long": "冷梅莊弟子，在劍法、內功上已經有相當火侯。\n",
+        "look": "冷梅莊弟子，在劍法、內功上已經有相當火侯。\n冷梅莊二代弟子屬於人類族。他的外表看起來約二十多歲。",
+        "inventory": []
+      }
+    ]
   },
   {
     "file": "/d/wutang/pawnshop",
@@ -4516,7 +4556,8 @@
     "long": "一處三岔路口，路旁立著一塊斑駁的石碑，上頭刻著往各地的方向。往西是一片草原，再往西則是鯉君渡，往東南的官道可以前往喬陰縣，往北則回到五堂鎮。\n",
     "exits": {
       "north": "/d/wutang/south_street2",
-      "west": "/d/wutang/boardwalk_e"
+      "west": "/d/wutang/boardwalk_e",
+      "southeast": "/d/qiaoyin/highway"
     },
     "npcs": []
   },
@@ -4595,7 +4636,7 @@
         "race": "human",
         "age": null,
         "long": "米沛是振武軍最高指揮官，身披戰甲，神情沉穩威嚴。他在軍中多年，以實戰與軍功一步步升任主將，看來約五十多歲。軍中傳聞具備相當實力的軍人可向他申請更進一步的職務，但相關條件目前仍待可靠資料補齊。\n",
-        "look": "米沛是振武軍最高指揮官，身披戰甲，神情沉穩威嚴。他在軍中多年，以實戰與軍功一步步升任主將，看來約五十多歲。軍中傳聞具備相當實力的軍人可向他申請更進一步的職務，但相關條件目前仍待可靠資料補齊。\n他身上帶著﹕\nＶ精鋼戰靴 (Steel boots)\nＶ冶磺套 (Fire gauntlets)\nＶ精鋼戰甲 (Steel armor)\nＶ萬夫莫敵 (Great axe of mighty)",
+        "look": "米沛是振武軍最高指揮官，身披戰甲，神情沉穩威嚴。他在軍中多年，以實戰與軍功一步步升任主將，看來約五十多歲。軍中傳聞具備相當實力的軍人可向他申請更進一步的職務，但相關條件目前仍待可靠資料補齊。\n他身上帶著﹕\nＶ精鋼戰靴 (Steel boots)\nＶ冶磺套 (Fire gauntlets)\nＶ精鋼戰甲 (Steel armor)\nＶ萬夫莫敵 (Great axe of mighty)\n  【奇兵精意】 (Book of assault)",
         "inventory": [
           {
             "path": "/custom/zhenwu/obj/steel_boots",
@@ -4620,6 +4661,12 @@
             "name": "萬夫莫敵",
             "id": "great axe of mighty",
             "equipped": true
+          },
+          {
+            "path": "/obj/books/book_of_assault",
+            "name": "【奇兵精意】",
+            "id": "book of assault",
+            "equipped": false
           }
         ]
       }
@@ -4880,24 +4927,49 @@
       {
         "path": "/custom/zhenwu/npc/lu_xinien",
         "count": 1,
-        "display": "「徵兵官」魯熙年(Lu xinien)",
+        "display": "徵兵官 魯熙年(Lu xinien)",
         "name": "魯熙年",
         "id": "lu xinien",
-        "title": null,
-        "nickname": "徵兵官",
+        "title": "徵兵官",
+        "nickname": null,
         "race": "human",
         "age": null,
-        "long": "魯熙年是一名身材微胖的中年武官，兩眼瞇成一條線，臉上總帶著似笑非笑的古怪表情。他同時也是振武營負責招募新兵的徵兵官，看起來約三十多歲。營中新兵入伍後的基本兵刃操練，多半也是他一手帶出來的。\n",
-        "look": "魯熙年是一名身材微胖的中年武官，兩眼瞇成一條線，臉上總帶著似笑非笑的古怪表情。他同時也是振武營負責招募新兵的徵兵官，看起來約三十多歲。營中新兵入伍後的基本兵刃操練，多半也是他一手帶出來的。",
-        "inventory": []
+        "long": "魯熙年是一個身材微胖的中年武官﹐兩眼瞇成一條線﹐臉上總是露出似笑非笑的古怪表情。魯熙年同時也是振武營負責招募新兵的募兵官，如果你想從軍，請向他，辦理入伍(enlist)手續。\n",
+        "look": "魯熙年是一個身材微胖的中年武官﹐兩眼瞇成一條線﹐臉上總是露出似笑非笑的古怪表情。魯熙年同時也是振武營負責招募新兵的募兵官，如果你想從軍，請向他，辦理入伍(enlist)手續。\n他身上帶著﹕\nＶ精鋼砍刀 (Steelblade)\nＶ鐵盔 (Iron helmet)\nＶ精鐵環扣 (Iron girth)\nＶ連身鎖子甲 (Ring armor)",
+        "inventory": [
+          {
+            "path": "/custom/weapon/blade/steelblade",
+            "name": "精鋼砍刀",
+            "id": "steelblade",
+            "equipped": true
+          },
+          {
+            "path": "/custom/armor/head/iron_helmet",
+            "name": "鐵盔",
+            "id": "iron helmet",
+            "equipped": true
+          },
+          {
+            "path": "/custom/armor/waist/iron_girth",
+            "name": "精鐵環扣",
+            "id": "iron girth",
+            "equipped": true
+          },
+          {
+            "path": "/custom/armor/armor/ring_armor",
+            "name": "連身鎖子甲",
+            "id": "ring armor",
+            "equipped": true
+          }
+        ]
       },
       {
         "path": "/custom/zhenwu/obj/recruit_stone",
         "count": 1,
-        "display": "徵兵石(Recruit stone)",
+        "display": "振武軍營軍人 徵兵石(Recruit stone)",
         "name": "徵兵石",
         "id": "recruit stone",
-        "title": null,
+        "title": "振武軍營軍人",
         "nickname": null,
         "race": null,
         "age": null,
@@ -5056,6 +5128,17 @@
     ]
   },
   {
+    "file": "/custom/wizroom/w/windstory/room/home",
+    "area": "巫師工作室",
+    "short": "未知地方",
+    "long": "這裡整個不見光，完全不知道有甚麼。\n",
+    "exits": {
+      "east": "/custom/wizroom/w/windstory/room/dragon_inn",
+      "west": "/d/snow/square_w"
+    },
+    "npcs": []
+  },
+  {
     "file": "/custom/wizroom/w/windstory/room/inn_w",
     "area": "巫師工作室",
     "short": "鄉校",
@@ -5105,7 +5188,8 @@
     "long": "這裡是巫師公會的傳送門，平坦的草地上有一片鋪著地磚的空地。\n空地中央有一個巨大的綠色魔法陣，正發出閃爍不定的微弱光芒。\n",
     "exits": {
       "east": "/adm/guild/guildhall",
-      "inn": "/d/snow/inn_hall"
+      "snow": "/d/snow/inn_hall",
+      "50": "/d/swaylan/inn"
     },
     "npcs": []
   }
