@@ -22,6 +22,10 @@ int main(object me, string arg)
     else
         return notify_fail("指令格式﹕invis [on|off]\n");
 
+    // 判斷看不看得到的程式（std/char.c 的 visible）查的是角色身上的設定，
+    // 所以角色身上也要記一份，隱身才會生效（#29，2026-11-04）。
+    me->set("invis", link->query("invis"));
+
     write("Ok。\n");
     return 1  ;
 }
