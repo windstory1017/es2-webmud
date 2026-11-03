@@ -25,14 +25,14 @@ private int lin_from(int lv, int base)
 }
 
 // 升級增加精氣神最大值：精 = 機敏/dex_div、氣 = 根骨/con_div、神 = 靈性/spi_div，
-// 各自再隨機 +1、+0 或 -1，不會倒扣。用先天屬性計算。
+// 各自再隨機 +1、+0 或 -1，不會倒扣。用含裝備、狀態加成的屬性計算（使用者指示，2026-11-03）。
 private void grow_stats(object ob, int dex_div, int con_div, int spi_div)
 {
     int gin_gain, kee_gain, sen_gain;
 
-    gin_gain = ob->query_attr("dex", 1) / dex_div + random(3) - 1;
-    kee_gain = ob->query_attr("con", 1) / con_div + random(3) - 1;
-    sen_gain = ob->query_attr("spi", 1) / spi_div + random(3) - 1;
+    gin_gain = ob->query_attr("dex") / dex_div + random(3) - 1;
+    kee_gain = ob->query_attr("con") / con_div + random(3) - 1;
+    sen_gain = ob->query_attr("spi") / spi_div + random(3) - 1;
     if (gin_gain < 0) gin_gain = 0;
     if (kee_gain < 0) kee_gain = 0;
     if (sen_gain < 0) sen_gain = 0;

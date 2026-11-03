@@ -113,7 +113,7 @@ Neolith `HEARTBEAT_INTERVAL` is 2,000,000 microseconds, so 1 tick = one 2-second
 
 Every class level-up threshold is multiplied by the race 基數 (`commoner_score_base` / 100). A threshold `(lv-N)` or `(lv-N)^2` is 0 until the level passes N. `lv` is the level being reached. Shared helpers live in `include/class_level.h`. Player thresholds are recomputed at every login (`CHAR_D->setup_char()`), so formula changes apply to existing characters.
 
-On level-up, gin / kee / sen maximums grow by base dex / con / spi divided by the class divisor, each +1, +0 or -1 at random, never below 0.
+On level-up, gin / kee / sen maximums grow by dex / con / spi divided by the class divisor, each +1, +0 or -1 at random, never below 0. The attributes include equipment and status bonuses (`query_attr()` without the raw flag) for every class (user decision, 2026-11-03).
 
 | Class | Thresholds (x 基數) | gin / kee / sen growth |
 |---|---|---|
