@@ -102,13 +102,16 @@ int halt_exercise(object me, object owner, object from, string how)
     return 1;
 }
 
-/* refresh：消耗 寒梅心法/3 的氣，回復 寒梅心法 的精；自身停頓 1 回合。 */
+/* refresh：消耗 寒梅心法/3 的氣，回復 寒梅心法 的精；自身停頓 1 回合。
+ * 目前的氣低於氣上限的 1/3 時無法使用。 */
 int do_refresh(object me)
 {
     int sk, cost;
 
     sk = me->query_skill("hainmay force", 1);
     cost = sk / 3;
+    if( me->query_stat("kee") * 3 < me->query_stat_maximum("kee") )
+        return notify_fail("你現在的氣不夠。\n");
     if( me->query_stat("kee") <= cost )
         return notify_fail("你的氣不夠﹐無法運起寒梅心法回復精神。\n");
     me->consume_stat("kee", cost);
