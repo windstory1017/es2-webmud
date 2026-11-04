@@ -119,7 +119,7 @@ int do_refresh(object me)
     me->damage_stat("kee", 2 + sk / 20);
     me->heal_stat("gin", 5 + sk / 5);
     me->supplement_stat("gin", 10 + sk / 2);
-    message_vision("$N悄悄吐納了幾口氣﹐眼中的倦意一掃而空。\n", me, 0, 1);
+    message_vision(HIB "$N悄悄吐納了幾口氣﹐眼中的倦意一掃而空。\n" NOR, me, 0, 1);
     me->start_busy(2);
     return 1;
 }
@@ -160,7 +160,8 @@ int do_darkpower(object me)
     ]);
     foreach(string key, int val in bonus) me->add_temp("apply/" + key, val);
     me->set_temp("longyeforce/darkpower", 1);
-    message_vision(HIB "$N氣息一斂﹐身形漸漸淡入暗影之中﹐只剩一道朦朧的輪廓﹐已然進入「夜遊神」之境。\n" NOR, me, 0, 1);
+    message_vision(MAG "$N氣息一斂﹐身形漸漸淡入暗影之中﹐只剩一道朦朧的輪廓﹐已然進入"
+                   HIW "『夜 遊 神』" NOR MAG "之境。\n" NOR, me, 0, 1);
     call_out("remove_darkpower", (sk / 3) * 2, me, bonus);
     return 1;
 }
@@ -169,7 +170,7 @@ varargs int exert_function(object me, string func, object target)
 {
     switch(func) {
     case "longyeforce":
-        message_vision(HIB "$N縮身伏在暗處﹐氣息放得極輕極細﹐幾乎聽不見呼吸。\n" NOR, me, 0, 1);
+        message_vision(MAG "$N縮身伏在暗處﹐氣息放得極輕極細﹐幾乎聽不見呼吸。\n" NOR, me, 0, 1);
         me->start_busy((: do_exercise, me :), (: halt_exercise, me :));
         return 1;
     case "refresh":
