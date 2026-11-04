@@ -4,7 +4,8 @@ LEGACY NPC. 名稱、英文 ID、敘述、年紀、性別、種族、裝備取�
 docs/LEGACY_ROOM_NPC_COMPENDIUM.md）；職業、等級、強度、門派、行為依使用者提供的
 「舊有 NPC 待製作清單」（2026-10-15）。尚未放入地圖。
 瑯夷派師父（使用者定案，2026-11-04）：任何未加入門派的盜賊都可拜師，不限種族、性別；
-拜師後成為「瑯夷派弟子」。瑯夷派內功見 docs/martial_arts/瑯夷派_瑯夷派內功.md。
+拜師後成為「瑯夷派弟子」。拜師信物是瞎眼老太婆給的古錢（d/snow/npc/obj/coin.c）：
+把古錢交給吳長貴、承認是祖奶奶叫你來的，才能拜師（使用者定案，2026-11-04）。瑯夷派內功見 docs/martial_arts/瑯夷派_瑯夷派內功.md。
 舊站區域：未能判定；房間：—（房間尚未製作）。
 尚未製作的裝備（先空著）：點鋼匕(Steel dagger)、襯甲(Padded armor)。
 */
@@ -36,7 +37,100 @@ void create()
 }
 
 // ------------------------------------------------------------------
-// 拜師：任何未加入門派的盜賊都收，不限種族、性別；拜師後成為瑯夷派弟子。
+// 信物：把瞎眼老太婆給的古錢交給吳長貴（使用者定案，2026-11-04）。
+// 1. hmm  2. 問是不是祖奶奶叫你來的  3. 玩家說是或點頭  4. 「好吧」（從此可以拜師）
+// 5～8. 叮嚀幾句。每句話之間隔 1～2 回合（一回合兩秒）。
+// ------------------------------------------------------------------
+
+#define TOKEN_MARK "longye/token"     // 玩家身上的記號：已經憑古錢得到吳長貴認可
+#define ASKING     "longye/asking"    // 吳長貴暫存：正在等誰回答
+
+private string *advice = ({
+    "我也沒什麼能教你的﹐這些把戲只能算是行走江湖的小伎倆。",
+    "我們瑯夷派說不上行俠仗義﹐但也不做違背良心的事情。",
+    "若讓我知道你做了什麼傷天害理之事﹐就不要怪我了⋯",
+    "好了好了⋯去吧。",
+});
+
+private int talk_gap() { return (1 + random(2)) * 2; }
+
+private int still_here(object who)
+{
+    return objectp(who) && environment(who) == environment();
+}
+
+void ask_token(object who)
+{
+    if( !still_here(who) ) { delete_temp(ASKING); return; }
+    command("say 是祖奶奶叫你來的？");
+    set_temp(ASKING, who);
+    call_out("give_up", 60, who);   // 一直不回答就不等了，免得擋住別人
+}
+
+void give_up(object who)
+{
+    if( query_temp(ASKING) == who ) delete_temp(ASKING);
+}
+
+void say_advice(object who, int i)
+{
+    if( !still_here(who) || i >= sizeof(advice) ) return;
+    command("say " + advice[i]);
+    if( i + 1 < sizeof(advice) ) call_out("say_advice", talk_gap(), who, i + 1);
+}
+
+void approve(object who)
+{
+    if( !still_here(who) ) return;
+    command("say 好吧。");
+    who->set(TOKEN_MARK, 1);
+    call_out("say_advice", talk_gap(), who, 0);
+}
+
+int accept_object(object who, object ob)
+{
+    if( !ob->query("thief_token") ) return 0;
+    if( query_temp(ASKING) ) {
+        command("say 等等﹐一個一個來。");
+        return 0;
+    }
+    set_temp(ASKING, 1);   // 問話之前也算忙著，避免兩人同時交古錢
+    command("hmm");
+    call_out("ask_token", talk_gap(), who);
+    call_out((: destruct, ob :), 1);
+    return 1;
+}
+
+/* 玩家回答：說「是」「對」「沒錯」「正是」「嗯」之類（不含「不是」「沒有」）都算肯定。 */
+private int positive(string arg)
+{
+    if( !stringp(arg) ) return 0;
+    if( strsrch(arg, "不") != -1 || strsrch(arg, "沒有") != -1 ) return 0;
+    foreach(string w in ({ "是", "對", "沒錯", "正是", "嗯", "恩", "yes", "Yes" }))
+        if( strsrch(arg, w) != -1 ) return 1;
+    return 0;
+}
+
+private void answered(object who)
+{
+    delete_temp(ASKING);
+    call_out("approve", talk_gap(), who);
+}
+
+void relay_say(object who, string arg)
+{
+    if( query_temp(ASKING) != who ) return;
+    if( positive(arg) ) answered(who);
+}
+
+void relay_emote(object who, string verb)
+{
+    if( query_temp(ASKING) != who ) return;
+    if( verb == "nod" ) answered(who);
+}
+
+// ------------------------------------------------------------------
+// 拜師：任何未加入門派的盜賊都收，不限種族、性別；要先憑古錢得到認可；拜師後成為瑯夷派弟子。
 // ------------------------------------------------------------------
 
 int accept_info(object ob, string type)
@@ -57,6 +151,10 @@ int accept_apprentice(object me)
         command("say 你已經拜了別家的山頭﹐我吳長貴可不搶人。");
         return 0;
     }
+    if( faction != FACTION && !me->query(TOKEN_MARK) ) {
+        command("say 我跟你非親非故的﹐憑什麼收你？");
+        return 0;
+    }
     return 1;
 }
 
@@ -65,10 +163,7 @@ int init_apprentice(object me)
     if( ::init_apprentice(me) ) {
         me->set("title", "瑯夷派弟子");
         me->set("custom_faction", FACTION);
-        do_chat(({
-            "吳長貴摸了摸臉上的刀疤﹐咧嘴一笑：好﹐從今往後你就是瑯夷派的弟子了。\n",
-            "吳長貴壓低聲音說道：記住﹐幹咱們這行的﹐腳底要輕﹐手要快﹐心要更狠。\n",
-        }));
+        do_chat("吳長貴點了點頭﹐從今往後你就是瑯夷派的弟子了。\n");
     }
     return 1;
 }
