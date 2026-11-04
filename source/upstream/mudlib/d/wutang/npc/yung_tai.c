@@ -2,6 +2,7 @@
 //
 // 風嘯拳法任務（使用者指示，2026-11-04，依舊資料 Quest 紀錄）：
 // 玩家走進醇雨樓客棧時，雍泰向玩家打聽失散的四弟，每句間隔 1 tick（2 秒）。
+// - 只對武者說（任務職業限制：武者，使用者指示 2026-11-04）；
 // - 已學會風嘯拳法（fonxiaoken）的玩家不再觸發；
 // - 一段話還沒說完時，其他人進來不會重頭再說；
 // - 玩家中途離開，雍泰就不再往下說。
@@ -59,7 +60,7 @@ void init()
     object who = this_player();
 
     if( talking || !userp(who) || !living(this_object()) || is_fighting() ) return;
-    if( who->query_skill("fonxiaoken", 1) ) return;
+    if( who->query_class() != "fighter" || who->query_skill("fonxiaoken", 1) ) return;
     talking = 1;
     // 說話時先停下平常的閒聊，免得插在對話中間。
     set("chat_chance", 0);
