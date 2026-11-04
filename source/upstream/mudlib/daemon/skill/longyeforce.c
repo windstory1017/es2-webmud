@@ -160,7 +160,7 @@ int do_darkpower(object me)
     ]);
     foreach(string key, int val in bonus) me->add_temp("apply/" + key, val);
     me->set_temp("longyeforce/darkpower", 1);
-    message_vision(HIB "$N氣息一斂﹐身形淡進了四周的暗影裡﹐恍若夜遊神般只剩一道朦朧的輪廓。\n" NOR, me, 0, 1);
+    message_vision(HIB "$N氣息一斂﹐身形漸漸淡入暗影之中﹐只剩一道朦朧的輪廓﹐已然進入「夜遊神」之境。\n" NOR, me, 0, 1);
     call_out("remove_darkpower", (sk / 3) * 2, me, bonus);
     return 1;
 }
