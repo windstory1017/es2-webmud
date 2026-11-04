@@ -88,7 +88,7 @@ Neolith `HEARTBEAT_INTERVAL` is 2,000,000 microseconds, so 1 tick = one 2-second
 ## 夜叉 (yaksa)
 
 - Race numbers follow the original data: gin/kee/sen 140/70/70, karma 50, 基數 140.
-- Class caps: fighter 65, alchemist 50, taoist 50, soldier 50, thief 70, commoner 1. scholar and monk are -1 (cannot join).
+- Class caps: fighter 65, alchemist 60, taoist 65, soldier 60, thief 70, commoner 1. scholar and monk are -1 (cannot join). (2026-11-04: user raised taoist 50→65, alchemist and soldier 50→60.)
 - Attributes: str 16-25, cor 17-25, int 13-18, spi 13-18, cps 13-18, dex 13-18, con 16-25, wis 13-18.
 - Hidden bonuses: 防禦力 15 (`apply/armor`), 攻擊能力值 10 (`apply/attack`), 陰陽眼 (`apply/vision_of_ghost`).
 - **Seal switch:** sealed 2026-11-03, reopened 2026-11-04 with the revised rules below (`#define DEVOUR_SEALED 0` in `devour.c`; set it to 1 and `update /daemon/race/yaksa/devour` to seal again, which makes a yaksa only get "你體內的噬魂凶性已被封住，再也吞不下任何魂魄。"). Stats gained under the old rules are kept.
