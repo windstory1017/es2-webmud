@@ -4,9 +4,9 @@ inherit F_CLEAN_UP;
 
 #define TICK_SECONDS 2
 
-// 吞魂已封印（使用者指示，2026-11-03）：夜叉不能再吞食任何鬼魂。
-// 程式與設計保留；要恢復時把 DEVOUR_SEALED 改成 0，再 update 本檔即可。
-#define DEVOUR_SEALED 1
+// 吞魂封印開關：2026-11-03 封印，2026-11-04 改版後重新開放（使用者指示）。
+// 要再封印時把 DEVOUR_SEALED 改成 1，再 update 本檔即可。
+#define DEVOUR_SEALED 0
 
 private void create() { seteuid(getuid()); }
 
@@ -190,9 +190,7 @@ int help(object me) {
     write(@HELP
 指令格式：devour <鬼魂>
 
-【目前已封印】夜叉的噬魂凶性已被封住，暫時無法吞食任何鬼魂。
-
-解除封印後，夜叉可以吞食鬼魂 NPC 或死去玩家的鬼魂：
+夜叉可以吞食鬼魂 NPC 或死去玩家的鬼魂：
 - 抓住鬼魂後要稍待片刻才開始吞食，鬼魂可以趁機逃走。
 - 吞鬼魂 NPC：鬼魂被吃掉，吞多少補多少精、神。
 - 吞玩家鬼魂：對方魂飛魄散，須重新創造角色。魂魄夠凝實才能

@@ -16,8 +16,9 @@ def test_devoured_player_reincarnates_in_own_context():
 
 
 def test_devour_is_sealed():
+    # 封印開關：2026-11-04 重新開放（0）；封印檢查本身保留，要再封印改成 1。
     s = (MUD / 'daemon/race/yaksa/devour.c').read_text(encoding='utf-8')
-    assert '#define DEVOUR_SEALED 1' in s
+    assert '#define DEVOUR_SEALED 0' in s
     main = s[s.index('int main(object me, string arg)'):]
     # 封印檢查要在開始吞食（設定 yaksa_devour）之前。
     assert main.index('if (DEVOUR_SEALED)') < main.index('me->set_temp("yaksa_devour"')
