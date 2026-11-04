@@ -329,6 +329,22 @@ void apply_restored_skill_progression(string skill)
     }
 }
 
+/* 技能已達上限時不再累積點數（天賦上限，或技能檔用 query_skill_cap 暫時鎖住的上限）。
+ * 例外：技能檔的 query_learn_at_cap(人物) 傳回非 0，表示「暫停升級、但照常累積點數」，
+ * 例如黃白之術 79 級要累積到 90 級的門檻才一口氣升級（#31，2026-11-04）。
+ * 升級仍照 skill_next_level() 受上限限制，不受這個例外影響。 */
+private int cap_blocks_learning(string skill)
+{
+    object daemon;
+
+    if( !userp(this_object()) || skills[skill] <= 0 ) return 0;
+    if( skills[skill] < restored_skill_cap(skill) ) return 0;
+    daemon = SKILL_D(skill);
+    if( objectp(daemon) && function_exists("query_learn_at_cap", daemon)
+    &&  call_other(daemon, "query_learn_at_cap", this_object()) ) return 0;
+    return 1;
+}
+
 /* Exact learned gain + old-Neolith-compatible daemon hook. */
 void improve_skill_exact(string skill, int amount)
 {
@@ -337,8 +353,7 @@ void improve_skill_exact(string skill, int amount)
     if( skill_flag[skill] & SKILL_FLAG_ABANDONED ) return;
     if( amount <= 0 ) return;
     // 技能已達個人上限（天賦值）就不再累積點數
-    if( userp(this_object()) && skills[skill] > 0
-    &&  skills[skill] >= restored_skill_cap(skill) ) return;
+    if( cap_blocks_learning(skill) ) return;
     /* 人物等級加成：點數 × (1 + random(人物等級 / 8))。 */
     amount += amount * random(this_object()->query_level() / 8);
     if( undefinedp(learned[skill]) ) learned[skill] = amount; else learned[skill] += amount;
@@ -383,8 +398,7 @@ improve_skill(string skill, int amount)
 
     if( !amount ) amount = 1;
     // 技能已達個人上限（天賦值）就不再累積點數
-    if( userp(this_object()) && skills[skill] > 0
-    &&  skills[skill] >= restored_skill_cap(skill) ) return;
+    if( cap_blocks_learning(skill) ) return;
 
     // Level bonus for skill improvement.
     amount += amount * random(this_object()->query_level() / 8);
