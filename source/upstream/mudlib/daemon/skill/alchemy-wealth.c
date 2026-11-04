@@ -41,6 +41,13 @@ int query_skill_cap(object me)
     return 0;
 }
 
+// U-07：79 級暫停升級時照常累積經驗，累積到 90 級的門檻才升級（#31，2026-11-04）。
+// 沒有這個，技能系統會因為「已到上限」不再給經驗，79 級永遠卡住。
+int query_learn_at_cap(object me)
+{
+    return me->query_skill(SKILL_ID, 1) == HOLD_LEVEL;
+}
+
 // U-06：學成訊息。
 void skill_completed(object me, string sk)
 {
