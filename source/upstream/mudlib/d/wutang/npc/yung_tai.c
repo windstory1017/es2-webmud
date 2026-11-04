@@ -1,7 +1,28 @@
 // /d/wutang/npc/yung_tai.c — 五堂鎮 NPC：雍泰（依五堂鎮設計表）。
+//
+// 風嘯拳法任務（使用者指示，2026-11-04，依舊資料 Quest 紀錄）：
+// 玩家走進醇雨樓客棧時，雍泰向玩家打聽失散的四弟，每句間隔 1 tick（2 秒）。
+// - 已學會風嘯拳法（fonxiaoken）的玩家不再觸發；
+// - 一段話還沒說完時，其他人進來不會重頭再說；
+// - 玩家中途離開，雍泰就不再往下說。
 
+#include <ansi.h>
 #include <npc.h>
 inherit F_FIGHTER;
+
+#define TICK 2                  // 一個 tick 的秒數
+
+// 進房時的對話，$N 是雍泰，$n 是剛進來的玩家。
+string *GREET_MSG = ({
+    "$N望了$n幾眼﹐忽然說道﹕這位朋友可是外地來的﹖\n",
+    "$N接著說道﹕小弟想打聽一個人﹐是我那失散的四弟 ...\n",
+    "$N說道﹕我那四弟個頭比我高些﹐但是瘦了點﹐前年在斐縣境中失散 ...\n",
+    "$N嘆了口氣﹐說道﹕到現在一點消息也沒有﹐也不知道是生是死 ...\n",
+    "$N說道﹕如果您有見到或聽到舍弟的消息﹐請千萬讓小弟知道 ...\n",
+    "$N嘆了口氣﹐又繼續喝酒。\n",
+});
+
+int talking;                    // 正在說進房的那段話
 
 void create()
 {
@@ -31,4 +52,33 @@ LONG
     }));
     set_power("B");
     setup();
+}
+
+void init()
+{
+    object who = this_player();
+
+    if( talking || !userp(who) || !living(this_object()) || is_fighting() ) return;
+    if( who->query_skill("fonxiaoken", 1) ) return;
+    talking = 1;
+    // 說話時先停下平常的閒聊，免得插在對話中間。
+    set("chat_chance", 0);
+    call_out("greet", TICK, who, 0);
+}
+
+void greet(object who, int step)
+{
+    if( !objectp(who) || environment(who) != environment()
+    ||  !living(this_object()) || is_fighting() ) {
+        talking = 0;
+        set("chat_chance", 15);
+        return;
+    }
+    message_vision(CYN + GREET_MSG[step] + NOR, this_object(), who);
+    if( ++step < sizeof(GREET_MSG) ) {
+        call_out("greet", TICK, who, step);
+        return;
+    }
+    talking = 0;
+    set("chat_chance", 15);
 }
