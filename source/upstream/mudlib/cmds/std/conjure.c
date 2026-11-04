@@ -18,8 +18,10 @@ int main(object me, string arg)
 
 	if( !arg ) return notify_fail("指令格式﹕conjure <法術> [on <目標>]\n");
 	if( sscanf(arg, "%s on %s", spl, trg)==2 ) {
-		target = present(trg, environment(me));
-		if( !target ) target = present(trg, me);
+		// 先找身上、再找地上：地上有同名物品時，才不會搶走身上的目標
+		// （例如銀咒只能轉身上的東西，#32，2026-11-04）。
+		target = present(trg, me);
+		if( !target ) target = present(trg, environment(me));
 		if( !target ) return notify_fail("這裡沒有 " + trg + "。\n");
 	} else {
 		spl = arg;
