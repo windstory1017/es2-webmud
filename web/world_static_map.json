@@ -2597,6 +2597,97 @@
       "x": 0,
       "y": 0,
       "layer": "小黃的船"
+    },
+    {
+      "id": "/d/graveyard/grave1",
+      "label": "亂葬崗",
+      "area": "亂葬崗",
+      "x": 7,
+      "y": 2
+    },
+    {
+      "id": "/d/graveyard/grave2",
+      "label": "亂葬崗",
+      "area": "亂葬崗",
+      "x": 6,
+      "y": 1
+    },
+    {
+      "id": "/d/graveyard/grave3",
+      "label": "亂葬崗",
+      "area": "亂葬崗",
+      "x": 5,
+      "y": 1
+    },
+    {
+      "id": "/d/graveyard/grave4",
+      "label": "亂葬崗",
+      "area": "亂葬崗",
+      "x": 4,
+      "y": 0
+    },
+    {
+      "id": "/d/graveyard/grave5",
+      "label": "亂葬崗",
+      "area": "亂葬崗",
+      "x": 3,
+      "y": 0
+    },
+    {
+      "id": "/d/graveyard/shrine",
+      "label": "祠堂",
+      "area": "亂葬崗",
+      "x": 2,
+      "y": 0
+    },
+    {
+      "id": "/d/graveyard/grave6",
+      "label": "亂葬崗",
+      "area": "亂葬崗",
+      "x": 2,
+      "y": 1
+    },
+    {
+      "id": "/d/graveyard/grave7",
+      "label": "亂葬崗",
+      "area": "亂葬崗",
+      "x": 2,
+      "y": 2
+    },
+    {
+      "id": "/d/graveyard/grave8",
+      "label": "亂葬崗",
+      "area": "亂葬崗",
+      "x": 1,
+      "y": 2
+    },
+    {
+      "id": "/d/graveyard/weeds",
+      "label": "雜草叢",
+      "area": "亂葬崗",
+      "x": 1,
+      "y": 3
+    },
+    {
+      "id": "/d/graveyard/forest",
+      "label": "密林",
+      "area": "亂葬崗",
+      "x": 1,
+      "y": 4
+    },
+    {
+      "id": "/d/graveyard/forest_w",
+      "label": "密林",
+      "area": "亂葬崗",
+      "x": 0,
+      "y": 4
+    },
+    {
+      "id": "/d/graveyard/forest_e",
+      "label": "密林",
+      "area": "亂葬崗",
+      "x": 2,
+      "y": 4
     }
   ],
   "edges": [
@@ -7194,6 +7285,150 @@
       "from": "/d/swaylan/forest/hideout",
       "to": "/d/swaylan/forest/chamber",
       "direction": "enter",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/grave1",
+      "to": "/d/graveyard/grave2",
+      "direction": "northwest",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/grave1",
+      "to": "/d/snow/wgate",
+      "direction": "southeast",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/grave2",
+      "to": "/d/graveyard/grave3",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/grave2",
+      "to": "/d/graveyard/grave1",
+      "direction": "southeast",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/grave3",
+      "to": "/d/graveyard/grave4",
+      "direction": "northwest",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/grave3",
+      "to": "/d/graveyard/grave2",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/grave4",
+      "to": "/d/graveyard/grave5",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/grave4",
+      "to": "/d/graveyard/grave3",
+      "direction": "southeast",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/grave5",
+      "to": "/d/graveyard/grave6",
+      "direction": "southwest",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/grave5",
+      "to": "/d/graveyard/grave4",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/shrine",
+      "to": "/d/graveyard/grave5",
+      "direction": "out",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/grave6",
+      "to": "/d/graveyard/grave5",
+      "direction": "northeast",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/grave6",
+      "to": "/d/graveyard/grave7",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/grave7",
+      "to": "/d/graveyard/grave6",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/grave7",
+      "to": "/d/graveyard/grave8",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/grave8",
+      "to": "/d/graveyard/grave7",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/weeds",
+      "to": "/d/graveyard/grave8",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/weeds",
+      "to": "/d/graveyard/forest",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/forest",
+      "to": "/d/graveyard/weeds",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/forest",
+      "to": "/d/graveyard/forest_w",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/forest",
+      "to": "/d/graveyard/forest_e",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/forest_w",
+      "to": "/d/graveyard/forest",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/forest_e",
+      "to": "/d/graveyard/forest",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/snow/wgate",
+      "to": "/d/graveyard/grave1",
+      "direction": "northwest",
       "resolved": true
     }
   ],
