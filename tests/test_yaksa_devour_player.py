@@ -41,9 +41,12 @@ def test_threshold_rules():
     assert '#define COUNT_KEY "yaksa/devour_count"' in s
     body = s[s.index('private void reward_player'):s.index('private void finish')]
     # 未達門檻：不計數、不加成；達到門檻才 add 次數，且比完門檻才加倍。
-    miss = body[body.index('if (ghost_gin < need)'):body.index('} else {')]
+    # 夜叉自己的精（最大值）也要達到同一個門檻。
+    assert 'own_gin = me->query_stat_maximum("gin");' in body
+    assert 'if (ghost_gin < need || own_gin < need) {' in body
+    miss = body[body.index('if (ghost_gin < need || own_gin < need)'):body.index('} else {')]
     assert 'COUNT_KEY' not in miss and 'grow(' not in miss
-    assert body.index('if (ghost_gin < need)') < body.index('ghost_gin *= 2')
+    assert body.index('if (ghost_gin < need || own_gin < need)') < body.index('ghost_gin *= 2')
     assert 'devour_log(' in body
     # 未達門檻一樣魂飛魄散。
     fin = s[s.index('private void finish'):]

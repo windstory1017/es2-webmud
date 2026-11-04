@@ -40,8 +40,8 @@ private void devour_log(string text) {
     write_file(DEVOUR_LOG, text);
 }
 
-// 門檻（使用者指示，2026-11-04）：鬼魂的精（開始吞時的目前值）要達到門檻，
-// 才加精氣神、才計數。第 1～10 隻 500，第 11 隻起每隻多 50（550、600……）。
+// 門檻（使用者指示，2026-11-04）：鬼魂的精（開始吞時的目前值）與夜叉自己的精
+// （最大值）都要達到門檻，才加精氣神、才計數。第 1～10 隻 500，第 11 隻起每隻多 50（550、600……）。
 // 夜叉族的鬼魂門檻減半：250，第 11 隻起每隻多 25（275、300……）。
 int devour_threshold(int count, int yaksa_ghost) {
     int extra = count >= 10 ? count - 9 : 0;
@@ -54,18 +54,23 @@ private string who(object ob) {
 
 // 吞完玩家鬼魂：達到門檻才依原始公式給予永久加成並計數；沒有反噬。
 private void reward_player(object me, object victim, int ghost_gin) {
-    int count, big, gin, kee, sen, yaksa_ghost, need, raw_gin;
+    int count, big, gin, kee, sen, yaksa_ghost, need, raw_gin, own_gin;
     string note;
 
     raw_gin = ghost_gin;
+    // 夜叉自己的精（最大值）也要達到同一個門檻（使用者指示，2026-11-04）。
+    own_gin = me->query_stat_maximum("gin");
 
     count = me->query(COUNT_KEY);
     yaksa_ghost = victim->query_race() == "yaksa";
     need = devour_threshold(count, yaksa_ghost);
 
-    if (ghost_gin < need) {
-        tell_object(me, HIK "這縷魂魄太過稀薄，沒能為你增添半分力量。\n" NOR);
-        note = "未達門檻，不計數、不加成";
+    if (ghost_gin < need || own_gin < need) {
+        tell_object(me, HIK + (ghost_gin < need
+            ? "這縷魂魄太過稀薄，沒能為你增添半分力量。\n"
+            : "你的根基尚淺，化不開這縷魂魄的力量，沒能增添半分。\n") + NOR);
+        note = ghost_gin < need ? "鬼魂未達門檻，不計數、不加成"
+                                : "夜叉自身未達門檻，不計數、不加成";
     } else {
         me->add(COUNT_KEY, 1);
         // 夜叉族的鬼魂，精以兩倍計算（門檻比的是加倍前的精）。
@@ -90,9 +95,9 @@ private void reward_player(object me, object victim, int ghost_gin) {
         note = sprintf("計入第 %d 隻，精 +%d、氣 +%d、神 +%d", count + 1, gin, kee, sen);
     }
 
-    devour_log(sprintf("[%s] 夜叉 %s 吞噬 %s（%s）：鬼魂精 %d／門檻 %d，%s\n",
+    devour_log(sprintf("[%s] 夜叉 %s 吞噬 %s（%s）：鬼魂精 %d／夜叉精 %d／門檻 %d，%s\n",
         ctime(time()), who(me), who(victim), victim->query_race(),
-        raw_gin, need, note));
+        raw_gin, own_gin, need, note));
 }
 
 private void finish(object me, object victim, int total) {
@@ -193,8 +198,8 @@ int help(object me) {
 夜叉可以吞食鬼魂 NPC 或死去玩家的鬼魂：
 - 抓住鬼魂後要稍待片刻才開始吞食，鬼魂可以趁機逃走。
 - 吞鬼魂 NPC：鬼魂被吃掉，吞多少補多少精、神。
-- 吞玩家鬼魂：對方魂飛魄散，須重新創造角色。魂魄夠凝實才能
-  讓夜叉永久增加精氣神，而且吞得越多，需要的魂魄越凝實。
+- 吞玩家鬼魂：對方魂飛魄散，須重新創造角色。魂魄夠凝實、自身
+  根基也夠深厚，才能永久增加精氣神；吞得越多，要求越高。
 HELP);
     return 1;
 }
