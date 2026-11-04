@@ -1,4 +1,3 @@
-import {SessionRecorder} from './session_recorder.js';
 import {PlayerStateObserver} from './player_state.js';
 import {Automation,setupAutomationUI} from './automation.js';
 import {setupChatWindow} from './chat_window.js';
@@ -7,7 +6,14 @@ import {setupTextColor} from './text_color.js';
 import {setupBoard} from './board.js';
 import {bgTimeout,clearBg,keepPageAlive} from './bg_timer.js';
 
-const sessionRecorder = new SessionRecorder();
+// 畫面紀錄器已關閉（使用者指示 #33，2026-11-04）：原本把最近 200 筆指令與回應整份寫進
+// 分頁暫存，熱鬧時約每秒重寫一次，長時間掛機很吃資源。只有開發用的 Session 匯出頁會讀它。
+// 這裡留下同名的空物件，原本呼叫的地方不用改；要恢復時改回 new SessionRecorder() 並加回 import。
+const sessionRecorder = {
+  appendResponse(){}, beginCommand(){}, finishResponse(){},
+  markTransportOpen(){}, markTransportClose(){}, markReconnect(){}
+};
+try { sessionStorage.removeItem('es2-session-recorder-v2'); } catch (_) {}   // 清掉舊紀錄
 const observer = new PlayerStateObserver();
 const term = document.querySelector('#terminal');
 const input = document.querySelector('#command');
@@ -746,8 +752,9 @@ function appendTerminalHtml(html,endsLine){
 // 訊息欄只保留最近的內容。原本每段輸出都永久留在 DOM，掛 3~4 小時（尤其戰鬥中）
 // 會累積數十萬個節點，每次新訊息都要對整棵樹排版，瀏覽器越跑越吃 CPU/記憶體。
 // 超過上限時一次刪掉一批最舊的，攤平成本；玩家正在往上捲閱讀時保持畫面位置不跳動。
-const TERMINAL_MAX_NODES=3000;
-const TERMINAL_TRIM_TO=2400;
+// 1,000 塊；超過時一次刪到剩 800 塊（使用者指示 #34，2026-11-04）。
+const TERMINAL_MAX_NODES=1000;
+const TERMINAL_TRIM_TO=800;
 function trimTerminal(stick){
   const extra=term.childNodes.length-TERMINAL_MAX_NODES;
   if(extra<=0)return;
