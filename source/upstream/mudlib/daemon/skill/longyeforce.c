@@ -130,7 +130,6 @@ void remove_darkpower(object me, mapping bonus)
     foreach(string key, int val in bonus) me->add_temp("apply/" + key, -val);
     me->delete_temp("longyeforce/darkpower");
     message_vision(HIB "$N朦朧的身影漸漸清晰起來﹐那股鬼魅般的氣息也隨之消散。\n" NOR, me, 0, 1);
-    tell_object(me, HIB "你退出了「夜遊神」之境。\n" NOR);
 }
 
 /* darkpower（夜遊神）：120 級起；精上限受傷 10 + 等級/2；效果中不能再用；戰鬥中可用。
@@ -161,8 +160,7 @@ int do_darkpower(object me)
     ]);
     foreach(string key, int val in bonus) me->add_temp("apply/" + key, val);
     me->set_temp("longyeforce/darkpower", 1);
-    message_vision(HIB "$N氣息一斂﹐身形彷彿淡進了四周的暗影裡﹐只剩一道朦朧的輪廓。\n" NOR, me, 0, 1);
-    tell_object(me, HIB "你進入了「夜遊神」之境。\n" NOR);
+    message_vision(HIB "$N氣息一斂﹐身形淡進了四周的暗影裡﹐恍若夜遊神般只剩一道朦朧的輪廓。\n" NOR, me, 0, 1);
     call_out("remove_darkpower", (sk / 3) * 2, me, bonus);
     return 1;
 }
