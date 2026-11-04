@@ -90,15 +90,17 @@ void approve(object who)
 int accept_object(object who, object ob)
 {
     if( !ob->query("thief_token") ) return 0;
-    if( query_temp(ASKING) ) {
-        command("say 等等﹐一個一個來。");
-        return 0;
-    }
+    if( query_temp(ASKING) ) return 0;   // 別人正在交古錢：直接不收（使用者定案，2026-11-04）
     set_temp(ASKING, 1);   // 問話之前也算忙著，避免兩人同時交古錢
     command("hmm");
     call_out("ask_token", talk_gap(), who);
-    call_out((: destruct, ob :), 1);
+    call_out("drop_token", 1, ob);   // give 指令會直接銷毀有價物品；萬一還在就收走
     return 1;
+}
+
+void drop_token(object ob)
+{
+    if( objectp(ob) ) destruct(ob);
 }
 
 /* 玩家回答：說「是」「對」「沒錯」「正是」「嗯」之類（不含「不是」「沒有」）都算肯定。 */
