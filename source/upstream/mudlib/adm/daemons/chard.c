@@ -359,7 +359,7 @@ void hint_user_race (string race) {
             write (CHA(20) + "巫首悟性與靈性極高，天生防禦力強，沒有特殊種族能力。");
             break;
         case "yaksa":
-            write (CHA(20) + "夜叉天生陰陽眼，看得見遊蕩人間的鬼魂。");
+            write (CHA(20) + "夜叉天生陰陽眼，看得見遊蕩人間的鬼魂，還能吞食鬼魂的魂魄來壯大自己。");
             break;
         case "ashura":
             write (CHA(20) + "阿修羅天生好戰，遇到 NPC 時常會忍不住出手，定力越高越能克制。");

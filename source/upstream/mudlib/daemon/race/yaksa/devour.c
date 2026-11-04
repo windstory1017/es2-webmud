@@ -4,9 +4,9 @@ inherit F_CLEAN_UP;
 
 #define TICK_SECONDS 2
 
-// 吞魂已封印（使用者指示，2026-11-03）：夜叉不能再吞食任何鬼魂。
-// 程式與設計保留；要恢復時把 DEVOUR_SEALED 改成 0，再 update 本檔即可。
-#define DEVOUR_SEALED 1
+// 吞魂封印開關：2026-11-03 封印，2026-11-04 改版後重新開放（使用者指示）。
+// 要再封印時把 DEVOUR_SEALED 改成 1，再 update 本檔即可。
+#define DEVOUR_SEALED 0
 
 private void create() { seteuid(getuid()); }
 
@@ -27,30 +27,72 @@ private void grow(object me, string stat, int n) {
     me->supplement_stat(stat, n);
 }
 
-// 吞完玩家鬼魂：依原始種族資料給予永久加成。取消反噬，鬼魂比自己強也有加成。
-private void reward_player(object me, int ghost_gin) {
-    int count, big, gin, kee, sen;
+// 有效吞魂次數（使用者指示，2026-11-04 歸零）：只有達到門檻的吞魂才計數。
+// 舊規則的次數 yaksa/devoured_players 不再使用。
+#define COUNT_KEY "yaksa/devour_count"
 
-    count = me->query("yaksa/devoured_players");
-    me->add("yaksa/devoured_players", 1);
+// 吞魂紀錄（使用者指示，2026-11-04）。本檔的身分（Mudlib）不能寫 /log，
+// 系統權限只開放 /data/daemon 給 Mudlib，所以紀錄放在這裡。
+#define DEVOUR_LOG "/data/daemon/yaksa_devour.log"
 
-    // 前 10 次必定大幅增加；之後機率 = 10 / (10 + random(吞食次數))。
-    big = count < 10 || random(10 + rnd(count)) < 10;
-    if (big) {
-        gin = 1 + ghost_gin / 40;
-        kee = 1 + rnd(ghost_gin / 40);
-        sen = 1 + rnd(ghost_gin / 80);
+private void devour_log(string text) {
+    assure_file(DEVOUR_LOG);
+    write_file(DEVOUR_LOG, text);
+}
+
+// 門檻（使用者指示，2026-11-04）：鬼魂的精（開始吞時的目前值）要達到門檻，
+// 才加精氣神、才計數。第 1～10 隻 500，第 11 隻起每隻多 50（550、600……）。
+// 夜叉族的鬼魂門檻減半：250，第 11 隻起每隻多 25（275、300……）。
+int devour_threshold(int count, int yaksa_ghost) {
+    int extra = count >= 10 ? count - 9 : 0;
+    return yaksa_ghost ? 250 + 25 * extra : 500 + 50 * extra;
+}
+
+private string who(object ob) {
+    return sprintf("%s(%s)", ob->name(1), ob->query("id"));
+}
+
+// 吞完玩家鬼魂：達到門檻才依原始公式給予永久加成並計數；沒有反噬。
+private void reward_player(object me, object victim, int ghost_gin) {
+    int count, big, gin, kee, sen, yaksa_ghost, need, raw_gin;
+    string note;
+
+    raw_gin = ghost_gin;
+
+    count = me->query(COUNT_KEY);
+    yaksa_ghost = victim->query_race() == "yaksa";
+    need = devour_threshold(count, yaksa_ghost);
+
+    if (ghost_gin < need) {
+        tell_object(me, HIK "這縷魂魄太過稀薄，沒能為你增添半分力量。\n" NOR);
+        note = "未達門檻，不計數、不加成";
     } else {
-        gin = 1 + random(2);
-        kee = random(2);
-        sen = 0;
+        me->add(COUNT_KEY, 1);
+        // 夜叉族的鬼魂，精以兩倍計算（門檻比的是加倍前的精）。
+        if (yaksa_ghost) ghost_gin *= 2;
+        // 前 10 次必定大幅增加；之後機率 = 10 / (10 + random(吞食次數))。
+        big = count < 10 || random(10 + rnd(count)) < 10;
+        if (big) {
+            gin = 1 + ghost_gin / 40;
+            kee = 1 + rnd(ghost_gin / 40);
+            sen = 1 + rnd(ghost_gin / 80);
+        } else {
+            gin = 1 + random(2);
+            kee = random(2);
+            sen = 0;
+        }
+        grow(me, "gin", gin);
+        grow(me, "kee", kee);
+        grow(me, "sen", sen);
+        tell_object(me, HIG "你的精增加了 " + gin + " 點"
+            + (kee ? "、氣增加了 " + kee + " 點" : "")
+            + (sen ? "、神增加了 " + sen + " 點" : "") + "！\n" NOR);
+        note = sprintf("計入第 %d 隻，精 +%d、氣 +%d、神 +%d", count + 1, gin, kee, sen);
     }
-    grow(me, "gin", gin);
-    grow(me, "kee", kee);
-    grow(me, "sen", sen);
-    tell_object(me, HIG "你的精增加了 " + gin + " 點"
-        + (kee ? "、氣增加了 " + kee + " 點" : "")
-        + (sen ? "、神增加了 " + sen + " 點" : "") + "！\n" NOR);
+
+    devour_log(sprintf("[%s] 夜叉 %s 吞噬 %s（%s）：鬼魂精 %d／門檻 %d，%s\n",
+        ctime(time()), who(me), who(victim), victim->query_race(),
+        raw_gin, need, note));
 }
 
 private void finish(object me, object victim, int total) {
@@ -58,12 +100,10 @@ private void finish(object me, object victim, int total) {
 
     message_vision(HIR "$N張口一吸，將$n最後一縷魂魄吞進肚裡！\n" NOR, me, victim);
     ghost_gin = me->query_temp("yaksa_devour/ghost_gin");
-    stop_devour(me);
 
     if (userp(victim)) {
-        // 夜叉族的鬼魂，精以兩倍計算。
-        if (victim->query_race() == "yaksa") ghost_gin *= 2;
-        reward_player(me, ghost_gin);
+        reward_player(me, victim, ghost_gin);
+        stop_devour(me);
         // 不在這裡直接 die() + make_mist()：魂飛魄散後的選種族畫面與輸入，
         // 會綁在「目前下指令的人」身上，在這裡就是夜叉，結果變成夜叉看到選種族、
         // 被吞的玩家什麼都沒看到。改為耗盡對方的形體（HP），讓對方在自己的心跳裡
@@ -71,6 +111,7 @@ private void finish(object me, object victim, int total) {
         victim->consume_stat("HP", victim->query_stat("HP") + 1, me);
         return;
     }
+    stop_devour(me);
 
     // 鬼魂類 NPC：吞多少補多少精、神（目前值與受損的最大值）。
     me->heal_stat("gin", total);
@@ -138,20 +179,22 @@ int main(object me, string arg) {
         "ghost_gin": victim->query_stat("gin") ]));
     message_vision(HIR "$N張開血盆大口，一把抓住$n，開始吞食$n的魂魄！\n" NOR, me, victim);
     tell_object(victim, HIR "你被夜叉抓住了，快逃離這裡！\n" NOR);
-    devour_tick(me, victim, serial);
+    // 下指令後先等 2 tick 才吞第一口（使用者指示，2026-11-04），讓鬼魂有時間逃走。
+    me->start_busy(2);
+    call_out("devour_tick", TICK_SECONDS * 2, me, victim, serial);
     return 1;
 }
 
 int help(object me) {
-    // 封印前的完整規則見 docs/CUSTOM_RACE_A_H.md（@HELP 區塊不可超過 1024 位元組）。
+    // 完整規則見 docs/CUSTOM_RACE_A_H.md（@HELP 區塊不可超過 1024 位元組）。
     write(@HELP
 指令格式：devour <鬼魂>
 
-【目前已封印】夜叉的噬魂凶性已被封住，暫時無法吞食任何鬼魂。
-
-封印前，夜叉可以吞食鬼魂 NPC 或死去玩家的鬼魂：
+夜叉可以吞食鬼魂 NPC 或死去玩家的鬼魂：
+- 抓住鬼魂後要稍待片刻才開始吞食，鬼魂可以趁機逃走。
 - 吞鬼魂 NPC：鬼魂被吃掉，吞多少補多少精、神。
-- 吞玩家鬼魂：對方魂飛魄散，須重新創造角色；夜叉永久增加精氣神最大值。
+- 吞玩家鬼魂：對方魂飛魄散，須重新創造角色。魂魄夠凝實才能
+  讓夜叉永久增加精氣神，而且吞得越多，需要的魂魄越凝實。
 HELP);
     return 1;
 }
