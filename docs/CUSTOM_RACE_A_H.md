@@ -106,9 +106,10 @@ Neolith `HEARTBEAT_INTERVAL` is 2,000,000 microseconds, so 1 tick = one 2-second
     | 12th | 600 | 300 |
     | (n+1)th, n ≥ 10 | 500 + 50 × (n − 9) | 250 + 25 × (n − 9) |
 
-    Below the threshold: no stat gain and not counted; the yaksa sees "這縷魂魄太過稀薄，沒能為你增添半分力量。"
+    **The yaksa's own maximum gin must also reach the same threshold (2026-11-04)**, e.g. a yaksa with max gin 450 gets nothing from a 600-gin human ghost, but does from a 300-gin yaksa ghost (threshold 250). Exactly equal counts.
+    Below either threshold: no stat gain and not counted. Ghost too weak → "這縷魂魄太過稀薄，沒能為你增添半分力量。"; yaksa too weak → "你的根基尚淺，化不開這縷魂魄的力量，沒能增添半分。"
   - Reward when the threshold is met (formula unchanged, no backlash): for a yaksa ghost G is doubled after the threshold check. The yaksa permanently gains maximum gin 1 + G/40, kee 1 + random(G/40), sen 1 + random(G/80). The first 10 valid devours always give this large gain. After that the chance is 10 / (10 + random(n)); otherwise the gain is gin 1~2, kee 0~1.
-  - **Log (2026-11-04):** every player devour writes one line to `data/daemon/yaksa_devour.log` (time, yaksa, victim and race, G, threshold, counted or not, gains). It is not in `log/` because the command runs as `Mudlib`, which the security daemon only lets write under `/data/daemon`.
+  - **Log (2026-11-04):** every player devour writes one line to `data/daemon/yaksa_devour.log` (time, yaksa, victim and race, G, the yaksa's max gin, threshold, counted or not, gains). It is not in `log/` because the command runs as `Mudlib`, which the security daemon only lets write under `/data/daemon`.
 - 雪亭鎮土地公廟 (`d/snow/small_temple.c`, where ghosts revive) is a no_fight room (2026-11-04), so nobody can wait there to kill or devour reviving ghosts.
 
 ## 阿修羅 (ashura)
