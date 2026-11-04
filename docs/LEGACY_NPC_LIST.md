@@ -67,7 +67,7 @@
 | 43 | 凌月蘅 | Ling yue heng | `custom/legacy_npc/ling_yue_heng.c` | 未能判定／花砌居 | 人類 | 武者 | 35 | A | 古劍派（`fighter.ancient`） | — |
 | 44 | 劉尚民 | Liu shang min | `custom/legacy_npc/liu_shang_min.c` | 未能判定／— | 人類 | 武者 | 10 | C | — | — |
 | 45 | 司馬成都 | Si-ma cheng du | `custom/legacy_npc/si_ma_cheng_du.c` | 未能判定／— | 人類 | 軍人 | 70 | A | — | — |
-| 46 | 吳長貴 | Wu changuei | `custom/legacy_npc/wu_changuei.c` | 未能判定／— | 人類 | 盜賊 | 15 | B | 瑯夷派（`thief.longye`） | — |
+| 46 | 吳長貴 | Wu changuei | `custom/legacy_npc/wu_changuei.c` | 未能判定／— | 人類 | 盜賊 | 15 | B | 瑯夷派（`thief.longye`） | 瑯夷派師父（2026-11-04；房間尚未製作） |
 | 47 | 地府鬼卒 | Hell soldier | `custom/legacy_npc/hell_soldier.c` | 未能判定／— | 人類 | 軍人 | 25 | B | — | — |
 | 48 | 宇文嵐胥 | Yu wen | `custom/legacy_npc/yu_wen.c` | 未能判定／畫室內堂 | 人類 | 書生 | 20 | B | — | — |
 | 49 | 左國益 | Zuo guo yi | `custom/legacy_npc/zuo_guo_yi.c` | 未能判定／— | 人類 | 軍人 | 30 | B | — | — |
