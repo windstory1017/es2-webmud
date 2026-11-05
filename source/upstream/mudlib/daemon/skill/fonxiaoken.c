@@ -53,13 +53,7 @@ private void create()
     setup();
 }
 
-/* 學習條件：武者（任務由雍泰傳授）。 */
-int valid_learn(object me)
-{
-    if( me->query_class() != "fighter" )
-        return notify_fail("風嘯拳法是武道世家的拳法﹐不是你這條路上的功夫。\n");
-    return 1;
-}
+/* 學習條件：無，所有職業都能學（使用者指示，2026-11-05）；只能從雍泰的任務學到。 */
 
 /* 特攻機率（千分比）：90 級 10%，200 級 15%，中間依等級增加。 */
 int special_chance(object me)

@@ -1,6 +1,6 @@
 ◎ 風嘯拳法（fonxiaoken）
 　技能種類：徒手
-　學習條件：武者
+　學習條件：無，所有職業都能學
 　任務起始：五堂鎮醇雨樓客棧 雍泰
 　安裝：enable unarmed with fonxiaoken
 　特殊能力：

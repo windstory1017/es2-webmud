@@ -2,7 +2,7 @@
 //
 // 風嘯拳法任務（使用者指示，2026-11-04～05，依舊資料 Quest 紀錄；設計見
 // docs/martial_arts/共通_風嘯拳法.md「任務」）：
-// - 只對武者（fighter）反應；已學過風嘯拳法（fonxiaoken）的人不再觸發。
+// - 所有職業都能做（使用者指示 2026-11-05，原本限武者）；已學過風嘯拳法（fonxiaoken）的人不再觸發。
 // - 玩家走進醇雨樓客棧時，雍泰向玩家打聽失散的四弟。
 // - 對他說「雍順」、交給他貓眼戒指，他會追問四弟下落。
 // - 交過貓眼戒指之後再交骨灰罈：雍泰昏倒 5 tick，醒來後道謝並傳授風嘯拳法。
@@ -77,11 +77,10 @@ LONG
     setup();
 }
 
-// 任務對象：武者、還沒學過風嘯拳法。
+// 任務對象：還沒學過風嘯拳法的玩家。
 private int quest_player(object who)
 {
-    return objectp(who) && userp(who) && who->query_class() == "fighter"
-        && undefinedp(who->query_skills()[QUEST_SKILL]);
+    return objectp(who) && userp(who) && undefinedp(who->query_skills()[QUEST_SKILL]);
 }
 
 private int still_here(object who)

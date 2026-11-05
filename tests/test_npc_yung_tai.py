@@ -12,7 +12,7 @@ def test_greeting_on_enter():
     s = read('d/wutang/npc/yung_tai.c')
     assert 'void init()' in s and '::init();' in s and '#define TICK        2' in s
     assert 'call_out("greet", TICK, who, 0);' in s and 'call_out("greet", TICK, who, step);' in s
-    assert 'who->query_class() == "fighter"' in s and 'undefinedp(who->query_skills()[QUEST_SKILL])' in s
+    assert 'query_class' not in s and 'undefinedp(who->query_skills()[QUEST_SKILL])' in s
     for line in ['這位朋友可是外地來的﹖', '是我那失散的四弟 ...', '前年在斐縣境中失散 ...',
                  '也不知道是生是死 ...', '請千萬讓小弟知道 ...', '又繼續喝酒。']:
         assert line in s, line
