@@ -16,9 +16,9 @@ create()
 LONG
   );
   set("outdoors", "snow");
-  set("exits", ([ /* sizeof() == 1 */
+  set("exits", ([ /* sizeof() == 2 */
 	"east" : __DIR__"wstreet3",
-//	"northwest" : "/d/graveyard/grave1",
+	"northwest" : "/d/graveyard/grave1",   // 亂葬崗（2026-11-04）
   ]));
   set("objects", ([
 	"/custom/ghost/npc/mountain_sprite": 1,

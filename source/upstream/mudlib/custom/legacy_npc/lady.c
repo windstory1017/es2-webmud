@@ -2,7 +2,7 @@
 /*
 LEGACY NPC. 名稱、英文 ID、敘述、年紀、性別、種族、裝備取自舊站畫面紀錄（DOCUMENTED，
 docs/LEGACY_ROOM_NPC_COMPENDIUM.md）；職業、等級、強度、門派、行為依使用者提供的
-「舊有 NPC 待製作清單」（2026-10-15）。尚未放入地圖。
+「舊有 NPC 待製作清單」（2026-10-15）。放在亂葬崗（/d/graveyard/grave5）。
 舊站區域：未能判定；房間：亂葬崗。
 尚未製作的裝備（先空著）：羊皮短靴(Goatskin buskins)、青布小襖(Green jerkin)。
 */
