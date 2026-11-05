@@ -16,7 +16,8 @@ object direct_container(object me, string id)
     object ob;
     ob = present(id, me);
     if (!ob && environment(me)) ob = present(id, environment(me));
-    if (ob && living(ob)) return 0;
+    // 活人與玩家（昏倒的也是）不能當容器搜身；屍體可以。
+    if (ob && (living(ob) || userp(ob))) return 0;
     return ob;
 }
 int put_limit(object me, object ob, object dest, int count)
@@ -64,6 +65,8 @@ int transfer(object me, string verb, object ob, object dest, int count)
                 return fail(me, guard->name() + "正守在" + ob->name() + "一旁﹐防止任何人拿走。");
         if (me->over_encumbranced()) return fail(me, "你已經負荷過重了﹗");
     } else {
+        // 雨師妾的小蛇：丟下去會自己爬回來。
+        if (verb == "drop" && function_exists("crawl_back", ob)) { ob->crawl_back(me); return 1; }
         if (denied = ob->query("no_drop"))
             return fail(me, stringp(denied) ? denied : "這樣東西不能隨意丟棄。");
         if (verb == "put" && (ob == dest || ob->query("no_get")))

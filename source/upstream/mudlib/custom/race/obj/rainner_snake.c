@@ -2,7 +2,8 @@
  *
  * 經驗與斑點記在主人身上（rainner/snake/<顏色>），本物件只是依記錄產生的
  * 裝備；每次登入由雨師妾種族重建。能力依斑點線性成長，斑點 120 時達到上限。
- * 不能丟棄、給人、放進容器或被偷，死亡時也不會掉進屍體，其他人無法穿戴。
+ * 不能丟棄（丟下會自己爬回來）、給人、放進容器或被偷（偷牠一定被發現），
+ * 主人昏倒、死亡時也拿不走、不會掉進屍體，其他人無法穿戴。
  */
 #include <ansi.h>
 #include <armor.h>
@@ -35,6 +36,13 @@ void create() {
     set("unit", "條");
     set("value", 0);
     set("no_drop", "你的小蛇緊緊纏在你身上，不肯離開。\n");
+}
+
+// drop 時：小蛇被放到地上，又自己爬回主人身上（使用者定案，2026-11-05）。
+// 由 cmds/std/drop.c 與 daemon/misc/heat_commands.c 的 drop 呼叫。
+int crawl_back(object me) {
+    message_vision("$N將" + name() + "放到地上﹐" + name() + "扭了扭身子﹐又自己爬回$N身上。\n", me);
+    return 1;
 }
 
 int query_spots() {
