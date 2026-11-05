@@ -47,8 +47,9 @@ def wrap(s, width=70, first=4):
 
 def test_rooms_and_exits():
     want = {
-        'grave1': {'northwest': 'grave3', 'southeast': '/d/snow/wgate'},
-        'grave3': {'northwest': 'grave4', 'southeast': 'grave1'},
+        'grave1': {'west': 'grave2', 'southeast': '/d/snow/wgate'},
+        'grave2': {'east': 'grave1', 'northwest': 'grave3'},
+        'grave3': {'northwest': 'grave4', 'southeast': 'grave2'},
         'grave4': {'west': 'grave5', 'southeast': 'grave3'},
         'grave5': {'southwest': 'grave6', 'east': 'grave4'},
         'shrine': {'out': 'grave5'},
@@ -131,8 +132,8 @@ def test_description_layout():
 def test_web_map():
     g = json.loads(read(ROOT / 'web/world_static_map.json'))
     ids = [n for n in g['nodes'] if n['id'].startswith('/d/graveyard/')]
-    assert len(ids) == 12 and {n['area'] for n in ids} == {'亂葬崗'}
-    assert len({(n['x'], n['y']) for n in ids}) == 12
+    assert len(ids) == 13 and {n['area'] for n in ids} == {'亂葬崗'}
+    assert len({(n['x'], n['y']) for n in ids}) == 13
     assert any(e['from'] == '/d/snow/wgate' and e['to'] == '/d/graveyard/grave1' for e in g['edges'])
 
 
