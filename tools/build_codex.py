@@ -168,18 +168,17 @@ MAP_POS = {
     '/d/snow/ruin2': ('/d/snow/riverbank', 0, 1),          # 破舊大宅正廳：河邊空地下方（緊貼河邊上方）
     '/d/snow/kitchen': ('/d/snow/epath', 0, -1),           # 有錢人家廚房：僻靜小巷上方（climb 圍牆）
     # 亂葬崗（d/graveyard）：依設計表格位（相對於入口 P6）。祠堂靠 enter／out、雜草叢靠 pass 進出，全部手動指定。
-    '/d/graveyard/grave2': ('/d/graveyard/grave1', -1, -1),
-    '/d/graveyard/grave3': ('/d/graveyard/grave1', -2, -1),
-    '/d/graveyard/grave4': ('/d/graveyard/grave1', -3, -2),
-    '/d/graveyard/grave5': ('/d/graveyard/grave1', -4, -2),
-    '/d/graveyard/shrine': ('/d/graveyard/grave1', -5, -2),
-    '/d/graveyard/grave6': ('/d/graveyard/grave1', -5, -1),
-    '/d/graveyard/grave7': ('/d/graveyard/grave1', -5, 0),
-    '/d/graveyard/grave8': ('/d/graveyard/grave1', -6, 0),
-    '/d/graveyard/weeds': ('/d/graveyard/grave1', -6, 1),
-    '/d/graveyard/forest': ('/d/graveyard/grave1', -6, 2),
-    '/d/graveyard/forest_w': ('/d/graveyard/grave1', -7, 2),
-    '/d/graveyard/forest_e': ('/d/graveyard/grave1', -5, 2),
+    '/d/graveyard/grave3': ('/d/graveyard/grave1', -1, -1),
+    '/d/graveyard/grave4': ('/d/graveyard/grave1', -2, -2),
+    '/d/graveyard/grave5': ('/d/graveyard/grave1', -3, -2),
+    '/d/graveyard/shrine': ('/d/graveyard/grave1', -4, -2),
+    '/d/graveyard/grave6': ('/d/graveyard/grave1', -4, -1),
+    '/d/graveyard/grave7': ('/d/graveyard/grave1', -4, 0),
+    '/d/graveyard/grave8': ('/d/graveyard/grave1', -5, 0),
+    '/d/graveyard/weeds': ('/d/graveyard/grave1', -5, 1),
+    '/d/graveyard/forest': ('/d/graveyard/grave1', -5, 2),
+    '/d/graveyard/forest_w': ('/d/graveyard/grave1', -6, 2),
+    '/d/graveyard/forest_e': ('/d/graveyard/grave1', -4, 2),
 }
 MAP_HIDE = {'/d/snow/inn_staff_room', '/d/oldpine/reeds2', '/d/oldpine/reeds3', '/d/oldpine/reeds4', '/d/oldpine/reeds5'}  # 不在地圖上顯示的房間
 
