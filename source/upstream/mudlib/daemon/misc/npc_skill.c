@@ -96,7 +96,12 @@ private mapping sect = ([
         "name":        "雪吟莊",
         "force":       "tidy force",
         "force_level": 5,
-        "arts":        ({
+        "arts":        ({   // docs/martial_arts/雪吟莊_武功.md（使用者同意，2026-11-05）
+            ([ "skill": "deep blade", "map": "blade", "level": 1 ]),
+            ([ "skill": "six-chaos-sword", "map": "sword", "level": 1 ]),
+            ([ "skill": "six-chaos-sword", "map": "parry", "level": 1 ]),
+            ([ "skill": "celestial force", "map": 0, "level": 10, "req": ([ "tidy force": 1 ]) ]),
+            ([ "skill": "celestial palm", "map": "unarmed", "level": 10, "req": ([ "celestial force": 180 ]) ]),
         }),
     ]),
     "fighter.ancient": ([   // 內功迴風拂柳心訣為解謎取得
