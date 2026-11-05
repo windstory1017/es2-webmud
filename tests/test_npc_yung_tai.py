@@ -39,6 +39,18 @@ def test_dirty_taoist_gets_drunk():
     assert 'chrysoberyl_ring")->wear();' in s and 'obj/urn");' in s
 
 
+def test_fonxiaoken_skill():
+    s = read('daemon/skill/fonxiaoken.c')
+    assert 'art_usage = "unarmed";' in s and s.count('"action":') == 6 and s.count('"name":') == 4
+    assert 'art_entry        = 5;' in s and 'mm_start = 21;' in s and 'mm_minus = 20;' in s and 'mm_coef  = 15;' in s
+    assert '#define SPECIAL_LEVEL 90' in s and 'return 100 + 50 * (lv - SPECIAL_LEVEL) / (200 - SPECIAL_LEVEL);' in s
+    assert 'me->supplement_stat("gin", SPECIAL_GIN);' in s and 'opponent->start_busy(1);' in s
+    assert 'HIW "$N吐氣開聲' in s and 'me->start_busy' not in s
+    h = read('docs/help/fonxiaoken.txt')
+    assert h.startswith('◎ 風嘯拳法（fonxiaoken）') and '任務起始：五堂鎮醇雨樓客棧 雍泰' in h
+    assert (MUD.parents[2] / 'docs/martial_arts/共通_風嘯拳法.md').exists()
+
+
 if __name__ == '__main__':
     for name, fn in list(globals().items()):
         if name.startswith('test_') and callable(fn):
