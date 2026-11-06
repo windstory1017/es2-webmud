@@ -129,7 +129,7 @@ int do_roar(object me)
         return notify_fail("你的神不夠﹐無法發出天邪虎嘯。\n");
     me->consume_stat("sen", cost);
 
-    message_vision(HIR "\n$N深吸一口氣﹐運起天邪神功仰天長嘯﹐嘯聲有如猛虎出山﹐震得四壁嗡嗡作響！\n\n" NOR, me);
+    message_vision(HIY "\n$N深吸一口氣﹐運起天邪神功仰天長嘯﹐嘯聲有如猛虎出山﹐震得四壁嗡嗡作響！\n\n" NOR, me, 0, 1);   // 整句一行、不自動斷行（使用者指示，2026-11-06）
     dmg = sk / 5 + me->query_attr("con");
     foreach( ob in enemies ) {
         if( !objectp(ob) ) continue;
