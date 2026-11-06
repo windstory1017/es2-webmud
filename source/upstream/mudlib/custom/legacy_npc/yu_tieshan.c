@@ -36,7 +36,6 @@ void create()
     map_skill("force", "celestial force");   // 內功用天邪神功（等級由 NPC 自動技能給）
     set_power("S");
     setup();
-    delete_skill("celestial palm");   // 魚鐵山不會天邪神掌（使用者指示，2026-11-06）；拳腳回到基本拳腳
     carry_object("/custom/armor/head/brass_hat")->wear();   // 黃呢鐵帽
     carry_object("/custom/armor/waist/water_dragon_girdle")->wear();   // 蛟龍帶
     carry_object("/custom/armor/feet/spider_boots")->wear();   // 玄蛛皂白靴
@@ -139,7 +138,6 @@ int acquire_skill(object me, string skill)
     case "deep blade":
     case "six-chaos-sword":
     case "celestial force":
-    case "celestial palm":
         daemon = SKILL_D(skill);
         if( objectp(daemon) && !daemon->valid_learn(me) ) return 0;
         break;

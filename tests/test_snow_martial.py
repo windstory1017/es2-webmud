@@ -70,7 +70,7 @@ def test_celestial_palm():
 def test_npc_table_and_master():
     t = read('daemon/misc/npc_skill.c')
     assert '"skill": "deep blade", "map": "blade", "level": 1' in t
-    assert '"skill": "celestial palm", "map": "unarmed", "level": 10, "req": ([ "celestial force": 180 ])' in t
+    assert '"skill": "celestial palm"' not in t   # 雪吟莊弟子不會天邪神掌（2026-11-06）
     y = read('custom/legacy_npc/yu_tieshan.c')
     assert 'int accept_apprentice(object me)' in y and 'me->set("custom_faction", FACTION);' in y
     assert 'daemon->valid_learn(me)' in y
