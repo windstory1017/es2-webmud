@@ -77,7 +77,12 @@ def test_pavilion_mechanism():
 
 def test_dungeon_door_and_key():
     s = read(K / 'dungeon.c')
-    assert 'present("jailer", this_object())' in s and 'present("brass key", me)' in s
+    assert 'present("jailer", this_object())' in s and 'present("brass key", me)' not in s
+    # 牢門改用標準門：關著時出口不顯示，用鑰匙 unlock、open（2026-11-06）
+    assert '"status" : DOOR_CLOSED | DOOR_LOCKED, "lock" : LOCK_ID' in s and 'void reset()' in s
+    e = read(K / 'dungeon_e.c')
+    assert 'create_door("west",' in e and 'varargs int open_door' in e and 'replace_program' not in e
+    assert 'set("lock", "snowkeep_dungeon");' in read(K / 'obj/brass_key.c')
     assert '"/d/snowkeep/obj/brass_key"' in read(MUD / 'custom/legacy_npc/yu_tieshan.c')
     assert 'set_name("黃銅鑰匙", ({ "brass key", "key" }));' in read(K / 'obj/brass_key.c')
     h = read(MUD / 'custom/armor/armor/heart_plate.c')

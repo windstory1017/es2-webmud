@@ -1,10 +1,13 @@
 // /d/snowkeep/dungeon.c — 雪吟莊（H2）地牢。依使用者提供的雪吟莊設計表（2026-11-06）；敘述：新寫。
-// 往東（地牢深處 J2）：獄卒在場時攔人；獄卒不在時，身上要有黃銅鑰匙（魚鐵山身上）才打得開牢門，鑰匙不會用掉。
+// 往東（地牢深處 J2）是上鎖的牢門（標準門，關著時出口不顯示）：用黃銅鑰匙（魚鐵山身上）
+// unlock door with key、open door 打開；獄卒在場時仍會攔人。房間重置時牢門重新關上鎖好（使用者指示，2026-11-06）。
 // 區域文件見 docs/AREA_SNOWKEEP.md。
 
 #include <room.h>
 
 inherit ROOM;
+
+#define LOCK_ID "snowkeep_dungeon"
 
 int valid_leave(object me, string dir)
 {
@@ -14,11 +17,20 @@ int valid_leave(object me, string dir)
         jailer = present("jailer", this_object());
         if( objectp(jailer) && living(jailer) && jailer->query("snowkeep_jailer") && jailer != me )
             return notify_fail(jailer->name() + "伸手一攔﹐冷冷地說道：「沒有莊主的吩咐﹐誰也不准過去。」\n");
-        if( !present("brass key", me) )
-            return notify_fail("牢門上掛著一把沉甸甸的大鎖﹐鎖得緊緊的﹐怎麼推也推不開。\n");
-        tell_object(me, "你掏出黃銅鑰匙打開大鎖﹐推開了沉重的牢門。\n");
     }
     return ::valid_leave(me, dir);
+}
+
+/* 房間重置：牢門重新關上、鎖好（兩邊一起）。 */
+void reset()
+{
+    mapping doors;
+
+    ::reset();
+    doors = this_object()->query_doors();
+    if( !mapp(doors) || !mapp(doors["east"]) ) return;
+    if( !(doors["east"]["status"] & DOOR_CLOSED) ) catch(close_door("east"));
+    if( !(doors["east"]["status"] & DOOR_LOCKED) ) catch(lock_door("east", LOCK_ID));
 }
 
 void create()
@@ -37,5 +49,7 @@ LONG
     ]));
     set("map/area", "雪吟莊");
     set("map/layer", "地下");
+    create_door("east", ([ "name" : "牢門", "id" : ({ "east", "牢門", "door" }), "other_side_dir" : "west",
+        "status" : DOOR_CLOSED | DOOR_LOCKED, "lock" : LOCK_ID ]));
     setup();
 }
