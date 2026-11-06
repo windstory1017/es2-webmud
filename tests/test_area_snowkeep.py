@@ -83,6 +83,13 @@ def test_dungeon_door_and_key():
     assert '"armor": 10,' in h and '"wittiness": 10,' in h
 
 
+def test_yu_tieshan_combat():
+    s = read(MUD / 'custom/legacy_npc/yu_tieshan.c')
+    assert 'map_skill("force", "celestial force");' in s
+    assert '#define PILL_MAX        4' in s and '#define PILL_RATIO      10' in s
+    assert 'exert_function("roar");' in s and 'message_vision(HIG "$N從懷中摸出一粒朱紅色的丹丸' in s
+
+
 def test_guard_no_longer_blocks():
     s = read(MUD / 'd/snow/npc/guard.c')
     assert 'do_go' not in s and 'seteuid(getuid());' in s
