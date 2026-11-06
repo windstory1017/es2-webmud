@@ -86,6 +86,7 @@ def test_dungeon_door_and_key():
 def test_yu_tieshan_combat():
     s = read(MUD / 'custom/legacy_npc/yu_tieshan.c')
     assert 'map_skill("force", "celestial force");' in s
+    assert 'delete_skill("celestial palm");' in s
     assert '#define PILL_MAX        4' in s and '#define PILL_RATIO      10' in s
     assert 'exert_function("roar");' in s and 'message_vision(HIG "\\n$N從懷中摸出把丹藥一口吞了下去' in s
 
