@@ -136,7 +136,7 @@
 | 112 | 哭無望 | Ku wu wang | `custom/legacy_npc/ku_wu_wang.c` | 雪吟莊／東廂房 | 厭火族 | 武者 | 40 | A | 哭笑門（`fighter.chin`） | — |
 | 113 | 褚商魂 | Chu xang-when | `custom/legacy_npc/chu_xang_when.c` | 雪吟莊／雪吟莊大廳 | 人類 | 武者 | 25 | B | 雪吟莊（`fighter.snow`） | — |
 | 114 | 魚平胤 | Yu pingyin | `custom/legacy_npc/yu_pingyin.c` | 雪吟莊／後花園 | 人類 | 武者 | 20 | B | 雪吟莊（`fighter.snow`） | — |
-| 115 | 魚鐵山 | Yu tieshan | `custom/legacy_npc/yu_tieshan.c` | 雪吟莊／雪吟莊大廳 | 人類 | 武者 | 65 | S | 雪吟莊（`fighter.snow`） | — |
+| 115 | 魚鐵山 | Yu tieshan | `custom/legacy_npc/yu_tieshan.c` | 雪吟莊／雪吟莊大廳 | 人類 | 武者 | 65 | S | 雪吟莊（`fighter.snow`） | 雪吟莊師父（收徒、傳授武功，2026-11-05） |
 | 116 | 黑衣人 | Man in black | `custom/legacy_npc/man_in_black.c` | 雲棧市集／客房 | 厭火族 | 盜賊 | 20 | B | — | — |
 | 117 | 任常恩 | Jen commando | `custom/legacy_npc/jen_commando.c` | 青邪宮／上山小路 | 人類 | 軍人 | 25 | B | — | — |
 | 118 | 葬心 | Blade man | `custom/legacy_npc/blade_man.c` | 青邪宮、漕幫／酒館二樓 | 厭火族 | 武者 | 30 | A | 哭笑門（`fighter.chin`） | — |

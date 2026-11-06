@@ -102,18 +102,8 @@ private void heart_beat() {
     if (!this_object())
         return;
 
-    // Make us older. Note this should not rely on fixed period between
-    // each call to heart_beat bcz heart_beat could be stoped for various
-    // reason.                                           - Annihilator
-
-    if (!last_age_set)
-        last_age_set = time();
-    add ("time_aged", time() - last_age_set);
-    last_age_set = time();
-    if ((int)query("time_aged") >= 43200) {
-        add("age", 1);
-        delete("time_aged");
-    }
+    // 年齡跟著遊戲曆走：自創角起每過一個遊戲年長一歲（使用者指示，2026-11-06，見 CHAR_D update_age）。
+    CHAR_D->update_age(this_object());
 
     if (objectp(my_link))
         my_link->update_age();

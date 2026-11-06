@@ -40,13 +40,15 @@ int main (object me, string arg) {
     }
     if (!ob->query("birthday"))
         ob->set("birthday", random (1892160000));
-    birth = ((int)ob->query ("birthday") - 14*365*24*60) * 60 % 1892160000;
+    CHAR_D->update_age(ob);
+    // 出生時刻＝創角那一刻的遊戲時間（與 time 指令同一套曆法，見 NATURE_D 的 TIME_TICK）。
+    birth = (int)ob->query ("birthday") * 60 % 1892160000;
 
     line = sprintf (HIW "【 %s 】" NOR "%s\n\n", ob->rank(), ob->short(1));
     line += cjk_wrap (sprintf(
             "%s出生於%s﹐外表是一%s%s歲的%s%s。目前是等級 %d 的%s﹐目前有 %d 點業力。",
                 ob==me ? gender_self (ob) : gender_pronoun (ob),
-                CHINESE_D->chinese_date(),
+                CHINESE_D->chinese_date(birth),
                 (tmp = ob->query ("unit")) ? tmp : "個",
                 chinese_number (ob->query ("age")),
                 (tmp = ob->query ("gender")) ? to_chinese (tmp) : "",
