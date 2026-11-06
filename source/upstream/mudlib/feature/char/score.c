@@ -63,6 +63,8 @@ void reset_score_gain() { score_gain = ([]); }
 varargs void
 gain_score(string course, int xp)
 {
+    // 戰場功勳只有軍人能得到，武者入伍轉成的軍人也算（使用者定案，2026-11-06）。
+    if( course == "military service" && query_class() != "soldier" ) return;
     add("score/" + course, xp);
     if( undefinedp(score_gain[course]) ) score_gain[course] = xp;
     else score_gain[course] += xp;
