@@ -109,7 +109,7 @@ int do_heal(object me)
 }
 
 /* 天邪虎嘯：扣 天邪神功/20 的神；正在和自己交手的對手全部停頓 2 回合，
- * 受到 天邪神功/5 + 根骨 的傷害；自身回復 天邪神功/2 的氣，用完停頓 2 回合。
+ * 受到 天邪神功/5 + 根骨 的傷害；自身回復 天邪神功/2 的氣，用完停頓 1 回合（使用者指示，2026-11-06）。
  * 不在戰鬥中的人不受影響。 */
 int do_roar(object me)
 {
@@ -139,7 +139,7 @@ int do_roar(object me)
         if( objectp(ob) ) show_status(ob, kee_ratio(ob));
     }
     me->supplement_stat("kee", sk / 2);
-    me->start_busy(2);
+    me->start_busy(1);
     return 1;
 }
 
