@@ -13,5 +13,6 @@ void create()
         set("unit", "把");
         set("long", "一把沉甸甸的黃銅鑰匙﹐齒紋粗大﹐看來是用來開某道厚重的鐵鎖。\n");
         set("value", 10);
+        set("lock", "snowkeep_dungeon");   // 開地牢牢門（d/snowkeep/dungeon.c）
     }
 }
