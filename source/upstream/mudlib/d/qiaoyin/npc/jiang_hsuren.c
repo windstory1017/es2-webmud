@@ -77,7 +77,7 @@ int accept_object(object who, object ob)
     who->set_temp("qiaoyin/alchemy_paid", 1);
     if( SKILL_D("zushang")->is_longtu_disciple(who) )
         command("say 嘿嘿，好說好說，丹房就在後頭，請便；如果還不會丹道之術的話，也可以跟我學習。");
-    else if( who->query("custom_faction") == "alchemist.wuto" )
+    else if( who->query("custom_faction") == "alchemist.wu" )
         command("say 嘿嘿，好說好說，丹房就在後頭，請便；如果還不會神農之術的話，也可以跟我學習。");
     else
         command("say 嘿嘿，好說好說，丹房就在後頭，請便。");
@@ -93,7 +93,7 @@ int acquire_skill(object me, string skill)
     if( member_array(skill, ({ "alchemy-medication", "alchemy-wealth", "zushang" })) < 0 )
         return 0;
     if( !SKILL_D("zushang")->is_longtu_disciple(me)
-    &&  !(skill == "alchemy-medication" && me->query("custom_faction") == "alchemist.wuto") ) {
+    &&  !(skill == "alchemy-medication" && me->query("custom_faction") == "alchemist.wu") ) {
         say_to(me, "你不是龍圖丹派弟子，我不能教你" + to_chinese(skill) + "。");
         return 1;
     }

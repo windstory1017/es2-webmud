@@ -23,7 +23,7 @@ void create()
         "瘦弱的男子，他的臉色蒼白，好像是身染重病一樣。男子揹在身後哪把與\n"
         "其身材不成比例的長杖，詭譎的流線、古怪的造型，正散發著一陣又一陣\n"
         "的淫靡之氣，刺激的你下身火熱.....\n");
-    set("custom_faction", "fighter.chin");   // 哭笑門（docs/martial_arts/門派武功對照表.md）
+    set("custom_faction", "fighter.huge");   // 哭笑門（docs/martial_arts/門派武功對照表.md）
     set_power("A");
     setup();
     carry_object("/custom/armor/feet/cloud_boots")->wear();   // 流雲靴

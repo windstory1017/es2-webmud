@@ -10,7 +10,7 @@ inherit SKILL;
 
 #define STEP    5
 #define BONUS   5
-#define WUTO_BONUS 10   // 武陀灸堂弟子（custom_faction alchemist.wuto）
+#define WUTO_BONUS 10   // 武陀灸堂弟子（custom_faction alchemist.wu）
 #define COEF    10
 
 private void create()
@@ -45,7 +45,7 @@ void skill_advanced(object me, string skill)
     if( now <= done ) return;
 
     me->set("skill_bonus/kee anatomy", now);
-    bonus = me->query("custom_faction") == "alchemist.wuto" ? WUTO_BONUS : BONUS;
+    bonus = me->query("custom_faction") == "alchemist.wu" ? WUTO_BONUS : BONUS;
     for(lv = done + STEP; lv <= now; lv += STEP) {
         if( random(lv * COEF + highest_stat(me)) >= lv * COEF ) continue;
         foreach(string stat in ({ "gin", "kee", "sen" }))
