@@ -857,6 +857,22 @@ varargs void enter_world(object ob, object user, int silent) {
     user->setup();
     increment_visitor_count();
 
+    // 門派代碼改用舊名（使用者指示 #35，2026-11-06）：存檔裡還是舊代碼的玩家，登入時換成新代碼，只換一次。
+    {
+        mapping faction_rename = ([
+            "alchemist.wuto"  : "alchemist.wu",
+            "taoist.fog"      : "mao-shan.fog",
+            "taoist.wind"     : "mao-shan.wind",
+            "taoist.lingyun"  : "mao-shan.cloud",
+            "fighter.chin"    : "fighter.huge",
+            "fighter.ancient" : "fighter.au-chan",
+            "thief.hidden"    : "thief.yin",
+        ]);
+        string old_faction = user->query("custom_faction");
+        if (stringp(old_faction) && faction_rename[old_faction])
+            user->set("custom_faction", faction_rename[old_faction]);
+    }
+
     // event 頻道一次性遷移（使用者指示，2026-11-01）：event 公告頻道是新加的，
     // 既有玩家的收聽清單裡不會有它。第一次登入時替他們補上 event（預設收聽），
     // 並記下已遷移；之後若玩家自己 tune event 關掉，不會再被重新打開。

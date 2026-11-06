@@ -25,6 +25,7 @@ void create()
 		
 		set("requirement", (["literate": 50, "alchemy-medication": 50]));
 		set("pill_grade", 2);   // 丹藥階級：一階最高、三階最低（使用者指示 #7，2026-10-23）
+		set("no_sell", 1);   // 丹藥不能賣給當鋪、不能典當，只能賣回藥鋪（使用者指示，2026-11-06）
 	}
 	set_amount(1);
 	setup();

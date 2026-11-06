@@ -9,7 +9,7 @@ docs/LEGACY_ROOM_NPC_COMPENDIUM.md）；職業、等級、強度、門派、行�
 
 inherit "/custom/legacy_npc/legacy_npc";
 
-#define FACTION "taoist.wind"
+#define FACTION "mao-shan.wind"
 
 void create()
 {

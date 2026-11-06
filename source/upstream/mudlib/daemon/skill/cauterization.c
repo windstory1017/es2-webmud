@@ -19,7 +19,7 @@ void create()
 
 int valid_learn(object me)
 {
-    if( me->query("custom_faction") != "alchemist.wuto" )
+    if( me->query("custom_faction") != "alchemist.wu" )
         return notify_fail(gender_self(me) + "不是武陀灸堂弟子，學不來針灸之術。\n");
     return 1;
 }
