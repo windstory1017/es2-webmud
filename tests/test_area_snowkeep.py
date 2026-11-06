@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 import re
 
 # 雪吟莊（d/snowkeep）；依使用者提供的雪吟莊設計表（2026-11-06），見 docs/AREA_SNOWKEEP.md。
@@ -89,6 +90,17 @@ def test_yu_tieshan_combat():
     assert 'celestial palm' not in s
     assert '#define PILL_MAX        4' in s and '#define PILL_RATIO      10' in s
     assert 'exert_function("roar");' in s and 'message_vision(HIG "\\n$N從懷中摸出把丹藥一口吞了下去' in s
+
+
+def test_web_map():
+    g = json.loads(read(ROOT / 'web/world_static_map.json'))
+    nodes = [n for n in g['nodes'] if n['id'].startswith('/d/snowkeep/')]
+    assert len(nodes) == 16 and {n['area'] for n in nodes} == {'雪吟莊'}
+    assert len({(n['x'], n['y']) for n in nodes}) == 16
+    assert {n['id'].split('/')[-1] for n in nodes if n.get('layer') == '地下'} == {'dungeon_w', 'dungeon', 'dungeon_e'}
+    assert any(e['from'] == '/d/snow/ebridge' and e['to'] == '/d/snowkeep/entrance' for e in g['edges'])
+    assert any(e['from'] == '/d/snowkeep/entrance' and e['to'] == '/d/snow/ebridge' for e in g['edges'])
+    assert "'/d/snowkeep/dungeon_w': ('/d/snowkeep/pavilion', 0, -1, -1)," in read(ROOT / 'tools/build_codex.py')
 
 
 def test_guard_no_longer_blocks():

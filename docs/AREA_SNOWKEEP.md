@@ -4,6 +4,7 @@
 雪吟莊的武功見 `docs/martial_arts/雪吟莊_武功.md`。
 
 網頁地圖區域（`map/area`）：雪吟莊。三間地牢的圖層（`map/layer`）為「地下」。
+網頁地圖 `web/world_static_map.json` 依設計表格位加入 16 間房（2026-11-06）；圖鑑的地牢位置在 `tools/build_codex.py` 的 `MAP_POS` 手動指定在涼亭下方一層。
 
 ## 地圖
 
