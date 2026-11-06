@@ -62,6 +62,9 @@ int do_drop(object me, object obj)
 {
     mixed no_drop;
 
+    // 雨師妾的小蛇：丟下去會自己爬回來。
+    if( function_exists("crawl_back", obj) ) return obj->crawl_back(me);
+
     if( no_drop = obj->query("no_drop") )
         return notify_fail( stringp(no_drop) ? no_drop : "這樣東西不能隨意丟棄。\n");
 
