@@ -19,7 +19,7 @@ void create()
         set("wear_as", "head_eq");
         set("apply_armor/head_eq", ([
             "spi": 1,
-            "defense": 3,
+            "armor": 3,
         ]));
     }
     setup();
