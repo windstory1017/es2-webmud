@@ -29,6 +29,7 @@ void create()
         "一個面皮白淨的高瘦漢子﹐左頰上一道長長的刀疤﹐你突然想起這個\n"
         "漢子就是這一帶著名的飛賊「無常鬼」吳長貴。\n");
     set("custom_faction", "thief.longye");   // 瑯夷派（docs/martial_arts/門派武功對照表.md）
+    set_skill("stealing", 45);   // 傳授偷竊用；門派自動技能沒有偷竊（2026-11-06）
     set_power("B");
     setup();
     carry_object("/obj/area/obj/dagger")->wield();   // 匕首
@@ -57,6 +58,12 @@ private int talk_gap() { return (1 + random(2)) * 2; }
 private int still_here(object who)
 {
     return objectp(who) && environment(who) == environment();
+}
+
+void start_hmm(object who)
+{
+    command("hmm");
+    call_out("ask_token", talk_gap(), who);
 }
 
 void ask_token(object who)
@@ -92,8 +99,7 @@ int accept_object(object who, object ob)
     if( !ob->query("thief_token") ) return 0;
     if( query_temp(ASKING) ) return 0;   // 別人正在交古錢：直接不收（使用者定案，2026-11-04）
     set_temp(ASKING, 1);   // 問話之前也算忙著，避免兩人同時交古錢
-    command("hmm");
-    call_out("ask_token", talk_gap(), who);
+    call_out("start_hmm", 1, who);   // 等「你拿出古錢交給吳長貴」那行先出現
     call_out("drop_token", 1, ob);   // give 指令會直接銷毀有價物品；萬一還在就收走
     return 1;
 }
@@ -172,6 +178,7 @@ int init_apprentice(object me)
 
 // ------------------------------------------------------------------
 // 傳授：瑯夷派弟子才教；每門只補足到剛好可以升到 1 級的經驗。
+// 背刺、潛行、偷竊、匕首、閃躲、招架、瑯夷派內功、內功（人物等級 5 起）；殺手本能不教。
 // ------------------------------------------------------------------
 
 int acquire_skill(object me, string skill)
@@ -179,6 +186,13 @@ int acquire_skill(object me, string skill)
     if( me->query("custom_faction") != FACTION ) return 0;
 
     switch( skill ) {
+    case "backstab":        // 使用者定案，2026-11-06（殺手本能不教）
+    case "sneak":
+    case "stealing":
+    case "dagger":
+    case "dodge":
+    case "parry":
+        break;
     case "longyeforce":
     case "force":
         if( me->query_level() < 5 )
