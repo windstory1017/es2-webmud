@@ -28,10 +28,10 @@ def test_celestial_force():
     assert 'me->advance_stat("sen", random(3));' in s
     # heal：扣 sk/20 神，回 sk/2+根骨 的氣與格子
     assert 'n = sk / 2 + me->query_attr("con");' in s and 'me->heal_stat("kee", n);' in s
-    # roar：只打交手中的對手，暈 2、傷害 sk/5+根骨、自回 sk/2、自身停頓 2
+    # roar：只打交手中的對手，暈 2、傷害 sk/5+根骨、自回 sk/2、自身停頓 1
     assert 'foreach( ob in me->query_enemy() )' in s and 'ob->start_busy(2);' in s
     assert 'dmg = sk / 5 + me->query_attr("con");' in s and 'me->supplement_stat("kee", sk / 2);' in s
-    assert 'me->start_busy(2);' in s
+    assert 'me->start_busy(1);' in s and 'me->start_busy(2);' not in s
     # ghost：警覺 sk/2、攻勢 sk/4、陰陽眼、sk/5 回合
     assert 'aware = sk / 2;' in s and 'intimidate = sk / 4;' in s and 'duration = sk / 5;' in s
     assert 'me->add_temp("apply/vision_of_ghost", 1);' in s
@@ -70,7 +70,7 @@ def test_celestial_palm():
 def test_npc_table_and_master():
     t = read('daemon/misc/npc_skill.c')
     assert '"skill": "deep blade", "map": "blade", "level": 1' in t
-    assert '"skill": "celestial palm", "map": "unarmed", "level": 10, "req": ([ "celestial force": 180 ])' in t
+    assert '"skill": "celestial palm"' not in t   # 雪吟莊弟子不會天邪神掌（2026-11-06）
     y = read('custom/legacy_npc/yu_tieshan.c')
     assert 'int accept_apprentice(object me)' in y and 'me->set("custom_faction", FACTION);' in y
     assert 'daemon->valid_learn(me)' in y

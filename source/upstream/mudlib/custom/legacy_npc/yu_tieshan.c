@@ -63,8 +63,9 @@ private void take_pill()
         set_stat_current(what, query_stat_maximum(what));
     }
     add_temp("yu_tieshan/pill", 1);
-    message_vision(HIG "$N從懷中摸出一粒朱紅色的丹丸吞了下去﹐臉上紅光一閃﹐傷勢竟在轉眼間盡數平復！\n" NOR,
-        this_object());
+    // 整句一行、前後各空一行（使用者指示，2026-11-06）。
+    message_vision(HIG "\n$N從懷中摸出把丹藥一口吞了下去﹐傷勢在轉眼間盡數平復！\n\n" NOR,
+        this_object(), 0, 1);
 }
 
 static void heart_beat()
@@ -137,7 +138,6 @@ int acquire_skill(object me, string skill)
     case "deep blade":
     case "six-chaos-sword":
     case "celestial force":
-    case "celestial palm":
         daemon = SKILL_D(skill);
         if( objectp(daemon) && !daemon->valid_learn(me) ) return 0;
         break;

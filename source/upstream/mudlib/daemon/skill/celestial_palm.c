@@ -46,11 +46,9 @@ private void create()
     setup();
 }
 
-/* 學習條件：雪吟莊弟子、天邪神功 180。 */
+/* 學習條件：天邪神功 180。雪吟莊弟子不會天邪神掌（使用者指示，2026-11-06）；之後由解謎習得（尚未製作）。 */
 int valid_learn(object me)
 {
-    if( !is_faction(me, FACTION) )
-        return notify_fail("你不是雪吟莊弟子﹐無法修練天邪神掌。\n");
     if( me->query_skill("celestial force", 1) < 180 )
         return notify_fail("你的天邪神功火候未到﹐還使不出天邪虎的掌勢。\n");
     return 1;

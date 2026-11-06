@@ -80,8 +80,9 @@ void after_strike(object me, object opponent, object weapon, mapping m, int dama
     if( a > b ) { n = a; a = b; b = n; }
     n = damage * (100 + a * b) / 100;
 
-    message_vision("$N刀招忽變﹐使出深空刀法絕招「" HIW + rhyme(a, b) + NOR "」﹐"
-        + "忽然歪歪斜斜地砍出一刀﹐竟逼得$n避無可避！\n", me, opponent);
+    // 整句青色、一行不自動斷行；口訣維持亮白（使用者指示，2026-11-06）。
+    message_vision(CYN "$N刀招忽變﹐使出深空刀法絕招「" HIW + rhyme(a, b) + NOR CYN "」﹐"
+        + "忽然歪歪斜斜地砍出一刀﹐竟逼得$n避無可避！\n" NOR, me, opponent, 1);
     opponent->receive_damage(n, me, me);
     if( objectp(opponent) ) show_status(opponent, kee_ratio(opponent));
 }
