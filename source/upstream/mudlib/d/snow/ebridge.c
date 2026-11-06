@@ -22,7 +22,7 @@ LONG
     set ("outdoors", "snow");
     set ("exits", ([
 	    "west" : __DIR__"npath3",
-//	"east" : "/d/snowkeep/entrance",
+        "east" : "/d/snowkeep/entrance",
     ]));
 
     setup();

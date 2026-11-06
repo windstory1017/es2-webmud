@@ -2,7 +2,7 @@
 /*
 LEGACY NPC. 名稱、英文 ID、敘述、年紀、性別、種族、裝備取自舊站畫面紀錄（DOCUMENTED，
 docs/LEGACY_ROOM_NPC_COMPENDIUM.md）；職業、等級、強度、門派、行為依使用者提供的
-「舊有 NPC 待製作清單」（2026-10-15）。尚未放入地圖。
+「舊有 NPC 待製作清單」（2026-10-15）。放在雪吟莊大廳 d/snowkeep/inner_hall.c（2026-11-06）。
 舊站區域：雪吟莊；房間：雪吟莊大廳。
 雪吟莊師父：收徒、傳授雪吟莊武功（使用者定案，2026-11-05；docs/martial_arts/雪吟莊_武功.md 第六節）。
 */
@@ -35,6 +35,7 @@ void create()
     carry_object("/custom/armor/cloth/golden_robe")->wear();   // 金絲長袍
     carry_object("/custom/armor/finger/ring_of_mighty_dragon")->wear();   // 巨龍指環
     carry_object("/custom/weapon/blade/golden_blade")->wield();   // 金絲八卦刀
+    carry_object("/d/snowkeep/obj/brass_key");   // 黃銅鑰匙：開地牢深處的牢門（docs/AREA_SNOWKEEP.md）
 }
 
 // ------------------------------------------------------------------

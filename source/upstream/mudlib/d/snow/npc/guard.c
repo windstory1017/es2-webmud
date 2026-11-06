@@ -7,6 +7,7 @@ inherit F_VILLAGER;
 
 void create()
 {
+    seteuid(getuid());
     set_name("青衣漢子", ({"guard"}));
     set_race("human");
     set_class("fighter");
@@ -24,29 +25,8 @@ void create()
 }
 
 
-void init()
-{
-    ::init();
-    add_action("do_go", "go");
-}
-
-// This overrides standard "go" command to emulate the effect of guarding
-// an entry.
-int do_go(string arg)
-{
-    // Only checks eastward movement, returning 0 to let standard command
-    // process it.
-    if( (arg!="east")
-    || this_player()->query_class()=="fighter"
-    || !this_player()->visible(this_object())
-    )
-        return 0;
-
-    do_chat((: command, "say 對不起﹐莊主有令﹐只有持英雄帖的貴客才能入內。":));
-    write( name() + "攔住了你的去路。\n");
-    return 1;
-}
-
+// 不再攔人（使用者指示，2026-11-06）：雪吟莊大門、後花園也用這個檔案。
+// 交出英雄帖仍會領人過橋進入雪吟莊（雪亭鎮白衣女子的任務線）。
 
 void greet_visitor(object ob, object invitation)
 {
