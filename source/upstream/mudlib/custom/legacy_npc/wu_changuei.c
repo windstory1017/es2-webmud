@@ -60,6 +60,12 @@ private int still_here(object who)
     return objectp(who) && environment(who) == environment();
 }
 
+void start_hmm(object who)
+{
+    command("hmm");
+    call_out("ask_token", talk_gap(), who);
+}
+
 void ask_token(object who)
 {
     if( !still_here(who) ) { delete_temp(ASKING); return; }
@@ -93,8 +99,7 @@ int accept_object(object who, object ob)
     if( !ob->query("thief_token") ) return 0;
     if( query_temp(ASKING) ) return 0;   // 別人正在交古錢：直接不收（使用者定案，2026-11-04）
     set_temp(ASKING, 1);   // 問話之前也算忙著，避免兩人同時交古錢
-    command("hmm");
-    call_out("ask_token", talk_gap(), who);
+    call_out("start_hmm", 1, who);   // 等「你拿出古錢交給吳長貴」那行先出現
     call_out("drop_token", 1, ob);   // give 指令會直接銷毀有價物品；萬一還在就收走
     return 1;
 }

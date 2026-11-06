@@ -5,6 +5,9 @@
 
 inherit F_VILLAGER;
 
+// 拿過古錢的角色（物件本身；重新上線就是新物件，老太婆重生清單也會清空）。
+static object *coin_given = ({});
+
 void create()
 {
 	set_name("瞎眼老太婆", ({ "blind gammer", "gammer", "__ID_GAMMER__" }) );
@@ -84,7 +87,20 @@ void relay_say(object ob, string arg)
 		if( arg=="祖奶奶" && ob->query_temp("thief_qualified") ) {
 			command("giggle");
 			command("pat " + ob->query("id"));
+			ob->delete_temp("thief_qualified");
+			// 已經是盜賊的人重解梳子任務：再給一枚古錢（瑯夷派拜師與老乞婆的信物）。
+			// 同一個角色、同一個老太婆只給一次；角色重新上線或老太婆重生後可再拿（使用者定案，2026-11-06）。
+			if( (string)ob->query_class() == "thief" ) {
+				if( member_array(ob, coin_given) != -1 ) return;
+				coin_given += ({ ob });
+				do_chat(({
+					"瞎眼老太婆說道：乖孩子，這個再給你。",
+					(: give_coin, ob :),
+				}));
+				return;
+			}
 			if( (string)ob->query_class() != "commoner" ) return;
+			coin_given += ({ ob });
 			ob->set_class("thief");
 			tell_object(ob, CYN + "你正式成為一名盜賊了。\n" NOR);
 			ob->improve_skill("sneak", 20);
@@ -170,7 +186,13 @@ private void ask_join(object player)
 {
 	if( !player || environment(player)!=environment() ) return;
 
-	if( player->query_class() != "commoner" )
+	coin_given -= ({ 0 });
+	if( player->query_class() == "thief" && member_array(player, coin_given) == -1 ) {
+		command("whisper " + player->query("id") +
+			" 好傢伙﹐又是你這小賊﹖手腳倒是越來越俐落了。再叫聲「祖奶奶」來聽聽 ...");
+		player->set_temp("thief_qualified", 1);
+	}
+	else if( player->query_class() != "commoner" )
 		command("say 唉 ... 人老了﹐連隨身的梳子都常常丟掉。\n");
 	else {
 		command("whisper " + player->query("id") + 
