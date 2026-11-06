@@ -14,6 +14,38 @@ private void create() {
   seteuid (getuid());
 }
 
+/* 角色年齡跟著遊戲曆走（使用者指示，2026-11-06）：
+ *   遊戲時間是現實的 60 倍（見 NATURE_D 的 TIME_TICK），遊戲一年 = 現實 365*24*60 秒（約六天）。
+ *   年齡 = 種族最低年紀 + 自創角（birthday）起經過的遊戲年數，下線期間也照算。
+ *   同 ID 魂飛魄散後新創的角色是新的身體，birthday 重設，所以又從種族最低年紀起算。
+ *   種族最低年紀取種族的 "min_age"，沒設就是十四歲（目前各種族都是十四歲起）。 */
+#define GAME_YEAR       (365 * 24 * 60)
+#define DEFAULT_MIN_AGE 14
+
+int query_min_age (object ob) {
+    int age;
+    string race = ob->query_race();
+
+    if (stringp(race) && (age = (int)RACE_D(race)->query("min_age")) > 0)
+        return age;
+    return DEFAULT_MIN_AGE;
+}
+
+/** 依遊戲曆重算玩家年齡；NPC 的年齡由各自檔案設定，不動。 */
+void update_age (object ob) {
+    int birth, age;
+
+    if (!objectp(ob) || !userp(ob))
+        return;
+    if ((birth = (int)ob->query("birthday")) <= 0)
+        ob->set("birthday", birth = time());
+    age = query_min_age(ob);
+    if (birth < time())
+        age += (time() - birth) / GAME_YEAR;
+    if ((int)ob->query("age") != age)
+        ob->set("age", age);
+}
+
 /** Setup character's basic attributes, statistics, and hit-points according to
  *  character's race, class, and life form. This function is called by character object during setup.
  */
@@ -97,6 +129,8 @@ void setup_char (object ob) {
 
     ob->add_path ("/daemon/race/" + ob->query_race() + "/");
     ob->add_path ("/daemon/class/" + ob->query_class() + "/");
+
+    update_age (ob);
 }
 
 varargs object make_corpse (object victim, object killer) {
