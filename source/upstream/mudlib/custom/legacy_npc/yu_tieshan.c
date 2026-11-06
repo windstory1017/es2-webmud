@@ -5,11 +5,17 @@ docs/LEGACY_ROOM_NPC_COMPENDIUM.md）；職業、等級、強度、門派、行�
 「舊有 NPC 待製作清單」（2026-10-15）。放在雪吟莊大廳 d/snowkeep/inner_hall.c（2026-11-06）。
 舊站區域：雪吟莊；房間：雪吟莊大廳。
 雪吟莊師父：收徒、傳授雪吟莊武功（使用者定案，2026-11-05；docs/martial_arts/雪吟莊_武功.md 第六節）。
+戰鬥行為（使用者定案，2026-11-06）：內功用天邪神功，戰鬥中會發出天邪虎嘯；
+氣或 HP 低於上限的一成時吞丹補滿（每次重生最多四顆）。
 */
 #include <ansi.h>
 inherit "/custom/legacy_npc/legacy_npc";
 
 #define FACTION "fighter.snow"
+
+#define PILL_MAX        4       // 丹藥的數量（每次重生重新計算）
+#define PILL_RATIO      10      // 氣或 HP 低於上限的百分之幾時吞丹
+#define ROAR_CHANCE     20      // 戰鬥中每次心跳發出天邪虎嘯的機率（%）
 
 void create()
 {
@@ -27,6 +33,7 @@ void create()
         "門於蘭焱門下學藝，不過由於於蘭兼毅是天邪國公世子，因此於蘭焱收於蘭兼\n"
         "毅為師弟，而魚鐵山反而要稱這位小他三歲的老友師叔了。\n");
     set("custom_faction", FACTION);   // 雪吟莊（docs/martial_arts/門派武功對照表.md）
+    map_skill("force", "celestial force");   // 內功用天邪神功（等級由 NPC 自動技能給）
     set_power("S");
     setup();
     carry_object("/custom/armor/head/brass_hat")->wear();   // 黃呢鐵帽
@@ -36,6 +43,40 @@ void create()
     carry_object("/custom/armor/finger/ring_of_mighty_dragon")->wear();   // 巨龍指環
     carry_object("/custom/weapon/blade/golden_blade")->wield();   // 金絲八卦刀
     carry_object("/d/snowkeep/obj/brass_key");   // 黃銅鑰匙：開地牢深處的牢門（docs/AREA_SNOWKEEP.md）
+}
+
+// ------------------------------------------------------------------
+// 戰鬥行為：天邪虎嘯；氣或 HP 低於一成時吞丹補滿，最多四顆。
+// ------------------------------------------------------------------
+
+private int low_stat(string what)
+{
+    int max = query_stat_maximum(what);
+    return max > 0 && query_stat(what) * 100 < max * PILL_RATIO;
+}
+
+private void take_pill()
+{
+    foreach( string what in ({ "kee", "HP" }) ) {
+        if( query_stat_maximum(what) <= 0 ) continue;
+        set_stat_effective(what, query_stat_maximum(what));
+        set_stat_current(what, query_stat_maximum(what));
+    }
+    add_temp("yu_tieshan/pill", 1);
+    message_vision(HIG "$N從懷中摸出一粒朱紅色的丹丸吞了下去﹐臉上紅光一閃﹐傷勢竟在轉眼間盡數平復！\n" NOR,
+        this_object());
+}
+
+static void heart_beat()
+{
+    ::heart_beat();
+    if( !this_object() || !living(this_object()) || !is_fighting() ) return;
+
+    if( query_temp("yu_tieshan/pill") < PILL_MAX && (low_stat("kee") || low_stat("HP")) )
+        take_pill();
+
+    if( !is_busy() && random(100) < ROAR_CHANCE )
+        exert_function("roar");
 }
 
 // ------------------------------------------------------------------
