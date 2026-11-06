@@ -2688,6 +2688,121 @@
       "area": "亂葬崗",
       "x": 6,
       "y": 2
+    },
+    {
+      "id": "/d/snowkeep/entrance",
+      "label": "雪吟莊大門",
+      "area": "雪吟莊",
+      "x": 0,
+      "y": 3
+    },
+    {
+      "id": "/d/snowkeep/yard_w",
+      "label": "前院",
+      "area": "雪吟莊",
+      "x": 1,
+      "y": 3
+    },
+    {
+      "id": "/d/snowkeep/yard_e",
+      "label": "前院",
+      "area": "雪吟莊",
+      "x": 2,
+      "y": 3
+    },
+    {
+      "id": "/d/snowkeep/hall",
+      "label": "雪吟莊大廳",
+      "area": "雪吟莊",
+      "x": 3,
+      "y": 3
+    },
+    {
+      "id": "/d/snowkeep/inner_hall",
+      "label": "雪吟莊大廳",
+      "area": "雪吟莊",
+      "x": 4,
+      "y": 3
+    },
+    {
+      "id": "/d/snowkeep/path",
+      "label": "小徑",
+      "area": "雪吟莊",
+      "x": 1,
+      "y": 2
+    },
+    {
+      "id": "/d/snowkeep/pavilion",
+      "label": "涼亭",
+      "area": "雪吟莊",
+      "x": 1,
+      "y": 1
+    },
+    {
+      "id": "/d/snowkeep/garden_s",
+      "label": "後花園",
+      "area": "雪吟莊",
+      "x": 2,
+      "y": 2
+    },
+    {
+      "id": "/d/snowkeep/garden_n",
+      "label": "後花園",
+      "area": "雪吟莊",
+      "x": 2,
+      "y": 1
+    },
+    {
+      "id": "/d/snowkeep/side_n",
+      "label": "側廳",
+      "area": "雪吟莊",
+      "x": 3,
+      "y": 2
+    },
+    {
+      "id": "/d/snowkeep/east_room",
+      "label": "東廂房",
+      "area": "雪吟莊",
+      "x": 4,
+      "y": 2
+    },
+    {
+      "id": "/d/snowkeep/side_s",
+      "label": "側廳",
+      "area": "雪吟莊",
+      "x": 3,
+      "y": 4
+    },
+    {
+      "id": "/d/snowkeep/court",
+      "label": "天井",
+      "area": "雪吟莊",
+      "x": 4,
+      "y": 4
+    },
+    {
+      "id": "/d/snowkeep/dungeon_w",
+      "label": "地牢",
+      "area": "雪吟莊",
+      "x": 1,
+      "y": 0,
+      "layer": "地下"
+    },
+    {
+      "id": "/d/snowkeep/dungeon",
+      "label": "地牢",
+      "area": "雪吟莊",
+      "x": 2,
+      "y": 0,
+      "layer": "地下"
+    },
+    {
+      "id": "/d/snowkeep/dungeon_e",
+      "label": "地牢深處",
+      "area": "雪吟莊",
+      "x": 3,
+      "y": 0,
+      "layer": "地下"
     }
   ],
   "edges": [
@@ -7429,6 +7544,192 @@
       "from": "/d/graveyard/grave3",
       "to": "/d/graveyard/grave2",
       "direction": "southeast",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/entrance",
+      "to": "/d/snow/ebridge",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/entrance",
+      "to": "/d/snowkeep/yard_w",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/yard_w",
+      "to": "/d/snowkeep/entrance",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/yard_w",
+      "to": "/d/snowkeep/yard_e",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/yard_w",
+      "to": "/d/snowkeep/path",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/yard_e",
+      "to": "/d/snowkeep/yard_w",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/yard_e",
+      "to": "/d/snowkeep/hall",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/yard_e",
+      "to": "/d/snowkeep/garden_s",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/hall",
+      "to": "/d/snowkeep/yard_e",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/hall",
+      "to": "/d/snowkeep/inner_hall",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/hall",
+      "to": "/d/snowkeep/side_n",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/hall",
+      "to": "/d/snowkeep/side_s",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/inner_hall",
+      "to": "/d/snowkeep/hall",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/path",
+      "to": "/d/snowkeep/yard_w",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/path",
+      "to": "/d/snowkeep/pavilion",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/pavilion",
+      "to": "/d/snowkeep/path",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/garden_s",
+      "to": "/d/snowkeep/garden_n",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/garden_s",
+      "to": "/d/snowkeep/yard_e",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/garden_n",
+      "to": "/d/snowkeep/garden_s",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/side_n",
+      "to": "/d/snowkeep/east_room",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/side_n",
+      "to": "/d/snowkeep/hall",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/east_room",
+      "to": "/d/snowkeep/side_n",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/side_s",
+      "to": "/d/snowkeep/hall",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/side_s",
+      "to": "/d/snowkeep/court",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/court",
+      "to": "/d/snowkeep/side_s",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/dungeon_w",
+      "to": "/d/snowkeep/pavilion",
+      "direction": "up",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/dungeon_w",
+      "to": "/d/snowkeep/dungeon",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/dungeon",
+      "to": "/d/snowkeep/dungeon_w",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/dungeon",
+      "to": "/d/snowkeep/dungeon_e",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/snowkeep/dungeon_e",
+      "to": "/d/snowkeep/dungeon",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/snow/ebridge",
+      "to": "/d/snowkeep/entrance",
+      "direction": "east",
       "resolved": true
     }
   ],
