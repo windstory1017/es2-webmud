@@ -101,9 +101,9 @@ int cmd_herblist(object me, string arg)
         st = QUALIFY->status(me, pill);
         if (st < 0) continue;
         if (st == 0)
-            rows += ({ cjk_pad(pill->name() + "(" + pill->query("id") + ")", 27)
+            rows += ({ cjk_pad(pill->name() + "(" + pill->query("id") + ")", 26)
                        + cjk_pad(money(CATALOG->price(key, "recipe") * CATALOG->recipe_count(key)), 20)
-                       + cjk_pad(money(CATALOG->price(key, "buy")), 13)
+                       + cjk_pad(money(CATALOG->price(key, "buy")), 14)
                        + money(CATALOG->price(key, "sell")) });
         else
             groups[st] += ({ pill->name() });
@@ -112,7 +112,8 @@ int cmd_herblist(object me, string arg)
     if (!sizeof(rows)) return say_to(me, "你目前還無法購買任何丹藥。");
 
     // 四欄：丹藥名稱(ID)、一套配方（一次購買總價）、成丹販售價、成丹收購價（使用者指示 #19，2026-10-30）。
-    msg = cjk_pad("丹藥名稱", 27) + cjk_pad("一套配方", 20) + cjk_pad("成丹販售價", 13) + "成丹收購價\n";
+    // 欄寬 26／20／14（2026-11-06 由 27／20／13 調整：販售價與收購價之間多留一格），全行不超過 80 格。
+    msg = cjk_pad("丹藥名稱", 26) + cjk_pad("一套配方", 20) + cjk_pad("成丹販售價", 14) + "成丹收購價\n";
     msg += "--------------------------------------------------------------------------------\n";
     msg += implode(rows, "\n") + "\n";
     if (sizeof(groups[1])) msg += "※ " + implode(groups[1], "、") + "：讀書識字不足，無法購買。\n";
