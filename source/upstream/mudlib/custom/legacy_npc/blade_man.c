@@ -23,7 +23,7 @@ void create()
         "一個正獨自在喝著酒的灰衣少年，看他帶點憂慮的神情，不知道他碰上了什麼困\n"
         "難，眼光一轉看到他手中把玩的奇特單刀，這種紅色透明的武器不知是用什麼所\n"
         "鑄造成的，如果說這把刀是兵器，不如把它當成藝品還比較恰當。\n");
-    set("custom_faction", "fighter.chin");   // 哭笑門（docs/martial_arts/門派武功對照表.md）
+    set("custom_faction", "fighter.huge");   // 哭笑門（docs/martial_arts/門派武功對照表.md）
     set_power("A");
     setup();
     carry_object("/custom/weapon/blade/blood_blade")->wield();   // 靈刀祭血

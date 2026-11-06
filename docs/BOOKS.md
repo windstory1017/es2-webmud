@@ -75,5 +75,5 @@
 ## 針灸之術與經驗（使用者定案，2026-10-29）
 
 - 【脈穴內經】【五脈內經】【藥石脈錄】【八脈注】都要針灸之術 1 級以上才能閱讀；針灸之術是武陀灸堂弟子的基本技能，所以這四本實際上是武陀灸堂弟子的書。【脈經注】沒有這個限制。
-- 經脈穴道之學的精氣神加成：武陀灸堂弟子（`custom_faction` 為 `alchemist.wuto`）每次 +10，其他人 +5。
-- 對應的說明檔：`help books`、`help kee_anatomy`、`help alchemist.wuto`。
+- 經脈穴道之學的精氣神加成：武陀灸堂弟子（`custom_faction` 為 `alchemist.wu`）每次 +10，其他人 +5。
+- 對應的說明檔：`help books`、`help kee_anatomy`、`help alchemist.wu`。

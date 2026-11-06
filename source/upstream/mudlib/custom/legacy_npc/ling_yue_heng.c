@@ -23,7 +23,7 @@ void create()
         "畫中讚歎不已的蘇州美人。別見她柔若無骨的姿態，她也是自幼\n"
         "跟從其父凌承軒習武的，一身武藝毫不遜色。從銅鏡看她，眼神\n"
         "若有所思的停佇在手中的那隻簪，大概是想念她的夫君蔚楓吧。\n");
-    set("custom_faction", "fighter.ancient");   // 古劍派（docs/martial_arts/門派武功對照表.md）
+    set("custom_faction", "fighter.au-chan");   // 古劍派（docs/martial_arts/門派武功對照表.md）
     set_power("A");
     setup();
     carry_object("/custom/weapon/dagger/wolf_dagger")->wield();   // 狼匕

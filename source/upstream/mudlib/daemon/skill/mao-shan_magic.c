@@ -23,7 +23,7 @@ private void create()
 int is_maoshan(object me)
 {
     return member_array(me->query("custom_faction"),
-        ({ "taoist.fog", "taoist.wind", "taoist.lingyun" })) >= 0;
+        ({ "mao-shan.fog", "mao-shan.wind", "mao-shan.cloud" })) >= 0;
 }
 
 int valid_learn(object me)

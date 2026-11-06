@@ -23,7 +23,7 @@ void create()
         "過。數年前，劉乙忘玄出關重掌哭笑門，青邪大會之後，江湖之中對其刀法\n"
         "頗多猜忌。也許是為了可以和更多武林名門建立關係，哭無望這次奉劉乙忘\n"
         "玄之命來到雪吟莊。\n");
-    set("custom_faction", "fighter.chin");   // 哭笑門（docs/martial_arts/門派武功對照表.md）
+    set("custom_faction", "fighter.huge");   // 哭笑門（docs/martial_arts/門派武功對照表.md）
     set_power("A");
     setup();
     carry_object("/custom/armor/waist/water_dragon_girdle")->wear();   // 蛟龍帶

@@ -40,7 +40,7 @@ private int say_to(object me, string text) { tell_object(me, replace_string(text
 private int is_alchemist(object me)
 {
     return objectp(me) && userp(me) && me->query_class() == "alchemist"
-        && me->query("custom_faction") != "alchemist.wuto";
+        && me->query("custom_faction") != "alchemist.wu";
 }
 
 private string money(int amount) { return BALANCE_CMD->money_string(amount); }

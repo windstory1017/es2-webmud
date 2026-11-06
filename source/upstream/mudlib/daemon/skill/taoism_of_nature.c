@@ -9,7 +9,7 @@ inherit SKILL;
 
 #define SCROLL  "/custom/item/scroll/nature"
 #define DOG     "/custom/taoism/npc/maoshan_dog"
-#define FACTION "taoist.wind"
+#define FACTION "mao-shan.wind"
 
 string type() { return "spell"; }
 int valid_enable(string usage) { return usage == "spells"; }
