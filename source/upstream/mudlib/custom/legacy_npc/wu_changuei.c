@@ -173,7 +173,7 @@ int init_apprentice(object me)
 
 // ------------------------------------------------------------------
 // 傳授：瑯夷派弟子才教；每門只補足到剛好可以升到 1 級的經驗。
-// 殺手本能、背刺、潛行、偷竊、匕首、閃躲、招架、瑯夷派內功、內功（人物等級 5 起）。
+// 背刺、潛行、偷竊、匕首、閃躲、招架、瑯夷派內功、內功（人物等級 5 起）；殺手本能不教。
 // ------------------------------------------------------------------
 
 int acquire_skill(object me, string skill)
@@ -181,8 +181,7 @@ int acquire_skill(object me, string skill)
     if( me->query("custom_faction") != FACTION ) return 0;
 
     switch( skill ) {
-    case "killerhood":      // 使用者定案，2026-11-06
-    case "backstab":
+    case "backstab":        // 使用者定案，2026-11-06（殺手本能不教）
     case "sneak":
     case "stealing":
     case "dagger":
