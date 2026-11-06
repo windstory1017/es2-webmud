@@ -29,6 +29,7 @@ void create()
         "一個面皮白淨的高瘦漢子﹐左頰上一道長長的刀疤﹐你突然想起這個\n"
         "漢子就是這一帶著名的飛賊「無常鬼」吳長貴。\n");
     set("custom_faction", "thief.longye");   // 瑯夷派（docs/martial_arts/門派武功對照表.md）
+    set_skill("stealing", 45);   // 傳授偷竊用；門派自動技能沒有偷竊（2026-11-06）
     set_power("B");
     setup();
     carry_object("/obj/area/obj/dagger")->wield();   // 匕首
@@ -172,6 +173,7 @@ int init_apprentice(object me)
 
 // ------------------------------------------------------------------
 // 傳授：瑯夷派弟子才教；每門只補足到剛好可以升到 1 級的經驗。
+// 殺手本能、背刺、潛行、偷竊、匕首、閃躲、招架、瑯夷派內功、內功（人物等級 5 起）。
 // ------------------------------------------------------------------
 
 int acquire_skill(object me, string skill)
@@ -179,6 +181,14 @@ int acquire_skill(object me, string skill)
     if( me->query("custom_faction") != FACTION ) return 0;
 
     switch( skill ) {
+    case "killerhood":      // 使用者定案，2026-11-06
+    case "backstab":
+    case "sneak":
+    case "stealing":
+    case "dagger":
+    case "dodge":
+    case "parry":
+        break;
     case "longyeforce":
     case "force":
         if( me->query_level() < 5 )
