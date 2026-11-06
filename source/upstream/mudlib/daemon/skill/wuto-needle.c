@@ -37,9 +37,9 @@ mapping NEEDLES = ([
                  "name": "敗骨二針", "color": HIW ]),
     "fail":   ([ "attr": "str", "stats": ({ "kee" }), "calc": "sum",
                  "name": "敗膂三針", "color": HIM ]),
-    "fling":  ([ "attr": "cps", "stats": ({ "gin", "sen" }), "calc": "sum",
+    "fling":  ([ "attr": "cps", "stats": ({ "gin", "sen" }), "calc": "avg",
                  "name": "敗韌四針", "color": HIY ]),
-    "fumble": ([ "attr": "dex", "stats": ({ "gin", "sen" }), "calc": "sum",
+    "fumble": ([ "attr": "dex", "stats": ({ "gin", "sen" }), "calc": "avg",
                  "name": "敗敏五針", "color": HIG ]),
 ]);
 
@@ -109,15 +109,14 @@ int do_wuto(object me, string key, object target)
     needle_blank(me);
     needle_line(me, target, HIT_MSG[key]);
 
-    // W-11：可先出手、必中。已經在交手（fight 切磋或 kill 拼命）就維持原本的狀態。
-    // 還沒開打時：NPC 強制進入切磋（fight），不會下殺手；玩家照 kill 的規定
-    // （使用者定案，2026-10-28）。
+    // W-11（使用者定案，2026-11-06）：必中。已經在交手就維持原本的狀態。
+    // 還沒交手時：對玩家等於下 kill；對 NPC 等於下 fight，NPC 則對施針者下殺手。
     if( !me->is_fighting(target) ) {
         if( userp(target) )
             KILL_CMD->do_kill(me, target);
         else {
             me->fight_ob(target);
-            target->fight_ob(me);
+            target->kill_ob(me);
         }
     }
 
@@ -134,8 +133,8 @@ int do_wuto(object me, string key, object target)
         set_needle_effect(target, "wuto_weaken_" + attr, key,
             ([ attr: -amount ]), sk / 5);
 
-    // W-07：目標停頓 2 回合的機率 50% + sk/8%。
-    if( random(100) < 50 + sk / 8 ) {
+    // W-07：目標停頓 2 回合的機率 sk/8%（使用者定案，2026-11-06）。
+    if( random(100) < sk / 8 ) {
         needle_line(me, target, "$n身子一僵，一時竟提不起勁來。");
         target->start_busy(2);
     }
