@@ -1,0 +1,11 @@
+◎ 六陰追魂劍法（six-chaos-sword）
+　技能種類：劍術、招架
+　學習條件：雪吟莊弟子，拜師後即可習得
+　任務起始：魚鐵山
+　安裝：enable sword with six-chaos-sword
+　　　　enable parry with six-chaos-sword
+　招式：厲鬼纏身、陰風拂面、孤魂索命、鬼影穿林、黃泉引路、六陰鎖魂
+　特殊能力：
+　　‧無
+　練成等級：1 級
+　能力提昇：無
