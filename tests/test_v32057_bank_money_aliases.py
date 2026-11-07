@@ -3,10 +3,14 @@ ROOT=Path(__file__).resolve().parents[1]
 
 def read(rel): return (ROOT/rel).read_text(encoding="utf-8")
 
-def test_bank_accepts_chinese_and_english_currency_names():
+def test_bank_accepts_money_ids_only():
+    # 2026-11-07 使用者指示：錢莊只認錢幣 id，不接受中文名稱（docs/CURRENCY.md）。
     s=read("source/upstream/mudlib/std/room/bank.c")
-    for token in ['"coin"','"文錢"','"銅錢"','"silver"','"碎銀"','"gold"','"黃金"']:
-        assert token in s
+    block=s[s.index('string normalize_money_id'):s.index('object find_player_money')]
+    for token in ['"coin"','"silver"','"gold"','"sycee"','"nugget"']:
+        assert token in block
+    for token in ['"文錢"','"銅錢"','"碎銀"','"黃金"','"金元寶"']:
+        assert token not in block
     assert 'money = normalize_money_id(money);' in s
     assert 'from = normalize_money_id(from);' in s
     assert 'to = normalize_money_id(to);' in s

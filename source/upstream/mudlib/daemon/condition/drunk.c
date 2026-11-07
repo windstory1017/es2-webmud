@@ -39,7 +39,9 @@ void condition_update(object me, string cnd, mixed cnd_data)
         case 2:
             if( (ob = present("coin_money", me))
             ||	(ob = present("silver_money", me))
-            ||	(ob = present("gold_money", me)) ) {
+            ||	(ob = present("gold_money", me))
+            ||	(ob = present("sycee_money", me))      // 金元寶也算（使用者指示，2026-11-07）
+            ||	(ob = present("nugget_money", me)) ) {
                 message_vision("$N醉得亂七八糟，將身上銀兩銅錢「嘩啦」一聲撒了滿地！\n", me);
                 ob->move(environment(me));
                 break;

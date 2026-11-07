@@ -2,6 +2,21 @@
 #include <room.h>
 inherit BANK;
 
+// 匾額照排好的樣子分行顯示（使用者指示，2026-11-07）。
+// 房間共用的 look 會把中文後面的換行吃掉重新斷行，匾額會擠成一團，
+// 所以下面的 do_look() 看匾額時直接原樣輸出。對齊用空白，不用 Tab。
+#define PLAQUE \
+"『      小      魚      吃      四      海\n" \
+"        金      銀      文      都      來      』\n" \
+"\n" \
+"存款﹕  deposit  <數量> <錢幣>, 查詢﹕  balance\n" \
+"提款﹕  withdraw <數量> <錢幣>\n" \
+"兌換﹕  convert <數量> <錢幣> to <另類錢幣>\n" \
+"錢幣﹕  coin（錢）  silver（碎銀）  gold（黃金）  sycee（金元寶）\n" \
+"        nugget（復刻紀念金元寶）\n" \
+"例如﹕  deposit 25 coin﹐withdraw 1 sycee﹐convert 100 gold to sycee\n" \
+"存款直接記在客官名下﹐不需開戶﹐也不必攜帶金契。\n"
+
 void create()
 {
 	set("short", "魚記小鋪");
@@ -14,13 +29,7 @@ void create()
 LONG
 	);
 	set("detail", ([ /* sizeof() == 2 */
-		"匾額" :
-			"『	小	魚	吃	四	海\n"
-			"	金	銀	文	都	來	』\n\n"
-			"存款﹕	deposit  <數量> <錢幣>,	查詢﹕	balance\n"
-			"提款﹕	withdraw <數量> <錢幣>,	兌換﹕	convert <數量> <錢幣> to <另類錢幣>\n"
-			"貨幣可用：文錢、碎銀、黃金，例如 deposit 25 文錢、withdraw 10 文錢。\n"
-			"存款直接記在客官名下﹐不需開戶﹐也不必攜帶金契。\n",
+		"匾額" : PLAQUE,
 		"櫃臺" : "一座漆黑紅杉所鋸雕而成, 散發出一種濃郁的杉木味, 看來價值不斐.\n",
 	]));
 	set("exits", ([ /* sizeof() == 1 */
@@ -31,6 +40,15 @@ LONG
 	]));
 
     setup();
-	replace_program(BANK);
+	// 本檔自訂了 do_look()，所以不能再用 replace_program(BANK)。
 	set("map/area", "雪亭鎮");
+}
+
+varargs int do_look(object me, string arg)
+{
+	if( arg == "匾額" ) {
+		write(PLAQUE);
+		return 1;
+	}
+	return ::do_look(me, arg);
 }
