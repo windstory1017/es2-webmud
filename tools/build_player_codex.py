@@ -51,11 +51,21 @@ USAGE_ZH = {'force': '內功', 'dodge': '閃躲', 'parry': '招架', 'unarmed': 
 TYPE_ZH = {'martial': '武學', 'magic': '法術', 'spell': '咒術', 'knowledge': '知識', 'skill': '技藝'}
 
 
+# 不是出口、也不是特殊指令，而是靠 NPC 才過得去的路線（例如付錢給船夫搭渡船）。兩邊互通。
+NPC_LINKS = [
+    ('/d/wutang/riverside', '/d/ziyan/ferry'),   # 羿水擺渡：五堂鎮河邊 ⇄ 紫煙鎮渡口（d/wutang/npc/ferryman.c 的 BANKS）
+]
+
+
 def reachable(rooms):
+    links = {}
+    for a, b in NPC_LINKS:
+        links.setdefault(a, []).append(b)
+        links.setdefault(b, []).append(a)
     seen, q = {START}, deque([START])
     while q:
         r = q.popleft()
-        targets = list(rooms[r]['exits'].values()) + [m['to'] for m in rooms[r]['special']]
+        targets = list(rooms[r]['exits'].values()) + [m['to'] for m in rooms[r]['special']] + links.get(r, [])
         for t in targets:
             if t in rooms and t not in seen:
                 seen.add(t)
@@ -290,6 +300,41 @@ def clean_desc(desc, name):
     return ('。'.join(out) + '。') if out else ''
 
 
+ENHANCE_D = MUD / 'adm' / 'daemons' / 'enhanced.c'
+# 詞綴效果的名稱（同 docs/WEAPON_AFFIX.md）
+AFFIX_ZH = {**ATTR_ZH, 'attack': '攻擊能力', 'defense': '防禦能力', 'damage': '傷害力', 'armor': '防禦力',
+            'spells': '咒術', 'magic': '法術', 'force': '內功', 'parry': '拆招', 'dodge': '縱躍',
+            'intimidate': '攻勢等級', 'wittiness': '守勢等級', 'awarness': '警覺性'}
+# 遊戲的顏色巨集 -> 圖鑑的 ANSI 色碼（高亮的多一個 1）
+ANSI_MACRO = {'BLK': '30', 'RED': '31', 'GRN': '32', 'YEL': '33', 'BLU': '34', 'MAG': '35', 'CYN': '36', 'WHT': '37',
+              'HIK': '1;30', 'HIR': '1;31', 'HIG': '1;32', 'HIY': '1;33', 'HIB': '1;34', 'HIM': '1;35', 'HIC': '1;36',
+              'HIW': '1;37'}
+
+
+def load_affixes():
+    """武器詞綴（adm/daemons/enhanced.c 的 AFFIX_PREFIX／AFFIX_SUFFIX／AFFIX_COLOR_CODE 與 roll_affix 的機率）。"""
+    if not ENHANCE_D.exists():
+        return None
+    code = bc.strip_comments(bc.read(ENHANCE_D))
+    def block(name):
+        m = re.search(r'\b%s\s*=\s*\(\[(.*?)\]\);' % name, code, re.S)
+        return m.group(1) if m else ''
+    def table(name):
+        out = []
+        for key, body in re.findall(r'"([^"]+)"\s*:\s*\(\[(.*?)\]\)', block(name), re.S):
+            out.append({'name': key, 'fx': [[AFFIX_ZH.get(k, k), v] for k, v in bc.mapping_pairs(body)]})
+        return out
+    colors = dict(re.findall(r'"([^"]+)"\s*:\s*([A-Z]{3})\b', block('AFFIX_COLOR_CODE')))
+    pre, suf = table('AFFIX_PREFIX'), table('AFFIX_SUFFIX')
+    for a in pre + suf:
+        a['color'] = ANSI_MACRO.get(colors.get(a['name']), '')
+    body = bc.func_body(code, 'roll_affix') or ''
+    p1 = re.search(r'r\s*>=\s*(\d+)\s*\)\s*affix\s*\[\s*"prefix"', body)
+    p2 = re.search(r'r\s*>=\s*(\d+)\s*\)\s*affix\s*\[\s*"suffix"', body)
+    a, b = (int(p1.group(1)) if p1 else 80), (int(p2.group(1)) if p2 else 95)
+    return {'prefix': pre, 'suffix': suf, 'chance': {'plain': a, 'prefix': b - a, 'both': 100 - b}}
+
+
 def main(out):
     data = bc.collect()
     rooms, npcs = data['rooms'], data['npcs']
@@ -443,6 +488,10 @@ def main(out):
         return o
 
     out_items = {k: [item_out(it) for it in data[k] if it['id'] in item_src] for k in ('weapons', 'armors', 'items')}
+    # 產生時會擲詞綴的武器（程式裡呼叫 roll_affix 的）
+    for it, o in zip([it for it in data['weapons'] if it['id'] in item_src], out_items['weapons']):
+        if 'roll_affix(' in bc.read(ROOT / it['file']):
+            o['affix'] = True
 
     out_skills = []
     for c in skill_codes:
@@ -510,7 +559,7 @@ def main(out):
     pdata = {
         'areas': areas, 'rooms': out_rooms, 'npcs': out_npcs, 'factions': out_factions, 'skills': out_skills,
         'weapons': out_items['weapons'], 'armors': out_items['armors'], 'items': out_items['items'],
-        'weaponKinds': bc.WEAPON_KIND, 'slots': bc.SLOT,
+        'weaponKinds': bc.WEAPON_KIND, 'slots': bc.SLOT, 'affixes': load_affixes(),
         'counts': {'rooms': len(out_rooms), 'areas': len(areas), 'npcs': len(out_npcs), 'factions': len(out_factions),
                    'skills': len(out_skills), 'weapons': len(out_items['weapons']), 'armors': len(out_items['armors']),
                    'items': len(out_items['items'])},
