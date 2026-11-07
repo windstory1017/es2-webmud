@@ -108,6 +108,14 @@ def test_web_map():
     assert "'/d/snowkeep/dungeon_w': ('/d/snowkeep/pavilion', 0, -1, -1)," in read(ROOT / 'tools/build_codex.py')
 
 
+def test_yu_lan_jian_yi_combat():
+    s = read(MUD / 'custom/legacy_npc/yu_lan_jian_yi.c')
+    assert 'map_skill("force", "celestial force");' in s and 'map_skill("unarmed", "celestial palm");' in s
+    assert '#define SURGE_MAX       2' in s and '#define SURGE_RATIO     10' in s and '#define SURGE_DAMAGE    50' in s
+    assert 'perform_action("celestial palm", "cele zarn");' in s and 'exert_function("roar");' in s
+    assert 'foreach( string what in ({ "gin", "kee", "sen", "HP" }) )' in s
+
+
 def test_guard_no_longer_blocks():
     s = read(MUD / 'd/snow/npc/guard.c')
     assert 'do_go' not in s and 'seteuid(getuid());' in s
