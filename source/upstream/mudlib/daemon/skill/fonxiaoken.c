@@ -43,7 +43,7 @@ private void create()
     art_entry_reward = 1;
     art_entry_msg    = "你練成了風嘯拳法。\n";
 
-    /* 每級武術造詣 等級 × 10；21 級起武學之道 (等級 − 20) × 15。 */
+    /* 每級武術造詣 等級 × 10；21 級起武學之道 (等級 - 20) × 15。 */
     ma_coef  = 10;
     mm_start = 21;
     mm_minus = 20;

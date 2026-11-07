@@ -17,7 +17,7 @@ mapping *moves = ({});  // 招式：name action lvl attack defense force bonus w
 
 /* 升級獎勵：升到第 lv 級時
  *   武術造詣 = lv × ma_coef
- *   武學之道 = (lv − mm_minus) × mm_coef，lv >= mm_start 才給 */
+ *   武學之道 = (lv - mm_minus) × mm_coef，lv >= mm_start 才給 */
 int ma_coef, mm_start, mm_minus, mm_coef;
 string mm_first_msg;    // 第一次獲得武學之道時的訊息（可留空）
 

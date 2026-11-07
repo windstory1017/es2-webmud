@@ -14,7 +14,7 @@ private void create()
 /* 不能 enable 在任何技能上。 */
 int valid_enable(string usage) { return 0; }
 
-/* 每級武術造詣 等級 × 10；31 級起武學之道 (等級 − 30) × 10（使用者定案，2026-10-20）。 */
+/* 每級武術造詣 等級 × 10；31 級起武學之道 (等級 - 30) × 10（使用者定案，2026-10-20）。 */
 void skill_advanced(object me, string skill)
 {
     int lv;

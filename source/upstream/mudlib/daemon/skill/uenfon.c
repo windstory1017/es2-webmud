@@ -38,7 +38,7 @@ private void create()
     art_entry_reward = 1;
     art_entry_msg    = "你終於練成了雲峰筆招﹐出手起落之間﹐隱隱已有雲山疊嶂的氣象。\n";
 
-    /* 每級武術造詣 等級 × 10；41 級起武學之道 (等級 − 40) × 10。 */
+    /* 每級武術造詣 等級 × 10；41 級起武學之道 (等級 - 40) × 10。 */
     ma_coef  = 10;
     mm_start = 41;
     mm_minus = 40;

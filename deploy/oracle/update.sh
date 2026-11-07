@@ -119,6 +119,14 @@ $nrconf{override_rc}{qr(^es2-mud\.service$)} = 0;
 $nrconf{override_rc}{qr(^es2-web\.service$)} = 0;
 NREOF
 fi
+# zMUD（4000）與 Telnet（4003）直連入口：舊主機沒開過就補開主機防火牆（已開過不重複）。
+# Oracle 網頁主控台的安全清單仍要手動開放，見 docs/DEPLOY_ORACLE.md。
+for P in 4000 4003; do
+    if command -v iptables >/dev/null && ! sudo iptables -C INPUT -p tcp --dport "$P" -m state --state NEW -j ACCEPT 2>/dev/null; then
+        sudo iptables -I INPUT 1 -p tcp --dport "$P" -m state --state NEW -j ACCEPT && NEWFW=1
+    fi
+done
+[ "${NEWFW:-0}" = 1 ] && command -v netfilter-persistent >/dev/null && sudo netfilter-persistent save
 echo "==== 4/4 清除編譯快取並重開 ===="
 rm -rf "$MUD/bin/"*
 sudo systemctl restart es2-mud

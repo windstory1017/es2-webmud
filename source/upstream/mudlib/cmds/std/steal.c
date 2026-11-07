@@ -8,7 +8,7 @@ inherit F_CLEAN_UP;
 void create() {seteuid(getuid());}
 
 /* 妙手空空點數（使用者定案，2026-10-19）：偷到東西
- * random((定力+機敏)/2)² + random(定力+機敏)；被發現時給 1/4。 */
+ * random((定力+機敏)/2)^2 + random(定力+機敏)；被發現時給 1/4。 */
 int steal_exp(object me)
 {
     int n, sum;

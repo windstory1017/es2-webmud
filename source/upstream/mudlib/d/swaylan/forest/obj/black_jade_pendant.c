@@ -1,5 +1,5 @@
 // /d/swaylan/forest/obj/black_jade_pendant.c — 玄玉墜（賊帥配戴，依水嵐縣設計表）：
-// 項鍊；守勢等級 −20、定力 −2、膽識 +2；名稱暗紅色。
+// 項鍊；守勢等級 -20、定力 -2、膽識 +2；名稱暗紅色。
 #include <ansi.h>
 #include <armor.h>
 
