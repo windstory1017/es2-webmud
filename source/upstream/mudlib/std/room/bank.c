@@ -10,25 +10,24 @@
 
 inherit ROOM;
 
-// Normalize player-facing money names to canonical money object ids.
-// The bank sign is written in Chinese, while the original code only accepted
-// coin/silver/gold. Accept both so WebMUD players do not fall through to What?.
+// 錢莊只認錢幣的 id：coin（錢）、silver（碎銀）、gold（黃金）、
+// sycee（金元寶）、nugget（復刻紀念金元寶）。不接受中文名稱
+// （使用者指示，2026-11-07，設計文件 docs/CURRENCY.md）。
+// 複數或物件內部的別名仍換回正式 id。
 string normalize_money_id(string money)
 {
     if( !stringp(money) ) return money;
     switch(money) {
-    case "coin": case "coins": case "coin_money":
-    case "錢": case "文": case "文錢": case "銅錢": case "錢幣": case "銅幣":
-        return "coin";
-    case "silver": case "silver_money":
-    case "銀": case "銀子": case "碎銀":
-        return "silver";
-    case "gold": case "gold_money": case "ingot":
-    case "金": case "金子": case "黃金":
-        return "gold";
+    case "coin": case "coins": case "coin_money":       return "coin";
+    case "silver": case "silver_money":                 return "silver";
+    case "gold": case "gold_money":                     return "gold";
+    case "sycee": case "sycee_money":                   return "sycee";
+    case "nugget": case "nugget_money":                 return "nugget";
     }
     return money;
 }
+
+#define MONEY_HINT "可用：coin、silver、gold、sycee、nugget。"
 
 // Resolve money by canonical money_id first, then legacy ids.  This avoids
 // depending on present("*_money") alone and also rejects non-currency objects
@@ -56,7 +55,8 @@ string money_file(string money)
 {
     string id;
     id = normalize_money_id(money);
-    if( id!="coin" && id!="silver" && id!="gold" ) return 0;
+    if( member_array(id, ({ "coin", "silver", "gold", "sycee", "nugget" })) < 0 )
+        return 0;
     return "/obj/money/" + id;
 }
 
@@ -117,7 +117,7 @@ int do_convert(string arg)
     from_ob = find_player_money(this_player(), from);
     to_ob = find_player_money(this_player(), to);
     if( !money_file(to) )
-        return notify_fail("你想兌換哪一種錢﹖可用：文錢、碎銀、黃金。\n");
+        return notify_fail("你想兌換哪一種錢﹖" + MONEY_HINT + "\n");
 
     if( !from_ob )        return notify_fail("你身上沒有這種貨幣。\n");
     if( amount < 1 )    return notify_fail("兌換貨幣一次至少要兌換一個。\n");
@@ -168,7 +168,7 @@ int do_deposit(string arg)
 
     money = normalize_money_id(money);
     if( !(money_ob = find_player_money(this_player(), money)) )
-        return notify_fail("你身上沒有這種錢幣。可用：文錢、碎銀、黃金。\n");
+        return notify_fail("你身上沒有這種錢幣。" + MONEY_HINT + "\n");
 
     if( money_ob->query_amount() < amount )
         return notify_fail("你身上沒有這麼多的" + money_ob->name() + "。\n");
@@ -204,7 +204,7 @@ int do_withdraw(string arg)
         return notify_fail("你不能一次領太多。\n");
 
     if( !money_file(money) )
-        return notify_fail("你要提領哪一種錢﹖可用：文錢、碎銀、黃金。\n");
+        return notify_fail("你要提領哪一種錢﹖" + MONEY_HINT + "\n");
 
     if( catch(money_ob = new(money_file(money))) )
         return notify_fail("錢莊暫時無法取出這種貨幣，請通知管理員。\n");

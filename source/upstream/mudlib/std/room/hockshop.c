@@ -32,6 +32,10 @@ string value_string(int value)
     if( value < 1 ) return "不值一文";
     if( value < 100 )
         return chinese_number(value) + "文錢";
+    // 金額最多寫到金元寶（使用者指示，2026-11-07）。
+    if( value >= 1000000 )
+        return chinese_number(value/1000000) + "錠金元寶"
+            + (value%1000000? "又" + value_string(value%1000000): "");
     return chinese_number(value/100) + "兩"
         + (value%100? "又" + chinese_number(value%100) + "文錢": "");
 }

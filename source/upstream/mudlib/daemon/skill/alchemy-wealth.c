@@ -70,7 +70,9 @@ string money_string(int amount)
 {
     string str = "";
 
-    if( amount >= 10000 ) str += chinese_number(amount / 10000) + "兩黃金";
+    // 金額最多寫到金元寶（使用者指示，2026-11-07）。
+    if( amount >= 1000000 ) str += chinese_number(amount / 1000000) + "錠金元寶";
+    if( amount % 1000000 >= 10000 ) str += chinese_number(amount % 1000000 / 10000) + "兩黃金";
     if( amount % 10000 >= 100 ) str += chinese_number(amount % 10000 / 100) + "兩碎銀";
     if( amount % 100 ) str += chinese_number(amount % 100) + "文錢";
     return str == "" ? "零文錢" : str;
