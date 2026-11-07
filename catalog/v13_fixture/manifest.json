@@ -3,9 +3,9 @@
   "source_policy": "SOURCE-ONLY / no external augmentation",
   "git": {
     "repository": "https://github.com/taedlar/es2_mudlib",
-    "origin": "https://github.com/windstory1017/es2-webmud",
-    "commit": "0bd203f7166d0bb83e9b75a526e333f379205182",
-    "branch": "wutang-pavilion-2026-11-03"
+    "origin": "https://github.com/wolfer168/es2-webmud",
+    "commit": "b0458d11b3cacb4f673588882bba3990ad510596",
+    "branch": "claude/fervent-euler-dbgib2"
   },
   "total_files": 16,
   "counts": {
