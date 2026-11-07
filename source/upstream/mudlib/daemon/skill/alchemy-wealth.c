@@ -140,25 +140,29 @@ void magic_gain(object me, int failed)
 }
 
 // U-03、U-10：成功的經驗與丹道修養。
+// 經驗取「價值 ÷ 100（最多等級 × 100）」與「random(靈性＋悟性)」較大者（2026-11-07）。
 void reward_success(object me, int value)
 {
-    int level, gain;
+    int level, gain, base, n;
 
     level = me->query_skill(SKILL_ID, 1);
     gain = value / 100;
     if( level > 0 && gain > level * 100 ) gain = level * 100;
+    n = me->query_attr("spi") + me->query_attr("int");
+    base = n > 0 ? random(n) : 0;
+    if( base > gain ) gain = base;
     if( gain > 0 ) me->improve_skill(SKILL_ID, gain);
     me->gain_score("alchemy", 1 + (level > 0 ? random(level) / 2 : 0));
     magic_gain(me, 0);
 }
 
-// U-04、U-10：失敗的經驗與丹道修養。
+// U-04、U-10：失敗的經驗與丹道修養。經驗為 random(靈性＋悟性) ÷ 2（2026-11-07）。
 void reward_failure(object me)
 {
     int n, gain;
 
     n = me->query_attr("spi") + me->query_attr("int");
-    gain = n > 0 ? random(n) : 0;
+    gain = n > 0 ? random(n) / 2 : 0;
     if( gain > 0 ) me->improve_skill(SKILL_ID, gain);
     me->gain_score("alchemy", 1);
     magic_gain(me, 1);
