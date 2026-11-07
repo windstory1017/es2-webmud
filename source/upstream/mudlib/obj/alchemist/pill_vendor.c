@@ -2,6 +2,7 @@
 description: 販售龍圖丹藥的 NPC 商人共用檔（取代 F_VENDOR 使用）。
 rule: NPC 向玩家販售丹藥時，依丹藥的階級（pill_grade）調整售價；
       目前二階丹藥以原價（base_value）三倍販售（使用者指示 #6，2026-10-23）。
+      金液丹另以原價三倍販售（2026-11-07：NPC 售價須高於藥鋪收購價 × 2，見煉丹流程 T-38）。
       其他商品照原價。藥鋪櫃台（HERB）的價格另由 herb_catalog 計算，不受本檔影響。
 note: 實付金額（query_trading_price）與商品清單（do_vendor_list）一律用同一個價格。
       要調整某一階的倍數，只改 GRADE_MARKUP。
@@ -16,13 +17,17 @@ inherit "/feature/npc/vendor.c";
 // 階級 -> 售價倍數。沒有列出的階級照原價。
 private mapping GRADE_MARKUP = ([ 2 : 3 ]);
 
+// 個別丹藥的售價倍數，優先於階級倍數（2026-11-07，見煉丹流程 T-38）。
+private mapping FILE_MARKUP = ([ "/obj/alchemist/aquapill" : 3 ]);
+
 int query_trading_price(string handle)
 {
     int v, rate;
 
     v = ::query_trading_price(handle);
     if( v < 1 ) return v;
-    rate = GRADE_MARKUP[handle->query("pill_grade")];
+    rate = FILE_MARKUP[handle];
+    if( !rate ) rate = GRADE_MARKUP[handle->query("pill_grade")];
     if( rate > 0 ) v *= rate;
     return v;
 }

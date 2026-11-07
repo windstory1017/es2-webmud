@@ -29,8 +29,6 @@ LONG
     set("merchandise", ([
         STOCK_MEDICATION("dragon_saliva") : 50,      // 龍涎草
         "/obj/alchemist/black_pill" : 30,            // 烏心丹
-        "/obj/alchemist/minor_heal_pill" : 20,       // 小還丹（設計表寫作小環丹）
-        "/obj/alchemist/mana_pill" : 30,             // 醒神丹
     ]));
     set_power("C");
     setup();

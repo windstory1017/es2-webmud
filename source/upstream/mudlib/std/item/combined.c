@@ -34,16 +34,20 @@ varargs int move(mixed dest, int silent)
 {
     if( ! ::move(dest, silent) ) return 0;
 
-    if( environment()->is_character() )
+    // 放到人身上或房間地上時，與同一種物品合併成一堆（房間地上：使用者指示，2026-11-07）。
+    // 袋子、屍體、丹爐等容器裡不合併，以免影響逐件計算的系統。
+    if( environment()->is_character() || inherits(ROOM, environment()) )
     {
-	object ob;
+	object ob, env = environment();
 	string file = base_name(this_object());
 
-	foreach(ob in all_inventory(environment()))
+	foreach(ob in all_inventory(env))
 	{
 	    if( ob==this_object() ) continue;
 	    if( base_name(ob)==file ) {
 		amount += (int)ob->query_amount();
+		// 被併掉的若是房間自己生成的物品，改由這一堆接手，房間重置時才不會再生一堆。
+		if( function_exists("replace_spawn", env) ) env->replace_spawn(ob, this_object());
 		destruct(ob);
 	    }
 	}
