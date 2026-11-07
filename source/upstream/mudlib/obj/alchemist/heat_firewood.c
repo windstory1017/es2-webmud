@@ -33,6 +33,11 @@ varargs int move(mixed dest, int silent)
 {
     object old;
     old = environment();
+    // 燃燒中的松柴不能給人（避免塞給別人造成燒傷），但可以主動從別人身上取走，
+    // 例如從昏倒的人身上拿走（使用者指示，2026-11-07）。
+    if (query_burning() && objectp(old) && old->is_character() && objectp(dest)
+    && dest->is_character() && !dest->is_corpse() && dest != old && dest != this_player())
+        return notify_fail("燃燒中的松柴火舌亂竄，可不能就這麼塞到別人手裡。\n");
     if (!::move(dest, silent)) return 0;
     HEAT_D->arrived(this_object(), old);
     return 1;
