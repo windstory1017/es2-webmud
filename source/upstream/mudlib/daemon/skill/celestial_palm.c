@@ -75,8 +75,9 @@ void after_strike(object me, object opponent, object weapon, mapping m, int dama
 
     if( damage > 0 && living(opponent) && environment(opponent) == environment(me)
     &&  !opponent->is_busy() && random(100) < move_chance(me, 10, 30, 20) ) {
-        message_vision(HIY "$N掌勢一沉﹐一股天邪真氣透掌而入﹐$n只覺週身一麻﹐竟動彈不得！\n" NOR,
-            me, opponent);
+        // 一行、前後各空一行（使用者指示，2026-11-07）
+        message_vision(HIY "\n$N掌勢一沉﹐一股天邪真氣透掌而入﹐$n只覺週身一麻﹐竟動彈不得！\n\n" NOR,
+            me, opponent, 1);
         opponent->start_busy(2);
     }
 
@@ -86,7 +87,7 @@ void after_strike(object me, object opponent, object weapon, mapping m, int dama
             if( objectp(ob) && living(ob) && environment(ob) == environment(me) )
                 enemies += ({ ob });
         if( sizeof(enemies) ) {
-            message_vision(HIR "$N猛地仰天一聲虎嘯﹐嘯聲中夾著天邪真氣﹐震得四周敵人氣血翻湧！\n" NOR, me);
+            message_vision(HIR "\n$N猛地仰天一聲虎嘯﹐嘯聲中夾著天邪真氣﹐震得四周敵人氣血翻湧！\n\n" NOR, me, 0, 1);   // 一行、前後空一行（2026-11-07）
             dmg = sk / 5 + me->query_attr("con");
             foreach( ob in enemies ) {
                 if( !objectp(ob) ) continue;
