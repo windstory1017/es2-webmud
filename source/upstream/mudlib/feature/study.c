@@ -24,14 +24,22 @@ int study_cost(object me)
 
 /* 書本上限只看技能等級（使用者定案，2026-10-23）：累積點數超過上限等級的門檻
  * 但還沒 gain 升上去時照樣可以讀，讀書拿到新點數才能下 gain 升級。 */
+
+/* 這項技能是否已讀到這本書的上限。 */
+int skill_capped(object me, mapping caps, string skill)
+{
+    return !undefinedp(caps[skill]) && me->query_skill(skill, 1) >= caps[skill];
+}
+
+/* 書的上限要每一項都讀到了才算讀完（使用者定案，2026-11-07）：例如上限讀書 70、古文 70，
+ * 讀書 70、古文 20 時還可以讀，只是讀書不再增加，點數只給還沒到上限的技能。 */
 int study_capped(object me, mapping caps)
 {
     string skill;
-    int limit;
 
-    foreach(skill, limit in caps)
-        if( me->query_skill(skill, 1) >= limit ) return 1;
-    return 0;
+    foreach(skill in keys(caps))
+        if( !skill_capped(me, caps, skill) ) return 0;
+    return 1;
 }
 
 void close_study(object me)
@@ -115,7 +123,8 @@ int study_content(object me)
     intellect = me->query_attr("int");
     gain = intellect * random(intellect);
     foreach(skill in keys(skills))
-        me->improve_skill_exact(skill, gain);
+        if( !skill_capped(me, caps, skill) )   // 已讀到上限的技能不再增加
+            me->improve_skill_exact(skill, gain);
 
     if( study_capped(me, caps) ) {
         close_study(me);
