@@ -6,6 +6,7 @@
 
 #include <ansi.h>
 #include <npc.h>
+#include "/d/wutang/butterfly_quest.h"
 inherit F_VILLAGER;
 
 void create()
@@ -81,4 +82,55 @@ void release_soul(object who)
     tell_object(who, "\n你化做一股輕煙，消失了。\n" HIR "你已經魂飛魄散了！！！\n" NOR);
     message("vision", who->name() + "化成一陣煙，消失了 ...\n", environment(who), who);
     CHAR_D->make_mist(who);
+}
+
+// 蝶影幻步任務（使用者提供舊資料，2026-11-07）：玩家交來老人給的小紅巾，廟祝送上飲血。
+// 廟祝一直都在，不分時辰；每個玩家各自進行，進度存在玩家身上。
+void speak(object who, int i)
+{
+    string *lines = ({
+        "$N很驚呀的說道 ﹕ 這..這..這..怎麼可能，這是鎮天神的東西呀 !",
+        "$N「嗯」的一聲﹐一副欲言又止的樣子。",
+        "$N說道﹕也許是緣吧..",
+        "$N說道﹕我也沒有什麼東西給你。",
+        "$N說道﹕那這樣子好了，我把前兒個日子撿到的利器送給您吧。",
+    });
+
+    if( !objectp(who) || environment(who) != environment() ) return;
+    bq_say(this_object(), who, lines[i]);
+    if( i + 1 < sizeof(lines) ) call_out("speak", BQ_TICK, who, i + 1);
+    else call_out("give_blade", BQ_TICK, who);
+}
+
+void give_blade(object who)
+{
+    if( !objectp(who) || environment(who) != environment() ) return;
+    bq_give(who, BQ_BLADE_FILE);
+    message_vision(CYN "$N交給$n一把飲血。\n" NOR, this_object(), who);
+}
+
+int accept_object(object who, object ob)
+{
+    if( !userp(who) || bq_stage(who) != BQ_SCARF || !bq_mine(who, ob, BQ_SCARF_FILE) ) return 0;
+    who->set(BQ_STAGE, BQ_BLADE);
+    call_out("speak", BQ_TICK, who, 0);
+    return 1;
+}
+
+// 飲血弄丟了（賣掉、丟了）：玩家再走進來，廟祝補一把，免得任務卡死。
+void init()
+{
+    object who = this_player();
+
+    ::init();
+    if( userp(who) && living(this_object()) && bq_stage(who) == BQ_BLADE
+    &&  !bq_find(who, BQ_BLADE_FILE) )
+        call_out("regive", BQ_TICK, who);
+}
+
+void regive(object who)
+{
+    if( !objectp(who) || environment(who) != environment() || bq_find(who, BQ_BLADE_FILE) ) return;
+    bq_say(this_object(), who, "$N說道﹕那把利器弄丟了嗎﹖別擔心，我再找一把給您。");
+    give_blade(who);
 }
