@@ -9,6 +9,16 @@ inherit F_CLEAN_UP;
 
 int do_get(object me, object ob);
 
+// 搜身限制：對方是活人或玩家時，巫師等級要比對方高才能搜身。
+// 例外：對方昏倒時，誰都可以從他身上取走燃燒中的松柴，用來救燒到昏倒的新手（使用者指示，2026-11-07）。
+private int search_denied(object me, object env, object obj)
+{
+    if( !env || !(living(env) || userp(env)) ) return 0;
+    if( wiz_level(me) > wiz_level(env) ) return 0;
+    if( objectp(obj) && !living(env) && obj->is_heat_wood() && obj->query_burning() ) return 0;
+    return 1;
+}
+
 void create() { seteuid(getuid()); }
 
 int ordinary_main(object me, string arg)
@@ -32,14 +42,14 @@ int ordinary_main(object me, string arg)
 	env = present(from, me);
 	if(!env) env = present(from, environment(me));
 	if(!env) return notify_fail("你找不到 " + from + " 這樣東西。\n");
-	if( (living(env) || userp(env))
-	&& (wiz_level(me) <= wiz_level(env)))
-	    return notify_fail("你的巫師等級必須比對方高﹐才能搜身。\n");
     } else env = environment(me);
 
     // Check if a certain amount is specified.
     if(sscanf(arg, "%d %s", amount, item)==2) {
-        if( !objectp(obj = present(item, env)) )
+        obj = present(item, env);
+        if( search_denied(me, env, obj) )
+            return notify_fail("你的巫師等級必須比對方高﹐才能搜身。\n");
+        if( !objectp(obj) )
             return notify_fail("這裡沒有這樣東西。\n");
         if( !obj->query_amount() )
             return notify_fail( obj->name() + "不能被分開拿走。\n");
@@ -70,6 +80,8 @@ int ordinary_main(object me, string arg)
 	object ob;
 	if( me->is_fighting() )
 	    return notify_fail("你還在戰鬥中﹗只能一次拿一樣。\n");
+	if( search_denied(me, env, 0) )
+	    return notify_fail("你的巫師等級必須比對方高﹐才能搜身。\n");
 
 	if( !function_exists("receive_object", env) )
 	    return notify_fail("那不是容器。\n");
@@ -83,7 +95,10 @@ int ordinary_main(object me, string arg)
 	return 1;
     }
 
-    if( !objectp(obj = present(arg, env)) || living(obj) )
+    obj = present(arg, env);
+    if( search_denied(me, env, obj) )
+        return notify_fail("你的巫師等級必須比對方高﹐才能搜身。\n");
+    if( !objectp(obj) || living(obj) )
         return notify_fail("你附近沒有這樣東西。\n");
 
     return do_get(me, obj);
