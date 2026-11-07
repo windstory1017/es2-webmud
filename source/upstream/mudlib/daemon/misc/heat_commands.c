@@ -20,6 +20,20 @@ object direct_container(object me, string id)
     if (ob && (living(ob) || userp(ob))) return 0;
     return ob;
 }
+// 救人：對方昏倒時，可以從他身上取走燃燒中的松柴（只限這樣東西，使用者指示，2026-11-07）。
+object rescue_container(object me, string id, string item)
+{
+    object ob, wood;
+    int count;
+    string name;
+    ob = present(id, me);
+    if (!ob && environment(me)) ob = present(id, environment(me));
+    if (!ob || ob == me || living(ob) || !(userp(ob) || ob->is_character())) return 0;
+    if (sscanf(item, "%d %s", count, name) == 2) item = name;
+    wood = present(item, ob);
+    if (!wood || !wood->is_heat_wood() || !wood->query_burning()) return 0;
+    return ob;
+}
 int put_limit(object me, object ob, object dest, int count)
 {
     int weight;
@@ -234,6 +248,7 @@ int execute(object me, string verb, string arg)
         if (!me->query_stat_maximum("HP")) return fail(me, "你沒有形體﹐無法拾取物品。");
         if (sscanf(arg, "%s from %s", item, target) == 2) {
             env = direct_container(me, target);
+            if (!env) env = rescue_container(me, target, item);
             if (!env) return fail(me, "這裡沒有這樣東西。");
         } else { item = arg; env = environment(me); }
         dest = me;

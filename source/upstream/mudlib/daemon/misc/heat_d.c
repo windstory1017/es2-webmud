@@ -129,6 +129,8 @@ object select_wood(object me)
     return 0;
 }
 void begin_operation(object me) { invalidate_inventory(); actor = me; notes = ([]); }
+// 目前執行煉丹指令的人（心跳補做排隊指令時 this_player() 不可靠）。
+object query_actor() { return actor; }
 void note(string kind) { if (actor) notes[kind] = 1; }
 void cancel_split_note() { map_delete(notes, "split"); }
 void end_operation()
