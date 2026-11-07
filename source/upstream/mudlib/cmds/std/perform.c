@@ -31,6 +31,11 @@ int main(object me, string arg)
         if( !living(target) ) return notify_fail("你可以直接宰了這個昏迷不醒的傢伙，不需要用絕招。\n");
     }
 
+    // 閃躲步法的絕招（例如 perform butterfly-steps:disappear，使用者同意，2026-11-07）：
+    // 技能名就是目前 enable 在閃躲上的技能，不需要裝備武器，直接交給該技能檔。
+    if( martial_skill != "dodge" && me->skill_mapped("dodge") == martial_skill )
+        return SKILL_D(martial_skill)->perform_action(me, act, target);
+
     if( !me->query_temp("weapon/" + martial_skill ) 
         && (martial_skill != "unarmed") )
         return notify_fail("你必須裝備適當的武器來使出絕招。\n");
