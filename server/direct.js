@@ -1,6 +1,6 @@
 // zMUD／Telnet 直連入口。設計文件：docs/ZMUD_TELNET_PLAN.md
 //
-//   zMUD 4.62    ──telnet:4002（Big5）──▶ 本程式（轉碼）──▶ 遊戲伺服器 Neolith（4001，只給本機）
+//   zMUD 4.62    ──telnet:4000（Big5）──▶ 本程式（轉碼）──▶ 遊戲伺服器 Neolith（4001，只給本機）
 //   UTF-8 用戶端 ──telnet:4003（UTF-8）─▶ 本程式（原樣轉接）─▶ 同上
 //
 // 只做連線轉接與編碼轉換，不含任何遊戲規則。出問題時把 ZMUD_PORT、TELNET_PORT 設為 0 就關閉。

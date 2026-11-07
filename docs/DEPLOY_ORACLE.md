@@ -55,7 +55,7 @@ Oracle 預設只開放 SSH（22）。玩家要從外面連進來，需要開放 
 
 | Destination Port | 用途 |
 |---|---|
-| `4002` | zMUD 4.62（Big5 繁體） |
+| `4000` | zMUD 4.62（Big5 繁體） |
 | `4003` | Mudlet、MUSHclient、CMUD、PuTTY 等（UTF-8） |
 
 主機防火牆由 `setup.sh` / `update.sh` 自動開放。想關閉某個入口：在 `es2-web` 服務設定

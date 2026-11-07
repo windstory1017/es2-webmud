@@ -307,7 +307,7 @@ const DIRECT_HOST=process.env.DIRECT_HOST||'0.0.0.0';
 const DIRECT_MAX=Math.max(1,Number(process.env.DIRECT_MAX_SESSIONS||MAX_SESSIONS));
 const directOpts={host:DIRECT_HOST,mudHost:MUD_HOST,mudPort:MUD_PORT,maxSessions:DIRECT_MAX,connectTimeoutMs:TCP_CONNECT_TIMEOUT_MS,bridgeSecret:BRIDGE_SECRET,trace:bridgeTrace};
 const directServers=[
-  startDirectListener({...directOpts,name:'zmud',port:Number(process.env.ZMUD_PORT??4002),big5:true}),
+  startDirectListener({...directOpts,name:'zmud',port:Number(process.env.ZMUD_PORT??4000),big5:true}),
   startDirectListener({...directOpts,name:'telnet',port:Number(process.env.TELNET_PORT??4003),big5:false}),
 ].filter(Boolean);
 server.on('close',()=>{for(const d of directServers)d.close()});
