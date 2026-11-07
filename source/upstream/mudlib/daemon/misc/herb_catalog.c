@@ -117,6 +117,7 @@ int price(string key, string mode)
     base = ob->query("base_value");
     if (base < 1 || base > 100000000) return -1;
     if (mode == "buy") return base * 10;
-    if (mode == "sell") return key == "black" ? base * 80 / 100 : base * 5;
+    // 收購價 × 2（2026-11-07 由 × 5 調降：NPC 售價必須高於收購價，避免轉賣賺價差，見煉丹流程 T-38）。
+    if (mode == "sell") return key == "black" ? base * 80 / 100 : base * 2;
     return -1;
 }
