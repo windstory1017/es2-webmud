@@ -51,11 +51,21 @@ USAGE_ZH = {'force': '內功', 'dodge': '閃躲', 'parry': '招架', 'unarmed': 
 TYPE_ZH = {'martial': '武學', 'magic': '法術', 'spell': '咒術', 'knowledge': '知識', 'skill': '技藝'}
 
 
+# 不是出口、也不是特殊指令，而是靠 NPC 才過得去的路線（例如付錢給船夫搭渡船）。兩邊互通。
+NPC_LINKS = [
+    ('/d/wutang/riverside', '/d/ziyan/ferry'),   # 羿水擺渡：五堂鎮河邊 ⇄ 紫煙鎮渡口（d/wutang/npc/ferryman.c 的 BANKS）
+]
+
+
 def reachable(rooms):
+    links = {}
+    for a, b in NPC_LINKS:
+        links.setdefault(a, []).append(b)
+        links.setdefault(b, []).append(a)
     seen, q = {START}, deque([START])
     while q:
         r = q.popleft()
-        targets = list(rooms[r]['exits'].values()) + [m['to'] for m in rooms[r]['special']]
+        targets = list(rooms[r]['exits'].values()) + [m['to'] for m in rooms[r]['special']] + links.get(r, [])
         for t in targets:
             if t in rooms and t not in seen:
                 seen.add(t)
