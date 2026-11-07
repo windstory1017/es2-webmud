@@ -160,7 +160,7 @@ string miss_line(string kind)
 // 數值
 // ------------------------------------------------------------------
 
-/* 咒文強度 = (慧根² ÷ 10 + 神 ÷ 32 + random(慧根)) × 咒術倍數；
+/* 咒文強度 = (慧根^2 ÷ 10 + 神 ÷ 32 + random(慧根)) × 咒術倍數；
  * 咒術（基本等級）未滿 100 為 100%，100 級起為 (50 + 咒術)%。神為施咒當時的神。 */
 int spell_strength(object me, int sen)
 {
@@ -191,7 +191,7 @@ int resistance(object target, string kind)
     return n;
 }
 
-/* 命中率 = 50 + (咒文技巧 − 抗性) × 2，限 5～95%（四系相同）。 */
+/* 命中率 = 50 + (咒文技巧 - 抗性) × 2，限 5～95%（四系相同）。 */
 int spell_hits(object me, object target, string kind, int ignore_resistance)
 {
     int chance;
@@ -502,7 +502,7 @@ varargs int cast_spell(object me, string spell, object target)
         delay = 0;
     }
     else if( kind == "freeze" && rank == 2 ) {
-        // 兆冰：精 −D、神 −D×33%；施法者回復一半。
+        // 兆冰：精 -D、神 -D×33%；施法者回復一半。
         target->consume_stat("gin", D, me);
         target->consume_stat("sen", D * 33 / 100, me);
         say_line(me, target, hit_line(kind, rank));
@@ -513,7 +513,7 @@ varargs int cast_spell(object me, string spell, object target)
         award_spell_hit(me, D);
     }
     else if( kind == "thunder" && rank == 3 ) {
-        // 神光雷：神 −D×33%。
+        // 神光雷：神 -D×33%。
         n = D * 33 / 100;
         target->consume_stat("sen", n, me);
         say_line(me, target, hit_line(kind, rank));
@@ -541,7 +541,7 @@ varargs int cast_spell(object me, string spell, object target)
             call_out("pure_fire_burst", 4, me, target,
                 elemental_damage(me, target, kind, D * 180 / 100, 0));
         }
-        // 七重玄冰：精、氣、神各自吸取 傷害 × (慧根 − random(慧根))%。
+        // 七重玄冰：精、氣、神各自吸取 傷害 × (慧根 - random(慧根))%。
         if( kind == "freeze" && rank == 4 && dealt > 0 && objectp(target) && wis > 0 ) {
             int got;
             foreach(string st in ({ "gin", "kee", "sen" })) {

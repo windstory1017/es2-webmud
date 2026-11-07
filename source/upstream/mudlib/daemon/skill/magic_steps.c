@@ -42,7 +42,7 @@ void skill_completed(object me, string sk)
     tell_object(me, HIY "你參透了陰陽奇門步的方位變化﹐身形已能隨陰陽流轉。\n" NOR);
 }
 
-/* 每級獎勵（學成那一級起）：武術造詣 等級 × 10；41 級起武學之道 (等級 − 40) × 10。 */
+/* 每級獎勵（學成那一級起）：武術造詣 等級 × 10；41 級起武學之道 (等級 - 40) × 10。 */
 void skill_advanced(object me, string sk)
 {
     int lv;

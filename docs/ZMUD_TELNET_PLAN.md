@@ -1,7 +1,7 @@
 # zMUD／Telnet 連線規劃（討論稿）
 
 狀態：**已製作（2026-11-07）**：兩個入口（4000 Big5、4003 UTF-8）都做，程式在 `server/direct.js`，測試 `tests/test_direct_zmud.mjs`。
-第六節的字元檢查工具與 CLAUDE.md 相容原則尚未做，待確認。
+第六節的字元檢查工具（`tools/check_big5_text.py`）與 CLAUDE.md 相容原則已做（2026-11-07）。
 
 ## 一、目標
 

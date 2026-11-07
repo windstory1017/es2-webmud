@@ -200,8 +200,8 @@ int do_backstab(object victim, object me)
         victim->kill_ob(me);
 
 
-        // 偷襲出手：random((膽識+悟性)/2)² + random(膽識+悟性)；
-        // 殺手本能：(random(膽識)+1)²（使用者定案，2026-10-19）。
+        // 偷襲出手：random((膽識+悟性)/2)^2 + random(膽識+悟性)；
+        // 殺手本能：(random(膽識)+1)^2（使用者定案，2026-10-19）。
         n = random((me->query_attr("cor") + me->query_attr("int")) / 2);
         me->improve_skill("backstab", n * n
             + random(me->query_attr("cor") + me->query_attr("int")));

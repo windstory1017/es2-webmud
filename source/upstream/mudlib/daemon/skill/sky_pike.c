@@ -42,7 +42,7 @@ private void create()
     art_entry_reward = 1;
     art_entry_msg    = "你終於練成了穹槍訣﹐槍尖一抖﹐眼前彷彿也綻開了點點星光。\n";
 
-    /* 每級武術造詣 等級 × 10；41 級起武學之道 (等級 − 40) × 10。 */
+    /* 每級武術造詣 等級 × 10；41 級起武學之道 (等級 - 40) × 10。 */
     ma_coef  = 10;
     mm_start = 41;
     mm_minus = 40;

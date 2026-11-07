@@ -195,7 +195,7 @@ void reset_skill_gain() { skill_gain = ([]); }
  * 學成到那一級，例如瘋虎功 20 級、龍圖心經 40 級；沒指定的技能學成等級是 1。
  * NPC 不會下 gain，拿到點數就照同一套門檻升級。
  *
- * 門檻：升到第 level 級所需的累積點數 = level² × base，越高級 base 越大。
+ * 門檻：升到第 level 級所需的累積點數 = level^2 × base，越高級 base 越大。
  * 所有技能上限 200 級。
  */
 int restored_skill_threshold(int level)
