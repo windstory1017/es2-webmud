@@ -120,6 +120,8 @@ svg.map line { stroke: var(--room-line); stroke-width: 2; }
 svg.map .cmd { stroke: var(--accent); stroke-width: 1.6; stroke-dasharray: 5 4; fill: none; }
 svg.map .dot { fill: var(--accent); }
 svg.map .ud { font-size: 10px; fill: var(--muted); }
+svg.map tspan { dominant-baseline: central; }
+svg.map .nm-long { font-size: 10px; }
 .side { display: grid; gap: 16px; min-width: 0; }
 .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; min-width: 0; }
 .panel h3 { margin: 0 0 6px; font-family: var(--serif); font-size: 1.1rem; }
@@ -460,7 +462,15 @@ svg.map .ud { font-size: 10px; fill: var(--muted); }
   }
 
   // ---------------------------------------------------------------- 地圖
-  const CW = 108, CH = 38, GX = 26, GY = 26;
+  // 房間格是正方形（同遊戲裡的地圖）：完整房名兩個字一行、上下左右置中；三、四行時字縮小一點。
+  const CW = 64, CH = 64, GX = 26, GY = 26;
+  function roomLabel(name, x, y) {
+    const chars = [...String(name)].slice(0, 8), lines = [];
+    for (let i = 0; i < chars.length; i += 2) lines.push(chars.slice(i, i + 2).join(''));
+    const long = lines.length > 2, lh = long ? 11 : 15;
+    return `<text class="${long ? 'nm-long' : ''}" x="${x}" text-anchor="middle">` +
+      lines.map((l, i) => `<tspan x="${x}" y="${y + (i - (lines.length - 1) / 2) * lh}">${esc(l)}</tspan>`).join('') + '</text>';
+  }
   function renderAreas() {
     const area = D.areas.find(a => a.key === state.area) || D.areas[0];
     if (!area) return '<p class="empty">沒有區域資料。</p>';
@@ -492,10 +502,9 @@ svg.map .ud { font-size: 10px; fill: var(--muted); }
       const cells = rs.map(r => {
         const ud = (r.ud.includes('up') ? '↑' : '') + (r.ud.includes('down') ? '↓' : '');
         const out = Object.values(r.exits).some(t => areaOfRoom[t] && areaOfRoom[t] !== area.key);
-        const label = r.short.length > 7 ? r.short.slice(0, 7) + '…' : r.short;
         const cls = ['room', r.npcs.length ? 'has-npc' : '', state.room === r.id ? 'sel' : ''].join(' ');
         return `<g class="${cls}" data-room="${esc(r.id)}" tabindex="0" role="button" aria-label="${esc(r.short)}"><title>${esc(r.short)}</title><rect x="${px(r)}" y="${py(r)}" width="${CW}" height="${CH}"/>` +
-          `<text x="${px(r) + CW / 2}" y="${py(r) + CH / 2 + 4}" text-anchor="middle">${esc(label)}</text>` +
+          roomLabel(r.short, px(r) + CW / 2, py(r) + CH / 2) +
           (r.npcs.length ? `<circle class="dot" cx="${px(r) + 8}" cy="${py(r) + 8}" r="3"/>` : '') +
           (ud || out ? `<text class="ud" x="${px(r) + CW - 6}" y="${py(r) + 12}" text-anchor="end">${ud}${out ? '⇢' : ''}</text>` : '') + '</g>';
       }).join('');
