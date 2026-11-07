@@ -24,7 +24,8 @@ void create()
 		
 		set("requirement", (["literate": 10, "alchemy-medication": 30]));
 		set("pill_grade", 3);   // 丹藥階級：一階最高、三階最低（使用者指示 #7，2026-10-23）
-		set("no_sell", 1);   // 丹藥不能賣給當鋪、不能典當，只能賣回藥鋪（使用者指示，2026-11-06）
+		set("no_pawn", 1);   // 丹藥不能賣給當鋪、不能典當，只能賣回藥鋪（使用者指示，2026-11-06）；
+							// 改用 no_pawn 而非 no_sell，黃白之術才轉得了丹藥（2026-11-07）
 	}
 	set_amount(1);
 	setup();
