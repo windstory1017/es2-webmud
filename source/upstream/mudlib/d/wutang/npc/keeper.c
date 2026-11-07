@@ -86,6 +86,11 @@ void release_soul(object who)
 
 // 蝶影幻步任務（使用者提供舊資料，2026-11-07）：玩家交來老人給的小紅巾，廟祝送上飲血。
 // 廟祝一直都在，不分時辰；每個玩家各自進行，進度存在玩家身上。
+// 飲血每次房間重置（reborn）只有一把，被人拿走後要等下次重置。
+int blade_ready = 1;
+
+void reset_stock() { blade_ready = 1; }
+
 void speak(object who, int i)
 {
     string *lines = ({
@@ -96,7 +101,8 @@ void speak(object who, int i)
         "$N說道﹕那這樣子好了，我把前兒個日子撿到的利器送給您吧。",
     });
 
-    if( !objectp(who) || environment(who) != environment() ) return;
+    // 玩家中途走開就不再說，但飲血照給（放在腳邊，只有本人能用）。
+    if( !bq_here(this_object(), who) ) { call_out("give_blade", 0, who); return; }
     bq_say(this_object(), who, lines[i]);
     if( i + 1 < sizeof(lines) ) call_out("speak", BQ_TICK, who, i + 1);
     else call_out("give_blade", BQ_TICK, who);
@@ -104,33 +110,24 @@ void speak(object who, int i)
 
 void give_blade(object who)
 {
-    if( !objectp(who) || environment(who) != environment() ) return;
-    bq_give(who, BQ_BLADE_FILE);
-    message_vision(CYN "$N交給$n一把飲血。\n" NOR, this_object(), who);
+    if( !objectp(who) ) return;
+    bq_give(this_object(), who, BQ_BLADE_FILE);
+    if( bq_here(this_object(), who) )
+        message_vision(CYN "$N交給$n一把飲血。\n" NOR, this_object(), who);
 }
 
 int accept_object(object who, object ob)
 {
-    if( !userp(who) || bq_stage(who) != BQ_SCARF || !bq_mine(who, ob, BQ_SCARF_FILE) ) return 0;
+    if( !userp(who) || bq_stage(who) != BQ_SCARF || !bq_mine(who, ob, BQ_SCARF_FILE) || !blade_ready )
+        return 0;
+    blade_ready = 0;
     who->set(BQ_STAGE, BQ_BLADE);
     call_out("speak", BQ_TICK, who, 0);
+    call_out("drop_item", 1, ob);       // 小紅巾價值 0，give 不會銷毀它，這裡收走
     return 1;
 }
 
-// 飲血弄丟了（賣掉、丟了）：玩家再走進來，廟祝補一把，免得任務卡死。
-void init()
+void drop_item(object ob)
 {
-    object who = this_player();
-
-    ::init();
-    if( userp(who) && living(this_object()) && bq_stage(who) == BQ_BLADE
-    &&  !bq_find(who, BQ_BLADE_FILE) )
-        call_out("regive", BQ_TICK, who);
-}
-
-void regive(object who)
-{
-    if( !objectp(who) || environment(who) != environment() || bq_find(who, BQ_BLADE_FILE) ) return;
-    bq_say(this_object(), who, "$N說道﹕那把利器弄丟了嗎﹖別擔心，我再找一把給您。");
-    give_blade(who);
+    if( objectp(ob) ) destruct(ob);
 }

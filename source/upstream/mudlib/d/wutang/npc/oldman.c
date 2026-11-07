@@ -52,10 +52,19 @@ LONG
     carry_object("/obj/area/obj/cloth")->wear();
 }
 
+int scarf_ready = 1;                // 這次房間重置的小紅巾還在不在
+
+// 房間重置（reborn）時補上一條小紅巾。
+void reset_stock() { scarf_ready = 1; }
+
 // 依序說完一串話，最後呼叫 done（沒有就不呼叫）。每個玩家各自一串，互不干擾。
+// 玩家中途走開就不再說，但收尾（done）照做，免得東西收了卻沒給。
 void speak(object who, string *lines, int i, string done)
 {
-    if( !objectp(who) || environment(who) != environment() ) return;
+    if( !bq_here(this_object(), who) ) {
+        if( done ) call_out(done, 0, who);
+        return;
+    }
     bq_say(this_object(), who, lines[i]);
     if( i + 1 < sizeof(lines) ) call_out("speak", BQ_TICK, who, lines, i + 1, done);
     else if( done ) call_out(done, BQ_TICK, who);
@@ -68,34 +77,17 @@ void init()
     int n;
 
     ::init();
-    if( !userp(who) || !living(this_object()) || is_fighting() ) return;
+    if( !userp(who) || !living(this_object()) || is_fighting() || bq_stage(who) != BQ_NONE ) return;
 
-    switch( bq_stage(who) ) {
-    case BQ_NONE:
-        n = who->query(BQ_MEET) + 1;
-        if( n < 3 ) {
-            who->set(BQ_MEET, n);
-            call_out("speak", BQ_TICK, who, n == 1 ? MEET_MSG[0..1] : ({ MEET_MSG[2] }), 0, 0);
-        } else {
-            who->delete(BQ_MEET);
-            who->set(BQ_STAGE, BQ_ASKED);
-            call_out("speak", BQ_TICK, who, ({ MEET_MSG[3] }), 0, 0);
-        }
-        break;
-    case BQ_SCARF:
-        // 小紅巾弄丟了（賣掉、丟了）：再給一條，免得任務卡死。
-        if( !bq_find(who, BQ_SCARF_FILE) )
-            call_out("regive", BQ_TICK, who);
-        break;
+    n = who->query(BQ_MEET) + 1;
+    if( n < 3 ) {
+        who->set(BQ_MEET, n);
+        call_out("speak", BQ_TICK, who, n == 1 ? MEET_MSG[0..1] : ({ MEET_MSG[2] }), 0, 0);
+    } else {
+        who->delete(BQ_MEET);
+        who->set(BQ_STAGE, BQ_ASKED);
+        call_out("speak", BQ_TICK, who, ({ MEET_MSG[3] }), 0, 0);
     }
-}
-
-void regive(object who)
-{
-    if( !objectp(who) || environment(who) != environment() || bq_find(who, BQ_SCARF_FILE) ) return;
-    bq_say(this_object(), who, "$N說道﹕小紅巾弄丟了嗎﹖別擔心，再給你一條。");
-    bq_give(who, BQ_SCARF_FILE);
-    message_vision(CYN "$N交給$n一條小紅巾。\n" NOR, this_object(), who);
 }
 
 // 玩家回答請託：說「好」「可以」「是」之類的肯定話。
@@ -114,18 +106,27 @@ void relay_emote(object who, string verb)
     call_out("speak", BQ_TICK, who, ACCEPT_MSG, 0, 0);
 }
 
-// 收下玩家自己找到的金牌，回報小紅巾。
+// 收下玩家自己找到的金牌，換小紅巾（這次重置的小紅巾已經被人拿走就不收）。
 int accept_object(object who, object ob)
 {
-    if( !userp(who) || bq_stage(who) != BQ_PLAQUE || !bq_mine(who, ob, BQ_PLAQUE_FILE) ) return 0;
+    if( !userp(who) || bq_stage(who) != BQ_PLAQUE || !bq_mine(who, ob, BQ_PLAQUE_FILE) || !scarf_ready )
+        return 0;
+    scarf_ready = 0;
     who->set(BQ_STAGE, BQ_SCARF);
     call_out("speak", BQ_TICK, who, PLAQUE_MSG, 0, "give_scarf");
+    call_out("drop_item", 1, ob);       // 金牌價值 0，give 不會銷毀它，這裡收走
     return 1;
+}
+
+void drop_item(object ob)
+{
+    if( objectp(ob) ) destruct(ob);
 }
 
 void give_scarf(object who)
 {
-    if( !objectp(who) || environment(who) != environment() ) return;
-    bq_give(who, BQ_SCARF_FILE);
-    message_vision(CYN "$N交給$n一條小紅巾。\n" NOR, this_object(), who);
+    if( !objectp(who) ) return;
+    bq_give(this_object(), who, BQ_SCARF_FILE);
+    if( bq_here(this_object(), who) )
+        message_vision(CYN "$N交給$n一條小紅巾。\n" NOR, this_object(), who);
 }

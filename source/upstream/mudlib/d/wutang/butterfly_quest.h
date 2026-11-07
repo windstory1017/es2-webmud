@@ -5,6 +5,8 @@
 //   BQ_STAGE：任務進度，0 還沒開始，見下方 BQ_*。
 //   BQ_MEET ：在後院和老人碰面了幾次（只在進度 0 時計算）。
 // 道具（金牌、小紅巾、飲血）記著是誰取得的（quest_owner），不是本人交給 NPC 就不算，NPC 不收。
+// 每項道具每次房間重置（reborn）只有一份：金牌、小紅巾、飲血被人拿走後，要等房間重置才有下一份；
+// 弄丟了不能補領，進度也不能回頭（使用者定案，2026-11-07）。
 // 每個玩家各自解各自的任務：進度存在玩家身上，NPC 不鎖定任何人。
 
 #include <ansi.h>
@@ -27,21 +29,19 @@
 
 private int bq_stage(object who) { return who->query(BQ_STAGE); }
 
-// 玩家身上有沒有「自己取得的」任務道具。
-private object bq_find(object who, string file)
+// 玩家還在 NPC 同一個房間嗎？
+private int bq_here(object npc, object who)
 {
-    foreach(object ob in all_inventory(who))
-        if( base_name(ob) == file && ob->query("quest_owner") == getuid(who) ) return ob;
-    return 0;
+    return objectp(who) && objectp(npc) && environment(who) == environment(npc);
 }
 
-// 造一件記著主人的任務道具交給玩家；拿不動就放在地上。
-private object bq_give(object who, string file)
+// 造一件記著主人的任務道具交給玩家；玩家已經走開或拿不動，就放在 NPC 所在的房間（只有本人能用）。
+private object bq_give(object npc, object who, string file)
 {
     object ob = new(file);
 
     ob->set("quest_owner", getuid(who));
-    if( !ob->move(who) ) ob->move(environment(who));
+    if( !bq_here(npc, who) || !ob->move(who) ) ob->move(environment(npc));
     return ob;
 }
 

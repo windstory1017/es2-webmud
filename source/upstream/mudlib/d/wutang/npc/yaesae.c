@@ -41,7 +41,8 @@ void speak(object who, int i)
         "$N「嗯」的一聲﹐一副欲言又止的樣子。",
     });
 
-    if( !objectp(who) || environment(who) != environment() ) return;
+    // 玩家中途走開就不再說，但獎勵照給。
+    if( !bq_here(this_object(), who) ) { call_out("reward", 0, who); return; }
     if( i < sizeof(lines) ) {
         bq_say(this_object(), who, lines[i]);
         call_out("speak", BQ_TICK, who, i + 1);
@@ -53,37 +54,39 @@ void speak(object who, int i)
 
 void reward(object who)
 {
-    if( !objectp(who) || environment(who) != environment() ) return;
+    if( !objectp(who) ) return;
     who->delete(BQ_STAGE);
     who->delete(BQ_MEET);
-    bq_say(this_object(), who, "$N點了點頭。");
+    if( bq_here(this_object(), who) ) bq_say(this_object(), who, "$N點了點頭。");
 
-    if( who->query_class() == "thief" && undefinedp(who->query_skills()["butterfly-steps"]) ) {
-        call_out("teach", BQ_TICK, who);
-        return;
-    }
-    call_out("pay", BQ_TICK, who);
+    if( who->query_class() == "thief" && undefinedp(who->query_skills()["butterfly-steps"]) )
+        call_out("teach", bq_here(this_object(), who) ? BQ_TICK : 0, who);
+    else
+        call_out("pay", bq_here(this_object(), who) ? BQ_TICK : 0, who);
 }
 
 void teach(object who)
 {
-    if( !objectp(who) || environment(who) != environment() ) return;
-    bq_say(this_object(), who,
-        "$N說道﹕在下的輕功在武林是數一數二的，如果你不嫌棄，我就傅授給您吧。");
+    if( !objectp(who) ) return;
+    if( bq_here(this_object(), who) )
+        bq_say(this_object(), who,
+            "$N說道﹕在下的輕功在武林是數一數二的，如果你不嫌棄，我就傅授給您吧。");
     who->improve_skill_exact("butterfly-steps", 1);
     tell_object(who, CYN "(葉翔將蝶影幻步的基本步法交給了你)\n" NOR);
 }
 
+// 不是盜賊、或已經學會的盜賊：給 10 兩黃金（玩家已走開就放在地上）。
 void pay(object who)
 {
     object gold;
 
-    if( !objectp(who) || environment(who) != environment() ) return;
-    bq_say(this_object(), who, "$N說道﹕這是在下的一點心意，還請您不要推辭。");
+    if( !objectp(who) ) return;
+    if( bq_here(this_object(), who) )
+        bq_say(this_object(), who, "$N說道﹕這是在下的一點心意，還請您不要推辭。");
     gold = new("/obj/money/gold");
     gold->set_amount(10);
-    if( !gold->move(who) ) gold->move(environment(who));
-    message_vision(CYN "$N給$n一些黃金。\n" NOR, this_object(), who);
+    if( !bq_here(this_object(), who) || !gold->move(who) ) gold->move(environment(this_object()));
+    else message_vision(CYN "$N給$n一些黃金。\n" NOR, this_object(), who);
 }
 
 // 收下玩家自己取得的飲血（別人轉手的不收）。

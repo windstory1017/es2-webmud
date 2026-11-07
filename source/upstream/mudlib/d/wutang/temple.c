@@ -23,6 +23,15 @@ int do_enter(string arg)
     return 1;
 }
 
+// 房間重置（reborn）時，廟祝補上一把飲血（蝶影幻步任務，每次重置只有一把）。
+void reset()
+{
+    object npc;
+
+    ::reset();
+    if( objectp(npc = present("keeper", this_object())) ) npc->reset_stock();
+}
+
 void create()
 {
     set("short", "鎮天神廟");

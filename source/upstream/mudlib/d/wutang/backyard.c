@@ -12,6 +12,7 @@ void init()
 }
 
 // 蝶影幻步任務：李山說金牌藏在小溪裡，搜小溪找到金牌（每個玩家各自進行）。
+// 金牌每次房間重置（reborn）只有一面，被人找走後要等下次重置；不能補領。
 int do_search(string arg)
 {
     object me = this_player();
@@ -19,16 +20,22 @@ int do_search(string arg)
     if( arg != "小溪" ) return 0;
     if( me->is_busy() || me->is_fighting() )
         return notify_fail("你現在沒有辦法這麼做。\n");
-    if( (bq_stage(me) != BQ_LEE && bq_stage(me) != BQ_PLAQUE) || bq_find(me, BQ_PLAQUE_FILE) ) {
+    if( bq_stage(me) != BQ_LEE || query_temp("plaque_taken") ) {
         write("你在小溪中摸了一陣﹐只摸到幾顆滑溜溜的石子。\n");
         return 1;
     }
-    // 進度是 BQ_PLAQUE 卻沒有金牌：金牌弄丟了（賣掉、丟了），讓玩家再找一次。
+    set_temp("plaque_taken", 1);
     me->set(BQ_STAGE, BQ_PLAQUE);
-    bq_give(me, BQ_PLAQUE_FILE);
+    bq_give(me, me, BQ_PLAQUE_FILE);
     write("你在小溪中摸索，找到一面金牌。\n");
     message("vision", me->name() + "在小溪中摸索了一陣。\n", environment(me), me);
     return 1;
+}
+
+void reset()
+{
+    ::reset();
+    delete_temp("plaque_taken");
 }
 
 void create()
