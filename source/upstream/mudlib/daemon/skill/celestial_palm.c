@@ -134,7 +134,7 @@ int perform_action(object me, string act, object target)
     me->add_temp("apply/intimidate", amount);
     me->add_temp("apply/wittiness", amount);
     me->set_temp("celestial_palm/zarn", 1);
-    message_vision(HIY "$N雙掌交錯護在身前﹐天邪真氣自掌心流遍全身﹐擺出了「天邪掌」的架勢﹐有如猛虎踞山！\n" NOR, me);
+    message_vision(HIY "$N催動體內天邪氣勁，雙掌交錯將真氣自掌心流遍全身！\n" NOR, me, 0, 1);   // 使用者指定敘述（2026-11-07）
     call_out("remove_cele_zarn", duration * 2, me, amount);
     return 1;
 }

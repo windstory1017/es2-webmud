@@ -82,7 +82,7 @@ F6 小徑        H6 後花園        J6 側廳 ── L6 東廂房
 |---|---|---|
 | 獄卒(Jailer) | `d/snowkeep/npc/jailer.c` | 人類、40 歲、武者、等級 50、強度 A；蛟骨刀、真元戰袍、烈陽護膝、鑲珠束腰 |
 | 王賢(Wang hsian) | `d/snowkeep/npc/wang_hsian.c` | 人類、25 歲、武者、等級 20、強度 C；皮短靴、護心鏡、單刀；敘述照設計表 |
-| 雪吟山莊弟子、刀客 | `d/snowkeep/npc/apprentice.c`、`blademan.c` | 見 `docs/martial_arts/雪吟莊_武功.md` 第七節；這次的設計表沒有指定房間，先不放 |
+| 雪吟莊弟子、雪吟莊刀客 | `d/snowkeep/npc/apprentice.c`、`blademan.c` | 見 `docs/martial_arts/雪吟莊_武功.md` 第七節；這次的設計表沒有指定房間，先不放 |
 | 黃銅鑰匙(Brass key) | `d/snowkeep/obj/brass_key.c` | 魚鐵山身上；開地牢深處的牢門 |
 | 護心鏡(Heart plate) | `custom/armor/armor/heart_plate.c` | 鎧甲；防禦 10、守勢等級 10 |
 

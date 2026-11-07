@@ -1,4 +1,4 @@
-// /d/snowkeep/npc/apprentice.c — 雪吟莊 NPC：雪吟山莊弟子（強度比照冷梅莊三代弟子）。
+// /d/snowkeep/npc/apprentice.c — 雪吟莊 NPC：雪吟莊弟子（強度比照冷梅莊三代弟子）。
 // 設計見 docs/martial_arts/雪吟莊_武功.md 第七節。
 
 #include <npc.h>
@@ -7,13 +7,13 @@ inherit F_FIGHTER;
 void create()
 {
     seteuid(getuid());
-    set_name("雪吟山莊弟子", ({ "apprentice" }));
+    set_name("雪吟莊弟子", ({ "apprentice" }));
     set_race("human");
     set_class("fighter");
     set_level(10);
     set("age", 17);
     set("long", @LONG
-雪吟山莊的年輕弟子﹐刀法初窺門徑﹐眉宇間帶著幾分名門子弟的傲氣。
+雪吟莊的年輕弟子﹐刀法初窺門徑﹐眉宇間帶著幾分名門子弟的傲氣。
 LONG
     );
     set_skill("unarmed", 20);
