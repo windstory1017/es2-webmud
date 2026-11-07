@@ -96,6 +96,8 @@ int do_pawn(string arg)
     if( value < 1 ) return notify_fail("這樣東西不值錢。\n");
 
     if (ob->query("no_sell")) return notify_fail("這樣東西不能典當。\n");
+    // no_pawn：只有當鋪不收（丹藥只能賣回藥鋪），其他系統照常把它當成可買賣的物品（2026-11-07）。
+    if (ob->query("no_pawn")) return notify_fail("這樣東西不能典當。\n");
 
     message_vision("$N把身上的" + ob->query("name") + "拿出來典當了"
         + value_string(value * 60 / 100) + "﹐換得一張當票。\n", this_player());
@@ -123,6 +125,7 @@ int sell_item(object ob)
     if( value < 1 ) return notify_fail("這樣東西不值錢。\n");
 
     if (ob->query("no_sell")) return notify_fail("這樣東西不能賣。\n");
+    if (ob->query("no_pawn")) return notify_fail("這樣東西不能賣。\n");
 
     message_vision("$N把身上的" + ob->query("name") + "賣掉。\n",
         this_player());
