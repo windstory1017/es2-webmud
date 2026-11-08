@@ -611,7 +611,13 @@ static size_t copy_chars (UCHAR* from, UCHAR* to, size_t count, interactive_t* i
                   *to++ = '\b';
                   *to++ = '\0';
                   opt_trace (TT_COMM|2, "TELNET new line sequence received.\n");
-                  add_message (ip->ob, "\r\n");
+                  /* Only echo the newline while the server is suppressing
+                   * client echo (password input).  Line-mode clients such as
+                   * zMUD echo locally and already move to a new line, so an
+                   * extra "\r\n" here shows up as a blank line after every
+                   * command. */
+                  if (ip->iflags & NOECHO)
+                    add_message (ip->ob, "\r\n");
                 }
               ip->state &= ~TS_CR_SEEN; /* lone CR is dropped */
               break;
