@@ -15,7 +15,7 @@ inherit SKILL;
 
 #define SKILL_ID     "alchemy-wealth"
 #define SEN_COST     15
-#define SILVER_LIMIT 500     // 銀咒只能轉價值 500 文以下（W-03：未滿 500）
+#define SILVER_LIMIT 500     // 銀咒只能轉價值 500 文以下（W-03：含 500，2026-11-08 修改，#41）
 #define GOLD_LEVEL   90      // 金咒領悟等級（W-01）
 #define HOLD_LEVEL   79      // 79 級後只累積經驗（U-07）
 
@@ -191,9 +191,9 @@ int conjure_magic(object me, string spell, object target)
     if( spell == "gold_seal" && level < GOLD_LEVEL )
         return notify_fail(gender_self(me) + "尚未領悟金咒。\n");
 
-    // 2.4：銀咒轉不動 500 文以上的物品。
+    // 2.4：銀咒轉不動超過 500 文的物品（剛好 500 文可以轉，#41）。
     value = unit_value(target);
-    if( spell == "silver_seal" && value >= SILVER_LIMIT ) {
+    if( spell == "silver_seal" && value > SILVER_LIMIT ) {
         unit = target->query("base_unit");
         if( !stringp(unit) ) unit = target->query("unit");
         if( !stringp(unit) ) unit = "件";
