@@ -102,8 +102,13 @@ private void give_coin(object who)
 
 	if( environment(who) != environment() ) return;
 	ob = new(__DIR__"obj/coin");
-	if( !ob->move(who) )
+	// 給古錢時要有敘述（使用者指示 #39，2026-11-08）。
+	if( ob->move(who) )
+		message_vision("瞎眼老太婆從懷裡摸出一枚黑黝黝的古錢，塞進$N的手裡。\n", who);
+	else {
 		ob->move(environment());
+		message_vision("瞎眼老太婆從懷裡摸出一枚黑黝黝的古錢，放在$N的腳邊。\n", who);
+	}
 }
 
 void relay_say(object ob, string arg)
@@ -141,7 +146,7 @@ void relay_say(object ob, string arg)
 				if( member_array(ob, coin_given) != -1 ) return;
 				coin_given += ({ ob });
 				do_chat(({
-					"瞎眼老太婆說道：乖孩子，這個再給你。",
+					"瞎眼老太婆說道：乖孩子，這個再給你。\n",
 					(: give_coin, ob :),
 				}));
 				return;
@@ -153,7 +158,7 @@ void relay_say(object ob, string arg)
 			ob->improve_skill("sneak", 20);
 			ob->improve_skill("stealing", 20);
 			do_chat(({
-				"瞎眼老太婆說道：對了，這個給你。",
+				"瞎眼老太婆說道：對了，這個給你。\n",
 				(: give_coin, ob :),
 				"瞎眼老太婆說道：如果你想學本事，拿這東西給對方看。\n",
 			}));
