@@ -46,8 +46,10 @@ int main(object me, string arg)
 		}
 		// 施法後延遲一次心跳（使用者指示 #37，2026-11-06）：只有真的施出去（成功或失敗）才延遲，
 		// 施法前被擋下的不延遲；技能自己設的延遲比較長時照技能的。
-		// 唯一例外：神農之術（七色印）施法成功不延遲，失敗照樣延遲。
-		if( ok && !(magic == "alchemy-medication" && !me->query_temp("conjure/failed"))
+		// 例外：神農之術（七色印）、黃白之術（銀咒、金咒）施法成功不延遲，失敗照樣延遲
+		// （黃白之術於 #42，2026-11-08 加入）。
+		if( ok && !((magic == "alchemy-medication" || magic == "alchemy-wealth")
+		            && !me->query_temp("conjure/failed"))
 		&&  !me->is_busy() )
 			me->start_busy(1);
 		me->delete_temp("conjure/failed");
