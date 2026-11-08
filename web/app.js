@@ -1338,6 +1338,26 @@ setupTextColor(document.getElementById('textColorSettings'));
 const fontRange=document.querySelector('#terminalFontSize'),fontValue=document.querySelector('#terminalFontValue');
 fontRange?.addEventListener('input',()=>{document.documentElement.style.setProperty('--terminal-font-size',fontRange.value+'px');sideSplitter.refresh();if(fontValue)fontValue.textContent=fontRange.value+'px';localStorage.setItem('es2-ui-font',fontRange.value);});
 try{const f=localStorage.getItem('es2-ui-font');if(f&&fontRange){fontRange.value=f;document.documentElement.style.setProperty('--terminal-font-size',f+'px');sideSplitter.refresh();if(fontValue)fontValue.textContent=f+'px';}}catch(_){}
+// 手機版（窄螢幕）：自動縮放終端機字級，讓 80 欄（40 個全形字）的排版（score、skills -a、房間敘述）
+// 剛好一行放得下；戰鬥等超長敘述仍自動換行。PC 版維持使用者設定的字級，不受影響（2026-11-08）。
+const mobileMQ=window.matchMedia('(max-width:620px)');
+function fitMobileFont(){
+  const root=document.documentElement;
+  if(!mobileMQ.matches){
+    let f='';try{f=localStorage.getItem('es2-ui-font')||'';}catch(_){}
+    root.style.setProperty('--terminal-font-size',(f||'15')+'px');
+    return;
+  }
+  const cs=getComputedStyle(term);
+  const avail=term.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight)-2;
+  if(avail<=0)return;
+  const px=Math.max(6.5,Math.min(15,Math.floor(avail/40*10)/10));
+  root.style.setProperty('--terminal-font-size',px+'px');
+}
+fitMobileFont();
+mobileMQ.addEventListener?.('change',fitMobileFont);
+window.addEventListener('resize',fitMobileFont);
+window.addEventListener('orientationchange',fitMobileFont);
 
 
 
