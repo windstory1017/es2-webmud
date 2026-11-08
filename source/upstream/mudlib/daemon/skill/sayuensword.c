@@ -96,3 +96,11 @@ int query_skill_cap(object me)
 {
     return has_essence(me) ? 200 : 30;
 }
+
+/* 水雲劍法到了上限，只要精義還沒到頂，仍照常累積點數（精義的經驗掛在水雲劍法的點數上），
+ * 劍法本身不會超過上限（使用者定案，2026-11-08）。 */
+int query_learn_at_cap(object me)
+{
+    if( !has_essence(me) ) return 0;
+    return me->query_skill("sayuensword essence", 1) < me->restored_skill_cap("sayuensword essence");
+}

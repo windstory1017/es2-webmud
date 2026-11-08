@@ -14,6 +14,12 @@ private void create()
 /* 不能 enable 在任何技能上。 */
 int valid_enable(string usage) { return 0; }
 
+/* 精義的上限最高等於水雲劍法的上限（使用者定案，2026-11-08）。 */
+int query_skill_cap(object me)
+{
+    return me->restored_skill_cap("sayuensword");
+}
+
 /* 每級武術造詣 等級 × 10；31 級起武學之道 (等級 - 30) × 10（使用者定案，2026-10-20）。 */
 void skill_advanced(object me, string skill)
 {
