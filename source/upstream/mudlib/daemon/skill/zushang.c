@@ -98,6 +98,8 @@ int halt_exercise(object me, object owner, object from, string how)
 }
 
 // 第三章：regenerate。
+// 2026-11-09 改（使用者定案）：扣精、氣 等級 ÷ 10，回神 等級，補神的可用上限 等級 ÷ 5 + 5；
+// 0 級（未練成）維持固定值。
 int do_regenerate(object me)
 {
     int level, cost, sen, heal;
@@ -106,7 +108,7 @@ int do_regenerate(object me)
     if( level < 1 ) {
         cost = 1; sen = 10; heal = 5;
     } else {
-        cost = level / 6; sen = level; heal = level / 10 + 5;
+        cost = level / 10; sen = level; heal = level / 5 + 5;
     }
     if( me->query_stat("gin") < cost || me->query_stat("kee") < cost )
         return notify_fail(gender_self(me) + "的精氣不足，無法運起竹上經心法回復精神。\n");
