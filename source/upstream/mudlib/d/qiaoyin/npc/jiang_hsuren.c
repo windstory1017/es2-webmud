@@ -101,8 +101,9 @@ int acquire_skill(object me, string skill)
         command("say 想學？先把柴火錢付了再說。");
         return 1;
     }
-    if( skill == "zushang" && me->query_level() < 15 ) {
-        say_to(me, "你的根基尚淺，恐怕無法瞭解竹上經心法的修練方式。");
+    // 竹上經心法的門檻照技能檔（讀書識字、神農之術、黃白之術；#40，2026-11-08）。
+    if( skill == "zushang" && SKILL_D("zushang")->learn_block_reason(me) ) {
+        say_to(me, SKILL_D("zushang")->learn_block_reason(me));
         return 1;
     }
     if( me->query_learn(skill) >= 50 ) {

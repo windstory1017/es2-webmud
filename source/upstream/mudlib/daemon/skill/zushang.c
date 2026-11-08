@@ -31,12 +31,27 @@ int is_longtu_disciple(object me)
 
 // 學習條件（使用者指示 #18，2026-10-28）：龍圖丹派弟子、人物等級 15。
 // 傳回 0 時 notify_fail 帶著原因；江述仁傳授前呼叫。
+// 學習門檻（使用者指示 #40，2026-11-08）：讀書識字 60、神農之術 30、黃白之術 20，
+// 只看自己練的等級；不再限制人物等級。江述仁教的時候也呼叫這裡，兩邊用同一套條件與說法。
+// 傳回不足時要說的話（「你」由呼叫的一方依性別替換），條件都夠時傳回 0。
+string learn_block_reason(object me)
+{
+    if( me->query_skill("literate", 1) < 60 )
+        return "你理解不了竹上經的修練方式。";
+    if( me->query_skill("alchemy-medication", 1) < 30
+    ||  me->query_skill("alchemy-wealth", 1) < 20 )
+        return "你的丹道根基尚淺，恐怕無法瞭解竹上經心法的修練方式。";
+    return 0;
+}
+
 int valid_learn(object me)
 {
+    string why;
+
     if( !is_longtu_disciple(me) )
         return notify_fail(gender_self(me) + "不是龍圖丹派弟子，無法修練竹上經心法。\n");
-    if( me->query_level() < 15 )
-        return notify_fail(gender_self(me) + "的根基尚淺，恐怕無法瞭解竹上經心法的修練方式。\n");
+    if( why = learn_block_reason(me) )
+        return notify_fail(replace_string(why, "你", gender_self(me)) + "\n");
     return 1;
 }
 
