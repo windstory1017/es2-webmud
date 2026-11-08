@@ -49,7 +49,7 @@ void skill_completed(object me, string sk)
     tell_object(me, HIY "你終於練成蝶影幻步。\n" NOR);
 }
 
-/* 每級獎勵（超過學成等級才給）：武術造詣 等級 × 10；41 級起武學之道 (等級 − 40) × 10。 */
+/* 每級獎勵（超過學成等級才給）：武術造詣 等級 × 10；41 級起武學之道 (等級 - 40) × 10。 */
 void skill_advanced(object me, string sk)
 {
     int lv;
