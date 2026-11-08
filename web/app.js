@@ -473,12 +473,34 @@ function compactGameOutput(s){
   out=out.replace(/\n(?:[ \t]*\n){2,}/g,'\n\n');  // 連續空行縮成一行，但保留下一行開頭的空白（置中排版用）
   return out;
 }
+// 手機版 skills 排版（2026-11-08）：技能名稱欄在遊戲端用全形／半形空白補到固定 52 欄寬，
+// 手機上這些空白很浪費。這裡把補的空白拿掉，改成「該批輸出中最長的名稱」寬度的欄位，
+// 各行的「 - 等級 數字」仍然對齊，整行變短後再把字級放大一些（最多 1.5 倍）。
+// 只動符合 skills 列表格式的整行；其他輸出不受影響。PC 版不經過這段。
+const SKILL_LINE_RE=/^((?:\x1b\[[0-9;]*m)*)(Ｖ|　)((?:\x1b\[[0-9;]*m)*)([^\x1b\n]*?\))([　 ]*)((?:\x1b\[[0-9;]*m)*) - (.{1,12}?) +-?\d+(?:(?:\x1b\[[0-9;]*m)* \([+-]\d+\)(?:\x1b\[[0-9;]*m)*)?(?:\x1b\[[0-9;]*m)*$/;
+function cjkCols(t){let n=0;for(const ch of t)n+=ch.charCodeAt(0)>=0x2e80?2:1;return n;}
 function renderChunk(s){
   const parts=compactGameOutput(s).split(/(\r\n|\n|\r)/);let out='';
+  let skillMax=0,skillScale=1;
+  if(window.matchMedia('(max-width:620px)').matches){
+    for(const p of parts){const m=SKILL_LINE_RE.exec(p);if(m)skillMax=Math.max(skillMax,cjkCols(m[4]));}
+    if(skillMax)skillScale=Math.max(1,Math.min(1.5,76/(skillMax+24)));
+  }
   for(let i=0;i<parts.length;i++){
-    const p=parts[i];
+    let p=parts[i];
     if(p==='\n'||p==='\r'||p==='\r\n'){out+='<br>';continue;}
     if(!p)continue;
+    if(skillMax){
+      const m=SKILL_LINE_RE.exec(p);
+      if(m){
+        const wd=(skillMax/2+0.5).toFixed(2);
+        const head=m[1]+m[2]+m[3]+m[4]+m[5]+m[6];
+        const body=m[1]+m[2]+m[3]+'\uE001'+m[4]+'\uE002'+m[6]+p.slice(head.length);
+        const html=ansi(body).replace('\uE001','<span style="display:inline-block;width:'+wd+'em">').replace('\uE002','</span>');
+        out+=skillScale>1.01?'<span style="font-size:'+skillScale.toFixed(2)+'em">'+html+'</span>':html;
+        continue;
+      }
+    }
     const cls=classifyLine(p);out+=cls?`<span class="${cls}">${ansi(p)}</span>`:ansi(p);
   }
   return out;
@@ -1338,6 +1360,26 @@ setupTextColor(document.getElementById('textColorSettings'));
 const fontRange=document.querySelector('#terminalFontSize'),fontValue=document.querySelector('#terminalFontValue');
 fontRange?.addEventListener('input',()=>{document.documentElement.style.setProperty('--terminal-font-size',fontRange.value+'px');sideSplitter.refresh();if(fontValue)fontValue.textContent=fontRange.value+'px';localStorage.setItem('es2-ui-font',fontRange.value);});
 try{const f=localStorage.getItem('es2-ui-font');if(f&&fontRange){fontRange.value=f;document.documentElement.style.setProperty('--terminal-font-size',f+'px');sideSplitter.refresh();if(fontValue)fontValue.textContent=f+'px';}}catch(_){}
+// 手機版（窄螢幕）：自動縮放終端機字級，讓 80 欄（40 個全形字）的排版（score、skills -a、房間敘述）
+// 剛好一行放得下；戰鬥等超長敘述仍自動換行。PC 版維持使用者設定的字級，不受影響（2026-11-08）。
+const mobileMQ=window.matchMedia('(max-width:620px)');
+function fitMobileFont(){
+  const root=document.documentElement;
+  if(!mobileMQ.matches){
+    let f='';try{f=localStorage.getItem('es2-ui-font')||'';}catch(_){}
+    root.style.setProperty('--terminal-font-size',(f||'15')+'px');
+    return;
+  }
+  const cs=getComputedStyle(term);
+  const avail=term.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight)-2;
+  if(avail<=0)return;
+  const px=Math.max(6.5,Math.min(15,Math.floor(avail/40*10)/10));
+  root.style.setProperty('--terminal-font-size',px+'px');
+}
+fitMobileFont();
+mobileMQ.addEventListener?.('change',fitMobileFont);
+window.addEventListener('resize',fitMobileFont);
+window.addEventListener('orientationchange',fitMobileFont);
 
 
 

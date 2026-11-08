@@ -452,3 +452,5 @@ label{display:block;margin:12px 0 5px;color:#b6c9bb}.form input,.form textarea{w
 .board-field input,.board-field textarea{width:100%;box-sizing:border-box;border:1px solid #31564a;border-radius:6px;background:#07100d;color:#dfe8e3;padding:6px 8px;font-size:14px}
 .board-field-grow{flex:1;min-height:0;grid-template-rows:auto minmax(0,1fr)}
 .board-field textarea{resize:none;min-height:120px;line-height:1.6}
+/* 手機版：終端機左右留白縮小、捲軸變細，讓文字有更多橫向空間（字級由 app.js 自動貼合 80 欄）。只在窄螢幕生效。 */
+@media(max-width:620px){#terminal{padding-left:4px;padding-right:4px;line-height:1.5}#terminal::-webkit-scrollbar{width:6px}#terminal::-webkit-scrollbar-thumb{border-width:1px}}
