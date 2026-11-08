@@ -1387,6 +1387,14 @@ setupTextColor(document.getElementById('textColorSettings'));
 const fontRange=document.querySelector('#terminalFontSize'),fontValue=document.querySelector('#terminalFontValue');
 fontRange?.addEventListener('input',()=>{document.documentElement.style.setProperty('--terminal-font-size',fontRange.value+'px');sideSplitter.refresh();if(fontValue)fontValue.textContent=fontRange.value+'px';localStorage.setItem('es2-ui-font',fontRange.value);});
 try{const f=localStorage.getItem('es2-ui-font');if(f&&fontRange){fontRange.value=f;document.documentElement.style.setProperty('--terminal-font-size',f+'px');sideSplitter.refresh();if(fontValue)fontValue.textContent=f+'px';}}catch(_){}
+// 手機版左欄選單：按選單按鈕展開／收起；點選單以外的地方或選了項目也收起。
+{
+  const tg=document.querySelector('#navToggle'),nav=document.querySelector('#gameNav');
+  const setNav=on=>{document.documentElement.classList.toggle('nav-open',on);tg?.setAttribute('aria-expanded',on?'true':'false');};
+  tg?.addEventListener('click',e=>{e.stopPropagation();setNav(!document.documentElement.classList.contains('nav-open'));});
+  document.addEventListener('pointerdown',e=>{if(document.documentElement.classList.contains('nav-open')&&!nav?.contains(e.target)&&!tg?.contains(e.target))setNav(false);});
+  nav?.addEventListener('click',e=>{if(e.target.closest('.nav-item'))setNav(false);});
+}
 // 手機版（窄螢幕）：自動縮放終端機字級，讓 80 欄（40 個全形字）的排版（score、skills -a、房間敘述）
 // 剛好一行放得下；戰鬥等超長敘述仍自動換行。PC 版維持使用者設定的字級，不受影響（2026-11-08）。
 const mobileMQ=window.matchMedia('(max-width:620px), (hover:none) and (pointer:coarse)');

@@ -8,12 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- 終端機中文字型：Noto Sans TC（思源黑體繁體），英文與符號用網站自帶的 ES2 Mono（更紗黑體） -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap">
-  <link rel="stylesheet" href="/styles.css?v=mobile-1108f">
+  <link rel="stylesheet" href="/styles.css?v=mobile-1108g">
 </head>
 <body class="game-body">
   <div id="gameApp" class="game-app">
     <div class="game-shell">
-      <aside class="game-nav" aria-label="遊戲功能選單">
+      <button type="button" id="navToggle" class="nav-toggle" aria-label="功能選單" aria-expanded="false" aria-controls="gameNav"><i></i></button>
+      <aside id="gameNav" class="game-nav" aria-label="遊戲功能選單">
         <div class="nav-art"></div>
         <div class="nav-shade"></div>
         <div class="nav-content">
@@ -223,6 +224,6 @@
     </section>
   </div>
 
-  <script type="module" src="/app.js?v=mobile-1108f"></script>
+  <script type="module" src="/app.js?v=mobile-1108g"></script>
 </body>
 </html>
