@@ -479,30 +479,57 @@ function compactGameOutput(s){
 // 只動符合 skills 列表格式的整行；其他輸出不受影響。PC 版不經過這段。
 const SKILL_LINE_RE=/^((?:\x1b\[[0-9;]*m)*)(Ｖ|　)((?:\x1b\[[0-9;]*m)*)([^\x1b\n]*?\))([　 ]*)((?:\x1b\[[0-9;]*m)*) - (.{1,12}?) +-?\d+(?:(?:\x1b\[[0-9;]*m)* \([+-]\d+\)(?:\x1b\[[0-9;]*m)*)?(?:\x1b\[[0-9;]*m)*$/;
 function cjkCols(t){let n=0;for(const ch of t)n+=ch.charCodeAt(0)>=0x2e80?2:1;return n;}
+// 手機版房間敘述重排（2026-11-08）：遊戲端把房間敘述切成約 70 欄一行，手機畫面較窄時會斷成
+// 一長一短。這裡把「房間標題行（結尾是 -）之後，同一段敘述被硬切開的行」接回同一段，
+// 交給瀏覽器依頁面寬度自動換行。只接「不以空白開頭」的續行；縮排的天色行、出口行、
+// 人物（結尾是 (英文代號)）、空行都會結束這一段。PC 版不經過這段。
+let descState=0;   // 0 一般；1 剛看到房間標題；2 正在敘述段落中
+let midLine=false; // 上一段輸出是否停在一行的中間
+const ROOM_TITLE_RE=/^\S.{0,30}\s-\s*$/;
 function renderChunk(s){
   const parts=compactGameOutput(s).split(/(\r\n|\n|\r)/);let out='';
-  let skillMax=0,skillScale=1;
-  if(mobileMQ.matches){
+  const mobile=mobileMQ.matches;
+  let skillMax=0;
+  if(mobile){
     for(const p of parts){const m=SKILL_LINE_RE.exec(p);if(m)skillMax=Math.max(skillMax,cjkCols(m[4]));}
-    if(skillMax)skillScale=Math.max(1,Math.min(1.5,76/(skillMax+24)));
-  }
+  }else descState=0;
+  let lineStart=!midLine,pending=false,contCount=0,lastText=false;
   for(let i=0;i<parts.length;i++){
     let p=parts[i];
-    if(p==='\n'||p==='\r'||p==='\r\n'){out+='<br>';continue;}
+    if(p==='\n'||p==='\r'||p==='\r\n'){
+      lastText=false;lineStart=true;
+      if(descState===2){
+        if(pending){out+='<br><br>';pending=false;descState=0;}
+        else pending=true;
+      }else out+='<br>';
+      continue;
+    }
     if(!p)continue;
+    const plain=cleanText(p);
+    if(lineStart){
+      if(descState===2&&pending){
+        if(contCount<12&&!/^[\s\u3000]/.test(plain)&&!/\([A-Za-z][^()]*\)\s*$/.test(plain)&&!/明顯的出口|唯一的出口/.test(plain)){
+          pending=false;contCount++;
+        }else{out+='<br>';pending=false;descState=0;}
+      }else if(descState===1){descState=2;contCount=0;}
+      if(mobile&&descState===0&&ROOM_TITLE_RE.test(plain.trim()))descState=1;
+    }
+    lineStart=false;lastText=true;
     if(skillMax){
       const m=SKILL_LINE_RE.exec(p);
       if(m){
         const wd=(skillMax/2+0.5).toFixed(2);
         const head=m[1]+m[2]+m[3]+m[4]+m[5]+m[6];
         const body=m[1]+m[2]+m[3]+'\uE001'+m[4]+'\uE002'+m[6]+p.slice(head.length);
-        const html=ansi(body).replace('\uE001','<span style="display:inline-block;width:'+wd+'em">').replace('\uE002','</span>');
-        out+=skillScale>1.01?'<span style="font-size:'+skillScale.toFixed(2)+'em">'+html+'</span>':html;
+        out+=ansi(body).replace('\uE001','<span style="display:inline-block;width:'+wd+'em">').replace('\uE002','</span>');
         continue;
       }
     }
     const cls=classifyLine(p);out+=cls?`<span class="${cls}">${ansi(p)}</span>`:ansi(p);
   }
+  if(pending){out+='<br>';}
+  if(descState===2)descState=0;
+  midLine=lastText;
   return out;
 }
 function isNearBottom(){return term.scrollHeight-term.scrollTop-term.clientHeight<90;}
@@ -1360,6 +1387,14 @@ setupTextColor(document.getElementById('textColorSettings'));
 const fontRange=document.querySelector('#terminalFontSize'),fontValue=document.querySelector('#terminalFontValue');
 fontRange?.addEventListener('input',()=>{document.documentElement.style.setProperty('--terminal-font-size',fontRange.value+'px');sideSplitter.refresh();if(fontValue)fontValue.textContent=fontRange.value+'px';localStorage.setItem('es2-ui-font',fontRange.value);});
 try{const f=localStorage.getItem('es2-ui-font');if(f&&fontRange){fontRange.value=f;document.documentElement.style.setProperty('--terminal-font-size',f+'px');sideSplitter.refresh();if(fontValue)fontValue.textContent=f+'px';}}catch(_){}
+// 手機版左欄選單：按選單按鈕展開／收起；點選單以外的地方或選了項目也收起。
+{
+  const tg=document.querySelector('#navToggle'),nav=document.querySelector('#gameNav');
+  const setNav=on=>{document.documentElement.classList.toggle('nav-open',on);tg?.setAttribute('aria-expanded',on?'true':'false');};
+  tg?.addEventListener('click',e=>{e.stopPropagation();setNav(!document.documentElement.classList.contains('nav-open'));});
+  document.addEventListener('pointerdown',e=>{if(document.documentElement.classList.contains('nav-open')&&!nav?.contains(e.target)&&!tg?.contains(e.target))setNav(false);});
+  nav?.addEventListener('click',e=>{if(e.target.closest('.nav-item'))setNav(false);});
+}
 // 手機版（窄螢幕）：自動縮放終端機字級，讓 80 欄（40 個全形字）的排版（score、skills -a、房間敘述）
 // 剛好一行放得下；戰鬥等超長敘述仍自動換行。PC 版維持使用者設定的字級，不受影響（2026-11-08）。
 const mobileMQ=window.matchMedia('(max-width:620px), (hover:none) and (pointer:coarse)');
@@ -1374,7 +1409,8 @@ function fitMobileFont(){
   const vw=window.visualViewport?window.visualViewport.width-term.getBoundingClientRect().left:1e9;
   const avail=Math.min(term.clientWidth,vw)-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight)-2;
   if(avail<=0)return;
-  const px=Math.max(6.5,Math.min(15,Math.floor(avail/40*10)/10));
+  // 手機字級固定 9px；螢幕窄到 80 欄放不下時才略縮（最小 8px）。
+  const px=Math.max(8,Math.min(9,Math.floor(avail/40*10)/10));
   root.style.setProperty('--terminal-font-size',px+'px');
 }
 fitMobileFont();

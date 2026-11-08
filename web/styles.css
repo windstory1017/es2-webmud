@@ -454,3 +454,26 @@ label{display:block;margin:12px 0 5px;color:#b6c9bb}.form input,.form textarea{w
 .board-field textarea{resize:none;min-height:120px;line-height:1.6}
 /* 手機版：終端機左右留白縮小、捲軸變細，讓文字有更多橫向空間（字級由 app.js 自動貼合 80 欄）。只在窄螢幕生效。 */
 @media(max-width:620px){#terminal{padding-left:4px;padding-right:4px;line-height:1.5}#terminal::-webkit-scrollbar{width:6px}#terminal::-webkit-scrollbar-thumb{border-width:1px}}
+/* iOS Safari 會自動把小字放大（文字自動調整），讓手機縮小後的終端機字級失效；關掉它，字級才會照我們算的。 */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+/* 手機版：主畫面的欄寬不要被輸入列等內容撐寬（原本會比螢幕寬一截，文字被切掉、換行位置跑到螢幕外）。 */
+@media(max-width:620px),(hover:none) and (pointer:coarse){.console-panel{grid-template-columns:minmax(0,1fr)}.console-panel>*{min-width:0}}
+
+/* 手機版左欄選單（2026-11-08）：平常收起來，只留左上角一個選單按鈕，把整個寬度讓給文字；
+   按一下展開，再按一次、點選單以外的地方、或選了項目就收起。電腦版沒有這個按鈕，維持原樣。 */
+.nav-toggle{display:none}
+@media(max-width:620px),(hover:none) and (pointer:coarse) and (max-width:900px){
+  .game-shell{grid-template-columns:minmax(0,1fr)!important}
+  .game-nav{position:fixed!important;left:0;top:0;bottom:0;height:100%!important;width:150px;z-index:60;transform:translateX(-105%);transition:transform .18s ease;overflow-y:auto;visibility:hidden}
+  .nav-open .game-nav{transform:none;visibility:visible;box-shadow:6px 0 24px rgba(0,0,0,.6)}
+  .nav-content{padding:48px 8px 12px}
+  .nav-brand{padding:0 0 10px}
+  .nav-brand strong{writing-mode:horizontal-tb;font-size:16px;display:block}
+  .nav-brand span,.nav-brand small{display:none}
+  .nav-item{height:42px;grid-template-columns:30px 1fr;padding:0 8px;place-items:center start}
+  .nav-item span:last-child{display:inline}
+  .nav-footer small{display:none}
+  .nav-toggle{display:flex;align-items:center;justify-content:center;position:fixed;left:6px;top:6px;z-index:70;width:36px;height:36px;padding:0;border:1px solid rgba(224,184,93,.5);border-radius:8px;background:rgba(9,14,12,.92);cursor:pointer}
+  .nav-toggle i{display:block;width:18px;height:2px;background:#e6bb5e;box-shadow:0 -6px #e6bb5e,0 6px #e6bb5e}
+  .console-heading{padding-left:50px!important}
+}
