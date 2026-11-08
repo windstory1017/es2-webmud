@@ -2,11 +2,23 @@
 // gammer.c
 
 #include <npc.h>
+#include <command.h>
 
 inherit F_VILLAGER;
 
 // 拿過古錢的角色（物件本身；重新上線就是新物件，老太婆重生清單也會清空）。
 static object *coin_given = ({});
+
+// 走到這些地方時只准往指定方向走，避免走出雪亭鎮（使用者定案，2026-11-08）。
+// 平時隨機走動、戰鬥中逃跑、氣不足時逃跑都照這張表；表上沒有的房間照原本隨機走。
+static mapping limited_dirs = ([
+	"/d/snow/wgate"   : ({ "east" }),
+	"/d/snow/sgate"   : ({ "north" }),
+	"/d/snow/egate"   : ({ "west" }),
+	"/d/snow/npath2"  : ({ "west", "southeast" }),
+	"/d/snow/ebridge" : ({ "west" }),
+	"/d/snow/ngate"   : ({ "south" }),
+]);
 
 void create()
 {
@@ -47,6 +59,41 @@ void create()
 	carry_object("/obj/area/obj/cloth")->wear();
 	carry_object(__DIR__"obj/cane")->wield();
 	carry_object(__DIR__"obj/syndicator")->wield("secondhand dagger");
+}
+
+// 目前所在房間可以走的方向（已套用上面的限制表）。
+private string *allowed_dirs()
+{
+	mapping exits;
+	string *dirs, *limit, room;
+
+	if( !environment() ) return ({});
+	if( !mapp(exits = environment()->query("exits")) ) return ({});
+	dirs = keys(exits);
+	room = base_name(environment());
+	if( room[0] != '/' ) room = "/" + room;
+	limit = limited_dirs[room];
+	if( arrayp(limit) ) dirs = dirs & limit;
+	return dirs;
+}
+
+// 平時走動與戰鬥中逃跑（chat_msg / chat_msg_combat 裡的 random_move）。
+int random_move()
+{
+	string *dirs = allowed_dirs();
+
+	if( !sizeof(dirs) ) return 0;
+	return GO_CMD->main(this_object(), dirs[random(sizeof(dirs))]);
+}
+
+// 氣不足時的逃跑（set_stat_notify 觸發）。
+int notify_stat(mapping flag)
+{
+	string *dirs;
+
+	if( !living(this_object()) ) return 0;
+	if( !sizeof(dirs = allowed_dirs()) ) return 0;
+	return command("go " + dirs[random(sizeof(dirs))]);
 }
 
 private void give_coin(object who)
