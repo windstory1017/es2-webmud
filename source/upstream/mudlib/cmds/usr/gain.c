@@ -20,8 +20,9 @@ int main(object me, string arg)
 	txt += "    無。\n";
     else {
 	foreach(term, g in score_g)
-	    txt += sprintf("    %-16s %+d 點\n",
-		to_chinese("score of " + term), score_g[term] );
+	    // 名稱照畫面寬度補空格（中文算兩格），點數靠右對齊（#43，2026-11-09）。
+	    txt += "    " + cjk_pad(to_chinese("score of " + term), 16)
+		+ sprintf("%+8d 點\n", score_g[term]);
     }
 
     txt += "\n技能點數：\n";
@@ -29,8 +30,8 @@ int main(object me, string arg)
 	txt += "    無。\n";
     else {
 	foreach(term, g in skill_g)
-	    txt += sprintf("    %-16s %+d 點\n",
-		to_chinese(term), skill_g[term] );
+	    txt += "    " + cjk_pad(to_chinese(term), 16)
+		+ sprintf("%+8d 點\n", skill_g[term]);
     }
 
     write(txt);
