@@ -473,12 +473,34 @@ function compactGameOutput(s){
   out=out.replace(/\n(?:[ \t]*\n){2,}/g,'\n\n');  // 連續空行縮成一行，但保留下一行開頭的空白（置中排版用）
   return out;
 }
+// 手機版 skills 排版（2026-11-08）：技能名稱欄在遊戲端用全形／半形空白補到固定 52 欄寬，
+// 手機上這些空白很浪費。這裡把補的空白拿掉，改成「該批輸出中最長的名稱」寬度的欄位，
+// 各行的「 - 等級 數字」仍然對齊，整行變短後再把字級放大一些（最多 1.5 倍）。
+// 只動符合 skills 列表格式的整行；其他輸出不受影響。PC 版不經過這段。
+const SKILL_LINE_RE=/^((?:\x1b\[[0-9;]*m)*)(Ｖ|　)((?:\x1b\[[0-9;]*m)*)([^\x1b\n]*?\))([　 ]*)((?:\x1b\[[0-9;]*m)*) - (.{1,12}?) +-?\d+(?:(?:\x1b\[[0-9;]*m)* \([+-]\d+\)(?:\x1b\[[0-9;]*m)*)?(?:\x1b\[[0-9;]*m)*$/;
+function cjkCols(t){let n=0;for(const ch of t)n+=ch.charCodeAt(0)>=0x2e80?2:1;return n;}
 function renderChunk(s){
   const parts=compactGameOutput(s).split(/(\r\n|\n|\r)/);let out='';
+  let skillMax=0,skillScale=1;
+  if(window.matchMedia('(max-width:620px)').matches){
+    for(const p of parts){const m=SKILL_LINE_RE.exec(p);if(m)skillMax=Math.max(skillMax,cjkCols(m[4]));}
+    if(skillMax)skillScale=Math.max(1,Math.min(1.5,76/(skillMax+24)));
+  }
   for(let i=0;i<parts.length;i++){
-    const p=parts[i];
+    let p=parts[i];
     if(p==='\n'||p==='\r'||p==='\r\n'){out+='<br>';continue;}
     if(!p)continue;
+    if(skillMax){
+      const m=SKILL_LINE_RE.exec(p);
+      if(m){
+        const wd=(skillMax/2+0.5).toFixed(2);
+        const head=m[1]+m[2]+m[3]+m[4]+m[5]+m[6];
+        const body=m[1]+m[2]+m[3]+'\uE001'+m[4]+'\uE002'+m[6]+p.slice(head.length);
+        const html=ansi(body).replace('\uE001','<span style="display:inline-block;width:'+wd+'em">').replace('\uE002','</span>');
+        out+=skillScale>1.01?'<span style="font-size:'+skillScale.toFixed(2)+'em">'+html+'</span>':html;
+        continue;
+      }
+    }
     const cls=classifyLine(p);out+=cls?`<span class="${cls}">${ansi(p)}</span>`:ansi(p);
   }
   return out;
