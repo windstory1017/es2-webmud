@@ -244,7 +244,9 @@ object split_stack(object ob, int count)
 void scent(object furnace, string text, object mature)
 {
     // Keep identity after successful preparation/drop. Only actual ash cancels aroma.
-    scents += ({({room_of(furnace), text, mature ? file_name(mature) : 0})});
+    // 第 4 欄記下是哪一座丹爐：藥香、焦臭以丹爐為單位，每座丹爐各顯示一次（#38，2026-11-08）。
+    scents += ({({room_of(furnace), text, mature ? file_name(mature) : 0,
+                  furnace ? file_name(furnace) : ""})});
 }
 void flush_scents()
 {
@@ -253,7 +255,8 @@ void flush_scents()
     object who;
     foreach (event in scents) {
         if (!event[0] || (event[2] && ashed_tokens[event[2]])) continue;
-        key = file_name(event[0]) + event[1];
+        // 同一座丹爐、同一次心跳、同一種訊息只顯示一次；不同丹爐各自顯示（#38，2026-11-08）。
+        key = event[3] + "|" + event[1];
         if (seen_scents[key]) continue;
         seen_scents[key] = 1;
         foreach (who in inventory(event[0]))
