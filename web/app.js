@@ -482,7 +482,7 @@ function cjkCols(t){let n=0;for(const ch of t)n+=ch.charCodeAt(0)>=0x2e80?2:1;re
 function renderChunk(s){
   const parts=compactGameOutput(s).split(/(\r\n|\n|\r)/);let out='';
   let skillMax=0,skillScale=1;
-  if(window.matchMedia('(max-width:620px)').matches){
+  if(mobileMQ.matches){
     for(const p of parts){const m=SKILL_LINE_RE.exec(p);if(m)skillMax=Math.max(skillMax,cjkCols(m[4]));}
     if(skillMax)skillScale=Math.max(1,Math.min(1.5,76/(skillMax+24)));
   }
@@ -1362,7 +1362,7 @@ fontRange?.addEventListener('input',()=>{document.documentElement.style.setPrope
 try{const f=localStorage.getItem('es2-ui-font');if(f&&fontRange){fontRange.value=f;document.documentElement.style.setProperty('--terminal-font-size',f+'px');sideSplitter.refresh();if(fontValue)fontValue.textContent=f+'px';}}catch(_){}
 // 手機版（窄螢幕）：自動縮放終端機字級，讓 80 欄（40 個全形字）的排版（score、skills -a、房間敘述）
 // 剛好一行放得下；戰鬥等超長敘述仍自動換行。PC 版維持使用者設定的字級，不受影響（2026-11-08）。
-const mobileMQ=window.matchMedia('(max-width:620px)');
+const mobileMQ=window.matchMedia('(max-width:620px), (hover:none) and (pointer:coarse)');
 function fitMobileFont(){
   const root=document.documentElement;
   if(!mobileMQ.matches){
@@ -1371,7 +1371,8 @@ function fitMobileFont(){
     return;
   }
   const cs=getComputedStyle(term);
-  const avail=term.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight)-2;
+  const vw=window.visualViewport?window.visualViewport.width-term.getBoundingClientRect().left:1e9;
+  const avail=Math.min(term.clientWidth,vw)-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight)-2;
   if(avail<=0)return;
   const px=Math.max(6.5,Math.min(15,Math.floor(avail/40*10)/10));
   root.style.setProperty('--terminal-font-size',px+'px');
@@ -1380,6 +1381,9 @@ fitMobileFont();
 mobileMQ.addEventListener?.('change',fitMobileFont);
 window.addEventListener('resize',fitMobileFont);
 window.addEventListener('orientationchange',fitMobileFont);
+// 登入畫面時終端機是隱藏的（寬度為 0），進入遊戲顯示後寬度才有值，所以要隨終端機大小變化重算。
+try{new ResizeObserver(fitMobileFont).observe(term);}catch(_){}
+window.addEventListener('load',fitMobileFont);
 
 
 
