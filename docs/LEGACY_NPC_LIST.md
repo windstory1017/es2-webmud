@@ -52,7 +52,7 @@
 | 28 | 安懶道人 | Old taoist | `custom/legacy_npc/old_taoist.c` | 天邪國／草廬 | 人類 | 道士 | 60 | A | 玄衣派（`taoist.storm`） | — |
 | 29 | 於蘭兼毅 | Yu lan jian yi | `custom/legacy_npc/yu_lan_jian_yi.c` | 天邪國／— | 人類 | 武者 | 70 | S | 天邪派（未列入對照表） | — |
 | 30 | 蕭朗生 | Hsiao lang-sheng | `custom/legacy_npc/hsiao_lang_sheng.c` | 天邪國／— | 人類 | 武者 | 50 | A | 天邪派（未列入對照表） | — |
-| 31 | 白齊 | Taoist leader | `custom/legacy_npc/taoist_leader.c` | 太乙觀／賓客宿房 | 人類 | 道士 | 50 | A | 素衣派（`taoist.freeze`） | — |
+| 31 | 白齊 | Taoist leader | `custom/legacy_npc/taoist_leader.c` | 太乙觀／賓客宿房（2026-11-09 起放在新做的太乙觀正殿 `d/taiyi/main_hall`，素衣派掌門，可拜師與傳授） | 人類 | 道士 | 50 | A | 素衣派（`taoist.freeze`） | — |
 | 32 | 孟驚鴻 | Meng jiang-hong | `custom/legacy_npc/meng_jiang_hong.c` | 孟家祖墳／— | 人類 | 武者 | 30 | B | — | — |
 | 33 | 田由 | Tian yu | `custom/legacy_npc/tian_yu.c` | 孟家祖墳／— | 形天族 | 武者 | 30 | B | — | — |
 | 34 | 花興 | Hua xing | `custom/legacy_npc/hua_xing.c` | 孟家祖墳／暗道 | 人類 | 盜賊 | 25 | B | — | — |
