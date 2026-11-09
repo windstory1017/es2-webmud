@@ -8,14 +8,14 @@ void create()
 
 	seteuid(getuid());
 	set_name("大水缸", ({ "pot" }));
-	set_max_encumbrance(180000);
+	set_max_encumbrance(300000);
 	set("long", "一個裝滿清水的大水缸﹐如果你口渴﹐可以舀水來喝(drink)。\n");
 	set("no_get", 1);
 	set("liquid_container", 1);
 	setup();
 	if( clonep() ) {
 		water = new("/obj/water");
-		water->set_volume(100000);
+		water->set_volume(150000);
 		water->move(this_object());
 	}
 }
@@ -39,7 +39,7 @@ void refill()
 		liquid = new("/obj/water");
 		liquid->move(this_object());
 	}
-	liquid->set_volume(100000);
+	liquid->set_volume(150000);
 }
 
 void reset()
