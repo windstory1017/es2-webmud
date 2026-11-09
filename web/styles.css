@@ -477,3 +477,9 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   .nav-toggle i{display:block;width:18px;height:2px;background:#e6bb5e;box-shadow:0 -6px #e6bb5e,0 6px #e6bb5e}
   .console-heading{padding-left:50px!important}
 }
+
+/* 自動功能：縮寫與變數分頁 */
+.auto-script-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.auto-script-grid h4{margin:0 0 6px;font-size:13px;color:#c9d6cd;font-weight:500}
+.auto-script-grid h4 code{color:#8fb8a4;font-size:12px}
+.auto-help b{color:#d8c27a;font-weight:500}
