@@ -15,7 +15,7 @@ inherit "/custom/legacy_npc/legacy_npc";
 void create()
 {
     seteuid(getuid());
-    set_name("玄清道長", ({ "hsuan-ching", "taoist", "玄清道長" }));
+    set_name("玄清道長", ({ "Hsuan-ching taoist", "hsuan-ching", "taoist", "玄清道長" }));
     set_race("human");
     set_class("taoist");
     set_level(50);
