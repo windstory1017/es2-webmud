@@ -708,7 +708,7 @@ export class Automation{
 export function setupAutomationUI(auto,{dialog,toggleButton,openButtons}){
   if(!dialog)return;
   let tab='triggers';
-  let editingTrigger=null,editingTimer=null;
+  let editingTimer=null;
   const $=s=>dialog.querySelector(s);
 
   function renderToggle(){
@@ -744,41 +744,57 @@ export function setupAutomationUI(auto,{dialog,toggleButton,openButtons}){
     $('#autoColorRows').innerHTML=auto.state.colors.length?auto.state.colors.map(r=>`<tr><td class="auto-mono">${esc(r.pattern)}</td><td>${esc(r.color)}</td>${del('color',r.id)}</tr>`).join(''):empty(3,'沒有上色的樣式。');
   }
 
+  // ---------- 觸發（照 zMUD 的排版：左邊清單、右邊編輯） ----------
+  let trgTab='main',selectedTrigger=null,trgEnabled=true,trgDirty=false;
   function renderTriggers(){
     $('#autoTriggersEnabled').checked=auto.state.triggersEnabled;
     const off=new Set(auto.state.disabledClasses);
-    $('#autoClassList').innerHTML=auto.classes().map(c=>
-      `<label class="auto-class"><input type="checkbox" data-auto-class="${esc(c)}"${off.has(c)?'':' checked'}> ${esc(c)}</label>`).join('')
-      ||'<span class="auto-muted">尚無類別</span>';
-    const rows=auto.state.triggers.map(t=>`<tr class="${t.enabled?'':'is-off'}">
-      <td><input type="checkbox" data-trigger-enable="${t.id}"${t.enabled?' checked':''} aria-label="啟用"></td>
-      <td class="auto-mono">${esc(t.pattern)}</td>
-      <td class="auto-mono">${esc(t.command)}</td>
-      <td>${esc(t.cls)}</td>
-      <td class="auto-actions"><button type="button" data-trigger-edit="${t.id}">編輯</button><button type="button" data-trigger-del="${t.id}">刪除</button></td>
-    </tr>`).join('');
-    $('#autoTriggerRows').innerHTML=rows||'<tr><td colspan="5" class="auto-muted">尚未設定任何觸發。</td></tr>';
+    $('#trgClassOptions').innerHTML=auto.classes().map(c=>`<option value="${esc(c)}"></option>`).join('');
+    const rows=auto.state.triggers.map(t=>{
+      const classOff=t.cls&&off.has(t.cls);
+      const on=t.enabled&&!classOff;
+      return `<div class="trg-item${t.id===selectedTrigger?' selected':''}${on?'':' is-off'}" role="option" tabindex="0" data-trigger-id="${t.id}" aria-selected="${t.id===selectedTrigger}" title="${on?'已啟動':classOff?'類別已關閉':'已停用'}（雙擊切換）">
+        <span class="trg-check">${on?'✔':''}</span><span class="trg-cls">${esc(t.cls)}</span><span class="trg-pat">${esc(t.pattern)}</span></div>`;
+    }).join('');
+    $('#autoTriggerList').innerHTML=`<div class="trg-item trg-list-head"><span></span><span>類別</span><span>句型</span></div>`+
+      (rows||'<div class="auto-muted trg-empty">尚未設定任何觸發，按「新增」開始。</div>');
+    renderTriggerExtras();
+  }
+  function renderTriggerExtras(){
+    for(const b of dialog.querySelectorAll('[data-trg-tab]')){const on=b.dataset.trgTab===trgTab;b.classList.toggle('active',on);b.setAttribute('aria-selected',on?'true':'false');}
+    for(const p of dialog.querySelectorAll('[data-trg-panel]'))p.hidden=p.dataset.trgPanel!==trgTab;
+    const btn=$('#trgEnabledBtn');
+    btn.classList.toggle('off',!trgEnabled);btn.setAttribute('aria-pressed',trgEnabled?'true':'false');
+    btn.querySelector('b').textContent=trgEnabled?'已啟動':'已停用';
+    const cls=$('#trgClass').value.trim();
+    $('#trgClassState').textContent=cls?(auto.state.disabledClasses.includes(cls)?`類別「${cls}」目前關閉中，這一類的觸發都不會動作。`:`類別「${cls}」開啟中。`):'';
+    $('#trgClassOn').disabled=$('#trgClassOff').disabled=!cls;
+    $('#trgDelete').disabled=$('#trgCopy').disabled=!selectedTrigger;
+    $('#trgState').textContent=selectedTrigger?(trgDirty?'有修改尚未儲存':''):(trgDirty?'新的觸發，按「確定」儲存':'新的觸發');
   }
 
   function fillTriggerForm(t){
-    editingTrigger=t?.id||null;
+    selectedTrigger=t?.id||null;
     $('#trgPattern').value=t?.pattern||'';
     $('#trgCommand').value=t?.command||'';
     $('#trgClass').value=t?.cls||'';
-    $('#trgEnabled').checked=t?t.enabled:true;
+    trgEnabled=t?t.enabled:true;
     $('#trgCase').checked=!!t?.caseSensitive;
-    $('#trgRegex').checked=!!t?.regex;
+    $('#trgRegex').checked=!!t?.regex;$('#trgKindPattern').checked=!t?.regex;
     $('#trgPrompt').checked=!!t?.prompt;
-    $('#trgSave').textContent=editingTrigger?'儲存修改':'新增觸發';
     $('#trgError').textContent='';
     $('#trgTestResult').textContent='';
+    trgDirty=false;
+    lastStructure='';render();
   }
 
   function readTriggerForm(){
-    return {id:editingTrigger||undefined,pattern:$('#trgPattern').value.trim(),command:$('#trgCommand').value.trim(),
-      cls:$('#trgClass').value.trim(),enabled:$('#trgEnabled').checked,caseSensitive:$('#trgCase').checked,
+    return {id:selectedTrigger||undefined,pattern:$('#trgPattern').value.trim(),command:$('#trgCommand').value.trim(),
+      cls:$('#trgClass').value.trim(),enabled:trgEnabled,caseSensitive:$('#trgCase').checked,
       regex:$('#trgRegex').checked,prompt:$('#trgPrompt').checked};
   }
+  // 換到別的觸發前，有沒存的修改先問一下。
+  function confirmLeave(){return !trgDirty||confirm('目前的觸發有修改還沒按「確定」，要放棄這些修改嗎？');}
 
   function fmt(sec){
     const s=Math.ceil(sec);
@@ -854,10 +870,11 @@ export function setupAutomationUI(auto,{dialog,toggleButton,openButtons}){
     const t=e.target instanceof Element?e.target:null;if(!t)return;
     const b=t.closest('button');
     if(b?.dataset.autoTab){tab=b.dataset.autoTab;lastStructure='';render();return;}
-    if(b?.dataset.triggerEdit){fillTriggerForm(auto.state.triggers.find(x=>x.id===b.dataset.triggerEdit));$('#trgPattern').focus();return;}
-    if(b?.dataset.triggerDel){
-      const x=auto.state.triggers.find(y=>y.id===b.dataset.triggerDel);
-      if(x&&confirm(`刪除觸發「${x.pattern}」？`)){auto.removeTrigger(x.id);if(editingTrigger===x.id)fillTriggerForm(null);}
+    if(b?.dataset.trgTab){trgTab=b.dataset.trgTab;renderTriggerExtras();return;}
+    const item=t.closest('[data-trigger-id]');
+    if(item){
+      const id=item.dataset.triggerId;
+      if(id!==selectedTrigger&&confirmLeave())fillTriggerForm(auto.state.triggers.find(x=>x.id===id));
       return;
     }
     if(b?.dataset.scriptDel){
@@ -876,25 +893,47 @@ export function setupAutomationUI(auto,{dialog,toggleButton,openButtons}){
       return;
     }
   });
+  // 雙擊清單裡的觸發：切換開關（直接存檔）。
+  dialog.addEventListener('dblclick',e=>{
+    const item=e.target instanceof Element?e.target.closest('[data-trigger-id]'):null;if(!item)return;
+    const x=auto.state.triggers.find(y=>y.id===item.dataset.triggerId);if(!x)return;
+    x.enabled=!x.enabled;
+    if(x.id===selectedTrigger)trgEnabled=x.enabled;
+    auto.save();
+  });
+  dialog.addEventListener('keydown',e=>{
+    const item=e.target instanceof Element?e.target.closest('[data-trigger-id]'):null;
+    if(item&&(e.key==='Enter'||e.key===' ')){e.preventDefault();item.click();}
+  });
   dialog.addEventListener('change',e=>{
     const t=e.target;
-    if(t.dataset?.triggerEnable){
-      const x=auto.state.triggers.find(y=>y.id===t.dataset.triggerEnable);
-      if(x){x.enabled=t.checked;auto.save();}
-    }else if(t.dataset?.autoClass!==undefined){
-      auto.toggleClass(t.dataset.autoClass,t.checked);
-    }else if(t.id==='autoTriggersEnabled'){
-      auto.setTriggersEnabled(t.checked);
-    }
+    if(t.id==='autoTriggersEnabled')auto.setTriggersEnabled(t.checked);
+    else if(t.closest?.('#autoTriggerPane')&&t.id!=='trgSample'){trgDirty=true;renderTriggerExtras();}
+  });
+  dialog.addEventListener('input',e=>{
+    const t=e.target;
+    if(t.closest?.('#autoTriggerPane')&&['trgPattern','trgCommand','trgClass'].includes(t.id)){trgDirty=true;renderTriggerExtras();}
   });
 
   $('#trgSave').addEventListener('click',()=>{
     const x=readTriggerForm();
-    if(!x.pattern){$('#trgError').textContent='請輸入樣式。';return;}
-    try{auto.upsertTrigger(x);fillTriggerForm(null);}
-    catch(err){$('#trgError').textContent='樣式有誤：'+err.message;}
+    if(!x.pattern){trgTab='main';renderTriggerExtras();$('#trgError').textContent='請輸入句型。';return;}
+    try{const saved=auto.upsertTrigger(x);fillTriggerForm(saved);}
+    catch(err){$('#trgError').textContent='句型有誤：'+err.message;}
   });
-  $('#trgNew').addEventListener('click',()=>fillTriggerForm(null));
+  $('#trgCancel').addEventListener('click',()=>fillTriggerForm(auto.state.triggers.find(x=>x.id===selectedTrigger)||null));
+  $('#trgNew').addEventListener('click',()=>{if(confirmLeave()){trgTab='main';fillTriggerForm(null);$('#trgPattern').focus();}});
+  $('#trgCopy').addEventListener('click',()=>{
+    const x=auto.state.triggers.find(y=>y.id===selectedTrigger);if(!x||!confirmLeave())return;
+    fillTriggerForm({...x,id:undefined});trgDirty=true;renderTriggerExtras();$('#trgPattern').focus();
+  });
+  $('#trgDelete').addEventListener('click',()=>{
+    const x=auto.state.triggers.find(y=>y.id===selectedTrigger);
+    if(x&&confirm(`刪除觸發「${x.pattern}」？`)){auto.removeTrigger(x.id);fillTriggerForm(null);}
+  });
+  $('#trgEnabledBtn').addEventListener('click',()=>{trgEnabled=!trgEnabled;trgDirty=true;renderTriggerExtras();});
+  $('#trgClassOn').addEventListener('click',()=>{const c=$('#trgClass').value.trim();if(c)auto.toggleClass(c,true);});
+  $('#trgClassOff').addEventListener('click',()=>{const c=$('#trgClass').value.trim();if(c)auto.toggleClass(c,false);});
   $('#trgTest').addEventListener('click',()=>{
     const x=readTriggerForm(),sample=$('#trgSample').value;
     try{

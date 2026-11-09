@@ -483,3 +483,51 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .auto-script-grid h4{margin:0 0 6px;font-size:13px;color:#c9d6cd;font-weight:500}
 .auto-script-grid h4 code{color:#8fb8a4;font-size:12px}
 .auto-help b{color:#d8c27a;font-weight:500}
+
+/* 觸發分頁：照 zMUD 的排版，左邊是已儲存的觸發清單，右邊是編輯區（觸發／選項／測試） */
+.auto-trigger-pane{display:block}
+.trg-layout{display:grid;grid-template-columns:minmax(260px,320px) minmax(0,1fr);gap:14px;align-items:stretch}
+.trg-left{display:flex;flex-direction:column;gap:8px;min-width:0}
+.trg-left-head{display:grid;gap:3px;font-size:13px;color:#9fb3a7}
+.trg-left-head strong{font-size:15px;color:#e2c46f;font-weight:600}
+.trg-left-head .auto-switch{margin-top:4px;color:#dfe8e3}
+.trg-list{flex:1;min-height:280px;max-height:52vh;overflow:auto;border:1px solid #31564a;border-radius:7px;background:#050806}
+.trg-item{display:grid;grid-template-columns:1.4em 6em minmax(0,1fr);gap:6px;align-items:center;padding:5px 8px;font-size:13px;color:#dfe8e3;cursor:pointer;border-bottom:1px solid #121e19;user-select:none}
+.trg-item:hover{background:#10201a}
+.trg-item.selected{background:#1f4d3d;color:#fff}
+.trg-item.is-off{color:#6f8277}
+.trg-item:focus-visible{outline:2px solid #a88839;outline-offset:-2px}
+.trg-list-head{position:sticky;top:0;cursor:default;background:#101c17;color:#9fb3a7;font-weight:600}
+.trg-list-head:hover{background:#101c17}
+.trg-check{color:#65df8b;text-align:center}
+.trg-cls,.trg-pat{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--term-font,monospace)}
+.trg-empty{padding:18px 10px;font-size:13px}
+.trg-left-actions{display:flex;gap:6px}
+.trg-left-actions button{flex:1;padding:6px 8px;font-size:13px}
+.trg-left-actions button:disabled,.trg-row button:disabled{opacity:.45;cursor:default}
+.trg-right{display:flex;flex-direction:column;gap:10px;min-width:0}
+.trg-subtabs{display:flex;gap:4px;border-bottom:1px solid #31564a}
+.trg-subtabs button{padding:6px 18px;border:1px solid #31564a;border-bottom:0;border-radius:7px 7px 0 0;background:#0d1a15;color:#a9c7b1;font-size:14px;letter-spacing:.2em;margin-bottom:-1px}
+.trg-subtabs button.active{background:#13241d;color:#f0ce76;border-color:#a88839;border-bottom:1px solid #13241d}
+.trg-panel{display:grid;gap:12px;align-content:start;padding:14px;border:1px solid #24372f;border-top:0;border-radius:0 0 7px 7px;background:#0c1612;min-height:250px}
+.trg-panel[hidden]{display:none}
+.trg-intro{margin:0 0 4px;display:flex;gap:10px;align-items:flex-start;color:#dfe8e3;font-size:14px;line-height:1.6}
+.trg-arrow{color:#d64545;font-size:22px;line-height:1}
+.trg-row{display:grid;grid-template-columns:4.5em minmax(0,1fr);gap:10px;align-items:center;font-size:13px;color:#9fb3a7}
+.trg-row-class{grid-template-columns:4.5em minmax(0,1fr) auto auto}
+.trg-row input{width:100%;box-sizing:border-box;background:#050806;color:#fff;border:1px solid #354d43;border-radius:6px;padding:7px 9px;font-family:var(--term-font,monospace)}
+.trg-row button{padding:6px 12px;font-size:13px}
+.trg-enabled{justify-self:start;display:inline-flex;align-items:center;gap:10px;padding:8px 22px!important;border-color:#548c77;background:#10201a}
+.trg-enabled i{width:14px;height:14px;border-radius:50%;background:#2fd36a;box-shadow:0 0 8px #2fd36a}
+.trg-enabled.off i{background:#55615b;box-shadow:none}
+.trg-enabled b{font-weight:500;color:#dfe8e3}
+.trg-class-state{font-size:12px;color:#c9b27a;min-height:1em}
+.trg-box{border:1px solid #31564a;border-radius:7px;padding:8px 14px 12px;margin:0;display:flex;flex-wrap:wrap;gap:8px 28px;color:#dfe8e3;font-size:13px}
+.trg-box legend{padding:0 6px;color:#9fb3a7}
+.trg-box label{display:flex;align-items:center;gap:6px}
+.trg-box-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.trg-bottom{display:flex;align-items:center;gap:8px;justify-content:flex-end}
+.trg-bottom .trg-state{flex:1;font-size:12px;color:#c9b27a}
+.trg-bottom button{min-width:7em;padding:7px 14px}
+.trg-bottom .primary{border-color:#a88839;color:#f0ce76;background:rgba(87,72,28,.45)}
+@media(max-width:760px){.trg-layout{grid-template-columns:1fr}.trg-list{min-height:160px;max-height:30vh}.trg-box-row{grid-template-columns:1fr}}
