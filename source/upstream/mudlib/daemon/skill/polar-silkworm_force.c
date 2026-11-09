@@ -33,7 +33,7 @@ private void create()
     setup();
 }
 
-/* 學習條件：素衣派弟子、角色等級 15（取得方式為解謎，之後另行製作）。 */
+/* 學習條件：素衣派弟子、角色等級 15；向掌門白齊學習（使用者定案，2026-11-09，取代先前的解謎）。 */
 int valid_learn(object me)
 {
     if( !is_faction(me, "taoist.freeze") )

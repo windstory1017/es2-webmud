@@ -1,7 +1,7 @@
 ◎ 冰蠶奇功（polar-silkworm force）
 　技能種類：內功
 　學習條件：素衣派道士，人物等級 >=15
-　任務起始：解謎
+　任務起始：白齊
 　安裝：enable force with polar-silkworm force
 　修練：exert polar-silkworm force
 　　　　打坐修練，每回合消耗精 1～2、氣 1～2、神 1～3，並減少精、氣、
