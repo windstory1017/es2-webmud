@@ -126,6 +126,7 @@
         <div class="auto-tabs" role="tablist">
           <button type="button" data-auto-tab="triggers" role="tab">觸發</button>
           <button type="button" data-auto-tab="timers" role="tab">計時器</button>
+          <button type="button" data-auto-tab="script" role="tab">縮寫與變數</button>
         </div>
         <div class="auto-head-actions">
           <button type="button" id="autoExport">匯出</button>
@@ -172,6 +173,29 @@
           <p>例：樣式 <code>^(%w)告訴你：(*)$</code>，指令 <code>reply 收到：%2</code>。指令可用 <code>;</code> 串接，也可以寫 <code>#tr off</code>。</p>
           <p>網頁指令（輸入欄、觸發、計時器都能用，不會送到遊戲）：<code>#wa 2000</code> 等 2 秒再送後面的指令（單位毫秒，只寫 <code>#wa</code> 是 1 秒）　<code>#3 e</code> 同一個指令重複 3 次　<code>#dis</code> 中斷連線（不會自動重連）　<code>#con</code> 重新連線　<code>#t+ 類別</code>／<code>#t- 類別</code> 開關某一組觸發　<code>#sh 文字</code> 只在自己畫面印一行字。例：<code>n;#wa 2000;get all;s</code>。</p>
           <p>同一行符合多個觸發時全部都會執行。自動指令一秒內超過 20 個會自動暫停，避免觸發互相引發造成無限循環。輸入密碼或編輯文章時不會自動送指令。</p>
+        </details>
+      </section>
+
+      <section id="autoScriptPane" class="auto-pane" hidden>
+        <p class="auto-note">這裡列出用指令建立的縮寫、變數、隱藏與上色設定，可以在這裡刪除；新增請在輸入欄（或觸發、計時器）打指令，寫法見下方說明。</p>
+        <div class="auto-script-grid">
+          <div><h4>縮寫 <code>#alias</code></h4><div class="auto-table-wrap"><table class="auto-table"><thead><tr><th>名稱</th><th>指令</th><th></th></tr></thead><tbody id="autoAliasRows"></tbody></table></div></div>
+          <div><h4>變數 <code>#var</code></h4><div class="auto-table-wrap"><table class="auto-table"><thead><tr><th>名稱</th><th>值</th><th></th></tr></thead><tbody id="autoVarRows"></tbody></table></div></div>
+          <div><h4>隱藏 <code>#gag</code></h4><div class="auto-table-wrap"><table class="auto-table"><thead><tr><th>樣式</th><th></th></tr></thead><tbody id="autoGagRows"></tbody></table></div></div>
+          <div><h4>上色 <code>#color</code></h4><div class="auto-table-wrap"><table class="auto-table"><thead><tr><th>樣式</th><th>顏色</th><th></th></tr></thead><tbody id="autoColorRows"></tbody></table></div></div>
+        </div>
+        <details class="auto-help" open>
+          <summary>指令寫法說明</summary>
+          <p><b>條件</b>　<code>#if (條件) {成立時} {不成立時}</code>，後面的 <code>{…}</code> 可省略。例：<code>#if (@hp &lt; 50) {eat dumpling} {#sh 還撐得住}</code></p>
+          <p>條件可用 <code>=</code> <code>!=</code> <code>&gt;</code> <code>&lt;</code> <code>&gt;=</code> <code>&lt;=</code> 比較，<code>&amp;</code> 而且、<code>|</code> 或者、<code>!</code> 不是，<code>+ - * /</code> 計算（除法取整數）、<code>%</code> 取餘數，括號分組。文字有空白時用 <code>"雙引號"</code> 括起來。</p>
+          <p><b>重複</b>　<code>#loop 5 {指令}</code> 重複 5 次，<code>#loop 1,5 {say %i}</code> 的 <code>%i</code> 是第幾次；<code>#while (條件) {指令}</code> 條件成立就一直做；<code>#case 2 {甲} {乙} {丙}</code> 執行第 2 個；<code>#abort</code> 停止後面的指令。</p>
+          <p><b>變數</b>　<code>#var 名稱 值</code> 設定（值有空白用 <code>{}</code> 括起來）、<code>#unvar 名稱</code> 刪除、<code>#var</code> 列出全部；指令裡寫 <code>@名稱</code> 帶入。<code>#math 名稱 運算式</code> 把結果存進變數，<code>#add 名稱 數字</code> 加上去（例：<code>#add kills 1</code>）。</p>
+          <p><b>角色狀態</b>　<code>@hp</code> 形體、<code>@jing</code> 精、<code>@qi</code> 氣、<code>@shen</code> 神、<code>@food</code> 食物、<code>@water</code> 飲水、<code>@fatigue</code> 疲勞，後面加 <code>max</code> 是最大值（例：<code>@qimax</code>）。也可以寫 <code>@gin</code>、<code>@kee</code>、<code>@sen</code>。</p>
+          <p><b>縮寫</b>　<code>#alias kk {kill %1;perform %1}</code>，之後打 <code>kk 野狗</code>；<code>%1</code>～<code>%9</code> 是後面的字，<code>%*</code> 是全部。縮寫裡沒寫 <code>%</code> 的話，後面的字接在最後。<code>#unalias kk</code> 刪除、<code>#alias</code> 列出全部。</p>
+          <p><b>其他</b>　<code>.3n2e</code> 快速移動（等於 n;n;n;e;e，斜角寫 <code>.2(ne)</code>）；<code>#trigger {樣式} {指令} 類別</code> 新增觸發、<code>#untrigger {樣式}</code> 刪除；<code>#alarm 30 {指令}</code> 30 秒後執行一次；<code>#echo 文字</code> 只在自己畫面顯示；<code>#beep</code> 叫一聲。</p>
+          <p><b>函數</b>　<code>%len(文字)</code> 字數、<code>%random(10)</code> 0～10 的亂數（<code>%random(1,6)</code> 1～6）、<code>%time</code> 現在時間、<code>%left(文字,2)</code>／<code>%right(文字,2)</code> 左邊／右邊幾個字、<code>%pos(找的字,文字)</code> 在第幾個字（沒有是 0）、<code>%eval(運算式)</code> 計算、<code>%if(條件,是,否)</code>。</p>
+          <p><b>隱藏與上色</b>　<code>#gag {樣式}</code> 之後符合的行不顯示、<code>#ungag {樣式}</code> 取消；觸發的指令裡單獨寫 <code>#gag</code> 會隱藏觸發的那一行。<code>#color {樣式} 亮黃</code> 把符合的文字上色、<code>#uncolor {樣式}</code> 取消；顏色可用 紅 綠 黃 藍 紫 青 白 灰 橘 粉紅，前面加「亮」更亮，也可寫英文 red、hi yellow。</p>
+          <p>大括號裡的 <code>;</code> 不會拆開；要送出 <code>; { } @ %</code> 本身時，前面加 <code>~</code>。一串指令沒有 <code>#wa</code> 卻處理超過 2000 步（例如 #while 停不下來）會自動停止。</p>
         </details>
       </section>
 

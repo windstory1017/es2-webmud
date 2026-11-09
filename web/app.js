@@ -763,7 +763,8 @@ function print(s,system=false){
   renderVisible(shown,system,stick);
 }
 function renderVisible(shown,system,stick){
-  if(!system&&shown)automation.feed(shown,cleanText);
+  // 觸發照常比對；#gag 隱藏的行不顯示、#color 的文字上色。
+  if(!system&&shown)shown=automation.processOutput(shown,cleanText);
   let rendered=shown?renderChunk(shown):'';
   if(!system&&pendingTrimLeadingBlank){
     // Server output can arrive split across several WebSocket frames -- e.g.
@@ -1276,6 +1277,8 @@ const automation=new Automation({
   sendUserCommand:c=>send(c),
   notify:m=>print(`\n${m}\n`,true),
   isBlocked:()=>input.type==='password'||editorActive||ws?.readyState!==1,
+  // @hp、@qi… 讀角色狀態視窗的數字（背景狀態查詢更新的）
+  getStatus:()=>Object.fromEntries(Object.entries(observer.state.vitals||{}).map(([k,v])=>[k,{current:v?.current,max:v?.limit}])),
   disconnect:()=>{
     if(reconnectTimer){clearBg(reconnectTimer);reconnectTimer=null;manualDisconnect=true;print('\n[已取消自動重連，輸入 #con 重新連線]\n',true);return true;}
     if(!ws||![WebSocket.OPEN,WebSocket.CONNECTING].includes(ws.readyState))return false;
