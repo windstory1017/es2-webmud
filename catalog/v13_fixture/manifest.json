@@ -4,7 +4,7 @@
   "git": {
     "repository": "https://github.com/taedlar/es2_mudlib",
     "origin": "https://github.com/wolfer168/es2-webmud",
-    "commit": "b0458d11b3cacb4f673588882bba3990ad510596",
+    "commit": "3e2906a1b41a55bb17cdef85d96c91a002d3211c",
     "branch": "claude/fervent-euler-dbgib2"
   },
   "total_files": 16,
