@@ -28,7 +28,7 @@ int valid_enable(string usage)
     return usage == "dodge";
 }
 
-/* 學習條件：素衣派弟子（取得方式為解謎，之後另行製作）。 */
+/* 學習條件：素衣派弟子，拜師後找上清道長學習（使用者定案，2026-11-09）。 */
 int valid_learn(object me)
 {
     if( me->query("custom_faction") != "taoist.freeze" )
