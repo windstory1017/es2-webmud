@@ -29,7 +29,8 @@ def test_payment_breaks_small_to_large():
 
 
 def test_display_stops_at_sycee():
-    for rel in ["cmds/std/balance.c", "daemon/skill/alchemy-wealth.c", "d/snow/skill/dragon_force.c",
+    # 龍圖心經自 2026-11-09（#45）起不再顯示扣款金額，已無金額寫法，不在檢查之列。
+    for rel in ["cmds/std/balance.c", "daemon/skill/alchemy-wealth.c",
                 "feature/npc/vendor.c", "feature/npc/currency.c", "obj/alchemist/pill_vendor.c",
                 "std/room/hockshop.c"]:
         s = read(rel)
