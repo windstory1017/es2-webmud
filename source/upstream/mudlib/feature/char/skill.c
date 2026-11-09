@@ -345,8 +345,10 @@ private int cap_blocks_learning(string skill)
     return 1;
 }
 
-/* Exact learned gain + old-Neolith-compatible daemon hook. */
-void improve_skill_exact(string skill, int amount)
+/* Exact learned gain + old-Neolith-compatible daemon hook.
+ * max_learn > 0 時，累積點數最多加到 max_learn 為止（書本上限用，使用者定案，2026-11-09）：
+ * 人物等級加成算完後才截斷，已經到了就不加。 */
+varargs void improve_skill_exact(string skill, int amount, int max_learn)
 {
     object daemon;
 
@@ -356,6 +358,10 @@ void improve_skill_exact(string skill, int amount)
     if( cap_blocks_learning(skill) ) return;
     /* 人物等級加成：點數 × (1 + random(人物等級 / 8))。 */
     amount += amount * random(this_object()->query_level() / 8);
+    if( max_learn > 0 ) {
+        if( learned[skill] + amount > max_learn ) amount = max_learn - learned[skill];
+        if( amount <= 0 ) return;
+    }
     if( undefinedp(learned[skill]) ) learned[skill] = amount; else learned[skill] += amount;
     if( undefinedp(skill_gain[skill]) ) skill_gain[skill] = amount; else skill_gain[skill] += amount;
     if( undefinedp(skills[skill]) ) skills[skill] = 0;
