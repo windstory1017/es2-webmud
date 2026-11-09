@@ -1385,7 +1385,12 @@ document.querySelectorAll('[data-map-action]').forEach(b=>b.addEventListener('cl
 }));
 setupTextColor(document.getElementById('textColorSettings'));
 const fontRange=document.querySelector('#terminalFontSize'),fontValue=document.querySelector('#terminalFontValue');
-fontRange?.addEventListener('input',()=>{document.documentElement.style.setProperty('--terminal-font-size',fontRange.value+'px');sideSplitter.refresh();if(fontValue)fontValue.textContent=fontRange.value+'px';localStorage.setItem('es2-ui-font',fontRange.value);});
+const mobileFontMQ=window.matchMedia('(max-width:620px), (hover:none) and (pointer:coarse)');
+// 手機版文字大小另外存（es2-ui-font-m，預設 10px，範圍 8～14），不影響電腦版的設定。
+function mobileFontSize(){let v=NaN;try{v=parseFloat(localStorage.getItem('es2-ui-font-m'));}catch(_){}return v>=8&&v<=14?v:10;}
+fontRange?.addEventListener('input',()=>{
+  if(mobileFontMQ.matches){try{localStorage.setItem('es2-ui-font-m',fontRange.value);}catch(_){}fitMobileFont();return;}
+  document.documentElement.style.setProperty('--terminal-font-size',fontRange.value+'px');sideSplitter.refresh();if(fontValue)fontValue.textContent=fontRange.value+'px';localStorage.setItem('es2-ui-font',fontRange.value);});
 try{const f=localStorage.getItem('es2-ui-font');if(f&&fontRange){fontRange.value=f;document.documentElement.style.setProperty('--terminal-font-size',f+'px');sideSplitter.refresh();if(fontValue)fontValue.textContent=f+'px';}}catch(_){}
 // 手機版左欄選單：按選單按鈕展開／收起；點選單以外的地方或選了項目也收起。
 {
@@ -1403,14 +1408,14 @@ function fitMobileFont(){
   if(!mobileMQ.matches){
     let f='';try{f=localStorage.getItem('es2-ui-font')||'';}catch(_){}
     root.style.setProperty('--terminal-font-size',(f||'15')+'px');
+    if(fontRange&&fontRange.min==='8'){fontRange.min='13';fontRange.max='20';fontRange.step='1';fontRange.value=f||'15';if(fontValue)fontValue.textContent=(f||'15')+'px';}
     return;
   }
-  const cs=getComputedStyle(term);
-  const vw=window.visualViewport?window.visualViewport.width-term.getBoundingClientRect().left:1e9;
-  const avail=Math.min(term.clientWidth,vw)-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight)-2;
-  if(avail<=0)return;
-  // 手機字級固定 9px；螢幕窄到 80 欄放不下時才略縮（最小 8px）。
-  const px=Math.max(8,Math.min(9,Math.floor(avail/40*10)/10));
+  // 手機字級：預設 10px，可在設定裡調整（8～14）；不再為了塞進 80 欄而自動縮小。
+  const px=mobileFontSize();
+  if(fontRange&&(fontRange.min!=='8'||fontRange.max!=='14')){fontRange.min='8';fontRange.max='14';fontRange.step='0.5';}
+  if(fontRange)fontRange.value=px;
+  if(fontValue)fontValue.textContent=px+'px';
   root.style.setProperty('--terminal-font-size',px+'px');
 }
 fitMobileFont();
