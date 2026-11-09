@@ -136,44 +136,72 @@
         </div>
       </div>
 
-      <section id="autoTriggerPane" class="auto-pane">
-        <div class="auto-bar">
-          <label class="auto-switch"><input type="checkbox" id="autoTriggersEnabled"> 啟用全部觸發（同 <code>#tr</code>／<code>#tr on</code>／<code>#tr off</code>）</label>
-          <div class="auto-classes"><span>類別：</span><span id="autoClassList"></span></div>
-        </div>
-        <div class="auto-table-wrap">
-          <table class="auto-table">
-            <thead><tr><th>啟用</th><th>樣式</th><th>指令</th><th>類別</th><th></th></tr></thead>
-            <tbody id="autoTriggerRows"></tbody>
-          </table>
-        </div>
-        <div class="auto-form">
-          <label class="auto-wide">樣式 Pattern <input id="trgPattern" spellcheck="false" placeholder="例：^(%w)告訴你：(*)$"></label>
-          <label class="auto-wide">指令 Value <input id="trgCommand" spellcheck="false" placeholder="例：reply 我在忙，等一下回你　（多個指令用 ; 分隔，%1～%9 帶入擷取文字）"></label>
-          <label>類別 Class <input id="trgClass" spellcheck="false" placeholder="例：戰鬥"></label>
-          <div class="auto-checks">
-            <label><input type="checkbox" id="trgEnabled" checked> 啟用</label>
-            <label><input type="checkbox" id="trgCase"> 區分大小寫</label>
-            <label><input type="checkbox" id="trgRegex"> 正規表示式</label>
-            <label title="也比對還沒換行的提示文字，例如「你確定嗎？」"><input type="checkbox" id="trgPrompt"> 比對提示行</label>
+      <section id="autoTriggerPane" class="auto-pane auto-trigger-pane">
+        <div class="trg-layout">
+          <aside class="trg-left">
+            <div class="trg-left-head">
+              <strong>已儲存的觸發資料</strong>
+              <span>點選以下的觸發句型進行編輯<br>雙擊句型可切換觸發開關</span>
+              <label class="auto-switch"><input type="checkbox" id="autoTriggersEnabled"> 啟用全部觸發</label>
+            </div>
+            <div class="trg-list" id="autoTriggerList" role="listbox" aria-label="觸發清單"></div>
+            <div class="trg-left-actions">
+              <button type="button" id="trgNew">＋ 新增</button>
+              <button type="button" id="trgCopy">複製</button>
+              <button type="button" id="trgDelete" title="刪除這個觸發">刪除</button>
+            </div>
+          </aside>
+          <div class="trg-right">
+            <div class="trg-subtabs" role="tablist">
+              <button type="button" data-trg-tab="main" role="tab">觸發</button>
+              <button type="button" data-trg-tab="options" role="tab">選項</button>
+              <button type="button" data-trg-tab="test" role="tab">測試</button>
+            </div>
+            <div class="trg-panel" data-trg-panel="main">
+              <p class="trg-intro"><span class="trg-arrow" aria-hidden="true">▶</span>當遊戲傳來的文字符合「句型」時，「指令」欄的指令就會執行。</p>
+              <div class="trg-row trg-row-class"><span>類別</span><input id="trgClass" list="trgClassOptions" spellcheck="false" placeholder="例：戰鬥（可不填）"><datalist id="trgClassOptions"></datalist>
+                <button type="button" id="trgClassOn">開啟類別</button><button type="button" id="trgClassOff">關閉類別</button></div>
+              <label class="trg-row"><span>句型</span><input id="trgPattern" spellcheck="false" placeholder="例：^(%w)告訴你：(*)$"></label>
+              <label class="trg-row"><span>指令</span><input id="trgCommand" spellcheck="false" placeholder="例：reply 我在忙　（多個指令用 ; 分隔，%1～%9 帶入擷取文字）"></label>
+              <div class="trg-row"><span></span><button type="button" id="trgEnabledBtn" class="trg-enabled" aria-pressed="true"><i aria-hidden="true"></i><b>已啟動</b></button></div>
+              <div class="trg-class-state" id="trgClassState"></div>
+            </div>
+            <div class="trg-panel" data-trg-panel="options" hidden>
+              <fieldset class="trg-box"><legend>觸發種類</legend>
+                <label><input type="radio" name="trgKind" value="pattern" id="trgKindPattern" checked> 句型（zMUD 寫法）</label>
+                <label><input type="radio" name="trgKind" value="regex" id="trgRegex"> 正規表示式</label>
+              </fieldset>
+              <div class="trg-box-row">
+                <fieldset class="trg-box"><legend>觸發在</legend>
+                  <label title="也比對還沒換行的提示文字，例如「你確定嗎？」"><input type="checkbox" id="trgPrompt"> 提示列</label>
+                </fieldset>
+                <fieldset class="trg-box"><legend>其他項目</legend>
+                  <label><input type="checkbox" id="trgCase"> 大小寫區分</label>
+                </fieldset>
+              </div>
+              <p class="auto-note">一般的完整行一定會比對；勾「提示列」才會連還沒換行的提示文字一起比對。</p>
+            </div>
+            <div class="trg-panel" data-trg-panel="test" hidden>
+              <label class="trg-row"><span>測試文字</span><input id="trgSample" spellcheck="false" placeholder="貼一行遊戲訊息，按「測試」看會不會觸發"></label>
+              <div class="trg-row"><span></span><button type="button" id="trgTest">測試</button></div>
+              <div id="trgTestResult" class="auto-result"></div>
+              <details class="auto-help">
+                <summary>樣式寫法說明</summary>
+                <p><code>*</code> 任意文字　<code>?</code> 任一個字　<code>%d</code> 數字　<code>%n</code> 可帶正負號的數字　<code>%w</code> 一個詞（中英文字、數字）　<code>%s</code> 空白　<code>%x</code> 非空白字元</p>
+                <p><code>( )</code> 擷取文字，指令裡用 <code>%1</code>～<code>%9</code> 帶入（<code>%0</code> 是整段符合的文字）　<code>{甲|乙}</code> 二選一　<code>[abc]</code> 字元集合　<code>^</code> 行首　<code>$</code> 行尾　<code>~</code> 讓下一個字元照字面比對</p>
+                <p>例：樣式 <code>^(%w)告訴你：(*)$</code>，指令 <code>reply 收到：%2</code>。指令可用 <code>;</code> 串接，也可以寫 <code>#tr off</code>。</p>
+                <p>網頁指令（輸入欄、觸發、計時器都能用，不會送到遊戲）：<code>#wa 2000</code> 等 2 秒再送後面的指令（單位毫秒，只寫 <code>#wa</code> 是 1 秒）　<code>#3 e</code> 同一個指令重複 3 次　<code>#dis</code> 中斷連線（不會自動重連）　<code>#con</code> 重新連線　<code>#t+ 類別</code>／<code>#t- 類別</code> 開關某一組觸發　<code>#sh 文字</code> 只在自己畫面印一行字。例：<code>n;#wa 2000;get all;s</code>。</p>
+                <p>同一行符合多個觸發時全部都會執行。自動指令一秒內超過 20 個會自動暫停，避免觸發互相引發造成無限循環。輸入密碼或編輯文章時不會自動送指令。</p>
+              </details>
+            </div>
+            <div id="trgError" class="auto-error"></div>
+            <div class="trg-bottom">
+              <span class="trg-state" id="trgState"></span>
+              <button type="button" id="trgSave" class="primary">✔ 確定</button>
+              <button type="button" id="trgCancel">✘ 取消</button>
+            </div>
           </div>
-          <label class="auto-wide">測試文字 <input id="trgSample" spellcheck="false" placeholder="貼一行遊戲訊息，按「測試」看會不會觸發"></label>
-          <div class="auto-form-actions">
-            <button type="button" id="trgTest">測試</button>
-            <button type="button" id="trgNew">清空</button>
-            <button type="button" id="trgSave" class="primary">新增觸發</button>
-          </div>
-          <div id="trgTestResult" class="auto-result"></div>
-          <div id="trgError" class="auto-error"></div>
         </div>
-        <details class="auto-help">
-          <summary>樣式寫法說明</summary>
-          <p><code>*</code> 任意文字　<code>?</code> 任一個字　<code>%d</code> 數字　<code>%n</code> 可帶正負號的數字　<code>%w</code> 一個詞（中英文字、數字）　<code>%s</code> 空白　<code>%x</code> 非空白字元</p>
-          <p><code>( )</code> 擷取文字，指令裡用 <code>%1</code>～<code>%9</code> 帶入（<code>%0</code> 是整段符合的文字）　<code>{甲|乙}</code> 二選一　<code>[abc]</code> 字元集合　<code>^</code> 行首　<code>$</code> 行尾　<code>~</code> 讓下一個字元照字面比對</p>
-          <p>例：樣式 <code>^(%w)告訴你：(*)$</code>，指令 <code>reply 收到：%2</code>。指令可用 <code>;</code> 串接，也可以寫 <code>#tr off</code>。</p>
-          <p>網頁指令（輸入欄、觸發、計時器都能用，不會送到遊戲）：<code>#wa 2000</code> 等 2 秒再送後面的指令（單位毫秒，只寫 <code>#wa</code> 是 1 秒）　<code>#3 e</code> 同一個指令重複 3 次　<code>#dis</code> 中斷連線（不會自動重連）　<code>#con</code> 重新連線　<code>#t+ 類別</code>／<code>#t- 類別</code> 開關某一組觸發　<code>#sh 文字</code> 只在自己畫面印一行字。例：<code>n;#wa 2000;get all;s</code>。</p>
-          <p>同一行符合多個觸發時全部都會執行。自動指令一秒內超過 20 個會自動暫停，避免觸發互相引發造成無限循環。輸入密碼或編輯文章時不會自動送指令。</p>
-        </details>
       </section>
 
       <section id="autoScriptPane" class="auto-pane" hidden>
