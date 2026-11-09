@@ -68,7 +68,7 @@ int accept_info(object ob, string type)
 // 玩家對他做表情動作；嘆氣（sigh）才算。
 void relay_emote(object who, string verb)
 {
-    if( verb != "sigh" && verb != "sign" ) return;
+    if( verb != "sigh" ) return;
     if( !objectp(who) || query_temp(WAITING) ) return;   // 正在和別人說話
     if( who->query(TAUGHT) ) return;
     if( who->query_class() != "taoist" ) {
