@@ -110,13 +110,18 @@ int acquire_skill(object ob, string skill)
 		command("say 去去去～去找你大師兄，整天無所事事，正好照顧照顧小師弟。");
 		return 1;
 	case "dragon force":
-		// 04_龍圖心經：內功 90（原生）、等級 30、悟性 30（目前的值），最多學到經驗值 50。
-		if( ob->query_skill("force", 1) < 90 ) {
+		// 04_龍圖心經（#45，2026-11-09 修改）：內功 120、竹上經心法 120、讀書識字 120
+		// （皆看原生）、悟性 30（目前的值）；取消人物等級條件。最多學到經驗值 50。
+		if( ob->query_skill("force", 1) < 120 ) {
 			command("say 你的內功根基還不夠紮實，再練練吧。");
 			return 1;
 		}
-		if( ob->query_level() < 30 ) {
-			command("say 你的歷練尚淺，還不是學龍圖心經的時候。");
+		if( ob->query_skill("zushang", 1) < 120 ) {
+			command("say 你的竹上經心法火候未到，還不是學龍圖心經的時候。");
+			return 1;
+		}
+		if( ob->query_skill("literate", 1) < 120 ) {
+			command("say 你讀的書還不夠多，參不透龍圖心經的經文。");
 			return 1;
 		}
 		if( ob->query_attr("int") < 30 ) {
