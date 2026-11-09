@@ -35,6 +35,7 @@ LONG
     set("outdoors", "snow");
     set("exits", ([
         "east" : __DIR__"grave7",
+        "west" : "/d/taiyi/gate",   // 太乙觀門口（使用者定案，2026-11-09）
     ]));
     set("map/area", "亂葬崗");
     setup();

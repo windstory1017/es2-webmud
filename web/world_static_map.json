@@ -2803,6 +2803,143 @@
       "x": 3,
       "y": 0,
       "layer": "地下"
+    },
+    {
+      "id": "/d/taiyi/gate",
+      "label": "太乙觀門口",
+      "area": "太乙觀",
+      "x": 5,
+      "y": 7
+    },
+    {
+      "id": "/d/taiyi/hall",
+      "label": "太乙觀前廳",
+      "area": "太乙觀",
+      "x": 4,
+      "y": 6
+    },
+    {
+      "id": "/d/taiyi/main_hall",
+      "label": "太乙觀正殿",
+      "area": "太乙觀",
+      "x": 5,
+      "y": 6
+    },
+    {
+      "id": "/d/taiyi/cell",
+      "label": "廂房",
+      "area": "太乙觀",
+      "x": 6,
+      "y": 6
+    },
+    {
+      "id": "/d/taiyi/corridor1",
+      "label": "觀內走道",
+      "area": "太乙觀",
+      "x": 3,
+      "y": 6
+    },
+    {
+      "id": "/d/taiyi/corridor2",
+      "label": "觀內走道",
+      "area": "太乙觀",
+      "x": 3,
+      "y": 5
+    },
+    {
+      "id": "/d/taiyi/corridor3",
+      "label": "觀內走道",
+      "area": "太乙觀",
+      "x": 3,
+      "y": 4
+    },
+    {
+      "id": "/d/taiyi/guest1",
+      "label": "香客廂房",
+      "area": "太乙觀",
+      "x": 2,
+      "y": 4
+    },
+    {
+      "id": "/d/taiyi/guest2",
+      "label": "香客廂房",
+      "area": "太乙觀",
+      "x": 2,
+      "y": 5
+    },
+    {
+      "id": "/d/taiyi/guest3",
+      "label": "香客廂房",
+      "area": "太乙觀",
+      "x": 2,
+      "y": 6
+    },
+    {
+      "id": "/d/taiyi/yard",
+      "label": "後院",
+      "area": "太乙觀",
+      "x": 5,
+      "y": 5
+    },
+    {
+      "id": "/d/taiyi/well",
+      "label": "井底",
+      "area": "太乙觀",
+      "x": 5,
+      "y": 4,
+      "layer": "地下"
+    },
+    {
+      "id": "/d/taiyi/passage1",
+      "label": "通道",
+      "area": "太乙觀",
+      "x": 5,
+      "y": 3,
+      "layer": "地下"
+    },
+    {
+      "id": "/d/taiyi/passage2",
+      "label": "通道",
+      "area": "太乙觀",
+      "x": 5,
+      "y": 2,
+      "layer": "地下"
+    },
+    {
+      "id": "/d/taiyi/passage3",
+      "label": "通道",
+      "area": "太乙觀",
+      "x": 6,
+      "y": 2,
+      "layer": "地下"
+    },
+    {
+      "id": "/d/taiyi/cliff",
+      "label": "山崖邊",
+      "area": "太乙觀",
+      "x": 7,
+      "y": 2
+    },
+    {
+      "id": "/d/taiyi/trail1",
+      "label": "後山小路",
+      "area": "太乙觀",
+      "x": 4,
+      "y": 3
+    },
+    {
+      "id": "/d/taiyi/trail2",
+      "label": "後山小路",
+      "area": "太乙觀",
+      "x": 4,
+      "y": 2
+    },
+    {
+      "id": "/d/taiyi/trail3",
+      "label": "後山小路",
+      "area": "太乙觀",
+      "x": 3,
+      "y": 1
     }
   ],
   "edges": [
@@ -7730,6 +7867,216 @@
       "from": "/d/snow/ebridge",
       "to": "/d/snowkeep/entrance",
       "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/gate",
+      "to": "/d/taiyi/hall",
+      "direction": "northwest",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/gate",
+      "to": "/d/graveyard/grave8",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/hall",
+      "to": "/d/taiyi/gate",
+      "direction": "southeast",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/hall",
+      "to": "/d/taiyi/corridor1",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/hall",
+      "to": "/d/taiyi/main_hall",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/main_hall",
+      "to": "/d/taiyi/hall",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/main_hall",
+      "to": "/d/taiyi/cell",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/main_hall",
+      "to": "/d/taiyi/yard",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/cell",
+      "to": "/d/taiyi/main_hall",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/corridor1",
+      "to": "/d/taiyi/hall",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/corridor1",
+      "to": "/d/taiyi/corridor2",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/corridor1",
+      "to": "/d/taiyi/guest3",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/corridor2",
+      "to": "/d/taiyi/corridor1",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/corridor2",
+      "to": "/d/taiyi/corridor3",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/corridor2",
+      "to": "/d/taiyi/guest2",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/corridor3",
+      "to": "/d/taiyi/corridor2",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/corridor3",
+      "to": "/d/taiyi/guest1",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/corridor3",
+      "to": "/d/taiyi/trail1",
+      "direction": "northeast",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/guest1",
+      "to": "/d/taiyi/corridor3",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/guest2",
+      "to": "/d/taiyi/corridor2",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/guest3",
+      "to": "/d/taiyi/corridor1",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/yard",
+      "to": "/d/taiyi/main_hall",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/passage1",
+      "to": "/d/taiyi/well",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/passage1",
+      "to": "/d/taiyi/passage2",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/passage2",
+      "to": "/d/taiyi/passage1",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/passage2",
+      "to": "/d/taiyi/passage3",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/passage3",
+      "to": "/d/taiyi/passage2",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/passage3",
+      "to": "/d/taiyi/cliff",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/cliff",
+      "to": "/d/taiyi/passage3",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/trail1",
+      "to": "/d/taiyi/corridor3",
+      "direction": "southwest",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/trail1",
+      "to": "/d/taiyi/trail2",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/trail2",
+      "to": "/d/taiyi/trail1",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/trail2",
+      "to": "/d/taiyi/trail3",
+      "direction": "northwest",
+      "resolved": true
+    },
+    {
+      "from": "/d/taiyi/trail3",
+      "to": "/d/taiyi/trail2",
+      "direction": "southeast",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/grave8",
+      "to": "/d/taiyi/gate",
+      "direction": "west",
       "resolved": true
     }
   ],

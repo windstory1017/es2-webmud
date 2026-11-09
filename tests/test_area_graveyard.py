@@ -55,7 +55,7 @@ def test_rooms_and_exits():
         'shrine': {'out': 'grave5'},
         'grave6': {'northeast': 'grave5', 'south': 'grave7'},
         'grave7': {'north': 'grave6', 'west': 'grave8'},
-        'grave8': {'east': 'grave7'},
+        'grave8': {'east': 'grave7', 'west': '/d/taiyi/gate'},
         'weeds': {'north': 'grave8', 'south': 'forest'},
         'forest': {'north': 'weeds', 'west': 'forest_w', 'east': 'forest_e'},
         'forest_w': {'east': 'forest'},
