@@ -26,7 +26,8 @@ int do_enter (string arg) {
   }
 
   write (HIW "\n你覺得一陣暈眩 ...\n\n" NOR);
-  CHAR_D->make_living_faint (this_player());
+  if( !CHAR_D->make_living_faint (this_player()) )
+    CHAR_D->make_living (this_player());   /* 舊版 chard 沒有此函式時的保險 */
   return 1;
 }
 

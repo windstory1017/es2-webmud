@@ -18,7 +18,8 @@ int do_register(string arg)
         return notify_fail("你陽壽未盡，用不著向城隍爺報到。\n");
     message_vision(CYN + "$N向城隍爺跪拜報到，城隍爺翻了翻生死簿，點了點頭。\n" NOR, me);
     write("城隍爺說道：「你陽壽未盡，回去吧。」\n你覺得一陣暈眩 ...\n");
-    CHAR_D->make_living_faint(me);
+    if( !CHAR_D->make_living_faint(me) )
+        CHAR_D->make_living(me);   /* 舊版 chard 沒有此函式時的保險 */
     return 1;
 }
 
