@@ -9,6 +9,7 @@ void reset()
 {
     ::reset();
     delete_temp("door_found");
+    delete("detail/暗門");
 }
 
 void init()
@@ -43,6 +44,7 @@ int do_knock(string arg)
     if( me->is_busy() || me->is_fighting() )
         return notify_fail("你現在沒有辦法這麼做。\n");
     set_temp("door_found", 1);
+    set("detail/暗門", "幾塊磚頭拼成的一道暗門，縫隙裡透出涼風，伸手一推 (push) 便能打開。");
     tell_object(me, "你屈指在井壁上一塊一塊地敲過去，敲到其中幾塊磚頭時聲音忽然空了，湊近細看，那幾塊磚頭與四周的並不相同，竟是一道暗門。\n");
     message("vision", me->name() + "屈指在井壁上一塊一塊地敲著。\n", this_object(), ({ me }));
     return 1;
@@ -72,6 +74,8 @@ void create()
 井底陰濕狹窄，抬頭只見一小圈天光，一條繩索從上方垂落。井壁砌得整整齊齊，磚縫間滲著水氣，青苔滑膩膩地爬了滿牆，四下靜得只聽見水珠一滴一滴落下，回音在井中久久不散。
 LONG
     );
+    set("detail/繩索", "一條粗麻繩從井口垂落，繩身磨得發亮，抓緊繩索便可往上爬 (climb) 回後院。");
+    set("detail/井壁", "井壁以青磚砌成，磚縫間滲著水氣，其中幾塊磚頭的縫隙似乎比別處寬些，可以敲 (knock) 敲看。");
     set("exits", ([
     ]));
     set("map/layer", "地下");

@@ -33,6 +33,7 @@ void create()
 LONG
     );
     set("outdoors", "snow");
+    set("detail/小祠", "一座不大的小祠，祠前亂草叢生，祠門半掩著，撥開雜草就能走進 (enter) 去看看。");
     set("exits", ([
         "southwest" : __DIR__"grave6",
         "east" : __DIR__"grave4",

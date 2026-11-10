@@ -33,6 +33,7 @@ void create()
 LONG
     );
     set("outdoors", "snow");
+    set("detail/繩索", "井口垂下的一條粗麻繩，不知通向多深的地方，抓住繩索可以往下爬 (climb) 到井裡去。");
     set("exits", ([
         "south" : __DIR__"main_hall",
     ]));

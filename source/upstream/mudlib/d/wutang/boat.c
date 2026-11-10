@@ -33,5 +33,6 @@ LONG
         __DIR__"npc/smoke_fisher" : 1,
     ]));
     set("map/area", "五堂鎮");
+    set("detail/河水", "船外盡是滔滔的河水，想回岸邊的話，只能跳下水游 (swim) 回去。");
     setup();
 }

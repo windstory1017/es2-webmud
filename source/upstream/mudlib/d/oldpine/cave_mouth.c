@@ -4,24 +4,6 @@
 
 inherit ROOM;
 
-void init()
-{
-    ::init();
-    add_action("do_enter", "enter");
-}
-
-int do_enter(string arg)
-{
-    object me = this_player();
-
-    if( me->is_busy() || me->is_fighting() )
-        return notify_fail("你現在沒有辦法這麼做。\n");
-    message_vision("$N掀開布簾，走進了後頭的廚房。\n", me);
-    if( !me->move("/d/oldpine/cave1") ) return 0;
-    message("vision", replace_string("$N從前頭的店裡走了進來。", "$N", me->name()) + "\n", environment(me), me);
-    return 1;
-}
-
 void create()
 {
     set("short", "山洞口");

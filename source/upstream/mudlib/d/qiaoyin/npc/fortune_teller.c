@@ -85,7 +85,7 @@ void start_reading(object who, int token)
     if( !objectp(who) || who->query_temp("fortune_teller/paid") != token ) return;
     message_vision("$N微笑著向$n點了點頭，問明了$n的生辰八字，拿出一個龜殼和幾枚銅錢，占卜了起來。\n",
         this_object(), who);
-    message_vision("$N問道﹕不知" + title_of(who) + "要問(inquire)的是哪方面的事業？\n", this_object());
+    message_vision("$N問道﹕不知" + title_of(who) + "要問 (inquire) 的是哪方面的事業？\n", this_object());
 }
 
 private void forfeit(object who) { who->delete_temp("fortune_teller/paid"); }
