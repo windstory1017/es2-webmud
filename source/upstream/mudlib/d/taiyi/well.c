@@ -27,7 +27,7 @@ int do_climb(string arg)
     if( arg != "繩索" ) return notify_fail("這裡沒有什麼可以爬的。\n");
     if( me->is_busy() || me->is_fighting() )
         return notify_fail("你現在沒有辦法這麼做。\n");
-    tell_object(me, "你抓緊粗麻繩，手腳並用地往上爬去。\n");
+    tell_object(me, "你抓緊繩索，手腳並用地往上爬去。\n");
     message("vision", me->name() + "抓著繩索往上爬去。\n", this_object(), ({ me }));
     if( !me->move(__DIR__"yard") ) return 1;
     message("vision", me->name() + "從古井裏爬了上來。\n", environment(me), ({ me }));
@@ -69,7 +69,7 @@ void create()
 {
     set("short", "井底");
     set("long", @LONG
-井底陰濕狹窄，抬頭只見一小圈天光，粗麻繩從上方垂落。井壁砌得整整齊齊，磚縫間滲著水氣，青苔滑膩膩地爬了滿牆，四下靜得只聽見水珠一滴一滴落下，回音在井中久久不散。
+井底陰濕狹窄，抬頭只見一小圈天光，一條繩索從上方垂落。井壁砌得整整齊齊，磚縫間滲著水氣，青苔滑膩膩地爬了滿牆，四下靜得只聽見水珠一滴一滴落下，回音在井中久久不散。
 LONG
     );
     set("exits", ([
