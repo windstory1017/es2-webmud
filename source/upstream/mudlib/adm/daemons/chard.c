@@ -360,6 +360,14 @@ int make_living (object ob) {
     return 1;
 }
 
+/* 復活後昏迷：復活（見 make_living）後馬上昏迷，躺在復活點上 15 tick 後才醒來。
+ * 廟裡的紅色漩渦、城隍爺報到用這個；巫師的 resurrect 指令仍然立即復活。 */
+int make_living_faint (object ob) {
+    make_living (ob);
+    ob->revive_faint ();
+    return 1;
+}
+
 void hint_user_race (string race) {
     switch (race) {
         case "human":

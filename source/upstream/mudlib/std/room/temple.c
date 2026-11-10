@@ -26,8 +26,7 @@ int do_enter (string arg) {
   }
 
   write (HIW "\n你覺得一陣暈眩 ...\n\n" NOR);
-  CHAR_D->make_living (this_player());
-  this_player()->start_busy(3);
+  CHAR_D->make_living_faint (this_player());
   return 1;
 }
 
