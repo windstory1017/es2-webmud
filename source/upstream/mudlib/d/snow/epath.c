@@ -12,7 +12,7 @@ void create()
 LONG
 	);
 	set("detail/圍牆",
-		"這間屋子的圍牆看起來相當高﹐不過如果你跳起來的話勉強可以搆得著。\n");
+		"這間屋子的圍牆看起來相當高﹐不過如果你跳起來的話勉強可以搆 (climb) 得著。\n");
 	set("outdoors", "snow");
 	set("exits", ([ /* sizeof() == 2 */
 		"east" : __DIR__"lane1",
