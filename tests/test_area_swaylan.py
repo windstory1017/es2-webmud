@@ -152,7 +152,7 @@ def test_lunmay_manor():
     for part in ('add_action("do_practice", "practice");', 'arg != "lunmay"',
                  '"fighter.lunmay"', 'query_temp("weapon/sword")',
                  '已經練成冷梅劍法，不用再在這裡練習了。', 'gender_self(me)',
-                 '"環" : "在前院的橫樑中，懸掛著七個空心的鐵環，讓弟子可以練習 (practice) 冷梅劍法。"',
+                 '"環" : "在前院的橫樑中，懸掛著七個空心的鐵環，讓弟子可以練習 (practice lunmay) 冷梅劍法。"',
                  '#define RINGS_DONE  36', '#define GIN_COST    10', 'me->start_busy(1);',
                  'rings = 1 + to_int(sqrt(to_float(count)));', 'apply_gain_progression'):
         assert part in s, part
