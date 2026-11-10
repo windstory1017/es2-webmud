@@ -25,7 +25,6 @@ LONG
     );
     set("merchandise", ([
         "/obj/alchemist/black_pill" : 30,                     // 烏心丹
-        "/obj/alchemist/refresh_pill" : 20,    // 金鎖固精丸
         "/custom/item/scroll/blank" : 500,                // 空白符紙
         "/obj/alchemist/heat_firewood" : 2000,                     // 松材
         "/d/lee/obj/salt" : 50,                           // 鹽

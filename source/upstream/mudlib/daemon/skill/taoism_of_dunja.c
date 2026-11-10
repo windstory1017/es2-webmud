@@ -8,7 +8,7 @@ description: 茅山奇術【遁甲書】（taoism of dunja）。隱風觀法術�
 
 inherit SKILL;
 
-#define FACTION "taoist.wind"
+#define FACTION "mao-shan.wind"
 
 string type() { return "magic"; }
 int valid_enable(string usage) { return usage == "magic"; }

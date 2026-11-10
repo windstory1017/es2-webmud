@@ -83,11 +83,11 @@ def test_force_map_only_skips_manual_map():
 
 def test_sect_table_keys_and_arts():
     t = table(read('daemon/misc/npc_skill.c'), 'private mapping sect = ([')
-    keys = re.findall(r'^    "([a-z]+\.[a-z]+)": \(\[', t, re.M)
-    assert keys == ['fighter.lunmay', 'fighter.tiger', 'fighter.fonxan', 'fighter.chin', 'fighter.snow',
-                    'fighter.ancient', 'scholar.sky', 'thief.longye', 'thief.hidden', 'taoist.fire',
-                    'taoist.freeze', 'taoist.storm', 'taoist.thunder', 'taoist.fog', 'taoist.wind',
-                    'taoist.lingyun', 'alchemist.wuto']
+    keys = re.findall(r'^    "([a-z-]+\.[a-z-]+)": \(\[', t, re.M)
+    assert keys == ['fighter.lunmay', 'fighter.tiger', 'fighter.fonxan', 'fighter.huge', 'fighter.snow',
+                    'fighter.au-chan', 'scholar.sky', 'scholar.myst', 'thief.longye', 'thief.yin', 'taoist.fire',
+                    'taoist.freeze', 'taoist.storm', 'taoist.thunder', 'mao-shan.fog', 'mao-shan.wind',
+                    'mao-shan.cloud', 'alchemist.wu']
     assert '"skill": "advance_lunmay", "map": "secondhand sword", "level": 30, "req": ([ "hainmay force": 100 ])' in t
     assert '"skill": "ksanmando", "map": "blade", "level": 1' in t
 

@@ -35,14 +35,14 @@
 | 11 | 冷吟月 | Leng yin yue | `custom/legacy_npc/leng_yin_yue.c` | 冷府／閨房、密室 | 人類 | 平民 | 1 | C | — | — |
 | 12 | 應曉天 | Ying xiao tian | `custom/legacy_npc/ying_xiao_tian.c` | 冷梅莊／客房 | 人類 | 武者 | 40 | A | 封山派（`fighter.fonxan`） | — |
 | 13 | 梅嵐武 | May lan-wu | `custom/legacy_npc/may_lan_wu.c` | 冷梅莊、文國縣／冷梅莊前院、清水鄉 | 人類 | 武者 | 30 | B | 冷梅莊（`fighter.lunmay`） | — |
-| 14 | 景愈濤 | Jing yu tao | `custom/legacy_npc/jing_yu_tao.c` | 古劍門／書房 | 夜叉族 | 武者 | 70 | S | 古劍門（`fighter.ancient`） | — |
+| 14 | 景愈濤 | Jing yu tao | `custom/legacy_npc/jing_yu_tao.c` | 古劍門／書房 | 夜叉族 | 武者 | 70 | S | 古劍門（`fighter.au-chan`） | — |
 | 15 | 夜羅剎 | Yaksa | `custom/legacy_npc/yaksa.c` | 古墓場／— | 夜叉族 | 武者 | 30 | B | — | 巡邏 |
 | 16 | 戰屍 | zombie warrior | `custom/legacy_npc/zombie_warrior.c` | 古墓場／— | 人類 | 軍人 | 30 | B | — | 主動攻擊、巡邏 |
 | 17 | 羅剎王 | Yaksa King | `custom/legacy_npc/yaksa_king.c` | 古墓場／— | 夜叉族 | 武者 | 35 | A | — | 主動攻擊、巡邏 |
 | 18 | 螟蛉子 | Ming ling zi | `custom/legacy_npc/ming_ling_zi.c` | 古墓場／內房 | 巫首族 | 道士 | 20 | A | — | — |
 | 19 | 鬼夜叉 | Ghost yaksa | `custom/legacy_npc/ghost_yaksa.c` | 古墓場／— | 夜叉族 | 武者 | 30 | B | — | 主動攻擊、巡邏 |
 | 20 | 歐陽芝 | O-yan zhi | `custom/legacy_npc/o_yan_zhi.c` | 名山書肆、八寶樓／歐陽書屋 | 人類 | 書生 | 30 | B | 步玄派（未列入對照表） | — |
-| 21 | 劉乙忘玄 | Liuye the Master of Grimace | `custom/legacy_npc/liuye_the_master_of_grimace.c` | 哭笑門、青邪宮／青邪宮哭笑門鎮心 | 厭火族 | 武者 | 70 | S | 哭笑門（`fighter.chin`） | — |
+| 21 | 劉乙忘玄 | Liuye the Master of Grimace | `custom/legacy_npc/liuye_the_master_of_grimace.c` | 哭笑門、青邪宮／青邪宮哭笑門鎮心 | 厭火族 | 武者 | 70 | S | 哭笑門（`fighter.huge`） | — |
 | 22 | 劉可 | Liu ko | `custom/legacy_npc/liu_ko.c` | 哭笑門／— | 厭火族 | 平民 | 1 | C | — | — |
 | 23 | 無慾師太 | Wu-yu nun | `custom/legacy_npc/wu_yu_nun.c` | 哭笑門／— | 人類 | 和尚 | 30 | B | — | — |
 | 24 | 陰雨巖 | Yin euyen | `custom/legacy_npc/yin_euyen.c` | 喬陰縣／— | 人類 | 武者 | 20 | C | — | — |
@@ -52,7 +52,7 @@
 | 28 | 安懶道人 | Old taoist | `custom/legacy_npc/old_taoist.c` | 天邪國／草廬 | 人類 | 道士 | 60 | A | 玄衣派（`taoist.storm`） | — |
 | 29 | 於蘭兼毅 | Yu lan jian yi | `custom/legacy_npc/yu_lan_jian_yi.c` | 天邪國／— | 人類 | 武者 | 70 | S | 天邪派（未列入對照表） | — |
 | 30 | 蕭朗生 | Hsiao lang-sheng | `custom/legacy_npc/hsiao_lang_sheng.c` | 天邪國／— | 人類 | 武者 | 50 | A | 天邪派（未列入對照表） | — |
-| 31 | 白齊 | Taoist leader | `custom/legacy_npc/taoist_leader.c` | 太乙觀／賓客宿房 | 人類 | 道士 | 50 | A | 素衣派（`taoist.freeze`） | — |
+| 31 | 白齊 | Taoist leader | `custom/legacy_npc/taoist_leader.c` | 太乙觀／賓客宿房（2026-11-09 起放在新做的太乙觀正殿 `d/taiyi/main_hall`，素衣派掌門，可拜師與傳授） | 人類 | 道士 | 50 | A | 素衣派（`taoist.freeze`） | — |
 | 32 | 孟驚鴻 | Meng jiang-hong | `custom/legacy_npc/meng_jiang_hong.c` | 孟家祖墳／— | 人類 | 武者 | 30 | B | — | — |
 | 33 | 田由 | Tian yu | `custom/legacy_npc/tian_yu.c` | 孟家祖墳／— | 形天族 | 武者 | 30 | B | — | — |
 | 34 | 花興 | Hua xing | `custom/legacy_npc/hua_xing.c` | 孟家祖墳／暗道 | 人類 | 盜賊 | 25 | B | — | — |
@@ -64,10 +64,10 @@
 | 40 | 任蕭蕭 | Ren xiao-xiao | `custom/legacy_npc/ren_xiao_xiao.c` | 未能判定／廂房 | 人類 | 平民 | 10 | B | — | — |
 | 41 | 八臂石妖 | Stone ghost | `custom/legacy_npc/stone_ghost.c` | 未能判定／雷神宮殿 | 形天族 | 軍人 | 40 | A | — | 主動攻擊 |
 | 42 | 兵部軍官 | Soldier leader | `custom/legacy_npc/soldier_leader.c` | 未能判定／— | 形天族 | 軍人 | 20 | B | — | — |
-| 43 | 凌月蘅 | Ling yue heng | `custom/legacy_npc/ling_yue_heng.c` | 未能判定／花砌居 | 人類 | 武者 | 35 | A | 古劍派（`fighter.ancient`） | — |
+| 43 | 凌月蘅 | Ling yue heng | `custom/legacy_npc/ling_yue_heng.c` | 未能判定／花砌居 | 人類 | 武者 | 35 | A | 古劍派（`fighter.au-chan`） | — |
 | 44 | 劉尚民 | Liu shang min | `custom/legacy_npc/liu_shang_min.c` | 未能判定／— | 人類 | 武者 | 10 | C | — | — |
 | 45 | 司馬成都 | Si-ma cheng du | `custom/legacy_npc/si_ma_cheng_du.c` | 未能判定／— | 人類 | 軍人 | 70 | A | — | — |
-| 46 | 吳長貴 | Wu changuei | `custom/legacy_npc/wu_changuei.c` | 未能判定／— | 人類 | 盜賊 | 15 | B | 瑯夷派（`thief.longye`） | — |
+| 46 | 吳長貴 | Wu changuei | `custom/legacy_npc/wu_changuei.c` | 亂葬崗／密林 | 人類 | 盜賊 | 15 | B | 瑯夷派（`thief.longye`） | 瑯夷派師父（2026-11-04） |
 | 47 | 地府鬼卒 | Hell soldier | `custom/legacy_npc/hell_soldier.c` | 未能判定／— | 人類 | 軍人 | 25 | B | — | — |
 | 48 | 宇文嵐胥 | Yu wen | `custom/legacy_npc/yu_wen.c` | 未能判定／畫室內堂 | 人類 | 書生 | 20 | B | — | — |
 | 49 | 左國益 | Zuo guo yi | `custom/legacy_npc/zuo_guo_yi.c` | 未能判定／— | 人類 | 軍人 | 30 | B | — | — |
@@ -91,17 +91,17 @@
 | 67 | 蘇瀟 | Su xiao | `custom/legacy_npc/su_xiao.c` | 未能判定／書房 | 人類 | 武者 | 15 | A | — | — |
 | 68 | 語小梅 | Yu shao me | `custom/legacy_npc/yu_shao_me.c` | 未能判定／— | 人類 | 盜賊 | 25 | B | — | — |
 | 69 | 賈秋雨 | Jia qiu yu | `custom/legacy_npc/jia_qiu_yu.c` | 未能判定／— | 人類 | 武者 | 10 | C | — | — |
-| 70 | 野人酋長 | Barbarian chief | `custom/legacy_npc/barbarian_chief.c` | 未能判定／— | 人類 | 武者 | 5 | C | — | 主動攻擊 |
+| 70 | 野人酋長 | Barbarian chief | `custom/legacy_npc/barbarian_chief.c` | 亂葬崗／密林 | 人類 | 武者 | 15 | A | — | 主動攻擊 |
 | 71 | 鍾貙 | Zhong chu | `custom/legacy_npc/zhong_chu.c` | 未能判定／— | 黑齒族 | 軍人 | 40 | A | — | — |
-| 72 | 青衣女郎 | Lady | `custom/legacy_npc/lady.c` | 未能判定／亂葬崗 | 人類 | 盜賊 | 5 | B | — | — |
+| 72 | 青衣女郎 | Lady | `custom/legacy_npc/lady.c` | 亂葬崗／亂葬崗 | 人類 | 盜賊 | 5 | B | — | — |
 | 73 | 韓夫人 | Madam han | `custom/legacy_npc/madam_han.c` | 未能判定／— | 夜叉族 | 平民 | 1 | C | — | — |
 | 74 | 魯飛 | Lu fei | `custom/legacy_npc/lu_fei.c` | 未能判定／— | 厭火族 | 軍人 | 50 | A | — | — |
 | 75 | 黃靖國 | Captain Huang | `custom/legacy_npc/captain_huang.c` | 未能判定／— | 人類 | 軍人 | 30 | A | — | — |
 | 76 | 黑無常 | Black hell agent | `custom/legacy_npc/black_hell_agent.c` | 未能判定／— | 巫首族 | 道士 | 50 | A | 朱衣派（`taoist.fire`） | — |
 | 77 | 李儒 | Li ru | `custom/legacy_npc/li_ru.c` | 柳家／民宅 | 人類 | 書生 | 20 | B | — | — |
 | 78 | 劉開 | Liu kei | `custom/legacy_npc/liu_kei.c` | 檒城／街道 | 人類 | 軍人 | 30 | B | — | — |
-| 79 | 駱易 | Ro yi | `custom/legacy_npc/ro_yi.c` | 步玄派／— | 人類 | 書生 | 65 | S | 步玄派（未列入對照表） | — |
-| 80 | 武道通 | Wu dauton | `custom/legacy_npc/wu_dauton.c` | 武陀灸堂／武陀灸堂 | 人類 | 方士 | 60 | S | 武陀灸堂（`alchemist.wuto`） | 巡邏（暫放雪亭鎮廣場北邊） |
+| 79 | 駱易 | Ro yi | `custom/legacy_npc/ro_yi.c` | 步玄派／沐華居 | 人類 | 書生 | 65 | S | 步玄派（`scholar.myst`） | — |
+| 80 | 武道通 | Wu dauton | `custom/legacy_npc/wu_dauton.c` | 武陀灸堂／武陀灸堂 | 人類 | 方士 | 60 | S | 武陀灸堂（`alchemist.wu`） | 巡邏（暫放雪亭鎮廣場北邊） |
 | 81 | 張小簽 | Zhang xiao qian | `custom/legacy_npc/zhang_xiao_qian.c` | 水嵐縣／街道 | 人類 | 平民 | 1 | C | — | — |
 | 82 | 白劍飛 | Bai jian fei | `custom/legacy_npc/bai_jian_fei.c` | 漕幫／小船 | 夜叉族 | 武者 | 25 | B | 封山派（`fighter.fonxan`） | — |
 | 83 | 蕭尹 | Xiao yin | `custom/legacy_npc/xiao_yin.c` | 漕幫／房間內 | 人類 | 武者 | 45 | A | — | — |
@@ -127,19 +127,19 @@
 | 103 | 虎刀門教頭 | Tiger trainer | `custom/legacy_npc/tiger_trainer.c` | 虎刀門／操練場 | 人類 | 武者 | 20 | B | 虎刀門（`fighter.tiger`） | — |
 | 104 | 謝青翔 | Xie qing-xiang | `custom/legacy_npc/xie_qing_xiang.c` | 虎刀門／客房內 | 夜叉族 | 武者 | 25 | B | 虎刀門（`fighter.tiger`） | — |
 | 105 | 韓笑 | Han xiao | `custom/legacy_npc/han_xiao.c` | 虎刀門／— | 人類 | 武者 | 60 | S | 虎刀門（`fighter.tiger`） | — |
-| 106 | 刑龍 | Xing long | `custom/legacy_npc/xing_long.c` | 銅佛寺／客房 | 形天族 | 武者 | 35 | A | 哭笑門（`fighter.chin`） | — |
+| 106 | 刑龍 | Xing long | `custom/legacy_npc/xing_long.c` | 銅佛寺／客房 | 形天族 | 武者 | 35 | A | 哭笑門（`fighter.huge`） | — |
 | 107 | 魯驚 | Lu jing | `custom/legacy_npc/lu_jing.c` | 銅佛寺／客房 | 人類 | 軍人 | 25 | B | — | — |
 | 108 | 邯逸山 | Island master | `custom/legacy_npc/island_master.c` | 陷空島／賓客室側房 | 人類 | 武者 | 40 | B | — | — |
-| 109 | 利丰華 | Lee fong-hwa | `custom/legacy_npc/lee_fong_hwa.c` | 隱教／練武場 | 阿修羅族 | 盜賊 | 50 | A | 隱教（`thief.hidden`） | — |
-| 110 | 黃十四娘 | Huang | `custom/legacy_npc/huang.c` | 隱教／山洞峭壁前 | 人類 | 盜賊 | 40 | B | 隱教（`thief.hidden`） | — |
+| 109 | 利丰華 | Lee fong-hwa | `custom/legacy_npc/lee_fong_hwa.c` | 隱教／練武場 | 阿修羅族 | 盜賊 | 50 | A | 隱教（`thief.yin`） | — |
+| 110 | 黃十四娘 | Huang | `custom/legacy_npc/huang.c` | 隱教／山洞峭壁前 | 人類 | 盜賊 | 40 | B | 隱教（`thief.yin`） | — |
 | 111 | 佛心 | Phoxin | `custom/legacy_npc/phoxin.c` | 雪吟莊／天井 | 人類 | 盜賊 | 50 | S | — | — |
-| 112 | 哭無望 | Ku wu wang | `custom/legacy_npc/ku_wu_wang.c` | 雪吟莊／東廂房 | 厭火族 | 武者 | 40 | A | 哭笑門（`fighter.chin`） | — |
+| 112 | 哭無望 | Ku wu wang | `custom/legacy_npc/ku_wu_wang.c` | 雪吟莊／東廂房 | 厭火族 | 武者 | 40 | A | 哭笑門（`fighter.huge`） | — |
 | 113 | 褚商魂 | Chu xang-when | `custom/legacy_npc/chu_xang_when.c` | 雪吟莊／雪吟莊大廳 | 人類 | 武者 | 25 | B | 雪吟莊（`fighter.snow`） | — |
 | 114 | 魚平胤 | Yu pingyin | `custom/legacy_npc/yu_pingyin.c` | 雪吟莊／後花園 | 人類 | 武者 | 20 | B | 雪吟莊（`fighter.snow`） | — |
-| 115 | 魚鐵山 | Yu tieshan | `custom/legacy_npc/yu_tieshan.c` | 雪吟莊／雪吟莊大廳 | 人類 | 武者 | 65 | S | 雪吟莊（`fighter.snow`） | — |
+| 115 | 魚鐵山 | Yu tieshan | `custom/legacy_npc/yu_tieshan.c` | 雪吟莊／雪吟莊大廳 | 人類 | 武者 | 65 | S | 雪吟莊（`fighter.snow`） | 雪吟莊師父（收徒、傳授武功，2026-11-05） |
 | 116 | 黑衣人 | Man in black | `custom/legacy_npc/man_in_black.c` | 雲棧市集／客房 | 厭火族 | 盜賊 | 20 | B | — | — |
 | 117 | 任常恩 | Jen commando | `custom/legacy_npc/jen_commando.c` | 青邪宮／上山小路 | 人類 | 軍人 | 25 | B | — | — |
-| 118 | 葬心 | Blade man | `custom/legacy_npc/blade_man.c` | 青邪宮、漕幫／酒館二樓 | 厭火族 | 武者 | 30 | A | 哭笑門（`fighter.chin`） | — |
+| 118 | 葬心 | Blade man | `custom/legacy_npc/blade_man.c` | 青邪宮、漕幫／酒館二樓 | 厭火族 | 武者 | 30 | A | 哭笑門（`fighter.huge`） | — |
 | 119 | 司馬蔚 | Si-ma wei | `custom/legacy_npc/si_ma_wei.c` | 風城／— | 人類 | 軍人 | 55 | A | — | — |
 | 120 | 張俊仁 | Zhang jun ren | `custom/legacy_npc/zhang_jun_ren.c` | 鬼洞／— | 人類 | 武者 | 40 | B | 封山派（`fighter.fonxan`） | — |
 | 121 | 徐小惡 | Xu xiao e | `custom/legacy_npc/xu_xiao_e.c` | 黃家鏢局／— | 人類 | 盜賊 | 25 | B | （門派以後再補） | — |
@@ -196,7 +196,7 @@
 
 | 門派 | NPC |
 |---|---|
-| 步玄派 | 歐陽芝、駱易 |
+| 步玄派 | 歐陽芝（駱易已設 `scholar.myst`，2026-11-01） |
 | 天邪派 | 於蘭兼毅、蕭朗生 |
 | 武陀灸堂 | 雷同、武道通 |
 | 白象寺 | 無念大師 |

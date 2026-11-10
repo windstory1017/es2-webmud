@@ -1,12 +1,19 @@
-import {SessionRecorder} from './session_recorder.js';
 import {PlayerStateObserver} from './player_state.js';
 import {Automation,setupAutomationUI} from './automation.js';
 import {setupChatWindow} from './chat_window.js';
 import {setupFloatWindow,setupSideSplitter,bringToFront} from './float_window.js';
 import {setupTextColor} from './text_color.js';
+import {setupBoard} from './board.js';
 import {bgTimeout,clearBg,keepPageAlive} from './bg_timer.js';
 
-const sessionRecorder = new SessionRecorder();
+// 畫面紀錄器已關閉（使用者指示 #33，2026-11-04）：原本把最近 200 筆指令與回應整份寫進
+// 分頁暫存，熱鬧時約每秒重寫一次，長時間掛機很吃資源。只有開發用的 Session 匯出頁會讀它。
+// 這裡留下同名的空物件，原本呼叫的地方不用改；要恢復時改回 new SessionRecorder() 並加回 import。
+const sessionRecorder = {
+  appendResponse(){}, beginCommand(){}, finishResponse(){},
+  markTransportOpen(){}, markTransportClose(){}, markReconnect(){}
+};
+try { sessionStorage.removeItem('es2-session-recorder-v2'); } catch (_) {}   // 清掉舊紀錄
 const observer = new PlayerStateObserver();
 const term = document.querySelector('#terminal');
 const input = document.querySelector('#command');
@@ -100,6 +107,32 @@ const chatWindow=setupChatWindow({
   openButton:document.querySelector('[data-ui-chat]'),
 });
 document.getElementById('chatWindow')?.addEventListener('pointerdown',e=>bringToFront(e.currentTarget));
+// 回報板（問題回報與建議）：請求排隊，跟著下一次背景狀態查詢送出（webhud board …）。
+// 遊戲限制每秒指令數（webhud 本身不算，帶留言板請求的會算），所以請求之間至少隔 0.4 秒；
+// 萬一還是被擋（回覆是「你下指令的速度太快了」），等 2 秒自動重送，最多兩次。
+const hudRequestQueue=[];
+const BOARD_GAP_MS=400,BOARD_RETRY_MS=2000;
+let lastBoardSentAt=0,inflightBoardCmd=null;
+function boardRequestDue(){return hudRequestQueue.length>0&&Date.now()-lastBoardSentAt>=BOARD_GAP_MS;}
+function settleBoardRequest(text){
+  const cmd=inflightBoardCmd;inflightBoardCmd=null;
+  if(!cmd||/@@WEBHUD\|BOARDBEGIN/.test(text)||!/下指令的速度太快/.test(cleanText(text)))return;
+  if((cmd.tries=(cmd.tries||0)+1)>2)return;
+  setTimeout(()=>{hudRequestQueue.unshift(cmd);kickHudAfterServerText(true);},BOARD_RETRY_MS);
+}
+const board=setupBoard({
+  root:document.getElementById('boardWindow'),
+  badge:document.querySelector('[data-board-badge]'),
+  isReady:()=>!!currentRoomId&&ws?.readyState===1,
+  sendRequest:cmd=>{hudRequestQueue.push({cmd});kickHudAfterServerText(true);},
+});
+setupFloatWindow({
+  root:document.getElementById('boardWindow'),
+  openButton:document.querySelector('[data-ui-board]'),
+  storageKey:'es2-board-window-v1',resizable:true,rememberOpen:false,
+  defaultGeometry:()=>{const w=Math.min(560,window.innerWidth-32),h=Math.min(560,window.innerHeight-60);return {left:Math.max(16,(window.innerWidth-w)/2),top:Math.max(16,(window.innerHeight-h)/3),width:w,height:h};},
+  onShow:()=>board.onOpen(),
+});
 // 最右欄是空白區域，用來擺地圖、角色狀態等浮動視窗；訊息欄與它之間的分隔線可左右拖曳。
 // 訊息欄最窄 = score 最寬的一行（72 個半形字寬）× 125%，加上左右留白；跟著文字大小設定變動（同 styles.css 的 --console-min）。
 const SCORE_COLUMNS=72;
@@ -256,6 +289,7 @@ function parseWebHud(raw){
   for(const line of cleanText(String(raw)).split(/\r?\n/)){
     if(!line.startsWith('@@WEBHUD|'))continue;
     const a=line.split('|');
+    if(board.onHud(a))continue;
     if(a[1]==='ROOM'&&a.length>=3){beginRuntimeRoomSnapshot(a[2],a[3]||a[2]);continue;}
     if(a[1]==='MAPMETA'&&a.length>=3){setRoomMapMeta(a[2],a[3]||'',a[4]||'',a[5]||'');continue;}
     if(a[1]==='EXIT'&&a.length>=5){mergeRuntimeExit(a[2],a[3],a[4],a[5]||'');continue;}
@@ -439,14 +473,63 @@ function compactGameOutput(s){
   out=out.replace(/\n(?:[ \t]*\n){2,}/g,'\n\n');  // 連續空行縮成一行，但保留下一行開頭的空白（置中排版用）
   return out;
 }
+// 手機版 skills 排版（2026-11-08）：技能名稱欄在遊戲端用全形／半形空白補到固定 52 欄寬，
+// 手機上這些空白很浪費。這裡把補的空白拿掉，改成「該批輸出中最長的名稱」寬度的欄位，
+// 各行的「 - 等級 數字」仍然對齊，整行變短後再把字級放大一些（最多 1.5 倍）。
+// 只動符合 skills 列表格式的整行；其他輸出不受影響。PC 版不經過這段。
+const SKILL_LINE_RE=/^((?:\x1b\[[0-9;]*m)*)(Ｖ|　)((?:\x1b\[[0-9;]*m)*)([^\x1b\n]*?\))([　 ]*)((?:\x1b\[[0-9;]*m)*) - (.{1,12}?) +-?\d+(?:(?:\x1b\[[0-9;]*m)* \([+-]\d+\)(?:\x1b\[[0-9;]*m)*)?(?:\x1b\[[0-9;]*m)*$/;
+function cjkCols(t){let n=0;for(const ch of t)n+=ch.charCodeAt(0)>=0x2e80?2:1;return n;}
+// 手機版房間敘述重排（2026-11-08）：遊戲端把房間敘述切成約 70 欄一行，手機畫面較窄時會斷成
+// 一長一短。這裡把「房間標題行（結尾是 -）之後，同一段敘述被硬切開的行」接回同一段，
+// 交給瀏覽器依頁面寬度自動換行。只接「不以空白開頭」的續行；縮排的天色行、出口行、
+// 人物（結尾是 (英文代號)）、空行都會結束這一段。PC 版不經過這段。
+let descState=0;   // 0 一般；1 剛看到房間標題；2 正在敘述段落中
+let midLine=false; // 上一段輸出是否停在一行的中間
+const ROOM_TITLE_RE=/^\S.{0,30}\s-\s*$/;
 function renderChunk(s){
   const parts=compactGameOutput(s).split(/(\r\n|\n|\r)/);let out='';
+  const mobile=mobileMQ.matches;
+  let skillMax=0;
+  if(mobile){
+    for(const p of parts){const m=SKILL_LINE_RE.exec(p);if(m)skillMax=Math.max(skillMax,cjkCols(m[4]));}
+  }else descState=0;
+  let lineStart=!midLine,pending=false,contCount=0,lastText=false;
   for(let i=0;i<parts.length;i++){
-    const p=parts[i];
-    if(p==='\n'||p==='\r'||p==='\r\n'){out+='<br>';continue;}
+    let p=parts[i];
+    if(p==='\n'||p==='\r'||p==='\r\n'){
+      lastText=false;lineStart=true;
+      if(descState===2){
+        if(pending){out+='<br><br>';pending=false;descState=0;}
+        else pending=true;
+      }else out+='<br>';
+      continue;
+    }
     if(!p)continue;
+    const plain=cleanText(p);
+    if(lineStart){
+      if(descState===2&&pending){
+        if(contCount<12&&!/^[\s\u3000]/.test(plain)&&!/\([A-Za-z][^()]*\)\s*$/.test(plain)&&!/明顯的出口|唯一的出口/.test(plain)){
+          pending=false;contCount++;
+        }else{out+='<br>';pending=false;descState=0;}
+      }else if(descState===1){descState=2;contCount=0;}
+      if(mobile&&descState===0&&ROOM_TITLE_RE.test(plain.trim()))descState=1;
+    }
+    lineStart=false;lastText=true;
+    if(skillMax){
+      const m=SKILL_LINE_RE.exec(p);
+      if(m){
+        const wd=(skillMax/2+0.5).toFixed(2);
+        const head=m[1]+m[2]+m[3]+m[4]+m[5]+m[6];
+        const body=m[1]+m[2]+m[3]+'\uE001'+m[4]+'\uE002'+m[6]+p.slice(head.length);
+        out+=ansi(body).replace('\uE001','<span style="display:inline-block;width:'+wd+'em">').replace('\uE002','</span>');
+        continue;
+      }
+    }
     const cls=classifyLine(p);out+=cls?`<span class="${cls}">${ansi(p)}</span>`:ansi(p);
   }
+  if(pending){out+='<br>';}
+  if(descState===2)descState=0;
+  midLine=lastText;
   return out;
 }
 function isNearBottom(){return term.scrollHeight-term.scrollTop-term.clientHeight<90;}
@@ -520,7 +603,7 @@ function stripWebHudLines(whole){
     const plain=cleanText(line).trim();
     if(!plain)return false;
     if(/^>\s*$/.test(plain))return false;
-    if(/^webhud$/i.test(plain))return false;
+    if(/^webhud(?:\s|$)/i.test(plain))return false;
     return true;
   });
 }
@@ -564,6 +647,8 @@ function consumeHudPollOutputRaw(s){
   hudPollInFlight=false;hudBootstrapInFlight=false;hudPollBuffer='';hudPollStartedAt=0;
   if(hudResponseTimer){clearBg(hudResponseTimer);hudResponseTimer=null;}
   flushPendingUserCommands();
+  settleBoardRequest(whole);
+  if(hudRequestQueue.length)setTimeout(()=>kickHudAfterServerText(true),BOARD_GAP_MS);
   const kept=stripWebHudLines(whole);
   // HUD polling is a silent transport. Internal payload/prompt whitespace must never
   // create a visible terminal line. Real asynchronous text is still preserved.
@@ -583,10 +668,12 @@ function hudPollReady(force=false,allowNoRoom=false){
   if((!currentRoomId&&!allowNoRoom)||input.type==='password'||ws?.readyState!==1||hudPollInFlight)return false;
   if(serverInputWait)return false;
   if(document.hidden)return false;
-  if(!force&&!hudPollDue())return false;
+  // 排隊中的回報板請求等同強制查詢：之後到的遊戲文字可能把立即查詢換成一般查詢，閒置時要等好幾秒。
+  const urgent=force||boardRequestDue();
+  if(!urgent&&!hudPollDue())return false;
   if(editorActive)return false;
   // Real player input has priority over internal HUD telemetry.
-  if(!force && Date.now()-lastUserCommandAt<HUD_USER_GRACE_MS)return false;
+  if(!urgent && Date.now()-lastUserCommandAt<HUD_USER_GRACE_MS)return false;
   // HUD must continue updating during combat even when no classic ">" prompt is emitted.
   // Only hold polling while the newest server text is an interactive login/choice prompt.
   const recent=tail.trim().split('\n').slice(-2).join(' ').slice(-220);
@@ -601,7 +688,11 @@ function pollHud(force=false,allowNoRoom=false){
   hudPollBuffer='';
   hudPollStartedAt=Date.now();
   lastHudPollAt=hudPollStartedAt;
-  ws.send('webhud\r\n');
+  const extra=boardRequestDue()?hudRequestQueue.shift():null;
+  inflightBoardCmd=extra;
+  if(extra)lastBoardSentAt=Date.now();
+  else if(hudRequestQueue.length)setTimeout(()=>kickHudAfterServerText(true),BOARD_GAP_MS);
+  ws.send((extra?'webhud '+extra.cmd:'webhud')+'\r\n');
   if(allowNoRoom)hudBootstrapInFlight=true;
   if(hudResponseTimer)clearBg(hudResponseTimer);
   // 背景計時：網頁不在最上層時也要準時放行排隊中的指令（觸發、計時器送出的指令也在這裡排隊）。
@@ -622,6 +713,7 @@ function pollHud(force=false,allowNoRoom=false){
 // 之後才到的半段 HUD 回覆由 consumeHudPollOutput 的最後防線過濾。
 function releaseHudPoll(){
   const whole=holdTrailingHudPartial(hudPollBuffer);
+  settleBoardRequest(whole);
   hudPollInFlight=false;hudPollBuffer='';hudPollStartedAt=0;
   if(hudResponseTimer){clearBg(hudResponseTimer);hudResponseTimer=null;}
   if(!whole)return;
@@ -671,7 +763,8 @@ function print(s,system=false){
   renderVisible(shown,system,stick);
 }
 function renderVisible(shown,system,stick){
-  if(!system&&shown)automation.feed(shown,cleanText);
+  // 觸發照常比對；#gag 隱藏的行不顯示、#color 的文字上色。
+  if(!system&&shown)shown=automation.processOutput(shown,cleanText);
   let rendered=shown?renderChunk(shown):'';
   if(!system&&pendingTrimLeadingBlank){
     // Server output can arrive split across several WebSocket frames -- e.g.
@@ -709,8 +802,9 @@ function appendTerminalHtml(html,endsLine){
 // 訊息欄只保留最近的內容。原本每段輸出都永久留在 DOM，掛 3~4 小時（尤其戰鬥中）
 // 會累積數十萬個節點，每次新訊息都要對整棵樹排版，瀏覽器越跑越吃 CPU/記憶體。
 // 超過上限時一次刪掉一批最舊的，攤平成本；玩家正在往上捲閱讀時保持畫面位置不跳動。
-const TERMINAL_MAX_NODES=3000;
-const TERMINAL_TRIM_TO=2400;
+// 1,000 塊；超過時一次刪到剩 800 塊（使用者指示 #34，2026-11-04）。
+const TERMINAL_MAX_NODES=1000;
+const TERMINAL_TRIM_TO=800;
 function trimTerminal(stick){
   const extra=term.childNodes.length-TERMINAL_MAX_NODES;
   if(extra<=0)return;
@@ -1183,6 +1277,8 @@ const automation=new Automation({
   sendUserCommand:c=>send(c),
   notify:m=>print(`\n${m}\n`,true),
   isBlocked:()=>input.type==='password'||editorActive||ws?.readyState!==1,
+  // @hp、@qi… 讀角色狀態視窗的數字（背景狀態查詢更新的）
+  getStatus:()=>Object.fromEntries(Object.entries(observer.state.vitals||{}).map(([k,v])=>[k,{current:v?.current,max:v?.limit}])),
   disconnect:()=>{
     if(reconnectTimer){clearBg(reconnectTimer);reconnectTimer=null;manualDisconnect=true;print('\n[已取消自動重連，輸入 #con 重新連線]\n',true);return true;}
     if(!ws||![WebSocket.OPEN,WebSocket.CONNECTING].includes(ws.readyState))return false;
@@ -1292,8 +1388,46 @@ document.querySelectorAll('[data-map-action]').forEach(b=>b.addEventListener('cl
 }));
 setupTextColor(document.getElementById('textColorSettings'));
 const fontRange=document.querySelector('#terminalFontSize'),fontValue=document.querySelector('#terminalFontValue');
-fontRange?.addEventListener('input',()=>{document.documentElement.style.setProperty('--terminal-font-size',fontRange.value+'px');sideSplitter.refresh();if(fontValue)fontValue.textContent=fontRange.value+'px';localStorage.setItem('es2-ui-font',fontRange.value);});
+const mobileFontMQ=window.matchMedia('(max-width:620px), (hover:none) and (pointer:coarse)');
+// 手機版文字大小另外存（es2-ui-font-m，預設 10px，範圍 8～14），不影響電腦版的設定。
+function mobileFontSize(){let v=NaN;try{v=parseFloat(localStorage.getItem('es2-ui-font-m'));}catch(_){}return v>=8&&v<=14?v:10;}
+fontRange?.addEventListener('input',()=>{
+  if(mobileFontMQ.matches){try{localStorage.setItem('es2-ui-font-m',fontRange.value);}catch(_){}fitMobileFont();return;}
+  document.documentElement.style.setProperty('--terminal-font-size',fontRange.value+'px');sideSplitter.refresh();if(fontValue)fontValue.textContent=fontRange.value+'px';localStorage.setItem('es2-ui-font',fontRange.value);});
 try{const f=localStorage.getItem('es2-ui-font');if(f&&fontRange){fontRange.value=f;document.documentElement.style.setProperty('--terminal-font-size',f+'px');sideSplitter.refresh();if(fontValue)fontValue.textContent=f+'px';}}catch(_){}
+// 手機版左欄選單：按選單按鈕展開／收起；點選單以外的地方或選了項目也收起。
+{
+  const tg=document.querySelector('#navToggle'),nav=document.querySelector('#gameNav');
+  const setNav=on=>{document.documentElement.classList.toggle('nav-open',on);tg?.setAttribute('aria-expanded',on?'true':'false');};
+  tg?.addEventListener('click',e=>{e.stopPropagation();setNav(!document.documentElement.classList.contains('nav-open'));});
+  document.addEventListener('pointerdown',e=>{if(document.documentElement.classList.contains('nav-open')&&!nav?.contains(e.target)&&!tg?.contains(e.target))setNav(false);});
+  nav?.addEventListener('click',e=>{if(e.target.closest('.nav-item'))setNav(false);});
+}
+// 手機版（窄螢幕）：自動縮放終端機字級，讓 80 欄（40 個全形字）的排版（score、skills -a、房間敘述）
+// 剛好一行放得下；戰鬥等超長敘述仍自動換行。PC 版維持使用者設定的字級，不受影響（2026-11-08）。
+const mobileMQ=window.matchMedia('(max-width:620px), (hover:none) and (pointer:coarse)');
+function fitMobileFont(){
+  const root=document.documentElement;
+  if(!mobileMQ.matches){
+    let f='';try{f=localStorage.getItem('es2-ui-font')||'';}catch(_){}
+    root.style.setProperty('--terminal-font-size',(f||'15')+'px');
+    if(fontRange&&fontRange.min==='8'){fontRange.min='13';fontRange.max='20';fontRange.step='1';fontRange.value=f||'15';if(fontValue)fontValue.textContent=(f||'15')+'px';}
+    return;
+  }
+  // 手機字級：預設 10px，可在設定裡調整（8～14）；不再為了塞進 80 欄而自動縮小。
+  const px=mobileFontSize();
+  if(fontRange&&(fontRange.min!=='8'||fontRange.max!=='14')){fontRange.min='8';fontRange.max='14';fontRange.step='0.5';}
+  if(fontRange)fontRange.value=px;
+  if(fontValue)fontValue.textContent=px+'px';
+  root.style.setProperty('--terminal-font-size',px+'px');
+}
+fitMobileFont();
+mobileMQ.addEventListener?.('change',fitMobileFont);
+window.addEventListener('resize',fitMobileFont);
+window.addEventListener('orientationchange',fitMobileFont);
+// 登入畫面時終端機是隱藏的（寬度為 0），進入遊戲顯示後寬度才有值，所以要隨終端機大小變化重算。
+try{new ResizeObserver(fitMobileFont).observe(term);}catch(_){}
+window.addEventListener('load',fitMobileFont);
 
 
 

@@ -72,6 +72,15 @@ object make_inventory (string file) {
     return ob;
 }
 
+// 地上的同種物品合併時（std/item/combined.c），被併掉的若是房間生成的物品，
+// 改記成接手的那一堆，房間重置時才不會再生一堆（2026-11-07）。
+void replace_spawn(object old_ob, object new_ob)
+{
+    if( !objectp(old_ob) || !objectp(new_ob) ) return;
+    foreach (string key, object ob in spawn_list)
+        if( ob == old_ob ) spawn_list[key] = new_ob;
+}
+
 void reset() {
     mapping ob_list = query ("objects");
     if (mapp (ob_list)) {

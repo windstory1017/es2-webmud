@@ -4,7 +4,7 @@
 // 施針指令 acupuncture <針法> [to <目標>] 會呼叫 enable 在針灸之術（cauterization）上的
 // 技能檔的 acupuncture_cauterization(me, 針法, 目標)；NPC 施針不帶目標。
 
-#define WUTO_FACTION    "alchemist.wuto"
+#define WUTO_FACTION    "alchemist.wu"
 #define TICK_SECONDS    2
 
 // 經驗倍數：各技能檔在 include 之前 #define EXP_TIER，沒定義的是 1。

@@ -7,8 +7,8 @@ private void create() {
     ::create(); seteuid(getuid());
     set("karma", 50); set("civilized", 1); set("commoner_score_base", 140);
     set("class_level_cap", ([
-        "commoner":1, "fighter":65, "taoist":50, "alchemist":50,
-        "soldier":50, "scholar":-1, "monk":-1, "thief":70
+        "commoner":1, "fighter":65, "taoist":65, "alchemist":60,
+        "soldier":60, "scholar":-1, "monk":-1, "thief":70
     ]));
     DAEMON_D->register_race_daemon("yaksa");
 }

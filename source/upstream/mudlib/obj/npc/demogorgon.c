@@ -78,6 +78,11 @@ private void do_shutdown()
                         "\t\t所有的一切都在瞬間陷入火海....\n\n"
                         "\t\t然後你的眼前是一片黑暗....無止盡的黑暗....\n\n" NOR,
                 users() );
+        // 關機前替所有玩家存檔（含斷線但角色還留在世界裡的），
+        // 不然會損失最近一次自動存檔（每 5 分鐘）之後的進度（使用者同意，2026-11-02）。
+        foreach (object u in children(USER_OB))
+                if (clonep(u) && environment(u) && u->query("id"))
+                        catch (u->save());
         shutdown(0);
 }
 

@@ -25,6 +25,38 @@ age_string(int time)
     return (month ? month + "m" : "") + (day ? day + "d" : "") + hour + "h";
 }
 
+// 總表用的時數：有月份時天、小時固定兩位數（例如 4m05d18h），否則 3d05h（#27，2026-11-03）。
+private string table_age(int time)
+{
+    int month, day, hour;
+
+    time /= 3600;
+    hour = time % 24;
+    time /= 24;
+    day = time % 30;
+    month = time / 30;
+    if( month ) return sprintf("%dm%02dd%02dh", month, day, hour);
+    return sprintf("%dd%02dh", day, hour);
+}
+
+// 連線位址：數字位址每段補成三格，主機名稱照原樣（#27，2026-11-03）。
+private string table_ip(string ip)
+{
+    string *part;
+    int i;
+
+    if( !stringp(ip) ) return "";
+    part = explode(ip, ".");
+    if( sizeof(part) != 4 ) return ip;
+    for(i=0; i<4; i++) {
+        if( !sizeof(part[i]) || sizeof(part[i]) > 3 ) return ip;
+        foreach( int ch in part[i] ) if( ch < '0' || ch > '9' ) return ip;
+        part[i] = sprintf("%3s", part[i]);
+    }
+    return implode(part, ".");
+}
+
+// 巫師用的線上總表（#27，2026-11-03）：NAME 12 個中文字寬、ID 12 格靠左；DNS、AGE、LEVEL 靠右。
 string
 finger_all()
 {
@@ -33,17 +65,15 @@ finger_all()
     int i;
 
     ob = sort_array( users(), (: strcmp(query_ip_number($1), query_ip_number($2)) :) );
-    msg = "    NAME   |    ID     |              DNS             |   AGE  | LEVEL\n";
+    msg = cjk_pad("NAME", 24) + " " + cjk_pad("ID", 12) + " " + cjk_pad("DNS", 15, 1)
+        + "  " + cjk_pad("AGE", 9, 1) + " " + cjk_pad("LEVEL", 5, 1) + "\n";
     for(i=0; i<sizeof(ob); i++) {
 	if( this_player() && !ob[i]->visible(this_player()) ) continue;
-	msg = sprintf("%s%-12s%+12s %+30s %+8s %2d\n",
-	    msg,
-	    ob[i]->query("name"),
-	    ob[i]->query("id"),
-	    query_ip_name(ob[i]),
-	    ob[i]->link() ? age_string( ob[i]->link()->query("time_aged")) : "n/a",
-	    ob[i]->query("level"),
-	);
+	msg += cjk_pad(ob[i]->query("name") || "", 24) + " "
+	    + cjk_pad(ob[i]->query("id") || "", 12) + " "
+	    + cjk_pad(table_ip(query_ip_name(ob[i])), 15, 1) + "  "
+	    + cjk_pad(ob[i]->link() ? table_age(ob[i]->link()->query("time_aged")) : "n/a", 9, 1) + " "
+	    + cjk_pad(sprintf("%d", ob[i]->query("level")), 5, 1) + "\n";
     }
     return msg;
 }
@@ -93,8 +123,9 @@ finger_user(string name)
 	else msg += "\n" + gender_pronoun(body) + "現在斷線中。\n";
     }
 
+    // 上次連線的位址只有巫師（或查自己）看得到（#27，2026-11-03）。
     msg += sprintf("\n上次連線：%s (%s)\n",
-	ob->query("last_from"), ctime(ob->query("last_on")));
+	wiz_mode ? ob->query("last_from") : "<限巫師查詢>", ctime(ob->query("last_on")));
 
     if( invis ) age -= time() - ob->query_temp("login_time");
     msg += sprintf("時數總和：%s\n", chinese_period(age));
@@ -157,6 +188,8 @@ acquire_login_ob(string id)
     }
 
     ob = new(LOGIN_OB);
+    // 暫時物件的身分沒有讀檔權限，先交付本程式的權限，才讀得到離線玩家的存檔（#27，2026-11-03）。
+    export_uid(ob);
     ob->set("id", id);
     return ob->restore() ? ob : 0;
 }

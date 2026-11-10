@@ -5,7 +5,7 @@ MUD = Path(__file__).resolve().parents[1] / 'source' / 'upstream' / 'mudlib'
 W = MUD / 'd' / 'wutang'
 OPP = {'north': 'south', 'south': 'north', 'east': 'west', 'west': 'east', 'northeast': 'southwest',
        'southwest': 'northeast', 'northwest': 'southeast', 'southeast': 'northwest', 'up': 'down', 'down': 'up',
-       'in': 'out', 'out': 'in', 'northdown': 'southup', 'southup': 'northdown'}
+       'in': 'out', 'out': 'in', 'enter': 'out', 'northdown': 'southup', 'southup': 'northdown'}
 
 
 def read(p):
@@ -44,6 +44,8 @@ def test_exits_are_two_way():
             if t.startswith('/'):
                 continue
             back = exits(t).get(OPP[d])
+            if d == 'out' and back is None:
+                back = exits(t).get('enter')   # enter／out 也算一對（涼亭，2026-11-03）
             assert back == p.stem or (p.stem, t) in one_way or (t, p.stem) in one_way, (p.stem, d, t, back)
 
 

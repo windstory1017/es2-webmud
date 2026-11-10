@@ -19,6 +19,7 @@ LONG
     set_skill("dodge", 20);
     set_skill("parry", 20);
     set_skill("sword", 20);
+    set("custom_faction", "scholar.myst");   // 步玄派；門派武功依 daemon/misc/npc_skill.c 自動配置
     set_power("C");
     setup();
     carry_object("/obj/area/obj/longsword")->wield();

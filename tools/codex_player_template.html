@@ -120,6 +120,8 @@ svg.map line { stroke: var(--room-line); stroke-width: 2; }
 svg.map .cmd { stroke: var(--accent); stroke-width: 1.6; stroke-dasharray: 5 4; fill: none; }
 svg.map .dot { fill: var(--accent); }
 svg.map .ud { font-size: 10px; fill: var(--muted); }
+svg.map tspan { dominant-baseline: central; }
+svg.map .nm-long { font-size: 10px; }
 .side { display: grid; gap: 16px; min-width: 0; }
 .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; min-width: 0; }
 .panel h3 { margin: 0 0 6px; font-family: var(--serif); font-size: 1.1rem; }
@@ -138,6 +140,17 @@ svg.map .ud { font-size: 10px; fill: var(--muted); }
 .fac-grid .panel { display: grid; gap: 8px; align-content: start; }
 .fac-grid .panel h3 .tag { font-family: var(--sans); }
 .fac-intro { margin: 0; font-family: var(--serif); line-height: 1.8; }
+/* 武器詞綴 */
+.affix-intro { margin-bottom: 14px; display: grid; gap: 6px; }
+.affix-intro p { margin: 0; line-height: 1.8; }
+.affix-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; align-items: start; }
+.affix-group h3 { margin: 0 0 8px; font: 600 1rem var(--serif); }
+.affix-group h3 .n { margin-left: 6px; color: var(--muted); font: 0.8rem var(--sans); }
+.affix-table { width: 100%; }
+.affix-table td:first-child { width: 5.5em; }
+.affix-chip { display: inline-block; padding: 1px 8px; border-radius: 4px; font-weight: 700; letter-spacing: .05em;
+  background: color-mix(in srgb, currentColor 14%, transparent); border: 1px solid color-mix(in srgb, currentColor 35%, transparent); }
+.affix-chip + .affix-chip { margin-left: 2px; }
 /* 遊戲裡的 ANSI 顏色 */
 .a1 { font-weight: 700; }
 .a30 { color: var(--c-black); } .a31 { color: var(--c-red); } .a32 { color: var(--c-green); } .a33 { color: var(--c-yellow); }
@@ -359,17 +372,43 @@ svg.map .ud { font-size: 10px; fill: var(--muted); }
     const tr = Object.entries(traits || {});
     return tr.length ? `<div class="traits">${tr.map(([k, l]) => `<div class="trait-group"><h4>${esc(label)}・${esc(k)}</h4><div class="tbl-wrap"><table><tbody>${l.map(([a, v]) => `<tr><td>${esc(a)}</td><td class="v">${v > 0 ? '+' : ''}${v}</td></tr>`).join('')}</tbody></table></div></div>`).join('')}</div>` : '';
   }
+  // 詞綴：一般武器產生時隨機帶上的前綴／後綴（資料來自遊戲的 adm/daemons/enhanced.c）
+  function affixChip(a) { return `<span class="affix-chip ${(a.color || '').split(';').map(c => 'a' + c).join(' ')}">${esc(a.name)}</span>`; }
+  function affixFx(a) { return a.fx.map(([k, v]) => `${esc(k)} ${v > 0 ? '+' : ''}${v}`).join('、'); }
+  function renderAffixes(tools) {
+    const A = D.affixes;
+    if (!A) return listShell(tools, [], '');
+    const ok = a => matches(a.name + ' ' + a.fx.map(f => f[0]).join(' '));
+    const tbl = (list, label) => {
+      const rs = list.filter(ok);
+      return `<div class="affix-group"><h3>${label}<span class="n">${rs.length}</span></h3>` + (rs.length ?
+        `<div class="tbl-wrap"><table class="affix-table"><thead><tr><th>${label}</th><th>效果</th></tr></thead><tbody>` +
+        rs.map(a => `<tr><td>${affixChip(a)}</td><td>${affixFx(a)}</td></tr>`).join('') + `</tbody></table></div>` : '<p class="empty">沒有符合的詞綴。</p>') + '</div>';
+    };
+    const ws = D.weapons.filter(w => w.affix);
+    const sample = (p, s) => { const a = A.prefix.find(x => x.name === p), b = A.suffix.find(x => x.name === s); return a && b ? `${affixChip(a)}${affixChip(Object.assign({}, b, { name: b.name + '劍' }))}` : ''; };
+    const c = A.chance;
+    const intro = `<div class="panel affix-intro"><p>下面這些一般武器在產生時（不論在地上或人物身上）會擲一次詞綴：` +
+      `普通品 ${c.plain}%、只有前綴 ${c.prefix}%、前綴加後綴 ${c.both}%，要先有前綴才會有後綴。商店賣的一律是普通品。</p>` +
+      `<p>有詞綴的武器改叫「前綴＋後綴＋武器種類」，例如 ${sample('黑鋼', '火炎')}；名字的顏色跟著詞綴走。每多一個詞綴，價值變成原本的 1.5 倍。詞綴的加成在裝備這把武器時生效。</p>` +
+      (ws.length ? `<p class="affix-weapons">會出現詞綴的武器：${ws.map(w => itemLink(w.id)).join('、')}</p>` : '') + '</div>';
+    return `<div class="tools"><input class="search" id="q" type="search" placeholder="搜尋詞綴或效果" value="${esc(state.q)}" aria-label="搜尋">${tools || ''}</div>` +
+      intro + `<div class="affix-grid">${tbl(A.prefix, '前綴')}${tbl(A.suffix, '後綴')}</div>`;
+  }
   function renderWeapons() {
     const kinds = Object.keys(D.weaponKinds).filter(k => D.weapons.some(w => w.kind === k));
     const groups = [['all', '全部', D.weapons.length]].concat(kinds.map(k => [k, D.weaponKinds[k], D.weapons.filter(w => w.kind === k).length]));
+    if (D.affixes) groups.push(['affix', '詞綴', D.affixes.prefix.length + D.affixes.suffix.length]);
     const cur = state.sub.weapons || 'all';
+    if (cur === 'affix') return renderAffixes(subChips('weapons', groups));
     const rows = D.weapons.filter(w => (cur === 'all' || w.kind === cur) && matches(names(w) + ' ' + Object.values(w.traits).flat().map(t => t[0]).join(' ')))
       .map(w => row(w.id,
         `<span class="nm">${nameHtml(w)}${flagsHtml(w.flags)}</span><span class="sum">${esc(w.usages.map(u => `${u.skill} ${u.dmg || ''}`).join('・'))}</span><span class="num">${esc(w.value || '')}</span>`,
         () => (w.long ? `<p class="long">${ansi(w.long)}</p>` : '') +
           `<div class="tbl-wrap"><table><thead><tr><th>可用技能</th><th>傷害</th></tr></thead><tbody>` +
           w.usages.map(u => `<tr><td>${esc(u.skill)}</td><td class="v">${esc(u.dmg || '—')}</td></tr>`).join('') + `</tbody></table></div>` +
-          traitTables(w.traits, '武器特性') + commonKv(w)));
+          traitTables(w.traits, '武器特性') +
+          (w.affix ? `<p class="hint">這種武器產生時可能帶有詞綴，名稱會變成「前綴＋後綴＋種類」並多出加成，詳見「詞綴」分類。</p>` : '') + commonKv(w)));
     return listShell(subChips('weapons', groups), rows);
   }
   function renderArmors() {
@@ -460,7 +499,15 @@ svg.map .ud { font-size: 10px; fill: var(--muted); }
   }
 
   // ---------------------------------------------------------------- 地圖
-  const CW = 108, CH = 38, GX = 26, GY = 26;
+  // 房間格是正方形（同遊戲裡的地圖）：完整房名兩個字一行、上下左右置中；三、四行時字縮小一點。
+  const CW = 64, CH = 64, GX = 26, GY = 26;
+  function roomLabel(name, x, y) {
+    const chars = [...String(name)].slice(0, 8), lines = [];
+    for (let i = 0; i < chars.length; i += 2) lines.push(chars.slice(i, i + 2).join(''));
+    const long = lines.length > 2, lh = long ? 11 : 15;
+    return `<text class="${long ? 'nm-long' : ''}" x="${x}" text-anchor="middle">` +
+      lines.map((l, i) => `<tspan x="${x}" y="${y + (i - (lines.length - 1) / 2) * lh}">${esc(l)}</tspan>`).join('') + '</text>';
+  }
   function renderAreas() {
     const area = D.areas.find(a => a.key === state.area) || D.areas[0];
     if (!area) return '<p class="empty">沒有區域資料。</p>';
@@ -492,10 +539,9 @@ svg.map .ud { font-size: 10px; fill: var(--muted); }
       const cells = rs.map(r => {
         const ud = (r.ud.includes('up') ? '↑' : '') + (r.ud.includes('down') ? '↓' : '');
         const out = Object.values(r.exits).some(t => areaOfRoom[t] && areaOfRoom[t] !== area.key);
-        const label = r.short.length > 7 ? r.short.slice(0, 7) + '…' : r.short;
         const cls = ['room', r.npcs.length ? 'has-npc' : '', state.room === r.id ? 'sel' : ''].join(' ');
         return `<g class="${cls}" data-room="${esc(r.id)}" tabindex="0" role="button" aria-label="${esc(r.short)}"><title>${esc(r.short)}</title><rect x="${px(r)}" y="${py(r)}" width="${CW}" height="${CH}"/>` +
-          `<text x="${px(r) + CW / 2}" y="${py(r) + CH / 2 + 4}" text-anchor="middle">${esc(label)}</text>` +
+          roomLabel(r.short, px(r) + CW / 2, py(r) + CH / 2) +
           (r.npcs.length ? `<circle class="dot" cx="${px(r) + 8}" cy="${py(r) + 8}" r="3"/>` : '') +
           (ud || out ? `<text class="ud" x="${px(r) + CW - 6}" y="${py(r) + 12}" text-anchor="end">${ud}${out ? '⇢' : ''}</text>` : '') + '</g>';
       }).join('');

@@ -167,6 +167,23 @@ MAP_POS = {
     '/d/snow/riverbank': ('/d/snow/egate', 0, -2),         # 河邊空地：河邊上方第二格
     '/d/snow/ruin2': ('/d/snow/riverbank', 0, 1),          # 破舊大宅正廳：河邊空地下方（緊貼河邊上方）
     '/d/snow/kitchen': ('/d/snow/epath', 0, -1),           # 有錢人家廚房：僻靜小巷上方（climb 圍牆）
+    # 雪吟莊（d/snowkeep）：依設計表格位。地牢在涼亭下方一層（涼亭的 down 是機關打開才有），手動指定。
+    '/d/snowkeep/dungeon_w': ('/d/snowkeep/pavilion', 0, -1, -1),
+    '/d/snowkeep/dungeon': ('/d/snowkeep/pavilion', 1, -1, -1),
+    '/d/snowkeep/dungeon_e': ('/d/snowkeep/pavilion', 2, -1, -1),
+    # 亂葬崗（d/graveyard）：依設計表格位（相對於入口 P6）。祠堂靠 enter／out、雜草叢靠 pass 進出，全部手動指定。
+    '/d/graveyard/grave2': ('/d/graveyard/grave1', -1, 0),
+    '/d/graveyard/grave3': ('/d/graveyard/grave1', -2, -1),
+    '/d/graveyard/grave4': ('/d/graveyard/grave1', -3, -2),
+    '/d/graveyard/grave5': ('/d/graveyard/grave1', -4, -2),
+    '/d/graveyard/shrine': ('/d/graveyard/grave1', -5, -2),
+    '/d/graveyard/grave6': ('/d/graveyard/grave1', -5, -1),
+    '/d/graveyard/grave7': ('/d/graveyard/grave1', -5, 0),
+    '/d/graveyard/grave8': ('/d/graveyard/grave1', -6, 0),
+    '/d/graveyard/weeds': ('/d/graveyard/grave1', -6, 1),
+    '/d/graveyard/forest': ('/d/graveyard/grave1', -6, 2),
+    '/d/graveyard/forest_w': ('/d/graveyard/grave1', -7, 2),
+    '/d/graveyard/forest_e': ('/d/graveyard/grave1', -5, 2),
 }
 MAP_HIDE = {'/d/snow/inn_staff_room', '/d/oldpine/reeds2', '/d/oldpine/reeds3', '/d/oldpine/reeds4', '/d/oldpine/reeds5'}  # 不在地圖上顯示的房間
 

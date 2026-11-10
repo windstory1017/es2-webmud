@@ -40,13 +40,15 @@ int main (object me, string arg) {
     }
     if (!ob->query("birthday"))
         ob->set("birthday", random (1892160000));
-    birth = ((int)ob->query ("birthday") - 14*365*24*60) * 60 % 1892160000;
+    CHAR_D->update_age(ob);
+    // 出生時刻＝創角那一刻的遊戲時間（與 time 指令同一套曆法，見 NATURE_D 的 TIME_TICK）。
+    birth = (int)ob->query ("birthday") * 60 % 1892160000;
 
     line = sprintf (HIW "【 %s 】" NOR "%s\n\n", ob->rank(), ob->short(1));
     line += cjk_wrap (sprintf(
             "%s出生於%s﹐外表是一%s%s歲的%s%s。目前是等級 %d 的%s﹐目前有 %d 點業力。",
                 ob==me ? gender_self (ob) : gender_pronoun (ob),
-                CHINESE_D->chinese_date(),
+                CHINESE_D->chinese_date(birth),
                 (tmp = ob->query ("unit")) ? tmp : "個",
                 chinese_number (ob->query ("age")),
                 (tmp = ob->query ("gender")) ? to_chinese (tmp) : "",
@@ -71,10 +73,10 @@ int main (object me, string arg) {
             display_attr (ob->query_attr ("wis",1), ob->query_attr ("wis")));
     }
 
-    line = sprintf ("%s 形體 %s%4d/%4d  " NOR BGRN "%s" NOR "\n\n", line,
+    line = sprintf ("%s 形體 %s%4d/%4d  " NOR HIG "%s" NOR "\n\n", line,
         status_color(ob->query_stat("HP"), ob->query_stat_maximum("HP")),
         ob->query_stat("HP"), ob->query_stat_maximum("HP"),
-        tribar_graph(" ", BRED, " ", ob->query_stat("HP"), ob->query_stat_effective("HP"), ob->query_stat_maximum("HP")) );
+        tribar_graph("■", GRN, "□", ob->query_stat("HP"), ob->query_stat_effective("HP"), ob->query_stat_maximum("HP")) );
 
     if (ob->query_stat_maximum("gin"))
         line = sprintf ("%s 精   %s%4d/%4d  " NOR HIY "%s" NOR "\n", line,
@@ -163,8 +165,11 @@ string tribar_graph (string fill_char, string sep, string empty_char, int val, i
     int n_filled, n_empty;
     string bar = "";
 
-    if ((max <= 0) || (val <= 0) || (eff <= 0))
+    // 目前值為 0 時仍要畫出空格（上限沒受傷就是整條空格）；上限本身為 0 才不畫。
+    if ((max <= 0) || (eff <= 0))
         return "";
+    if (val < 0)
+        val = 0;
 
     n_filled = val * 25 / max;
     n_empty = eff * 25 / max - n_filled;

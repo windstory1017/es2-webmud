@@ -82,7 +82,7 @@
 | 老王 | `baihua/npc/old_wang` | 平民 1 C | 沿用敘述 |
 | 牧童 | `baihua/npc/shepherd` | 平民 1 C | 牧羊杖 |
 | 阿三哥 | `baihua/npc/san` | 平民 1 C | 壯碩青年；年齡表上寫 8，依「青年」改為 18 |
-| 小姑娘 | `baihua/npc/girl` | 平民 1 C | 做羹湯照顧村民、喜歡阿三哥；年齡表上寫 4，改為 14 |
+| 小姑娘 | `baihua/npc/girl` | 平民 1 C | 做羹湯照顧村民、喜歡阿三哥；年齡表上寫 4，改為 14；腰間繫著虹緞帶（`custom/armor/waist/rainbow_ribbon`，靈性 +1、防禦力 +3，使用者指定 2026-11-06） |
 | 「落山風」南宮恨 | `baihua/npc/nan_kong_hen` | 道士 40 A | 玄衣派（`taoist.storm`） |
 | 掌櫃 | `baihua/npc/innkeeper` | 平民 1 C | 紅燈客棧，櫃台打算盤 |
 | 過路客 | `baihua/npc/traveller` | — | 複製 `obj/area/traveller.c`，改拿路人的短劍（產生時擲隨機附加屬性） |

@@ -31,14 +31,10 @@ void create()
 LONG
     );
     set("exits", ([
-        "west" : __DIR__"pavilion",
+        "enter" : __DIR__"pavilion",
         "east" : __DIR__"west_street2",
         "north" : __DIR__"clearing",
         "southwest" : __DIR__"gravel_road_s",
-    ]));
-    set("objects", ([
-        __DIR__"npc/yang_zlin" : 1,
-        __DIR__"npc/apprentice" : 1,
     ]));
     set("map/area", "五堂鎮");
     setup();

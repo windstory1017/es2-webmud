@@ -15,7 +15,7 @@ inherit SKILL;
 
 #define SKILL_ID     "alchemy-wealth"
 #define SEN_COST     15
-#define SILVER_LIMIT 500     // 銀咒只能轉價值 500 文以下（W-03：未滿 500）
+#define SILVER_LIMIT 500     // 銀咒只能轉價值 500 文以下（W-03：含 500，2026-11-08 修改，#41）
 #define GOLD_LEVEL   90      // 金咒領悟等級（W-01）
 #define HOLD_LEVEL   79      // 79 級後只累積經驗（U-07）
 
@@ -41,6 +41,13 @@ int query_skill_cap(object me)
     return 0;
 }
 
+// U-07：79 級暫停升級時照常累積經驗，累積到 90 級的門檻才升級（#31，2026-11-04）。
+// 沒有這個，技能系統會因為「已到上限」不再給經驗，79 級永遠卡住。
+int query_learn_at_cap(object me)
+{
+    return me->query_skill(SKILL_ID, 1) == HOLD_LEVEL;
+}
+
 // U-06：學成訊息。
 void skill_completed(object me, string sk)
 {
@@ -63,7 +70,9 @@ string money_string(int amount)
 {
     string str = "";
 
-    if( amount >= 10000 ) str += chinese_number(amount / 10000) + "兩黃金";
+    // 金額最多寫到金元寶（使用者指示，2026-11-07）。
+    if( amount >= 1000000 ) str += chinese_number(amount / 1000000) + "錠金元寶";
+    if( amount % 1000000 >= 10000 ) str += chinese_number(amount % 1000000 / 10000) + "兩黃金";
     if( amount % 10000 >= 100 ) str += chinese_number(amount % 10000 / 100) + "兩碎銀";
     if( amount % 100 ) str += chinese_number(amount % 100) + "文錢";
     return str == "" ? "零文錢" : str;
@@ -131,25 +140,29 @@ void magic_gain(object me, int failed)
 }
 
 // U-03、U-10：成功的經驗與丹道修養。
+// 經驗取「價值 ÷ 100（最多等級 × 100）」與「random(靈性＋悟性)」較大者（2026-11-07）。
 void reward_success(object me, int value)
 {
-    int level, gain;
+    int level, gain, base, n;
 
     level = me->query_skill(SKILL_ID, 1);
     gain = value / 100;
     if( level > 0 && gain > level * 100 ) gain = level * 100;
+    n = me->query_attr("spi") + me->query_attr("int");
+    base = n > 0 ? random(n) : 0;
+    if( base > gain ) gain = base;
     if( gain > 0 ) me->improve_skill(SKILL_ID, gain);
     me->gain_score("alchemy", 1 + (level > 0 ? random(level) / 2 : 0));
     magic_gain(me, 0);
 }
 
-// U-04、U-10：失敗的經驗與丹道修養。
+// U-04、U-10：失敗的經驗與丹道修養。經驗為 random(靈性＋悟性) ÷ 2（2026-11-07）。
 void reward_failure(object me)
 {
     int n, gain;
 
     n = me->query_attr("spi") + me->query_attr("int");
-    gain = n > 0 ? random(n) : 0;
+    gain = n > 0 ? random(n) / 2 : 0;
     if( gain > 0 ) me->improve_skill(SKILL_ID, gain);
     me->gain_score("alchemy", 1);
     magic_gain(me, 1);
@@ -178,9 +191,9 @@ int conjure_magic(object me, string spell, object target)
     if( spell == "gold_seal" && level < GOLD_LEVEL )
         return notify_fail(gender_self(me) + "尚未領悟金咒。\n");
 
-    // 2.4：銀咒轉不動 500 文以上的物品。
+    // 2.4：銀咒轉不動超過 500 文的物品（剛好 500 文可以轉，#41）。
     value = unit_value(target);
-    if( spell == "silver_seal" && value >= SILVER_LIMIT ) {
+    if( spell == "silver_seal" && value > SILVER_LIMIT ) {
         unit = target->query("base_unit");
         if( !stringp(unit) ) unit = target->query("unit");
         if( !stringp(unit) ) unit = "件";

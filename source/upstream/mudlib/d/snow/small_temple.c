@@ -21,6 +21,8 @@ LONG
     set ("exits", ([
         "west" : __DIR__"nstreet1",
     ]));
+    // 鬼魂在此還陽，設為非戰區，避免守在廟裡殺人或吞魂（使用者指示，2026-11-04）。
+    set ("no_fight", 1);
 
     setup();
     replace_program (TEMPLE);

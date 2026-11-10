@@ -31,9 +31,19 @@ string *user_race = ({
     "ashura",
 });
 
+// 顯示名稱不能出現的單字（#28，2026-11-03）：指稱與粗話。
 string *banned_name = ({
-    "你", "妳", "我", "他", "她", "牠", "它",
-    "幹", "操", "娘", "媽", "屌", "屄", "插", "姦", "穴",
+    "你", "妳", "我", "他", "她", "牠", "它", "您", "咱", "俺",
+    "幹", "操", "娘", "媽", "屌", "屄", "插", "姦", "穴", "肏",
+    "靠", "婊", "妓", "娼", "淫", "屎", "尿", "屁", "尻",
+});
+
+// 顯示名稱不能出現的詞語（#28，2026-11-03）：單字本身可用，連成這些詞才擋。
+string *banned_phrase = ({
+    "白癡", "白痴", "智障", "腦殘", "廢物", "垃圾", "畜生", "王八", "烏龜", "混蛋",
+    "賤人", "去死", "死人", "雞巴", "雞雞", "懶叫", "老二", "龜頭", "陰莖", "陰道",
+    "陰部", "奶子", "乳頭", "做愛", "性交", "強姦", "輪姦", "春藥", "色情", "變態",
+    "鬼畜", "支那", "老子", "老娘", "爸爸", "爺爺", "祖宗", "巫師", "管理員",
 });
 
 string *banned_ip = ({
@@ -410,6 +420,9 @@ private void confirm_relogin (string yn, mapping opts, object ob, object user) {
     old_link = user->link();
     if (old_link) {
         seteuid (getuid());
+        // 舊連線物件裡有 alias 等最新資料，先存檔再踢掉，reconnect() 會重新讀進新連線。
+        if (!old_link->is_character())
+            old_link->save();
         if (user.interactive())
             exec (old_link, user);
         destruct (old_link);
@@ -707,7 +720,8 @@ private void get_name (string arg, object ob, object user) {
     if (!ob->query ("creation_time")) {
         ob->set ("creation_time", time());
         // default open chat and rumor channel -- by dragoon
-        ob->set ("channels", ({ "chat", "rumor" }));
+        // event：全服公告頻道，新玩家預設收聽（使用者指示，2026-11-01）。
+        ob->set ("channels", ({ "chat", "rumor", "event" }));
     }
 
     mapping opts = ([
@@ -820,6 +834,7 @@ private void init_new_body(object link, object user) {
 varargs void enter_world(object ob, object user, int silent) {
     object room;
     string startroom, err;
+    string *chs;   // event 頻道遷移用
 
     // 登入過程中其他角色可能已經先進入世界，進入前再檢查一次。
     if (!silent && !ip_can_enter(ob, ob->query("id"), user)) {
@@ -841,6 +856,34 @@ varargs void enter_world(object ob, object user, int silent) {
 
     user->setup();
     increment_visitor_count();
+
+    // 門派代碼改用舊名（使用者指示 #35，2026-11-06）：存檔裡還是舊代碼的玩家，登入時換成新代碼，只換一次。
+    {
+        mapping faction_rename = ([
+            "alchemist.wuto"  : "alchemist.wu",
+            "taoist.fog"      : "mao-shan.fog",
+            "taoist.wind"     : "mao-shan.wind",
+            "taoist.lingyun"  : "mao-shan.cloud",
+            "fighter.chin"    : "fighter.huge",
+            "fighter.ancient" : "fighter.au-chan",
+            "thief.hidden"    : "thief.yin",
+        ]);
+        string old_faction = user->query("custom_faction");
+        if (stringp(old_faction) && faction_rename[old_faction])
+            user->set("custom_faction", faction_rename[old_faction]);
+    }
+
+    // event 頻道一次性遷移（使用者指示，2026-11-01）：event 公告頻道是新加的，
+    // 既有玩家的收聽清單裡不會有它。第一次登入時替他們補上 event（預設收聽），
+    // 並記下已遷移；之後若玩家自己 tune event 關掉，不會再被重新打開。
+    if( objectp(user->link())
+    &&  !user->link()->query("event_channel_migrated") ) {
+        chs = user->link()->query("channels");
+        if( !pointerp(chs) ) chs = ({});
+        if( member_array("event", chs) == -1 )
+            user->link()->set("channels", chs + ({ "event" }));
+        user->link()->set("event_channel_migrated", 1);
+    }
 
     ob->delete ("reincarnating");   // 已經轉世進入遊戲
 
@@ -894,6 +937,9 @@ NOTICE
 }
 
 varargs void reconnect (object ob, object user, int silent) {
+    // ob 是輸入代號當下讀的存檔；之後舊連線可能又存過（save、自動存檔、斷線、
+    // 被取代），重新讀一次，才不會拿舊資料蓋掉玩家剛設的 alias 等設定。
+    ob->restore();
 
     user->set_link(ob);
     ob->set_body(user);
@@ -975,9 +1021,9 @@ int check_legal_name(string name) {
 
     i = sizeof(mbcs);
 
-    // 顯示名稱最少一個字（例如單名「熊」），最多 18 個字。
-    if ((i < 1) || (i > 18 )) {
-        write("您的顯示名稱必須使用長度 1 到 18 的合法 UTF-8 文字。\n");
+    // 顯示名稱最少一個字（例如單名「熊」），最多 8 個字（#28，2026-11-03）。
+    if ((i < 1) || (i > 8 )) {
+        write("您的顯示名稱必須是 1 到 8 個中文字。\n");
         return 0;
     }
     while (i--) {
@@ -999,6 +1045,11 @@ int check_legal_name(string name) {
             return 0;
         }
     }
+    foreach (string phrase in banned_phrase)
+        if (strsrch (name, phrase) != -1) {
+            write ("顯示名稱含有容易造成其他人的困擾的字元，請換一個名字。\n");
+            return 0;
+        }
     return 1;
 }
 

@@ -14,7 +14,7 @@ docs/LEGACY_ROOM_NPC_COMPENDIUM.md）；職業、等級、強度、門派、行�
 
 inherit "/custom/legacy_npc/legacy_npc";
 
-#define FACTION "alchemist.wuto"
+#define FACTION "alchemist.wu"
 
 #define WUTO_CHANCE     40      // 每 tick 施展五敗針的機率（%）
 #define REVIVE_RATIO    20      // 精氣神或 HP 低於上限的百分之幾時刺針續力

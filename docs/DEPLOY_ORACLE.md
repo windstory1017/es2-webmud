@@ -47,7 +47,19 @@ Oracle 預設只開放 SSH（22）。玩家要從外面連進來，需要開放 
    - Destination Port Range：`8080`
 4. 按「Add Ingress Rules」儲存。
 
-> 只開 8080 就好。MUD 本體的 4001 port 只給主機內部的網頁橋接程式用，不需要也不要對外開放。
+> MUD 本體的 4001 port 只給主機內部的網頁橋接程式用，不需要也不要對外開放。
+
+### 另外開放 zMUD／Telnet 直連（選用）
+
+想讓玩家用 zMUD 或其他 MUD 用戶端直接連線，照同樣的步驟再新增兩條規則（Source `0.0.0.0/0`、TCP）：
+
+| Destination Port | 用途 |
+|---|---|
+| `4000` | zMUD 4.62（Big5 繁體） |
+| `4003` | Mudlet、MUSHclient、CMUD、PuTTY 等（UTF-8） |
+
+主機防火牆由 `setup.sh` / `update.sh` 自動開放。想關閉某個入口：在 `es2-web` 服務設定
+`ZMUD_PORT=0` 或 `TELNET_PORT=0`（`sudo systemctl edit es2-web` 加 `[Service]` 與 `Environment=ZMUD_PORT=0`），再 `sudo systemctl restart es2-web`。
 
 ## 四、連上主機
 

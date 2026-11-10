@@ -34,7 +34,7 @@ private void create()
     art_entry_reward = 1;
     art_entry_msg    = "你把水雲劍法的四招記熟了﹐使起來總算有幾分樣子。\n";
 
-    /* 每級武術造詣 等級 × 10；31 級起武學之道 (等級 − 30) × 10（30 級以上要先習得精義）。 */
+    /* 每級武術造詣 等級 × 10；31 級起武學之道 (等級 - 30) × 10（30 級以上要先習得精義）。 */
     ma_coef  = 10;
     mm_start = 31;
     mm_minus = 30;
@@ -91,8 +91,18 @@ void after_strike(object me, object opponent, object weapon, mapping m, int dama
 /* 只能用在劍術。 */
 int valid_enable(string usage) { return usage == "sword"; }
 
-/* 等級上限（使用者定案，2026-10-20）：暫時 30；習得水雲劍法精義後才能往上練（精義尚未製作）。 */
+/* 等級上限（使用者定案，2026-10-20；2026-11-08）：沒有精義暫時 30；習得精義後，
+ * 水雲劍法與精義的上限都取兩者個人上限中較低的（劍術不受影響）。 */
 int query_skill_cap(object me)
 {
-    return has_essence(me) ? 200 : 30;
+    if( !has_essence(me) ) return 30;
+    return me->query_personal_skill_cap("sayuensword essence");
+}
+
+/* 水雲劍法到了上限，只要精義還沒到頂，仍照常累積點數（精義的經驗掛在水雲劍法的點數上），
+ * 劍法本身不會超過上限（使用者定案，2026-11-08）。 */
+int query_learn_at_cap(object me)
+{
+    if( !has_essence(me) ) return 0;
+    return me->query_skill("sayuensword essence", 1) < me->restored_skill_cap("sayuensword essence");
 }

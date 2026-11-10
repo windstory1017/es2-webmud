@@ -51,9 +51,9 @@ void advance_level(object ob)
 {
     int gin_gain, kee_gain, sen_gain;
 
-    gin_gain = ob->query_attr("dex", 1) / 4 + random(3) - 1;
-    kee_gain = ob->query_attr("con", 1) / 4 + random(3) - 1;
-    sen_gain = ob->query_attr("spi", 1) / 3 + random(3) - 1;
+    gin_gain = ob->query_attr("dex") / 4 + random(3) - 1;
+    kee_gain = ob->query_attr("con") / 4 + random(3) - 1;
+    sen_gain = ob->query_attr("spi") / 3 + random(3) - 1;
 
     ob->set_stat_maximum("gin", ob->query_stat_maximum("gin") + gin_gain);
     ob->set_stat_maximum("kee", ob->query_stat_maximum("kee") + kee_gain);

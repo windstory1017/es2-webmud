@@ -8,16 +8,17 @@
 
 | 區域 | 房間數 | 有 NPC 的房間 | NPC 種類 |
 |---|---:|---:|---:|
-| 雪亭鎮 | 43 | 20 | 32 |
-| 李家村 | 40 | 19 | 15 |
+| 雪亭鎮 | 42 | 19 | 32 |
+| 李家村 | 39 | 18 | 15 |
 | 五堂鎮 | 56 | 28 | 31 |
 | 老松林 | 22 | 8 | 8 |
 | 迷霧森林 | 28 | 14 | 12 |
 | 振武軍營 | 17 | 8 | 6 |
 | 玩家住宅 | 4 | 1 | 1 |
 | 公會 | 4 | 0 | 0 |
-| 巫師工作室 | 2 | 1 | 1 |
-| **合計** | **216** | **99** | **103** |
+| 巫師工作室 | 3 | 1 | 1 |
+| 羿水 | 2 | 0 | 0 |
+| **合計** | **217** | **97** | **103** |
 
 ## 雪亭鎮
 
@@ -145,32 +146,6 @@
 地面上積了一層厚厚的柴灰.
     這裡唯一的出口是 out。
 ```
-
-### 小藥鋪 `/d/snow/herb_shop`
-
-```text
-小藥鋪 -
-    這裡是一間小藥鋪﹐連像樣一點的招牌都沒有﹐只在門邊掛著一塊
-不甚起眼的木牌﹐上面寫著「順生堂」三個字﹐老舊的櫃臺後面陳列著
-一列藥櫃﹐藥櫃的每個抽屜按藥鋪的規矩都沒有任何標籤﹐西面的牆上
-吊著幾束曬乾的甘草﹐像這種小藥鋪沒有錢燒檀香祛除藥味﹐只好用甘
-草替代。
-    這裡唯一的出口是 north。
-  藥鋪掌櫃(Herbalist)
-```
-
-**NPC 敘述：**
-
-- **藥鋪掌櫃(Herbalist)** `/d/snow/npc/herbalist`
-
-  ```text
-  藥鋪掌櫃的是位胖胖的中年男子﹐雖然年紀有四五十歲了﹐不過看起
-  來依然紅光滿面、精神煥發﹐你可以用 list 問他店裡有哪些藥。
-  藥鋪掌櫃屬於人類族。他的外表看起來約四十多歲。
-  他身上帶著﹕
-  Ｖ布衣 (Cloth)
-  Ｖ毛皮帽 (Fur hat)
-  ```
 
 ### 客棧大堂 `/d/snow/inn_hall`
 
@@ -696,6 +671,7 @@
     這裡明顯的出口有 north 和 south。
   小孩(Child)
   小孩(Child)
+  武陀灸堂堂主「鬼華陀」武道通(Wu dauton)
 ```
 
 **NPC 敘述：**
@@ -715,6 +691,24 @@
   一個約七、八歲大的男孩﹐笑瞇瞇地望著你。
   他身上帶著﹕
   Ｖ木劍 (Wooden sword)
+  ```
+
+- **武陀灸堂堂主「鬼華陀」武道通(Wu dauton)** `/custom/legacy_npc/wu_dauton`
+
+  ```text
+  武道通年輕時本為龍圖丹派的方士, 因為一次因緣際會結識了一位江湖異人, 習得
+  了幾手針灸之術, 從此便不再苦煉丹道, 開始如著魔般浸淫於施針下灸之學。之後
+  竟因久疏龍圖丹派本門功夫, 而遭致開革之禍。武道通離開龍圖丹派之後, 便隱居
+  於斐縣縣郊, 為當地居民針灸治病, 沒有想到卻聲名大噪起來, 由於醫術高明, 行
+  事瘋癲乖張, 得了個「鬼華陀」的稱號。到了晚年, 乃自行開宗立派, 創設「武陀
+  灸堂」, 傳授附近居民武藝與防身灸術, 門下弟子不下百人, 多雲遊四海, 行醫救
+  世。
+  武道通屬於人類族。他的外表看起來約七十多歲。
+  他身上帶著﹕
+  Ｖ\x1b[1;37m塵不沾\x1b[m (Boots of cleanse)
+  Ｖ蜂尾針 (Bee needle)
+  Ｖ\x1b[0;33m虎紋戒指\x1b[m (Tiger ring)
+    \x1b[1;30m附骨之蛆\x1b[m (Needle of bone maggot)
   ```
 
 ### 廣場 `/d/snow/square_s`
@@ -1038,24 +1032,6 @@
   李忠是賣雜貨小夥計，整天笑嘻嘻的，一臉老實樣。
   ```
 
-### 藥鋪 `/d/lee/herb_shop`
-
-```text
-藥鋪 -
-    這是一間不大的藥鋪，木櫃裡分門別類收著藥材與丹藥，空氣中混著草根與藥香。掌櫃李岩守著櫃臺，店門朝東開向石子路。牆上掛著幾串曬乾的藥草，屋樑上懸著一副舊招牌，字跡已經有些斑駁老舊。鋪子裡賣的丹藥多是聶晟閒暇時煉的，價格公道，村民生病時多半先來這裡瞧瞧。
-    這裡唯一的出口是 east。
-  李岩(Lee yen)
-```
-
-**NPC 敘述：**
-
-- **李岩(Lee yen)** `/d/lee/npc/lee_yen`
-
-  ```text
-  李家村藥鋪的掌櫃，熟悉常用藥材與丹藥。你可以用 list 查看目前已恢復且功能可核對的商品。
-  李岩屬於人類族。他的外表看起來約四十多歲。
-  ```
-
 ### 木屋 `/d/lee/hunter`
 
 ```text
@@ -1087,6 +1063,7 @@
     這裡唯一的出口是 east。
   店小二(Waiter)
   李半仙(Li ban xian)
+  幻霧觀觀主 杜風凌(Du feng ling)
 ```
 
 **NPC 敘述：**
@@ -1103,6 +1080,25 @@
   ```text
   一位常在小旅店落腳的說書先生，鬍鬚微白，說起江湖舊聞時總是愛故意壓低聲音。目前階段只保留已經確認的角色與位置，完整的說書關鍵字和能力成長事件都待後續逐條復原。
   李半仙屬於人類族。他的外表看起來約五十多歲。
+  ```
+
+- **幻霧觀觀主 杜風凌(Du feng ling)** `/custom/legacy_npc/du_feng_ling`
+
+  ```text
+  杜風凌本是西方大漠的巫首族人﹐自幼拜林遠為師﹐修習茅山道法。也許是
+  因為天賦異常﹐入門十數年就熟練的掌握了茅山道法的精髓並將其融會貫通,
+  漸漸將一些不受重視的小把戲發展起來﹐當時盛傳杜風凌將會是下任茅山的
+  掌門人。怎料當時的茅山掌門人﹐林遠﹐為了追查茅山劍法竟然屍橫荒野﹐
+  一時間茅山派一片大亂。不少人因鄙視杜風凌所擅長的『茅山奇術』竟然離
+  開茅山自成流派﹐而杜風凌也因其家族牽扯到黃泉村一事﹐而不得不暫回西
+  方大漠。當他返回天朝以後﹐無法說服他的師兄弟重歸茅山﹐便憤然再返大
+  漠﹐借助他家族在大漠的勢力自創『幻霧觀』。此次不知是為何事﹐竟然又
+  來到天朝境內。
+  杜風凌屬於馬立克族。他的外表看起來約七十多歲。
+  他身上帶著﹕
+  Ｖ青衣道袍 (Green robe)
+  Ｖ桃木劍 (Peachwood sword)
+  Ｖ\x1b[1;32m漢玉戒指\x1b[m (Jade ring)
   ```
 
 ### 丹房 `/d/lee/nie_backroom`
@@ -1511,6 +1507,7 @@
   護院武師屬於黑齒族。他的外表看起來約二十多歲。
   他身上帶著﹕
   Ｖ牛皮背心 (Leather vest)
+  Ｖ單刀 (Blade)
   ```
 
 ### 木道 `/d/wutang/boardwalk_e`
@@ -1548,6 +1545,7 @@
   他身上帶著﹕
   Ｖ青絲釣竿 (Fishing stick)
   Ｖ簑衣 (Cloth)
+  Ｖ玄蛛皂白靴 (Spider boots)
   ```
 
 ### 城隍廟 `/d/wutang/city_god_temple`
@@ -1939,32 +1937,8 @@
 ```text
 碎石路 -
     一條鋪滿碎石的小路，走起來沙沙作響。西側不遠就是羿水河邊，路旁長著一大叢茂密的草叢，旁邊還有一片竹蘆，風一吹便沙沙作響，似乎可以從草叢穿過去。往東是五堂鎮的街道，往北是菜田前的空地。
-    這裡明顯的出口有 west、east、north 和 southwest。
-  冷梅莊一代弟子 楊子陵(Yang zlin)
-  冷梅莊二代弟子(Apprentice)
+    這裡明顯的出口有 enter、east、north 和 southwest。
 ```
-
-**NPC 敘述：**
-
-- **冷梅莊一代弟子 楊子陵(Yang zlin)** `/d/wutang/npc/yang_zlin`
-
-  ```text
-  楊子陵在冷梅派第一代弟子中排行第四, 為梅影風某日出外於路上所遇到的棄嬰, 因機緣而入冷梅派, 目前劍術內功已略有小成, 一手真冷梅劍法在武林中也頗有微名。
-  楊子陵屬於人類族。他的外表看起來約三十多歲。
-  他身上帶著﹕
-  Ｖ黑劍 (Black sword)
-  Ｖ黑鋼短刃 (Black iron dagger)
-  Ｖ\x1b[1;37m天蠶寶衣\x1b[m (Silk cloth)
-  Ｖ狼皮靴 (Wolf boots)
-  Ｖ狼皮帽 (Woof hat)
-  ```
-
-- **冷梅莊二代弟子(Apprentice)** `/d/wutang/npc/apprentice`
-
-  ```text
-  冷梅莊弟子，在劍法、內功上已經有相當火侯。
-  冷梅莊二代弟子屬於人類族。他的外表看起來約二十多歲。
-  ```
 
 ### 碎石路 `/d/wutang/gravel_road_s`
 
@@ -2138,9 +2112,33 @@
 
 ```text
 涼亭 -
-    一座建在小丘上的木造涼亭，四周種著幾株垂柳，微風吹過時柳枝輕輕搖曳。站在亭中向西望去，可以眺望寬闊的羿水在遠方緩緩流過，河面上點點帆影，景色十分宜人。往東是一條碎石路。
-    這裡唯一的出口是 east。
+    一座建在小丘上的木造涼亭，四周種著幾株垂柳，微風吹過時柳枝輕輕搖曳。站在亭中向西望去，可以眺望寬闊的羿水在遠方緩緩流過，河面上點點帆影，景色十分宜人。亭外便是一條碎石路。
+    這裡唯一的出口是 out。
+  冷梅莊一代弟子 楊子陵(Yang zlin)
+  冷梅莊二代弟子(Apprentice)
 ```
+
+**NPC 敘述：**
+
+- **冷梅莊一代弟子 楊子陵(Yang zlin)** `/d/wutang/npc/yang_zlin`
+
+  ```text
+  楊子陵在冷梅派第一代弟子中排行第四, 為梅影風某日出外於路上所遇到的棄嬰, 因機緣而入冷梅派, 目前劍術內功已略有小成, 一手真冷梅劍法在武林中也頗有微名。
+  楊子陵屬於人類族。他的外表看起來約三十多歲。
+  他身上帶著﹕
+  Ｖ黑劍 (Black sword)
+  Ｖ黑鋼短刃 (Black iron dagger)
+  Ｖ\x1b[1;37m天蠶寶衣\x1b[m (Silk cloth)
+  Ｖ狼皮靴 (Wolf boots)
+  Ｖ狼皮帽 (Woof hat)
+  ```
+
+- **冷梅莊二代弟子(Apprentice)** `/d/wutang/npc/apprentice`
+
+  ```text
+  冷梅莊弟子，在劍法、內功上已經有相當火侯。
+  冷梅莊二代弟子屬於人類族。他的外表看起來約二十多歲。
+  ```
 
 ### 和豐當鋪 `/d/wutang/pawnshop`
 
@@ -2279,7 +2277,7 @@
 ```text
 三岔路口 -
     一處三岔路口，路旁立著一塊斑駁的石碑，上頭刻著往各地的方向。往西是一片草原，再往西則是鯉君渡，往東南的官道可以前往喬陰縣，往北則回到五堂鎮。
-    這裡明顯的出口有 north 和 west。
+    這裡明顯的出口有 north、west 和 southeast。
 ```
 
 ### 街道 `/d/wutang/west_street1`
@@ -2474,7 +2472,7 @@
 ```text
 草叢 -
     松林在這裡忽然斷開，眼前是一大片及腰的野草，風一吹便如波浪般起伏。草叢裡不時傳來窸窸窣窣的聲音，偶爾還能看見一雙發亮的眼睛在草間一閃而過，叫人心裡發毛。草地上有幾處被壓倒的痕跡，像是有什麼大傢伙在這裡打過滾。往西北可以回到松林，往北是一塊空地，往東南的草長得更高更密。
-    這裡明顯的出口有 northwest、north 和 southeast。
+    這裡明顯的出口有 northwest、north、southeast 和 east。
 ```
 
 ### 草叢 `/d/oldpine/grass2`
@@ -2482,18 +2480,18 @@
 ```text
 草叢 -
     這裡的野草長得比人還高，四周只聽得見草葉摩擦的沙沙聲，根本看不清三步以外的東西。草叢中被壓出了一條條獸徑，泥地上滿是爪印，草根處還散落著幾撮灰黃色的獸毛。北邊的山壁下有一個黑黝黝的洞穴，裡頭不時傳出低沉的吼聲。往西北可以回到較矮的草叢。
-    這裡唯一的出口是 northwest。
-  土狼(Wolf)
-  土狼(Wolf)
-  土狼(Wolf)
+    這裡明顯的出口有 northwest 和 southeast。
+  山羊(Goat)
+  山羊(Goat)
+  山羊(Goat)
 ```
 
 **NPC 敘述：**
 
-- **土狼(Wolf)** `/d/oldpine/npc/wolf` ×3
+- **山羊(Goat)** `/d/oldpine/npc/goat` ×3
 
   ```text
-  一口白森森的利牙，正虎視眈眈的盯著你。
+  在山壁上到處爬來爬去，低頭吃著為數不多的野草。
   ```
 
 ### 碎石路 `/d/oldpine/gravel_road`
@@ -2545,7 +2543,7 @@
 ```text
 官道 -
     老松林南邊的官道，路面寬闊平坦，兩旁種著整齊的柳樹，與林中崎嶇的小路相比，走起來輕鬆許多。路邊立著一塊里程碑，刻著往喬陰縣的方向與里數。由於近來老松林土匪橫行，官道上往來的旅人寥寥無幾，只有幾隻烏鴉停在柳枝上啞啞叫著。往北可以進入老松林，往南的官道通往喬陰縣。
-    這裡唯一的出口是 north。
+    這裡明顯的出口有 north 和 south。
 ```
 
 ### 大雄寶殿 `/d/oldpine/main_hall`
@@ -2719,7 +2717,7 @@
 
 ```text
 山洞深處 -
-    山洞的最深處，空間突然開闊起來，洞頂高得看不見，四周的岩壁上掛著水珠，在黑暗中閃著微光。地上散落著大量獸骨，還有幾件破爛的衣物和一隻生鏽的鐵鍋，不知是哪個倒楣的獵人留下的。洞的一角有一塊巨大的石頭，石面上有幾處被踩出來的凹痕，看起來可以攀爬上去。往北和往西可以回到洞內其他地方。
+    山洞的最深處，空間突然開闊起來，洞頂高得看不見，四周的岩壁上掛著水珠，在黑暗中閃著微光。地上散落著大量獸骨，還有幾件破爛的衣物和一只生鏽的鐵鍋，不知是哪個倒楣的獵人留下的。洞的一角有一塊巨大的石頭，石面上有幾處被踩出來的凹痕，看起來可以攀爬上去。
     這裡明顯的出口有 north 和 west。
   小黑熊(Little bear)
   小黑熊(Little bear)
@@ -3052,6 +3050,7 @@
   Ｖ冶磺套 (Fire gauntlets)
   Ｖ精鋼戰甲 (Steel armor)
   Ｖ萬夫莫敵 (Great axe of mighty)
+    【奇兵精意】 (Book of assault)
   ```
 
 ### 軍營 `/custom/zhenwu/room/camp`
@@ -3207,19 +3206,24 @@
 校場 -
     這片校場位在中軍一側，往西可通向棚場與軍營外圍。土地中央被無數雙軍靴踩得發亮，附近不時傳來整隊口令；在此停留片刻，便能看見軍士依照號令往各處操演。
     這裡明顯的出口有 north、south、east 和 west。
-  「徵兵官」魯熙年(Lu xinien)
-  徵兵石(Recruit stone)
+  徵兵官 魯熙年(Lu xinien)
+  振武軍營軍人 徵兵石(Recruit stone)
 ```
 
 **NPC 敘述：**
 
-- **「徵兵官」魯熙年(Lu xinien)** `/custom/zhenwu/npc/lu_xinien`
+- **徵兵官 魯熙年(Lu xinien)** `/custom/zhenwu/npc/lu_xinien`
 
   ```text
-  魯熙年是一名身材微胖的中年武官，兩眼瞇成一條線，臉上總帶著似笑非笑的古怪表情。他同時也是振武營負責招募新兵的徵兵官，看起來約三十多歲。營中新兵入伍後的基本兵刃操練，多半也是他一手帶出來的。
+  魯熙年是一個身材微胖的中年武官﹐兩眼瞇成一條線﹐臉上總是露出似笑非笑的古怪表情。魯熙年同時也是振武營負責招募新兵的募兵官，如果你想從軍，請向他，辦理入伍(enlist)手續。
+  他身上帶著﹕
+  Ｖ精鋼砍刀 (Steelblade)
+  Ｖ鐵盔 (Iron helmet)
+  Ｖ精鐵環扣 (Iron girth)
+  Ｖ連身鎖子甲 (Ring armor)
   ```
 
-- **徵兵石(Recruit stone)** `/custom/zhenwu/obj/recruit_stone`
+- **振武軍營軍人 徵兵石(Recruit stone)** `/custom/zhenwu/obj/recruit_stone`
 
   ```text
   振武軍營徵兵處，可在此登記 (enlist) 成為軍人。
@@ -3371,7 +3375,7 @@ look bed 查看床；rest bed 或 上床開始休息；backhall 返回家園大�
 傳送門 -
     這裡是巫師公會的傳送門，平坦的草地上有一片鋪著地磚的空地。
 空地中央有一個巨大的綠色魔法陣，正發出閃爍不定的微弱光芒。
-    這裡明顯的出口有 east 和 inn。
+    這裡明顯的出口有 east、snow 和 50。
 ```
 
 ## 巫師工作室
@@ -3398,12 +3402,38 @@ look bed 查看床；rest bed 或 上床開始休息；backhall 返回家園大�
   店小二屬於人類族。他的外表看起來約二十多歲。
   ```
 
+### 未知地方 `/custom/wizroom/w/windstory/room/home`
+
+```text
+未知地方 -
+    這裡整個不見光，完全不知道有甚麼。
+    這裡明顯的出口有 east 和 west。
+```
+
 ### 鄉校 `/custom/wizroom/w/windstory/room/inn_w`
 
 ```text
 鄉校 -
     這裡是雪亭鎮的鄉校，鎮民若對地方事務有所疑問，便會前來向校老申訴。廳內陳設簡樸，幾張木桌與長凳整齊排列，牆上貼著勸人向善的告示。西邊通往雪亭鎮廣場，東邊新設了一道厚重木門，門後便是供往來旅客歇腳的龍門客棧。
     這裡明顯的出口有 east 和 west。
+```
+
+## 羿水
+
+### 渡船上 `/d/wutang/ferry_boat_huang`
+
+```text
+渡船上 -
+    一條新漆過的小舢舨，船頭貼著一張褪了色的紅紙，寫著「順風順水」四個字。小黃在船尾使勁搖著櫓，小船走得又快又急，濺起的水花不時打上船舷，水面的涼意一陣陣撲上臉來。
+    這裡沒有任何明顯的出路。
+```
+
+### 渡船上 `/d/wutang/ferry_boat_ro`
+
+```text
+渡船上 -
+    一條老舊的烏篷小船，船身被河水浸得發黑，篷頂的竹篾修補過好幾回。老駱站在船尾，竹篙一點一撐，小船便穩穩地在羿水上滑行，兩岸的景物緩緩向後退去，只聽得見篙尖入水的輕響。
+    這裡沒有任何明顯的出路。
 ```
 
 ## NPC 索引
@@ -3417,16 +3447,18 @@ look bed 查看床；rest bed 或 上床開始休息；backhall 返回家園大�
 | 魍魎(Water goblin) | `/custom/ghost/npc/water_goblin` | 溪邊（雪亭鎮） |
 | 枉死鬼(Wronged ghost) | `/custom/ghost/npc/wronged_ghost` | 木橋（雪亭鎮） |
 | 家園管家(Home butler) | `/custom/home/npc/butler` | 家園大廳（玩家住宅） |
+| 幻霧觀觀主 杜風凌(Du feng ling) | `/custom/legacy_npc/du_feng_ling` | 小旅店（李家村） |
+| 武陀灸堂堂主「鬼華陀」武道通(Wu dauton) | `/custom/legacy_npc/wu_dauton` | 廣場（雪亭鎮） |
 | 朱衣派弟子(Red-taoist) | `/custom/taoism/npc/fire_taoist` | 溪邊（雪亭鎮） |
 | 素衣派弟子(White-taoist) | `/custom/taoism/npc/freeze_taoist` | 溪邊（雪亭鎮） |
 | 玄衣派弟子(Black-taoist) | `/custom/taoism/npc/storm_taoist` | 溪邊（雪亭鎮） |
 | 紫衣派弟子(Purple-taoist) | `/custom/taoism/npc/thunder_taoist` | 溪邊（雪亭鎮） |
-| 「徵兵官」魯熙年(Lu xinien) | `/custom/zhenwu/npc/lu_xinien` | 校場（振武軍營） |
+| 徵兵官 魯熙年(Lu xinien) | `/custom/zhenwu/npc/lu_xinien` | 校場（振武軍營） |
 | 「振武軍提督」米沛(Mee-pei) | `/custom/zhenwu/npc/mee_pei` | 大帳（振武軍營） |
 | 小兵(Soldier) | `/custom/zhenwu/npc/soldier` | 振武軍營大門（振武軍營） |
 | 假人(Target stake) | `/custom/zhenwu/npc/target_stake` | 校場（振武軍營） |
 | 振武軍營士兵(Soldier) | `/custom/zhenwu/npc/zhenwu_soldier` | 校場（振武軍營） |
-| 徵兵石(Recruit stone) | `/custom/zhenwu/obj/recruit_stone` | 校場（振武軍營） |
+| 振武軍營軍人 徵兵石(Recruit stone) | `/custom/zhenwu/obj/recruit_stone` | 校場（振武軍營） |
 | 小孩(Child) | `/d/lee/npc/child` | 私塾（李家村）、廣場中央（李家村） |
 | 農夫(Farmer) | `/d/lee/npc/farmer` | 西瓜田（李家村） |
 | 守衛(Guard) | `/d/lee/npc/guard` | 村口大門（李家村） |
@@ -3434,7 +3466,6 @@ look bed 查看床；rest bed 或 上床開始休息；backhall 返回家園大�
 | 小藥童(Boy) | `/d/lee/npc/herb_boy` | 醫館（李家村） |
 | 李勖賢(Lee hsu hsien) | `/d/lee/npc/lee_hsu_hsien` | 私塾（李家村） |
 | 李嘯天(Lee xiao tian) | `/d/lee/npc/lee_xiao_tian` | 李記當鋪（李家村） |
-| 李岩(Lee yen) | `/d/lee/npc/lee_yen` | 藥鋪（李家村） |
 | 李勇(Lee yong) | `/d/lee/npc/lee_yong` | 木屋（李家村） |
 | 李忠(Lee zhong) | `/d/lee/npc/lee_zhong` | 雜貨鋪（李家村） |
 | 李半仙(Li ban xian) | `/d/lee/npc/li_ban_xian` | 小旅店（李家村） |
@@ -3447,6 +3478,7 @@ look bed 查看床；rest bed 或 上床開始休息；backhall 返回家園大�
 | 大黑熊(Big bear) | `/d/oldpine/npc/big_bear` | 山洞深處（迷霧森林） |
 | 彤雲寺住持 大觀和尚(Abbot da-gaun) | `/d/oldpine/npc/da_guan` | 大雄寶殿（老松林） |
 | 野鹿(Deer) | `/d/oldpine/npc/deer` | 迷霧森林（迷霧森林） |
+| 山羊(Goat) | `/d/oldpine/npc/goat` | 草叢（老松林） |
 | 採藥人(Herbalist) | `/d/oldpine/npc/herbalist` | 蘆葦叢（迷霧森林）、樹林（迷霧森林） |
 | 受傷的旅客(Injured traveller) | `/d/oldpine/npc/injured_traveller` | 空地（老松林） |
 | 虎刀門長老 高慎(Kao shen) | `/d/oldpine/npc/kao_shen` | 空地（老松林） |
@@ -3457,7 +3489,6 @@ look bed 查看床；rest bed 或 上床開始休息；backhall 返回家園大�
 | 松鼠(Squirrel) | `/d/oldpine/npc/squirrel` | 樹林深處（迷霧森林） |
 | 店小二(Waiter) | `/d/oldpine/npc/waiter` | 野店（迷霧森林） |
 | 凶暴的野熊(Bear) | `/d/oldpine/npc/wild_bear` | 山洞（老松林） |
-| 土狼(Wolf) | `/d/oldpine/npc/wolf` | 草叢（老松林） |
 | 土匪 徐彪(Xue biaw) | `/d/oldpine/npc/xue_biao` | 林間空地（老松林） |
 | 龍圖丹派弟子「牙山居士」陳維俠(Chen weisha) | `/d/snow/npc/alchemist` | 私塾（雪亭鎮） |
 | 阿寶(Arbao) | `/d/snow/npc/child` | 榕樹上（雪亭鎮） |
@@ -3469,7 +3500,6 @@ look bed 查看床；rest bed 或 上床開始休息；backhall 返回家園大�
 | 官兵(Garrison) | `/d/snow/npc/garrison` | 山路（雪亭鎮） |
 | 白衣女子(Girl) | `/d/snow/npc/girl` | 破舊大宅正廳（雪亭鎮） |
 | 青衣漢子(Guard) | `/d/snow/npc/guard` | 木橋（雪亭鎮） |
-| 藥鋪掌櫃(Herbalist) | `/d/snow/npc/herbalist` | 小藥鋪（雪亭鎮） |
 | 掌櫃(Innkeeper) | `/d/snow/npc/innkeeper` | 客棧大堂（雪亭鎮） |
 | 拾荒老頭(Junkman) | `/d/snow/npc/junkman` | 廣場中央（雪亭鎮） |
 | 武官(Lieutenant) | `/d/snow/npc/lieutenant` | 山路（雪亭鎮） |
@@ -3480,7 +3510,7 @@ look bed 查看床；rest bed 或 上床開始休息；backhall 返回家園大�
 | 店小二(Waiter) | `/d/snow/npc/waiter` | 客棧大堂（雪亭鎮）、龍門客棧（巫師工作室） |
 | 少婦(Woman) | `/d/snow/npc/woman` | 溪邊小路（雪亭鎮） |
 | 魚天(Yu tan) | `/d/snow/npc/yu` | 魚記小鋪（雪亭鎮） |
-| 冷梅莊二代弟子(Apprentice) | `/d/wutang/npc/apprentice` | 碎石路（五堂鎮） |
+| 冷梅莊二代弟子(Apprentice) | `/d/wutang/npc/apprentice` | 涼亭（五堂鎮） |
 | 大野豬(Big boar) | `/d/wutang/npc/big_boar` | 菜田（五堂鎮） |
 | 野豬(Boar) | `/d/wutang/npc/boar` | 菜田（五堂鎮） |
 | 釣客(Fisher) | `/d/wutang/npc/fisher` | 鯉君渡口（五堂鎮） |
@@ -3506,7 +3536,7 @@ look bed 查看床；rest bed 或 上床開始休息；backhall 返回家園大�
 | 店小二(Waiter) | `/d/wutang/npc/waiter` | 醇雨樓客棧（五堂鎮） |
 | 白衣道士(Taoist) | `/d/wutang/npc/white_taoist` | 醇雨樓客棧二樓（五堂鎮） |
 | 玉面好漢 葉翔(Yaesae) | `/d/wutang/npc/yaesae` | 雲棧市集廣場（五堂鎮） |
-| 冷梅莊一代弟子 楊子陵(Yang zlin) | `/d/wutang/npc/yang_zlin` | 碎石路（五堂鎮） |
+| 冷梅莊一代弟子 楊子陵(Yang zlin) | `/d/wutang/npc/yang_zlin` | 涼亭（五堂鎮） |
 | 青年公子(Young man) | `/d/wutang/npc/young_gentleman` | 布莊（五堂鎮） |
 | 小鼠兒(Young man) | `/d/wutang/npc/young_man` | 五堂鎮口（五堂鎮） |
 | 青年書生(Young scholar) | `/d/wutang/npc/young_scholar` | 醇雨樓客棧三樓（五堂鎮） |

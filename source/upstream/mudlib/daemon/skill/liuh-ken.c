@@ -38,7 +38,7 @@ private void create()
     art_entry_reward    = 1;
     art_entry_msg       = "你練成了柳家拳法。\n";
 
-    /* 武術造詣 等級 × 10；41 級起武學之道 (等級 − 40) × 10。 */
+    /* 武術造詣 等級 × 10；41 級起武學之道 (等級 - 40) × 10。 */
     ma_coef  = 10;
     mm_start = 41;
     mm_minus = 40;

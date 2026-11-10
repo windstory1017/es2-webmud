@@ -132,9 +132,12 @@ sleep 4
 sudo systemctl restart es2-web
 
 step "7/7 開放主機防火牆的 $WEB_PORT port（Oracle 的 Ubuntu 預設只開 22）"
-if ! sudo iptables -C INPUT -p tcp --dport "$WEB_PORT" -m state --state NEW -j ACCEPT 2>/dev/null; then
-    sudo iptables -I INPUT 1 -p tcp --dport "$WEB_PORT" -m state --state NEW -j ACCEPT
-fi
+# 8080 網頁；4000 zMUD（Big5）；4003 Telnet（UTF-8）。4001 是遊戲本體，不對外。
+for P in "$WEB_PORT" 4000 4003; do
+    if ! sudo iptables -C INPUT -p tcp --dport "$P" -m state --state NEW -j ACCEPT 2>/dev/null; then
+        sudo iptables -I INPUT 1 -p tcp --dport "$P" -m state --state NEW -j ACCEPT
+    fi
+done
 if command -v netfilter-persistent >/dev/null; then
     sudo netfilter-persistent save
 else

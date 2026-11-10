@@ -9,7 +9,7 @@ inherit SKILL;
 
 #define SCROLL  "/custom/item/scroll/nature"
 #define DOG     "/custom/taoism/npc/maoshan_dog"
-#define FACTION "taoist.wind"
+#define FACTION "mao-shan.wind"
 
 string type() { return "spell"; }
 int valid_enable(string usage) { return usage == "spells"; }
@@ -193,25 +193,39 @@ int do_hydra(object me, object target, int sk)
 }
 
 // ------------------------------------------------------------------
-// 祈天之術：房間內其他玩家（不含自己與 NPC）的精、氣、神，
-// 目前值與受損的上限都回復 等級/10 + random(慧根 + 靈性)，三項相同。
+// 祈天之術（使用者指示 #36，2026-11-06）：房間內其他玩家（不含自己與 NPC）
+//   精、氣、神目前值各回復 等級/10 + random((慧根 + 靈性)/2)，三項相同；
+//   受損的上限回復 回復量/3，最低 1；疲勞 -3（最低到 0）。
+//   施術者自己不受益，疲勞 +5；疲勞達 RAIN_FATIGUE_LIMIT 時不能施展（cast_spell 檢查）。
 // ------------------------------------------------------------------
+
+#define RAIN_FATIGUE_COST   5
+#define RAIN_FATIGUE_RELIEF 3
+#define RAIN_FATIGUE_LIMIT  50
 
 int do_rain(object me, int sk)
 {
-    int n, r;
+    int n, cap, r, fatigue;
 
-    r = me->query_attr("wis") + me->query_attr("spi");
+    r = (me->query_attr("wis") + me->query_attr("spi")) / 2;
     n = sk / 10 + (r > 0 ? random(r) : 0);
+    cap = n / 3;
+    if( cap < 1 ) cap = 1;
     message_vision("$N手捏法訣仰天長嘯﹐將先天符向空中一拋﹐霎時烏雲四合。\n", me, 0, 1);
     message_vision(HIC "一陣甘霖灑落下來﹐眾人只覺渾身舒暢﹐疲憊一掃而空。\n" NOR, me, 0, 1);
     foreach(object ob in all_inventory(environment(me))) {
         if( ob == me || !userp(ob) || !living(ob) ) continue;
         foreach(string st in ({ "gin", "kee", "sen" })) {
-            ob->heal_stat(st, n);
-            ob->supplement_stat(st, n);
+            ob->heal_stat(st, cap);         // 受損的上限
+            ob->supplement_stat(st, n);     // 目前值
         }
+        fatigue = ob->query_stat("fatigue") - RAIN_FATIGUE_RELIEF;
+        ob->set_stat_current("fatigue", fatigue < 0 ? 0 : fatigue);
     }
+    fatigue = me->query_stat("fatigue") + RAIN_FATIGUE_COST;
+    if( me->query_stat_maximum("fatigue") > 0 && fatigue > me->query_stat_maximum("fatigue") )
+        fatigue = me->query_stat_maximum("fatigue");
+    me->set_stat_current("fatigue", fatigue);
     return 1;
 }
 
@@ -249,6 +263,10 @@ varargs int cast_spell(object me, string spell, object target)
                 return notify_fail("喚蟒之術只能對付正在與你交手的對象。\n");
         }
     }
+
+    // 祈天之術：施術者過於疲憊時不能施展，不扣神也不用掉先天符（#36，2026-11-06）。
+    if( spell == "rain" && me->query_stat("fatigue") >= RAIN_FATIGUE_LIMIT )
+        return notify_fail(gender_self(me) + "已經過於疲憊無法再聚精祈求。\n");
 
     if( !(scroll = find_scroll(me)) )
         return notify_fail("你身上沒有先天符﹐無從施展幻術。\n");

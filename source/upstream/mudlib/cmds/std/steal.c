@@ -8,7 +8,7 @@ inherit F_CLEAN_UP;
 void create() {seteuid(getuid());}
 
 /* 妙手空空點數（使用者定案，2026-10-19）：偷到東西
- * random((定力+機敏)/2)² + random(定力+機敏)；被發現時給 1/4。 */
+ * random((定力+機敏)/2)^2 + random(定力+機敏)；被發現時給 1/4。 */
 int steal_exp(object me)
 {
     int n, sum;
@@ -72,7 +72,8 @@ int main(object me, string arg)
 */
     if( !ob = present(what, victim) ) {
 	object *inv;
-        inv = all_inventory(victim);
+        // 沒有指定目標的偷，會避開雨師妾的蛇（使用者定案，2026-11-05）。
+        inv = filter_array(all_inventory(victim), (: !$1->query("rainner_snake") :));
         if( !sizeof(inv) )
             return notify_fail( victim->name() + "身上看起來沒有什麼值錢的東西好偷。\n");
                 ob = inv[random(sizeof(inv))];
@@ -119,15 +120,6 @@ int main(object me, string arg)
     if( stealer_race == "jiaojao" ) dp += (int)victim->query_stat("gin");
     if( victim->is_fighting() ) dp *= 2;
     if( ob->query("equipped") ) dp *= 3;
-    // max dp for rr += 1500
-    if ( victim->query("race") == "rainnar" ) {
-	if ( present("black viper", victim) ) dp += 100;
-        if ( present("red viper", victim) ) dp += 300;
-        if ( present("green viper", victim) ) dp += 300;
-        if ( present("white viper", victim) ) dp += 400;
-        if ( present("yellow viper", victim) ) dp += 400;
-    }
-
     write("你不動聲色地慢慢靠近" + victim->name() + "﹐等待機會下手 ...\n\n");
 
     me->set_temp("stealing", 1);
@@ -135,6 +127,30 @@ int main(object me, string arg)
     call_out( "compelete_steal", 3, me, victim, ob, sp, dp);
 
     return 1;
+}
+
+// 失手被發現：被偷的人（或牠身上的蛇）察覺，雙方動手。
+private void caught(object me, object victim, object ob)
+{
+    tell_object(me, HIR "糟糕﹗你失手了﹗\n\n" NOR);
+    if( objectp(ob) && ob->query("rainner_snake") ) {
+        message_vision("$N身上的" + ob->name() + "猛然昂首咬向$n﹐讓$N驚覺$n的手正抓著牠﹗\n\n"
+            +  "$N喝道﹕「幹什麼﹗」\n\n", victim, me);
+    }
+    else {
+        message_vision("$N一回頭﹐正好發現$n的手正抓著$P身上的" + (objectp(ob) ? ob->name() : "東西") + "﹗\n\n"
+                + "$N喝道﹕「幹什麼﹗」\n\n", victim, me);
+    }
+    me->improve_skill("stealing", steal_exp(me) / 4);
+    me->gain_score("thievery", 1);
+    if( userp(victim) ) victim->fight_ob(me);
+    else {
+        victim->accept_kill(me);
+        victim->kill_ob(me);
+    }
+    me->fight_ob(victim);
+    if( me->query_race() != "jiaojao" ) me->start_busy(3);
+    if( me->query_race() == "jiaojao" ) me->start_busy(1);
 }
 
 private void compelete_steal(object me, object victim, object ob, int sp, int dp)
@@ -150,16 +166,14 @@ private void compelete_steal(object me, object victim, object ob, int sp, int dp
 
     if( victim->detect_steal(me, ob, sp) ) return;
 
+    // 雨師妾的蛇一定會發現有人要偷牠（主人昏倒也一樣），蛇本身也絕不會被偷走。
+    if( objectp(ob) && ob->query("rainner_snake") ) {
+        tell_object(me, "你的手才剛摸向" + ob->name() + "﹐牠就張著一口毒牙昂起頭來。\n");
+        caught(me, victim, ob);
+        return;
+    }
+
     if( objectp(ob) && (!living(victim) || (random(sp+dp) > dp) )) {
-	if ( ob->query("id") == "black viper"
-        || ob->query("id") == "green viper"
-        || ob->query("id") == "white viper"
-        || ob->query("id") == "red viper"
-        || ob->query("id") == "yellow viper" ) {
-            tell_object(me, "你摸到一條" + ob->name() +
-            "﹐牠張著一口毒牙向你咬來﹐嚇的你連退好幾步。\n");
-            return;
-        }
         if( ob->query("no_steal") ) {
             tell_object(me, "這東西不能偷。\n");
             return;
@@ -179,57 +193,22 @@ private void compelete_steal(object me, object victim, object ob, int sp, int dp
             me->gain_score("thievery", gain);
             if( userp(victim) )
                 me->gain_score("mortal sin", random(me->query_skill("stealing") / 2) + 1 );
-            }
-            if( random(sp) < dp/2 )
-                message("vision", "你看到" + me->name() + "鬼鬼祟祟地從"
-                    + victim->name() + "身上偷走了一" + ob->query("unit")
-                    + ob->name() + "﹗\n", environment(me), ({ me, victim }) );
-#ifdef SAVE_USER
-    victim->save();
-#endif
-	}
-        else {
-            if( !ob || random(sp) > dp/2 ) {
-                if ( present("black viper", victim)
-                || present("red viper", victim)
-                || present("green viper", victim)
-                || present("white viper", victim)
-                || present("yellow viper", victim) ) {
-                    tell_object(me, "嗤﹗地一聲﹐" + victim->name() + 
-			"身上突然竄出一條昂首吐信的蛇﹐虎視眈眈著你﹗\n"
-			"你嚇得趕緊縮手。\n");
-                    return; 
-		}
-                else {
-	            tell_object(me, victim->name() + "不經意地一轉頭﹐你急忙將手縮了回去﹗\n"
-                         "還好﹐沒有被發現。\n");
-                    return; 
-		}
-            }
-            tell_object(me, HIR "糟糕﹗你失手了﹗\n\n" NOR);
-            if ( present("black viper", victim)
-            || present("red viper", victim)
-            || present("green viper", victim)
-            || present("white viper", victim)
-            || present("yellow viper", victim) ) {
-                message_vision("$N身上的蛇猛然咬向$n﹐讓$N驚覺$n的手正抓著$N的"
-                + ob->name() + "﹗\n\n"
-                +  "$N喝道﹕「幹什麼﹗」\n\n", victim, me); 
-	    }
-            else {
-                message_vision("$N一回頭﹐正好發現$n的手正抓著$P身上的" + ob->name() + "﹗\n\n"
-                        + "$N喝道﹕「幹什麼﹗」\n\n", victim, me);
-            }
-            me->improve_skill("stealing", steal_exp(me) / 4);
-            me->gain_score("thievery", 1);
-            if( userp(victim) ) victim->fight_ob(me);
-        else {
-                victim->accept_kill(me);
-                victim->kill_ob(me);
         }
-        me->fight_ob(victim);
-        if( me->query_race() != "jiaojao" ) me->start_busy(3);
-        if( me->query_race() == "jiaojao" ) me->start_busy(1);
+        if( random(sp) < dp/2 )
+            message("vision", "你看到" + me->name() + "鬼鬼祟祟地從"
+                + victim->name() + "身上偷走了一" + ob->query("unit")
+                + ob->name() + "﹗\n", environment(me), ({ me, victim }) );
+#ifdef SAVE_USER
+        victim->save();
+#endif
+    }
+    else {
+        if( !ob || random(sp) > dp/2 ) {
+            tell_object(me, victim->name() + "不經意地一轉頭﹐你急忙將手縮了回去﹗\n"
+                     "還好﹐沒有被發現。\n");
+            return;
+        }
+        caught(me, victim, ob);
     }
 }
 

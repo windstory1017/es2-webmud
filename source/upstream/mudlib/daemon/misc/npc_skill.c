@@ -82,7 +82,7 @@ private mapping sect = ([
             ([ "skill": "fonxansword", "map": "sword", "level": 1 ]),
         }),
     ]),
-    "fighter.chin": ([
+    "fighter.huge": ([
         "name":        "哭笑門",
         "force":       "huge force",
         "force_level": 11,
@@ -96,10 +96,14 @@ private mapping sect = ([
         "name":        "雪吟莊",
         "force":       "tidy force",
         "force_level": 5,
-        "arts":        ({
+        "arts":        ({   // docs/martial_arts/雪吟莊_武功.md（使用者同意，2026-11-05）；天邪神掌雪吟莊弟子不會（2026-11-06）
+            ([ "skill": "deep blade", "map": "blade", "level": 1 ]),
+            ([ "skill": "six-chaos-sword", "map": "sword", "level": 1 ]),
+            ([ "skill": "six-chaos-sword", "map": "parry", "level": 1 ]),
+            ([ "skill": "celestial force", "map": 0, "level": 10, "req": ([ "tidy force": 1 ]) ]),
         }),
     ]),
-    "fighter.ancient": ([   // 內功迴風拂柳心訣為解謎取得
+    "fighter.au-chan": ([   // 內功迴風拂柳心訣為解謎取得
         "name":        "古劍派",
         "force":       0,
         "force_level": 0,
@@ -114,6 +118,17 @@ private mapping sect = ([
             ([ "skill": "advance-sky sword", "map": "sword", "level": 1 ]),
         }),
     ]),
+    "scholar.myst": ([   // 步玄派（使用者定案，2026-11-01）
+        "name":        "步玄派",
+        "force":       "myst-force",
+        "force_level": 5,
+        "arts":        ({
+            ([ "skill": "myst-steps", "map": "dodge", "level": 1 ]),
+            ([ "skill": "close myst-sword", "map": "sword", "level": 1 ]),
+            ([ "skill": "close myst-sword", "map": "secondhand sword", "level": 1 ]),
+            ([ "skill": "close myst-sword", "map": "parry", "level": 1 ]),
+        }),
+    ]),
     "thief.longye": ([
         "name":        "瑯夷派",
         "force":       "longyeforce",
@@ -121,7 +136,7 @@ private mapping sect = ([
         "arts":        ({
         }),
     ]),
-    "thief.hidden": ([
+    "thief.yin": ([
         "name":        "隱教",
         "force":       "lightswift",
         "force_level": 1,
@@ -164,7 +179,7 @@ private mapping sect = ([
             ([ "skill": "magic steps", "map": "dodge", "level": 1 ]),
         }),
     ]),
-    "taoist.fog": ([
+    "mao-shan.fog": ([
         "name":        "幻霧觀",
         "force":       0,
         "force_level": 0,
@@ -174,7 +189,7 @@ private mapping sect = ([
             ([ "skill": "mao-shan mysticism", "map": "magic", "level": 1, "req": ([ "taoism of darkness": 100 ]) ]),
         }),
     ]),
-    "taoist.wind": ([
+    "mao-shan.wind": ([
         "name":        "隱風觀",
         "force":       0,
         "force_level": 0,
@@ -184,7 +199,7 @@ private mapping sect = ([
             ([ "skill": "taoism of dunja", "map": "magic", "level": 30, "req": ([ "taoism of nature": 90 ]) ]),
         }),
     ]),
-    "taoist.lingyun": ([
+    "mao-shan.cloud": ([
         "name":        "靈雲觀",
         "force":       0,
         "force_level": 0,
@@ -196,7 +211,7 @@ private mapping sect = ([
     ]),
     // 武陀灸堂（docs/martial_arts/武陀灸堂_門派設計.md，2026-10-27）。
     // 引源針法、三自回針法要經脈穴道之學 80，NPC 一併給經脈穴道之學。
-    "alchemist.wuto": ([
+    "alchemist.wu": ([
         "name":        "武陀灸堂",
         "force":       0,
         "force_level": 0,

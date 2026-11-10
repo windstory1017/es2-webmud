@@ -2,8 +2,23 @@
 // gammer.c
 
 #include <npc.h>
+#include <command.h>
 
 inherit F_VILLAGER;
+
+// 拿過古錢的角色（物件本身；重新上線就是新物件，老太婆重生清單也會清空）。
+static object *coin_given = ({});
+
+// 走到這些地方時只准往指定方向走，避免走出雪亭鎮（使用者定案，2026-11-08）。
+// 平時隨機走動、戰鬥中逃跑、氣不足時逃跑都照這張表；表上沒有的房間照原本隨機走。
+static mapping limited_dirs = ([
+	"/d/snow/wgate"   : ({ "east" }),
+	"/d/snow/sgate"   : ({ "north" }),
+	"/d/snow/egate"   : ({ "west" }),
+	"/d/snow/npath2"  : ({ "west", "southeast" }),
+	"/d/snow/ebridge" : ({ "west" }),
+	"/d/snow/ngate"   : ({ "south" }),
+]);
 
 void create()
 {
@@ -46,14 +61,54 @@ void create()
 	carry_object(__DIR__"obj/syndicator")->wield("secondhand dagger");
 }
 
+// 目前所在房間可以走的方向（已套用上面的限制表）。
+private string *allowed_dirs()
+{
+	mapping exits;
+	string *dirs, *limit, room;
+
+	if( !environment() ) return ({});
+	if( !mapp(exits = environment()->query("exits")) ) return ({});
+	dirs = keys(exits);
+	room = base_name(environment());
+	if( room[0] != '/' ) room = "/" + room;
+	limit = limited_dirs[room];
+	if( arrayp(limit) ) dirs = dirs & limit;
+	return dirs;
+}
+
+// 平時走動與戰鬥中逃跑（chat_msg / chat_msg_combat 裡的 random_move）。
+int random_move()
+{
+	string *dirs = allowed_dirs();
+
+	if( !sizeof(dirs) ) return 0;
+	return GO_CMD->main(this_object(), dirs[random(sizeof(dirs))]);
+}
+
+// 氣不足時的逃跑（set_stat_notify 觸發）。
+int notify_stat(mapping flag)
+{
+	string *dirs;
+
+	if( !living(this_object()) ) return 0;
+	if( !sizeof(dirs = allowed_dirs()) ) return 0;
+	return command("go " + dirs[random(sizeof(dirs))]);
+}
+
 private void give_coin(object who)
 {
 	object ob;
 
 	if( environment(who) != environment() ) return;
 	ob = new(__DIR__"obj/coin");
-	if( !ob->move(who) )
+	// 給古錢時要有敘述（使用者指示 #39，2026-11-08）。
+	if( ob->move(who) )
+		message_vision("瞎眼老太婆從懷裡摸出一枚黑黝黝的古錢，塞進$N的手裡。\n", who);
+	else {
 		ob->move(environment());
+		message_vision("瞎眼老太婆從懷裡摸出一枚黑黝黝的古錢，放在$N的腳邊。\n", who);
+	}
 }
 
 void relay_say(object ob, string arg)
@@ -84,13 +139,26 @@ void relay_say(object ob, string arg)
 		if( arg=="祖奶奶" && ob->query_temp("thief_qualified") ) {
 			command("giggle");
 			command("pat " + ob->query("id"));
+			ob->delete_temp("thief_qualified");
+			// 已經是盜賊的人重解梳子任務：再給一枚古錢（瑯夷派拜師與老乞婆的信物）。
+			// 同一個角色、同一個老太婆只給一次；角色重新上線或老太婆重生後可再拿（使用者定案，2026-11-06）。
+			if( (string)ob->query_class() == "thief" ) {
+				if( member_array(ob, coin_given) != -1 ) return;
+				coin_given += ({ ob });
+				do_chat(({
+					"瞎眼老太婆說道：乖孩子，這個再給你。\n",
+					(: give_coin, ob :),
+				}));
+				return;
+			}
 			if( (string)ob->query_class() != "commoner" ) return;
+			coin_given += ({ ob });
 			ob->set_class("thief");
 			tell_object(ob, CYN + "你正式成為一名盜賊了。\n" NOR);
 			ob->improve_skill("sneak", 20);
 			ob->improve_skill("stealing", 20);
 			do_chat(({
-				"瞎眼老太婆說道：對了，這個給你。",
+				"瞎眼老太婆說道：對了，這個給你。\n",
 				(: give_coin, ob :),
 				"瞎眼老太婆說道：如果你想學本事，拿這東西給對方看。\n",
 			}));
@@ -170,7 +238,13 @@ private void ask_join(object player)
 {
 	if( !player || environment(player)!=environment() ) return;
 
-	if( player->query_class() != "commoner" )
+	coin_given -= ({ 0 });
+	if( player->query_class() == "thief" && member_array(player, coin_given) == -1 ) {
+		command("whisper " + player->query("id") +
+			" 好傢伙﹐又是你這小賊﹖手腳倒是越來越俐落了。再叫聲「祖奶奶」來聽聽 ...");
+		player->set_temp("thief_qualified", 1);
+	}
+	else if( player->query_class() != "commoner" )
 		command("say 唉 ... 人老了﹐連隨身的梳子都常常丟掉。\n");
 	else {
 		command("whisper " + player->query("id") + 

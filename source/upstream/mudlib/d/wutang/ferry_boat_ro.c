@@ -1,4 +1,4 @@
-// /d/wutang/ferry_boat_ro.c — 羿水渡船（老駱的船）：五堂鎮河邊 ↔ 紫煙鎮渡口的擺渡途中。
+// /d/wutang/ferry_boat_ro.c — 羿水渡船（老駱的船）：五堂鎮河邊 － 紫煙鎮渡口的擺渡途中。
 // 沒有出口，船夫靠岸時會把乘客帶上岸（d/wutang/npc/ferryman.c）。非戰區。
 
 #include <room.h>

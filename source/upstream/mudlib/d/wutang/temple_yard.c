@@ -4,6 +4,15 @@
 
 inherit ROOM;
 
+// 房間重置（reborn）時，老人補上一條小紅巾（蝶影幻步任務，每次重置只有一條）。
+void reset()
+{
+    object npc;
+
+    ::reset();
+    if( objectp(npc = present("oldman", this_object())) ) npc->reset_stock();
+}
+
 void create()
 {
     set("short", "後院");
@@ -19,5 +28,4 @@ LONG
     ]));
     set("map/area", "五堂鎮");
     setup();
-    replace_program(ROOM);
 }

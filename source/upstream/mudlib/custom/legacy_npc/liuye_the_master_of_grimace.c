@@ -29,7 +29,7 @@ void create()
         "亂, 狀如瘋癲。五十三歲那年, 殘蟻逝世, 劉乙忘玄瘋病竟然好轉, 自號「\n"
         "哭笑野人」, 成為青邪宮繼殘蟻師太之後的霸主, 之後潛心閉關五年, 創出\n"
         "「大邪心法」和「大邪七損刀」, 儼然成為武林中人皆敬佩的武學大宗師。\n");
-    set("custom_faction", "fighter.chin");   // 哭笑門（docs/martial_arts/門派武功對照表.md）
+    set("custom_faction", "fighter.huge");   // 哭笑門（docs/martial_arts/門派武功對照表.md）
     set_power("S");
     setup();
     carry_object("/custom/armor/feet/flying_boots")->wear();   // 飛天靴

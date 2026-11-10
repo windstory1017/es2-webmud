@@ -18,4 +18,5 @@ LONG
     );
     set_power("C");
     setup();
+    carry_object("/custom/armor/waist/rainbow_ribbon")->wear();   // 虹緞帶（使用者指定，2026-11-06）
 }

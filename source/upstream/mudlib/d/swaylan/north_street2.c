@@ -17,6 +17,9 @@ LONG
         "east" : __DIR__"smithy",
         "northwest" : __DIR__"crossroad",
     ]));
+    set("objects", ([
+        __DIR__"npc/man" : 1,
+    ]));
     set("map/area", "水嵐縣");
     setup();
     replace_program(ROOM);

@@ -195,7 +195,7 @@ void reset_skill_gain() { skill_gain = ([]); }
  * 學成到那一級，例如瘋虎功 20 級、龍圖心經 40 級；沒指定的技能學成等級是 1。
  * NPC 不會下 gain，拿到點數就照同一套門檻升級。
  *
- * 門檻：升到第 level 級所需的累積點數 = level² × base，越高級 base 越大。
+ * 門檻：升到第 level 級所需的累積點數 = level^2 × base，越高級 base 越大。
  * 所有技能上限 200 級。
  */
 int restored_skill_threshold(int level)
@@ -329,18 +329,39 @@ void apply_restored_skill_progression(string skill)
     }
 }
 
-/* Exact learned gain + old-Neolith-compatible daemon hook. */
-void improve_skill_exact(string skill, int amount)
+/* 技能已達上限時不再累積點數（天賦上限，或技能檔用 query_skill_cap 暫時鎖住的上限）。
+ * 例外：技能檔的 query_learn_at_cap(人物) 傳回非 0，表示「暫停升級、但照常累積點數」，
+ * 例如黃白之術 79 級要累積到 90 級的門檻才一口氣升級（#31，2026-11-04）。
+ * 升級仍照 skill_next_level() 受上限限制，不受這個例外影響。 */
+private int cap_blocks_learning(string skill)
+{
+    object daemon;
+
+    if( !userp(this_object()) || skills[skill] <= 0 ) return 0;
+    if( skills[skill] < restored_skill_cap(skill) ) return 0;
+    daemon = SKILL_D(skill);
+    if( objectp(daemon) && function_exists("query_learn_at_cap", daemon)
+    &&  call_other(daemon, "query_learn_at_cap", this_object()) ) return 0;
+    return 1;
+}
+
+/* Exact learned gain + old-Neolith-compatible daemon hook.
+ * max_learn > 0 時，累積點數最多加到 max_learn 為止（書本上限用，使用者定案，2026-11-09）：
+ * 人物等級加成算完後才截斷，已經到了就不加。 */
+varargs void improve_skill_exact(string skill, int amount, int max_learn)
 {
     object daemon;
 
     if( skill_flag[skill] & SKILL_FLAG_ABANDONED ) return;
     if( amount <= 0 ) return;
     // 技能已達個人上限（天賦值）就不再累積點數
-    if( userp(this_object()) && skills[skill] > 0
-    &&  skills[skill] >= restored_skill_cap(skill) ) return;
+    if( cap_blocks_learning(skill) ) return;
     /* 人物等級加成：點數 × (1 + random(人物等級 / 8))。 */
     amount += amount * random(this_object()->query_level() / 8);
+    if( max_learn > 0 ) {
+        if( learned[skill] + amount > max_learn ) amount = max_learn - learned[skill];
+        if( amount <= 0 ) return;
+    }
     if( undefinedp(learned[skill]) ) learned[skill] = amount; else learned[skill] += amount;
     if( undefinedp(skill_gain[skill]) ) skill_gain[skill] = amount; else skill_gain[skill] += amount;
     if( undefinedp(skills[skill]) ) skills[skill] = 0;
@@ -383,8 +404,7 @@ improve_skill(string skill, int amount)
 
     if( !amount ) amount = 1;
     // 技能已達個人上限（天賦值）就不再累積點數
-    if( userp(this_object()) && skills[skill] > 0
-    &&  skills[skill] >= restored_skill_cap(skill) ) return;
+    if( cap_blocks_learning(skill) ) return;
 
     // Level bonus for skill improvement.
     amount += amount * random(this_object()->query_level() / 8);
@@ -409,7 +429,7 @@ improve_skill(string skill, int amount)
 /* 技能成長屬性
  *
  * 對應表 ATTR_GROWTH：技能代碼 → 屬性代碼。
- * 技能等級每到 5 的倍數擲一次，成功則該屬性（裸值）+1，上限 50。
+ * 技能等級每到 5 的倍數擲一次（偷襲暗算、潛行：盜賊逢 5、其他職業逢 10），成功則該屬性（裸值）+1，上限 50。
  *   基礎機率：屬性 1~10 100%、11~15 90%、16~20 80%、21~25 60%、26~30 40%、
  *             31~40 30%、41~45 15%、46~49 10%
  *   技能等級倍率：(50 + 等級/2)%，lv5 約 0.5 倍、lv100 1 倍、lv200 1.5 倍
@@ -449,15 +469,19 @@ private int attr_growth_base(int value)
 private void roll_attr_growth(string skill, int old_level, int new_level)
 {
     string attr, cname;
-    int last, lv, value;
+    int last, lv, value, step;
 
     if( !userp(this_object()) ) return;
     if( !stringp(attr = ATTR_GROWTH[skill]) ) return;
 
+    // 偷襲暗算（backstab，增加膽識）與潛行（sneak，增加機敏）：盜賊逢 5 擲一次，
+    // 其他職業逢 10 擲一次（使用者定案，2026-10-30；潛行 2026-11-02）。
+    step = ((skill == "backstab" || skill == "sneak") && this_object()->query_class() != "thief") ? 10 : 5;
+
     last = this_object()->query("attr_growth/" + skill);
     if( last < old_level ) last = old_level;
 
-    for(lv = (last / 5 + 1) * 5; lv <= new_level; lv += 5) {
+    for(lv = (last / step + 1) * step; lv <= new_level; lv += step) {
         this_object()->set("attr_growth/" + skill, lv);
         // 善想禪要 100 級改為固定慧根 +3，這一級不再擲機率（使用者定案，2026-10-19）。
         if( skill == "absorption" && lv == 100 ) continue;

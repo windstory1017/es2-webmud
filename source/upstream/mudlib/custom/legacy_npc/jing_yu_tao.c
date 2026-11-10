@@ -24,7 +24,7 @@ void create()
         "年但是其瀟灑的舉止，讓人迷戀的風度仍是不減當年。據說，冷梅莊\n"
         "莊主梅影風的夫人是他的義妹，而他當年也正是為了他妹妹才在梅影\n"
         "風和葉風兩人面前一顯身手。\n");
-    set("custom_faction", "fighter.ancient");   // 古劍門（docs/martial_arts/門派武功對照表.md）
+    set("custom_faction", "fighter.au-chan");   // 古劍門（docs/martial_arts/門派武功對照表.md）
     set_power("S");
     setup();
     carry_object("/custom/armor/finger/white_ring")->wear();   // 白玉戒指

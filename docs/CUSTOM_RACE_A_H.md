@@ -88,14 +88,29 @@ Neolith `HEARTBEAT_INTERVAL` is 2,000,000 microseconds, so 1 tick = one 2-second
 ## 夜叉 (yaksa)
 
 - Race numbers follow the original data: gin/kee/sen 140/70/70, karma 50, 基數 140.
-- Class caps: fighter 65, alchemist 50, taoist 50, soldier 50, thief 70, commoner 1. scholar and monk are -1 (cannot join).
+- Class caps: fighter 65, alchemist 60, taoist 65, soldier 60, thief 70, commoner 1. scholar and monk are -1 (cannot join). (2026-11-04: user raised taoist 50→65, alchemist and soldier 50→60.)
 - Attributes: str 16-25, cor 17-25, int 13-18, spi 13-18, cps 13-18, dex 13-18, con 16-25, wis 13-18.
 - Hidden bonuses: 防禦力 15 (`apply/armor`), 攻擊能力值 10 (`apply/attack`), 陰陽眼 (`apply/vision_of_ghost`).
+- **Seal switch:** sealed 2026-11-03, reopened 2026-11-04 with the revised rules below (`#define DEVOUR_SEALED 0` in `devour.c`; set it to 1 and `update /daemon/race/yaksa/devour` to seal again, which makes a yaksa only get "你體內的噬魂凶性已被封住，再也吞不下任何魂魄。"). Stats gained under the old rules are kept.
 - `devour <ghost>` (`daemon/race/yaksa/devour.c`): targets anything whose `life_form` is `ghost` (ghost NPCs and dead players). Not in combat, not in no_fight rooms, not on wizards.
-  - One bite per tick. Bite = cor + dex + random(own current gin) / 10, taken from the ghost's current gin. At 0 the ghost is devoured. The yaksa and a ghost NPC are busy while devouring. A player ghost can still move and escapes by leaving the room. It stops if the yaksa enters combat, dies, or either side leaves the room.
+  - **Delay (2026-11-04):** after the command the yaksa grabs the ghost (the ghost is told to flee) and is busy for 2 ticks (4 seconds); the first bite comes after that. The ghost can leave the room during the delay to escape.
+  - One bite per tick (2 seconds). Bite = cor + dex + random(own current gin) / 10, taken from the ghost's current gin. At 0 the ghost is devoured. The yaksa and a ghost NPC are busy while devouring. A player ghost can still move and escapes by leaving the room. It stops if the yaksa enters combat, dies, or either side leaves the room.
   - Ghost NPC: destroyed. The yaksa heals gin and sen (current and damaged maximum) by the total amount devoured.
-  - Player ghost: 魂飛魄散 through the existing `CHAR_D->make_mist()` reincarnation. The account (id, password, total online time `time_aged`) is kept, the character file is deleted, and the player picks a race again.
-  - Player ghost reward (no backlash, even when the ghost is stronger): "ghost gin" G = the ghost's current gin when devouring started, doubled for a yaksa ghost. The yaksa permanently gains maximum gin 1 + G/40, kee 1 + random(G/40), sen 1 + random(G/80). The first 10 player devours always give this large gain. After that the chance is 10 / (10 + random(count)); otherwise the gain is gin 1~2, kee 0~1. The count is stored in `yaksa/devoured_players`.
+  - Player ghost: always 魂飛魄散 through the existing `CHAR_D->make_mist()` reincarnation, whether or not the threshold below is met. The account (id, password, total online time `time_aged`) is kept, the character file is deleted, and the player picks a race again.
+  - **Threshold (2026-11-04):** "ghost gin" G = the ghost's current gin when devouring started. Let n = valid devours so far (`yaksa/devour_count`; the old `yaksa/devoured_players` is no longer used, so every yaksa starts from 0).
+
+    | Devour | Human etc. ghost needs G ≥ | Yaksa ghost needs G ≥ |
+    |---|---|---|
+    | 1st–10th | 500 | 250 |
+    | 11th | 550 | 275 |
+    | 12th | 600 | 300 |
+    | (n+1)th, n ≥ 10 | 500 + 50 × (n − 9) | 250 + 25 × (n − 9) |
+
+    **The yaksa's own maximum gin must also reach the same threshold (2026-11-04)**, e.g. a yaksa with max gin 450 gets nothing from a 600-gin human ghost, but does from a 300-gin yaksa ghost (threshold 250). Exactly equal counts.
+    Below either threshold: no stat gain and not counted. Ghost too weak → "這縷魂魄太過稀薄，沒能為你增添半分力量。"; yaksa too weak → "你的根基尚淺，化不開這縷魂魄的力量，沒能增添半分。"
+  - Reward when the threshold is met (formula unchanged, no backlash): for a yaksa ghost G is doubled after the threshold check. The yaksa permanently gains maximum gin 1 + G/40, kee 1 + random(G/40), sen 1 + random(G/80). The first 10 valid devours always give this large gain. After that the chance is 10 / (10 + random(n)); otherwise the gain is gin 1~2, kee 0~1.
+  - **Log (2026-11-04):** every player devour writes one line to `data/daemon/yaksa_devour.log` (time, yaksa, victim and race, G, the yaksa's max gin, threshold, counted or not, gains). It is not in `log/` because the command runs as `Mudlib`, which the security daemon only lets write under `/data/daemon`.
+- 雪亭鎮土地公廟 (`d/snow/small_temple.c`, where ghosts revive) is a no_fight room (2026-11-04), so nobody can wait there to kill or devour reviving ghosts.
 
 ## 阿修羅 (ashura)
 
@@ -113,7 +128,7 @@ Neolith `HEARTBEAT_INTERVAL` is 2,000,000 microseconds, so 1 tick = one 2-second
 
 Every class level-up threshold is multiplied by the race 基數 (`commoner_score_base` / 100). A threshold `(lv-N)` or `(lv-N)^2` is 0 until the level passes N. `lv` is the level being reached. Shared helpers live in `include/class_level.h`. Player thresholds are recomputed at every login (`CHAR_D->setup_char()`), so formula changes apply to existing characters.
 
-On level-up, gin / kee / sen maximums grow by base dex / con / spi divided by the class divisor, each +1, +0 or -1 at random, never below 0.
+On level-up, gin / kee / sen maximums grow by dex / con / spi divided by the class divisor, each +1, +0 or -1 at random, never below 0. The attributes include equipment and status bonuses (`query_attr()` without the raw flag) for every class (user decision, 2026-11-03).
 
 | Class | Thresholds (x 基數) | gin / kee / sen growth |
 |---|---|---|

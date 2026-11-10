@@ -2,7 +2,7 @@
 description: 龍圖心經（dragon force）。龍圖丹派的內功，安裝在 force
              （enable force with dragon force）。exert dragon force 打坐修練；
              練成後可用錢莊存款轉化丹藥（exert lavage／relax／refresh／mana／heal／
-             minor heal／major heal）。
+             minor heal／major heal），以及號令師兄弟送來松柴（exert order）。
 design: docs/martial_arts/龍圖丹派_龍圖心經.md（2026-10-22）
 note: 1～69 級不存在，累積到門檻後 gain 直接練成 70 級。門檻不打折。
 ---*/
@@ -14,6 +14,10 @@ inherit SKILL;
 #define SKILL_ID    "dragon force"
 #define ENTRY_LEVEL 70
 #define MAJOR_LEVEL 160      // 160 級起 exert major heal 轉化大還丹
+#define MASTER_LEVEL 150     // 150 級起轉丹花費等於藥鋪收購價（#45，2026-11-09）
+#define FIREWOOD    "/obj/alchemist/heat_firewood"
+#define FIREWOOD_AMOUNT 1000
+#define FIREWOOD_PRICE  5000 // 1000 根松柴照市價（每根 5 文）
 
 // 第四章：可轉化的丹藥。exert 功能名 -> ({ 丹藥檔, 消耗的狀態 })
 // 消耗：gin／kee／sen 扣目前的值 5；fatigue 疲勞 +3；空字串不扣。
@@ -116,26 +120,14 @@ int halt_exercise(object me, object owner, object from, string how)
     return 1;
 }
 
-// 4.2：花費倍數（十分之一）。
-int price_rate(int level)
+// 4.2：轉丹花費（#45，2026-11-09）：依龍圖心經原生等級，對照藥鋪價格
+// （/daemon/misc/herb_catalog：販售價＝價值 ×10，收購價＝價值 ×2）。
+// 150 級起＝收購價；已練成未滿 150＝收購價 ×1.1（無條件捨去）；未練成＝販售價。
+int pill_price(int base, int level)
 {
-    if( level <= 100 ) return 90;
-    if( level <= 120 ) return 80;
-    if( level <= 140 ) return 70;
-    if( level <= 160 ) return 60;
-    if( level <= 180 ) return 55;
-    return 50;
-}
-
-// 把以文為單位的金額寫成錢莊寫法（同 cmds/std/balance.c）。
-string money_string(int amount)
-{
-    string str = "";
-
-    if( amount >= 10000 ) str += chinese_number(amount / 10000) + "兩黃金";
-    if( amount % 10000 >= 100 ) str += chinese_number(amount % 10000 / 100) + "兩碎銀";
-    if( amount % 100 ) str += chinese_number(amount % 100) + "文錢";
-    return str == "" ? "零文錢" : str;
+    if( level >= MASTER_LEVEL ) return base * 2;
+    if( level >= ENTRY_LEVEL ) return base * 22 / 10;
+    return base * 10;
 }
 
 // 第四章：以錢莊存款轉化丹藥。
@@ -147,9 +139,8 @@ int make_pill(object me, string func)
     string stat, pname;
     int level, price, fatigue, need;
 
+    // #45：學到龍圖心經（未練成時等級為 0）就能轉丹，未練成者照藥鋪販售價。
     level = me->query_skill(SKILL_ID, 1);
-    if( level < ENTRY_LEVEL )
-        return notify_fail(gender_self(me) + "的龍圖心經尚未練成，無法轉化丹藥。\n");
 
     // G-03、G-04：heal 的分流。
     if( func == "heal" ) {
@@ -175,7 +166,7 @@ int make_pill(object me, string func)
         return notify_fail(gender_self(me) + "的" + to_chinese(stat)
             + "不足，無法運起龍圖心經。\n");
 
-    price = load_object(info[0])->query("base_value") * price_rate(level) / 10;
+    price = pill_price(load_object(info[0])->query("base_value"), level);
     if( me->query("bank_account") < price )
         return notify_fail(gender_self(me) + "在錢莊的存款不足以轉化" + pname + "。\n");
 
@@ -196,7 +187,34 @@ int make_pill(object me, string func)
         me->consume_stat(stat, 5);
 
     message_vision("$N運起龍圖心經，雙掌間氤氳流轉，凝成一粒" + pname + "。\n", me);
-    tell_object(me, gender_self(me) + "的錢莊存款減少了" + money_string(price) + "。\n");
+    // #45：不顯示扣了多少存款。
+    me->start_busy(1);
+    return 1;
+}
+
+// #45（2026-11-09）：號令師兄弟送來 1000 根松柴，放在所在房間的地上。
+// 練成即可，不看讀書識字、神農之術、黃白之術；只扣錢莊存款（不顯示金額），
+// 不消耗精氣神與形體，停頓一回合。地上原有松柴由丹火系統自動合併
+// （其中有燃燒中的，合併後維持燃燒）。
+int call_firewood(object me)
+{
+    object env, wood;
+
+    if( me->query_skill(SKILL_ID, 1) < ENTRY_LEVEL )
+        return notify_fail(gender_self(me) + "的龍圖心經尚未練成，還無法號令其他師兄弟。\n");
+    if( me->query("bank_account") < FIREWOOD_PRICE )
+        return notify_fail(gender_self(me) + "的存款已不足以號令其他師兄弟。\n");
+    env = environment(me);
+    if( !env ) return 0;
+
+    wood = new(FIREWOOD);
+    wood->set_amount(FIREWOOD_AMOUNT);
+    if( !wood->move(env) ) {
+        destruct(wood);
+        return notify_fail("這裡放不下松柴。\n");
+    }
+    me->add("bank_account", -FIREWOOD_PRICE);
+    message_vision("$N運起龍圖心經，朝派內呼叫幫手，只見眾師兄弟紛紛扛著成堆的松柴放在地上並離去。\n", me);
     me->start_busy(1);
     return 1;
 }
@@ -218,6 +236,8 @@ exert_function(object me, string func, object target)
     case "minor heal":
     case "major heal":
 	return make_pill(me, func);
+    case "order":
+	return call_firewood(me);
     default:
 	return notify_fail("龍圖心經沒有這種功能。\n");
     }

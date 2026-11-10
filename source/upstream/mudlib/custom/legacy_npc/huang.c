@@ -19,7 +19,7 @@ void create()
     set("age", 25);
     set("long",
         "一個膚色黝黑的女子，年紀似乎不到三十，但是卻滿頭白髮。\n");
-    set("custom_faction", "thief.hidden");   // 隱教（docs/martial_arts/門派武功對照表.md）
+    set("custom_faction", "thief.yin");   // 隱教（docs/martial_arts/門派武功對照表.md）
     set_power("B");
     setup();
     carry_object("/custom/armor/feet/soft_leather_boots")->wear();   // 軟皮靴

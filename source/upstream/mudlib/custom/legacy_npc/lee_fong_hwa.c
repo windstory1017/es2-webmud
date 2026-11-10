@@ -19,7 +19,7 @@ void create()
     set("age", 25);
     set("long",
         "一個容色十分美艷的女子，身形婀娜，臉上帶著淺淺的微笑。\n");
-    set("custom_faction", "thief.hidden");   // 隱教（docs/martial_arts/門派武功對照表.md）
+    set("custom_faction", "thief.yin");   // 隱教（docs/martial_arts/門派武功對照表.md）
     set_power("A");
     setup();
     carry_object("/custom/armor/cloth/silk_cloth")->wear();   // 天蠶寶衣
