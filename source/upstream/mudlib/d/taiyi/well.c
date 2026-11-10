@@ -9,6 +9,7 @@ void reset()
 {
     ::reset();
     delete_temp("door_found");
+    delete("detail/暗門");
 }
 
 void init()
@@ -43,6 +44,7 @@ int do_knock(string arg)
     if( me->is_busy() || me->is_fighting() )
         return notify_fail("你現在沒有辦法這麼做。\n");
     set_temp("door_found", 1);
+    set("detail/暗門", "幾塊磚頭拼成的一道暗門，縫隙裡透出涼風，伸手一推 (push) 便能打開。");
     tell_object(me, "你屈指在井壁上一塊一塊地敲過去，敲到其中幾塊磚頭時聲音忽然空了，湊近細看，那幾塊磚頭與四周的並不相同，竟是一道暗門。\n");
     message("vision", me->name() + "屈指在井壁上一塊一塊地敲著。\n", this_object(), ({ me }));
     return 1;
