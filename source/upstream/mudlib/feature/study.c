@@ -22,20 +22,30 @@ int study_cost(object me)
     return cost - (1 + random(divisor));
 }
 
-/* 書本上限看累積的點數（使用者定案，2026-11-09；取代 2026-10-23「只看技能等級」）：
- * 一本書最多只給到「升到上限那一級所需的累積點數」。點數已經夠了，即使還沒 gain，
- * 這一項也不再增加；避免先累積一大堆點數、再一口氣 gain 到超過書的上限。 */
+/* 書本上限看累積的點數（使用者定案，2026-11-09）：一本書正常只給到「升到上限那一級
+ * 所需的累積點數」，避免先累積一大堆點數、再一口氣 gain 到超過書的上限。
+ * 點數夠了之後的處理見 skill_capped()（2026-11-11 修訂）。 */
 int skill_cap_points(object me, mapping caps, string skill)
 {
     return me->skill_threshold(skill, caps[skill]);
 }
 
-/* 這項技能是否已讀到這本書的上限：等級已到，或累積點數已夠升到上限那一級。 */
+/* 點數的硬上限：升到「上限下一級」所需點數減 1，保證讀書永遠 gain 不到超過書的上限。 */
+int skill_hard_points(object me, mapping caps, string skill)
+{
+    return me->skill_threshold(skill, caps[skill] + 1) - 1;
+}
+
+/* 這項技能是否已讀到這本書的上限（使用者定案，2026-11-11，修正卡級）：
+ * 看等級：等級到了書的上限才算讀滿。
+ * 點數已夠升到上限、但等級還沒 gain 上去時，書仍可以讀，每回合只給極少的點數
+ * （見 study_content()），讓玩家一面讀一面 gain，一級一級升到上限；
+ * 否則 gain 只升「這段期間有拿到新點數的技能」，點數讀滿後就會卡在原本的等級。 */
 int skill_capped(object me, mapping caps, string skill)
 {
     if( undefinedp(caps[skill]) ) return 0;
     return me->query_skill(skill, 1) >= caps[skill]
-        || me->query_learn(skill) >= skill_cap_points(me, caps, skill);
+        || me->query_learn(skill) >= skill_hard_points(me, caps, skill);
 }
 
 /* 書的上限要每一項都讀到了才算讀完（使用者定案，2026-11-07）：例如上限讀書 70、古文 70，
@@ -131,9 +141,13 @@ int study_content(object me)
     gain = intellect * random(intellect);
     foreach(skill in keys(skills)) {
         if( skill_capped(me, caps, skill) ) continue;   // 已讀到上限的技能不再增加
-        // 這一次讀超過上限的部分不給：累積點數最多到升上限那一級所需的點數。
         if( undefinedp(caps[skill]) ) me->improve_skill_exact(skill, gain);
-        else me->improve_skill_exact(skill, gain, skill_cap_points(me, caps, skill));
+        // 一般情況：累積點數最多到升上限那一級所需的點數，超過的部分不給。
+        else if( me->query_learn(skill) < skill_cap_points(me, caps, skill) )
+            me->improve_skill_exact(skill, gain, skill_cap_points(me, caps, skill));
+        // 點數已夠、等級還沒 gain 上去：只給 1 點（另有人物等級加成），
+        // 讓 gain 有新點數可以升級；不會超過升到上限下一級所需的點數。
+        else me->improve_skill_exact(skill, 1, skill_hard_points(me, caps, skill));
     }
 
     if( study_capped(me, caps) ) {
