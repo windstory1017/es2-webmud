@@ -430,10 +430,9 @@ improve_skill(string skill, int amount)
  *
  * 對應表 ATTR_GROWTH：技能代碼 → 屬性代碼。
  * 技能等級每到 5 的倍數擲一次（偷襲暗算、潛行：盜賊逢 5、其他職業逢 10），成功則該屬性（裸值）+1，屬性沒有上限（2026-11-12 取消上限 50）。
- *   基礎機率：屬性 1~10 100%、11~15 90%、16~20 80%、21~25 60%、26~30 40%、
- *             31~40 30%、41~45 15%、46 以上 10%
- *   技能加成（相加）：技能等級 ÷ 4 %，等級 200 時加 50%（等級 100 加 25%）
- *   成功率 = 基礎% + 技能加成%，最高 100%（2026-11-12 改為相加）
+ *   基礎機率：屬性 1~10 30%、11~20 25%、21~29 20%、30~40 10%、41~50 5%、51 以上 2%
+ *   技能加成（相加）：技能等級 ÷ 10 %，最多 +20%（等級 200 滿）；總機率最高 50%
+ *   屬性越低越容易長、技能越高機率越高（2026-11-12 改版）
  * 每個門檻一生只擲一次，擲過的最高門檻記在 attr_growth/<技能>。
  * 已經練過的等級不補擲。只對玩家生效。
  */
@@ -454,20 +453,18 @@ static mapping ATTR_GROWTH = ([
 
 private int attr_growth_base(int value)
 {
-    if( value <= 10 ) return 100;
-    if( value <= 15 ) return 90;
-    if( value <= 20 ) return 80;
-    if( value <= 25 ) return 60;
-    if( value <= 30 ) return 40;
-    if( value <= 40 ) return 30;
-    if( value <= 45 ) return 15;
-    return 10;
+    if( value <= 10 ) return 30;
+    if( value <= 20 ) return 25;
+    if( value < 30 ) return 20;
+    if( value <= 40 ) return 10;
+    if( value <= 50 ) return 5;
+    return 2;
 }
 
 private void roll_attr_growth(string skill, int old_level, int new_level)
 {
     string attr, cname;
-    int last, lv, value, step;
+    int last, lv, value, step, chance;
 
     if( !userp(this_object()) ) return;
     if( !stringp(attr = ATTR_GROWTH[skill]) ) return;
@@ -484,8 +481,10 @@ private void roll_attr_growth(string skill, int old_level, int new_level)
         // 善想禪要 100 級改為固定慧根 +3，這一級不再擲機率（使用者定案，2026-10-19）。
         if( skill == "absorption" && lv == 100 ) continue;
         value = query_attr(attr, 1);
-        // 機率以萬分之一計：基礎% + 技能等級/4 %（等級 200 加 50%）
-        if( random(10000) >= attr_growth_base(value) * 100 + lv * 25 ) continue;
+        // 機率以萬分之一計：基礎% + 技能等級/10 %（技能加成最多 20%），總機率最高 50%
+        chance = attr_growth_base(value) * 100 + (lv > 200 ? 200 : lv) * 10;
+        if( chance > 5000 ) chance = 5000;
+        if( random(10000) >= chance ) continue;
         if( !set_attr(attr, value + 1) ) continue;
         cname = ([ "str": "膂力", "cor": "膽識", "int": "悟性", "spi": "靈性",
                    "cps": "定力", "dex": "機敏", "con": "根骨", "wis": "慧根" ])[attr];
