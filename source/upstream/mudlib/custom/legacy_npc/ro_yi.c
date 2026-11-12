@@ -39,6 +39,7 @@ void create()
     carry_object("/custom/armor/head/headgear")->wear();   // 紫紗逍遙巾
     carry_object("/custom/weapon/sword/sword_of_wind_spring")->wield("sword");   // 風泉之劍（唯一；已被取走時換成逐風刃）
     carry_object("/custom/weapon/sword/cloudslay_sword")->wield("secondhand sword");   // 落雲刃
+    carry_object("/obj/books/water_dragon_canon");   // 【水龍經】（舊站資料，使用者指示，2026-11-12）
 }
 
 // ------------------------------------------------------------------
