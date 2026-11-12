@@ -37,8 +37,16 @@ void create()
     set("fonxan/npc_specials", 1);   // 封山劍法未開放的特殊招式他照樣使用（fonxansword.c）
 
     set("custom_faction", FACTION);   // 封山派（docs/martial_arts/門派武功對照表.md）
+    // 精、氣、神固定為 1500／2800／800（使用者指示，2026-11-12），不隨強度自動計算。
+    set_stat_maximum("gin", 1500);
+    set_stat_maximum("kee", 2800);
+    set_stat_maximum("sen", 800);
     set_power("S");
     setup();
+    foreach( string st, int v in ([ "gin": 1500, "kee": 2800, "sen": 800 ]) ) {
+        set_stat_effective(st, v);
+        set_stat_current(st, v);
+    }
     carry_object("/custom/armor/leg/red_scale_leggings")->wear();   // 火鱗脛甲
     carry_object("/custom/armor/waist/red_scale_girth")->wear();   // 火鱗腰帶
     carry_object("/custom/armor/hand/red_scale_gloves")->wear();   // 火鱗手套
