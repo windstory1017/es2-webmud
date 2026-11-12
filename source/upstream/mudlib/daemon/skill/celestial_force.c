@@ -55,16 +55,17 @@ void skill_completed(object me, string skill)
 
 /* 每級獎勵（引擎）；練成之後每升一級：精上限 +1～3、氣上限 +3、神上限 +0～2。 */
 /* 境界獎勵（使用者定案，2026-11-12）：天邪神功練到該等級時各給一次。
- *   等級: ({ 精氣上限各加多少, 膽識與根骨各加多少 }) */
+ *   等級: ({ 精氣上限各加多少, 膽識與根骨各加多少, 敘述第一句 }) */
 private mapping MILESTONE = ([
-    120: ({ 20, 1 }),
-    140: ({ 40, 2 }),
-    160: ({ 60, 4 }),
+    120: ({ 20, 1, "你的天邪神功漸入佳境﹐丹田中隱隱有虎嘯之聲。" }),
+    140: ({ 40, 2, "你的天邪神功又進一層﹐霸道的真氣在百脈間奔騰不息。" }),
+    160: ({ 60, 4, "你的天邪神功已臻化境﹐週身真氣鼓盪﹐有如猛虎下山。" }),
 ]);
 
 private void give_milestones(object me, int lv)
 {
-    int at, *bonus;
+    int at;
+    mixed *bonus;
 
     foreach( at in sort_array(keys(MILESTONE), 1) ) {
         if( lv < at || me->query("celestial_force/bonus_" + at) ) continue;
@@ -74,7 +75,7 @@ private void give_milestones(object me, int lv)
         me->advance_stat("kee", bonus[0]);
         me->set_attr("cor", me->query_attr("cor", 1) + bonus[1]);
         me->set_attr("con", me->query_attr("con", 1) + bonus[1]);
-        tell_object(me, HIY "你的天邪神功又進一層﹐霸道的真氣在百脈間奔騰不息。\n"
+        tell_object(me, HIY + bonus[2] + "\n"
             "你的膽識增加了。\n"
             "你的根骨增加了。\n"
             "你的精、氣因為修煉天邪神功增進不少。\n" NOR);
