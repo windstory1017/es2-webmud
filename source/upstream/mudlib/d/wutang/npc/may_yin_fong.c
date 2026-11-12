@@ -56,8 +56,16 @@ void create()
     map_skill("unarmed", "seven");
 
     set("custom_faction", FACTION);   // 門派記號（docs/CUSTOM_NPC_SKILL.md）
+    // 精、氣、神固定為 2200／2500／800（使用者指示，2026-11-12），不隨強度自動計算。
+    set_stat_maximum("gin", 2200);
+    set_stat_maximum("kee", 2500);
+    set_stat_maximum("sen", 800);
     set_power("S");
     setup();
+    foreach( string st, int v in ([ "gin": 2200, "kee": 2500, "sen": 800 ]) ) {
+        set_stat_effective(st, v);
+        set_stat_current(st, v);
+    }
 
     carry_object("/custom/armor/armor/silver_platemail_of_frost")->wear();
     carry_object("/custom/armor/feet/boots_of_flying_cloud")->wear();
