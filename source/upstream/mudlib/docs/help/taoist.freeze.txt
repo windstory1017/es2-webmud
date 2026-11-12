@@ -16,12 +16,12 @@
 　任務起始：白齊
 　特殊能力：
 　　‧chill freeze：寒冰，消耗 sen 5 delay 1，傷害 50%。
-　　‧ominous freeze：兆冰，冰咒 25，消耗 sen 20 delay 2，打對手的精與
-　　　神，並回復施法者的精與神。
-　　‧shadow freeze：無相冰，冰咒 45，消耗 sen 30 delay 2，命中時對手
-　　　停頓，施法失敗時自己停頓。
-　　‧polar freeze：七重玄冰，冰咒 70，消耗 sen 50 delay 2，有機會吸取
-　　　對手的精氣神。
+　　‧ominous freeze：兆冰，冰咒 25，消耗 sen 20 delay 2，無視抗性，打
+　　　對手的精與神，並回復施法者的精與神。
+　　‧shadow freeze：無相冰，冰咒 45，消耗 sen 30，不造成傷害；命中時對手
+　　　停頓 3，自己不停頓；施法失敗時自己停頓 1。
+　　‧polar freeze：七重玄冰，冰咒 70，消耗 sen 50 delay 2，傷害 150%，命
+　　　中後吸取對手的精氣神，慧根越高吸得越多。
 　練成等級：1 級
 　能力提升：無
 
