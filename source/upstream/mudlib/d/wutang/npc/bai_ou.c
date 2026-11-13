@@ -3,18 +3,19 @@ description: 五堂鎮 NPC：白甌（鳳娘）。昔日宮裡的繡娘，替玩
 design: docs/EMBROIDERY.md（使用者指示，2026-11-13）
 rule: - 玩家對她說「繡花」開始；先給工錢（五兩黃金＝50000 文以上，多給不找，不足不收、不可分次），
         再給布衣（/obj/area/obj/cloth）；順序錯、給錯東西、給繡過的衣服都不收。
-      - 收下布衣後原布衣銷毀（give 時店家收下有價值的物品會自動銷毀），3 tick 後產生新的繡花布衣
+      - 收下布衣後原布衣銷毀（give 時店家收下有價值的物品會自動銷毀），1 tick 後產生新的繡花布衣
         （obj/area/obj/embroidered_cloth.c）交給玩家，繡花結果在那個檔案裡擲。
       - 玩家中途走開，繡好的衣服就沒了；白甌被殺，製作中斷，錢與布衣都不補。
       - 每位玩家各自進行（進度記在白甌身上，不記在玩家身上）。
 ---*/
 
+#include <ansi.h>
 #include <npc.h>
 inherit F_VILLAGER;
 
 #define FEE         50000                       // 五兩黃金（文）
 #define TICK        2                           // 一個 tick 的秒數
-#define EMBROIDER_TICKS 3                       // 繡一件要幾個 tick
+#define EMBROIDER_TICKS 1                       // 收下布衣後幾個 tick 繡好
 #define CLOTH_FILE  "/obj/area/obj/cloth"
 #define EMBROIDERED_FILE "/obj/area/obj/embroidered_cloth"
 
@@ -50,29 +51,37 @@ LONG
 }
 
 /* ---- 說話與給東西 ------------------------------------------------- */
+// 白甌說的話照 say 的格式：「白甌說道﹕」加綠色內容（使用者指示，2026-11-13）；
+// 動作的描述用表情的青色。
+
+// 白甌說話；pre 是「說道」前面的動作（可空），例如 "笑著" → 「白甌笑著說道﹕…」。
+void speak(string pre, string text)
+{
+    message_vision("$N" + pre + "說道﹕" + HIG + text + NOR + "\n", this_object());
+}
+
+// 動作描述（青色，同表情）。
+void act(string msg, object who)
+{
+    message_vision(CYN + msg + NOR + "\n", this_object(), who);
+}
 
 void invite(object who)
 {
     if( !objectp(who) || environment(who) != environment() ) return;
     if( paid[who] ) {
-        message_vision("$N手中的針線不停，淡淡地說道：「工錢我已收下了，把布衣拿來吧 (give cloth to bai ou)。」\n",
-            this_object());
+        speak("", "工錢我已收下了，把布衣拿來吧 (give cloth to bai ou)。");
         return;
     }
-    message_vision("$N擱下手中的繡繃，抬眸淡淡一笑：「繡花麼？也罷，難得有人識貨。取五兩黃金作工錢"
-        " (give 5 gold to bai ou)，再備一件素淨的布衣 (give cloth to bai ou)，我替你繡上幾針。"
-        "記著，先付工錢，後交衣裳，這是我的規矩。」\n", this_object());
+    act("$N擱下手中的繡繃，抬眸淡淡一笑。", who);
+    speak("", "繡花麼？也罷，難得有人識貨。取五兩黃金作工錢 (give 5 gold to bai ou)，"
+        "再備一件素淨的布衣 (give cloth to bai ou)，我替你繡上幾針。記著，先付工錢，後交衣裳，這是我的規矩。");
 }
 
 void relay_say(object who, string msg)
 {
     if( !userp(who) || !stringp(msg) || strsrch(msg, "繡花") == -1 ) return;
     call_out("invite", 1, who);
-}
-
-void say_to(string msg)
-{
-    message_vision("$N" + msg + "\n", this_object());
 }
 
 // 給東西：傳回 1 才算收下（收下有價值的東西，give 會把它銷毀）。
@@ -82,29 +91,29 @@ int accept_object(object who, object ob)
 
     if( ob->query("money_id") ) {
         if( paid[who] ) {
-            say_to("搖了搖頭：「工錢你已經付過了，不必再給。把布衣拿來吧 (give cloth to bai ou)。」");
+            speak("搖頭", "工錢你已經付過了，不必再給。把布衣拿來吧 (give cloth to bai ou)。");
             return 0;
         }
         if( ob->value() < FEE ) {
-            say_to("瞥了一眼掌中的錢，輕輕搖頭：「我這一針一線，可不是尋常價錢。五兩黃金，少一文也不成。」");
+            speak("輕輕搖頭", "我這一針一線，可不是尋常價錢。五兩黃金，少一文也不成。");
             return 0;
         }
         paid[who] = 1;
-        call_out("say_to", 0, "將金子收入袖中，唇邊浮起一抹淺笑：「這才像話。衣裳呢？取來讓我瞧瞧 (give cloth to bai ou)。」");
+        call_out("speak", 0, "笑著", "衣裳呢？取來讓我瞧瞧");
         return 1;
     }
 
     if( ob->query("embroidered") ) {
-        say_to("撫過衣上的針腳，微微蹙眉：「這件已有人下過針了，我不願在別人的針腳上再添一筆。」");
+        speak("微微蹙眉", "這件已有人下過針了，我不願在別人的針腳上再添一筆。");
         return 0;
     }
     if( base_name(ob) != CLOTH_FILE ) {
-        say_to("淡淡掃了一眼：「我的針只為布衣 (cloth) 而動，這東西，恕我不繡。」");
+        speak("", "我的針只為布衣 (cloth) 而動，這東西，恕我不繡。");
         return 0;
     }
     if( !paid[who] ) {
-        say_to("眼也不抬，指尖輕輕推開衣裳：「針線未動，先談酬勞，這是規矩。先把五兩黃金交給我"
-            " (give 5 gold to bai ou)，再來說衣裳的事。」");
+        // 還沒付工錢就遞衣裳：不說話，只是微笑（衣裳退回）。
+        act("$N愉快地對著$n微笑著。", who);
         return 0;
     }
 
@@ -117,29 +126,8 @@ int accept_object(object who, object ob)
 
 void begin(object who)
 {
-    message_vision("$N接過$n遞來的布衣，在膝上輕輕撫平，信手劈開一縷絲線，細如蠶吐。"
-        "素指翻飛，銀針在布面上起落如蝶，轉眼已見雲紋隱隱。\n", this_object(), who);
+    act("$N接過$n遞來的布衣，銀針在布面上起落如蝶，轉眼已見雲紋隱隱。", who);
     call_out("finish", EMBROIDER_TICKS * TICK, who);
-}
-
-void finish(object who)
-{
-    object ob;
-
-    // 玩家走開（或離線）就沒了，不補。
-    if( !objectp(who) || environment(who) != environment() ) {
-        message_vision("$N見人已走遠，輕嘆一聲，將繡好的衣裳收了起來。\n", this_object());
-        return;
-    }
-
-    seteuid(getuid());
-    ob = new(EMBROIDERED_FILE);
-    ob->embroider();
-    if( !ob->move(who) ) ob->move(environment());
-
-    message_vision("$N咬斷線頭，將衣裳輕輕一抖，雲霞般的針腳在布上流轉。她把衣裳遞給$n：「成了。」\n",
-        this_object(), who);
-    call_out("farewell", TICK, who, ob->query("embroidery_result"));
 }
 
 // 繡花結果對應的一句話（結果代號見 embroidered_cloth.c）。
@@ -158,19 +146,22 @@ private string result_line(int result)
     return "";
 }
 
-void farewell(object who, int result)
+void finish(object who)
 {
-    message_vision("$N望著那件衣裳，目光柔了幾分：「一針一線，都是我的心血。往後穿著它行走江湖，"
-        "風吹雨打也好，刀光劍影也罷，只盼你好好待它，莫讓它蒙了塵，更別隨手棄於道旁。"
-        "待它如待故人，它自會護你周全。」\n", this_object());
-    call_out("farewell2", TICK, who, result);
-}
+    object ob;
 
-void farewell2(object who, int result)
-{
-    message_vision("$N" + (stringp(result_line(result)) && result_line(result) != "" ? "又低聲補了一句：「"
-        + result_line(result) + "」" : "微微頷首") + "\n", this_object());
-    if( objectp(who) && environment(who) == environment() )
-        message_vision("$N輕聲道：「它還沒有名字，你替它取一個吧 (name cloth as 名稱)，想改幾次都行。」\n",
-            this_object());
+    // 玩家走開（或離線）就沒了，不補。
+    if( !objectp(who) || environment(who) != environment() ) {
+        message_vision(CYN "$N見人已走遠，輕嘆一聲，將繡好的衣裳收了起來。\n" NOR, this_object());
+        return;
+    }
+
+    seteuid(getuid());
+    ob = new(EMBROIDERED_FILE);
+    ob->embroider();
+    speak("", "成了，" + result_line(ob->query("embroidery_result")));
+
+    // 這時候就把衣服交給玩家；拿不動就放在地上。
+    if( !ob->move(who) ) ob->move(environment());
+    message_vision("$N交給$n一" + ob->query("unit") + ob->name() + "。\n", this_object(), who);
 }

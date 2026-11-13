@@ -22,9 +22,7 @@ inherit F_CLOTH;
 #define RESULT_AWARE     8   // 警覺性
 
 #define DEFAULT_NAME "繡花布衣"
-#define UNNAMED_LONG \
-    "一件經白甌之手繡過的布衣，針腳細密，雲紋在衣襟與袖口隱隱流轉，一看便知出自\n" \
-    "名家。它還沒有名字，你可以替它取一個 (name cloth as 名稱)。\n"
+#define CLOTH_LONG "一件經名家之手繡過的布衣，雲紋在衣襟與袖口隱隱流轉。\n"
 
 void create()
 {
@@ -37,7 +35,7 @@ void create()
     set("wear_as", "cloth");
     set("embroidered", 1);
     set("apply_armor/cloth", ([ "armor": 1 ]));
-    set("long", UNNAMED_LONG);
+    set("long", CLOTH_LONG);
 
     setup();
 }
@@ -89,9 +87,6 @@ void set_custom_name(string str)
 {
     set("custom_name", str);
     set("name", str);
-    set("long",
-        "一件經白甌之手繡過的布衣，針腳細密，雲紋在衣襟與袖口隱隱流轉，一看便知出自\n"
-        "名家。襟內繡著它的名字「" + str + "」，想改名也行 (name cloth as 名稱)。\n");
 }
 
 /* ---- 家園儲物箱存取（登出不保留，所以不用 autoload） ------------------- */
