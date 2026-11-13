@@ -17,6 +17,7 @@ LONG
     set("objects", ([
         __DIR__"npc/tao" : 1,
         __DIR__"npc/young_gentleman" : 1,
+        __DIR__"npc/bai_ou" : 1,
     ]));
     set("map/area", "五堂鎮");
     setup();
