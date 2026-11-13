@@ -1,0 +1,58 @@
+# 紫衣派thunder
+
+- URL: https://japentery.pixnet.net/blog/posts/2020130531
+- Published: 2008-07-18
+- Labels: 
+- Source: japentery.pixnet.net | Provenance: DOCUMENTED
+- Retrieved: 2026-09-10T14:42:27+0800
+
+---
+
+○ 紫衣派資料
+
+ 職業 : 道士
+
+ 種族 : 不限，但需要慧根 >=16
+
+ 性別 : 不限
+
+ 師傅 : 青雲觀主 華子儀(Hua zi yi)
+
+ 技能 :
+
+ ○天師道法【雷法】 (taoism-thunder
+):
+
+ 技能種類: 咒術
+
+ 學習條件: 經解任務後進入華子儀處，拜師後習得
+
+ 任務起始: 令狐炎
+
+ 特殊能力:
+
+ swamp thunder: 澤雷。 延遲 1，消耗 sen 10。
+
+ celestial thunder: 天雷。 延遲 1，消耗 sen 25。
+
+ blaster thunder: 爆雷神。 延遲 2，消耗 sen 35 gin 5。
+
+ divine thunder: 神光雷。 延遲 2，消耗 sen 55 gin 10。
+
+ hexagram thunder: 六卦熒雷。延遲 3，消耗 sen 80 gin 15 kee 10。
+
+ 能力提昇: 無
+
+ 相關參考: help taoism-thunder
+
+ ○九龍神功 (nine-dragon force):
+
+ 技能種類：內功
+
+ 習得條件：人物等級 >=10
+
+ 特殊能力:
+
+ renew: 消耗 kee 當前值恢復 gin、sen 當前值。
+
+ balance: 消耗 sen 當前值恢復 gin、kee 當前值

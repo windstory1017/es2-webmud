@@ -1,0 +1,50 @@
+# 野店（幻霧森林）
+
+- URL: https://es2tips.blogspot.com/2014/03/blog-post_5387.html
+- Published: 2014-03-15T20:12:00.001+08:00
+- Updated: 2014-03-15T20:16:18.686+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+野店 -
+
+    森林之中唯一的一間小店, 這兒可提供旅客一些補給品, 雖然不
+
+怎麼齊全, 但勉強還是可以滿足旅客們的需求, 後院有間茅廁可供方
+
+便之用, 而且有樓梯可通往二樓 ..
+
+    這裡明顯的出口是 east、enter 和 up。
+
+  店家(Waiter)
+
+> list
+
+你可以購買下列這些東西：
+
+-------------------------
+
+  鹿肉(Venison)                 ：五十文錢
+
+  烤肉串(Barbecue)              ：四十文錢
+
+  小水袋(Skin)                  ：五十文錢
+
+l skin;l barbecue;l venison
+
+一個在外出時隨身攜帶的水袋！
+
+裡面有﹕
+
+      大約三升左右的山泉水(Water)
+
+>
+
+一個香香的肉串
+
+>
+
+剛烘煮而成的鹿肉...

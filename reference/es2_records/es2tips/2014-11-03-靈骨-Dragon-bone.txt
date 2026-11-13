@@ -1,0 +1,26 @@
+# 靈骨(Dragon bone)
+
+- URL: https://es2tips.blogspot.com/2014/11/dragon-bone.html
+- Published: 2014-11-03T21:37:00.000+08:00
+- Updated: 2014-11-22T21:37:44.813+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+靈骨(Dragon bone)
+
+一顆只有少數老年的龍才會長的骨頭﹐據說擁有強大的法力。
+
+護具特性﹕
+
+  天師道法【冰咒】               5
+
+  天師道法【風符】               5
+
+  天師道法【火術】               5
+
+  天師道法【雷法】               5
+
+  慧根                           1

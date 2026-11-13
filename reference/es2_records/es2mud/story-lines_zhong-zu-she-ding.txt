@@ -1,0 +1,14 @@
+# 種族設定
+
+- URL: https://sites.google.com/site/es2mud/home/story-lines/zhong-zu-she-ding
+- Path: /site/es2mud/home/story-lines/zhong-zu-she-ding
+- Source: ES2 MUD 天朝帝國 (Google Site)  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-09T16:41:42+0800
+
+---
+
+# 種族設定
+
+在天朝帝國的世界裡，除了天朝以外還有許多其他的國家。大多數的國家並沒有在目前的主線任務中登場，所以這裡不過多描述，感興趣的玩家可以查看世界地圖 (/site/es2mud/home/story-lines/zhong-zu-she-ding/guo-jia-de-tu)和天朝地圖 (/site/es2mud/home/story-lines/zhong-zu-she-ding/tian-chao-de-tu)。
+
+天朝帝國的種族設定在很大程度上借鑒了山海經的內容，所以並沒有歐美神話中常見的矮人、侏儒、獸人和牛頭人等等可供玩家選擇。不過僅以中國神話為背景，還是可以打造出十分豐富的種族設定哦！在天朝帝國中，玩家可以根據喜好選擇人類 (/site/es2mud/home/story-lines/zhong-zu-she-ding/human)、刑天 (/site/es2mud/home/story-lines/zhong-zu-she-ding/headless)、巫首 (/site/es2mud/home/story-lines/zhong-zu-she-ding/malik)、夜叉 (/site/es2mud/home/story-lines/zhong-zu-she-ding/yaksa)、阿修羅 (/site/es2mud/home/story-lines/zhong-zu-she-ding/ashura)、釘靈 (/site/es2mud/home/story-lines/zhong-zu-she-ding/dingling)、無腸 (/site/es2mud/home/story-lines/zhong-zu-she-ding/woochan)、焦僥 (/site/es2mud/home/story-lines/zhong-zu-she-ding/jiaojao)、黑齒 (/site/es2mud/home/story-lines/zhong-zu-she-ding/blackteeth)、厭火 (/site/es2mud/home/story-lines/zhong-zu-she-ding/yenhold)和雨師妾 (/site/es2mud/home/story-lines/zhong-zu-she-ding/rainnar)這十一個種族。根據職業 (/site/es2mud/home/story-lines/zhi-ye-yu-men-pai)的不同，每個種族所能達到的人物上限也有所不同，同時每個種族出生時的屬性也不盡相同。在短時間反复創造人物會導致在之後的一段時間內所創建的人物先天不足，即初始屬性遠低於初始屬性上限。

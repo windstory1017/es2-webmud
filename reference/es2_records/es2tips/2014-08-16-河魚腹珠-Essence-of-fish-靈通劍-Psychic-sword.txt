@@ -1,0 +1,49 @@
+# 河魚腹珠(Essence of fish) 靈通劍(Psychic sword)
+
+- URL: https://es2tips.blogspot.com/2014/08/essence-of-fish-psychic-sword.html
+- Published: 2014-08-16T23:59:00.003+08:00
+- Updated: 2014-08-16T23:59:20.008+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+##
+河魚腹珠(Essence of fish)
+
+極少數生活在河水中的魚經過數年的積累，不小心吸入體內的某
+
+些細砂，會漸漸在魚腹中形成一種類似珍珠的東西。然而，由於
+
+河魚腹珠形成的概率要遠遠小於珍珠，所以其價格遠高於珍珠。
+
+妳拿出河魚腹珠交給珍寶商人。
+
+>
+
+珍寶商人笑道：老夫用這個東西跟仙姑交換好了。
+
+靈通劍(Psychic sword)
+
+> id sword
+
+一把以黑曜石製成的細劍, 長度跟一般短劍差不多, 非常輕巧。而劍身
+
+上刻滿了密密麻麻的咒文。
+
+可用技能：
+
+  劍術 (sword)
+
+  左手劍術 (secondhand sword)
+
+傷害力： 4 - 32 (力量修正 100%，乘數等級 2)
+
+武器特性﹕
+
+  法術                           5
+
+  靈性                           1
+
+  悟性                           1

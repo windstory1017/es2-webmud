@@ -1,0 +1,42 @@
+# 酒店（龍安）
+
+- URL: https://es2tips.blogspot.com/2014/03/blog-post_5406.html
+- Published: 2014-03-15T21:17:00.000+08:00
+- Updated: 2014-03-15T21:17:02.894+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+酒店 -
+
+    這家小店的主人十分愛酒，所以開了間只賣酒不賣菜的怪店。更奇
+
+怪的是，這家店除了賣一些常見的酒以外，竟然還免費提供普通的白酒。
+
+    這裡唯一的出口是 east。
+
+  王秀才(Scholar wang)
+
+  大酒缸(Wine pot)
+
+> w
+
+這個方向沒有出路。
+
+> w
+
+這個方向沒有出路。
+
+> list
+
+你可以購買下列這些東西：
+
+-------------------------
+
+  白干酒(White wine)            ：四兩銀子
+
+  五加皮(Woo gai pee)           ：六兩銀子
+
+  甜菊花釀(White wine)          ：三兩銀子

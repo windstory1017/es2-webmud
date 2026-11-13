@@ -1,0 +1,80 @@
+# 自動擂台比武 ES2 tintin++ Automatic Duel
+
+- URL: https://es2tips.blogspot.com/2013/05/es2-tintin-automatic-duel.html
+- Published: 2013-05-29T10:53:00.004+08:00
+- Updated: 2013-05-29T10:55:25.329+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+這是自動擂台比武，可減輕負擔，
+
+但是 100% 建議人要在旁邊看著。
+
+---------------------------
+
+邀請者（失敗者 = SOMEONE）
+
+---------------------------
+
+#TICKER {aaa} {su;dr;give 1 gold to chang;} {10}
+
+#ACTION {比武擂台敲響銅鑼} {#delay {2} {e;e;s;s;w;s}}
+
+#ACTION {先把傷治好再說吧} {nd;drink from skin}
+
+身上備好對應場次的 golds
+
+---------------------------
+
+參與者（勝利者）
+
+---------------------------
+
+#ACTION {SOMEONE邀請天下英雄切磋武} {give 1 gold to chang}
+
+#ACTION {比武擂台敲響銅鑼}    {#delay {3} {e;e;s;s;w;s;#delay {2} {kill SOMEONE}}}
+
+身上備好對應場次的 golds
+
+---------------------------
+
+治療者（以 bonze.kind 為例子）
+
+---------------------------
+
+#TICKER {tmp} {conjure kee-remedy on SOMEONE;#delay {2} {conjure hp-remedy on SOMEONE};#delay {4} {conjure kee-remedy on
+
+SOMEONE;};#delay {6} {conjure kee-remedy on SOMEONE};#delay {8} {drink from skin}} {12}
+
+待在小看臺下方 (nd)，guard strange skin
+
+幫邀請者補 hp + gin/kee/sen
+
+Note:
+
+(1) 被擊敗後 HP/gin/kee/sen 等都不會補滿，所以要一個治療者，加快復原速度
+
+(2) 勝利者可配合一些秒殺特攻 or 秒殺咒文法術；但也不要太強，否則被擊敗者一下擂台就先昏迷不醒，e.g. 看過 kee -560，昏迷兩次以上。
+
+(3) 失敗者可什麼都不穿，最好是無腸可以 replete 使喚氤氳讓肉體附生。
+
+小看台 -
+
+    這兒是擂台前的看台, 前邊的木牆上貼著比武大會的規定, 一張披
+
+著虎皮的太師椅擺在正中, 乃是武威營張副將的座位, 他負責維持擂台
+
+的制序, 若想進行比武, 和張副將提一下「比武」, 詢問相關訊息。而
+
+比武場內的比武狀況也會有小兵定時前來此處回報, 想知道比武第一手
+
+消息的人也可以待在這裏和副將一同聽取回報。
+
+    這裡唯一的出口是 northdown。
+
+  擂台仲裁官 張副將(Chang the Arbitrator)
+
+  擂台助理 司馬牙將(Si-ma the Assistant)

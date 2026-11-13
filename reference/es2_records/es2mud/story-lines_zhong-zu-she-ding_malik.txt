@@ -1,0 +1,24 @@
+# 巫首
+
+- URL: https://sites.google.com/site/es2mud/home/story-lines/zhong-zu-she-ding/malik
+- Path: /site/es2mud/home/story-lines/zhong-zu-she-ding/malik
+- Source: ES2 MUD 天朝帝國 (Google Site)  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-09T16:41:42+0800
+
+---
+
+# 巫首
+
+[image:  https://lh3.googleusercontent.com/sitesv/AG8ngQXYUFSCgDrgTmaD0lbfaMrbb_ZqbvB6EcF--9B8pba7KQJ7gDLAM6haNqQEvwaFtsgwXajBGxIZTm5-Z-5StaR62AEUtWli4ZaxzuL1r9uCqSKzfezpO1Z1GbhhZO6kM-q_RuaxWMUYpHvH54N7nOSGDhQ5gn8zXUU1zsOkeTSC9rCNnaameEk9wLaoIgA-nzi9W_EHg4Ql3J7TqrQ=w1280]
+
+需要業力：30
+
+適合職業：書生60級，道士65級，和尚65級
+
+初始狀態：精70，氣40，神100
+
+初始屬性上限：膂力11，膽識11，悟性30，靈性30，定力28，機敏25，根骨15，慧根25
+
+種族被動能力：防禦能力50，防禦力10，通天眼
+
+種族主動能力：採納天地靈氣恢復大量神。

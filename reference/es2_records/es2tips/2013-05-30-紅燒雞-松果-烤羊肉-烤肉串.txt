@@ -1,0 +1,38 @@
+# 紅燒雞 松果 烤羊肉 烤肉串
+
+- URL: https://es2tips.blogspot.com/2013/05/blog-post_882.html
+- Published: 2013-05-30T09:08:00.002+08:00
+- Updated: 2013-05-30T09:08:24.199+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+小廚房 -
+
+    這裡是一間廚房，雖然不大但廚具卻也很完備，想來是為住在臥虎
+
+樓裡面的客人們提供三餐的。
+
+    這裡唯一的出口是 east。
+
+  虎刀門弟子(Waitress)
+
+虎刀門弟子微笑道: 想吃吧，嘻嘻。
+
+指令錯誤，請用 help cmds 查詢可用的指令。
+
+> list
+
+你可以購買下列這些東西：
+
+-------------------------
+
+  紅燒雞(Roast chicken)         ：八兩銀子
+
+  松果(Pine nut)                ：三文錢
+
+  烤羊肉(Roast mutton)          ：五兩銀子
+
+  烤肉串(Barbecue)              ：四十文錢

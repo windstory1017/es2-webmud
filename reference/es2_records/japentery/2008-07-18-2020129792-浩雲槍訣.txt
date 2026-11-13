@@ -1,0 +1,46 @@
+# 浩雲槍訣
+
+- URL: https://japentery.pixnet.net/blog/posts/2020129792
+- Published: 2008-07-18
+- Labels: 
+- Source: japentery.pixnet.net | Provenance: DOCUMENTED
+- Retrieved: 2026-09-10T14:42:27+0800
+
+---
+
+基本條件： 讀書識字 (literate) 21 雙手槍法 (twohanded pike) 31
+
+ 先行到李家莊拿西瓜
+
+ 西瓜 在廣場中央 - 大水缸(Pot)往 e5 ne n3 e n e pick 西瓜
+
+ (偷西瓜農夫會殺你...ccc
+)
+
+ 再到新區域老太婆(Gammer)那 老太婆會BEEP! 找你
+
+ 新區域老太婆在廣場中央 - 大水缸(Pot)往 s w4 nw w nw w sw s2 (破敗石亭小和尚和老和尚)
+
+ 再 w pass 草叢 s w (無常鬼吳長貴) 再s4(大熊)w2 wu2 wd wu nd n3 w n2
+
+ 他會問說道﹕你去過李家村﹖
+
+ 回答say 去過
+
+ 會再問說道﹕那能不能幫老婆婆個忙﹖
+
+ 回答say 好
+
+ 交給老太婆一顆西瓜
+
+ 他會說道﹕老太婆一輩子沒求過人﹐今天也不好白吃別人的西瓜﹐是不﹖
+
+ 回答say 不是
+
+ 就找白蟒(Snake)他會甩動尾巴﹐將你掃進石洞﹗
+
+ 白蟒在 老太婆處往 s2 e n e ne nw eu enter
+
+ 後來找花亭 - 看石柱再learn 浩雲
+
+ 就完成...

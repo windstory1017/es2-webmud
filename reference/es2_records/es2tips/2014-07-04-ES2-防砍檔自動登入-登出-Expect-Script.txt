@@ -1,0 +1,48 @@
+# ES2 防砍檔自動登入、登出 Expect Script
+
+- URL: https://es2tips.blogspot.com/2014/07/es2-expect-script.html
+- Published: 2014-07-04T01:28:00.002+08:00
+- Updated: 2014-07-04T01:28:15.171+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+$ cat es2.exp
+
+#!/usr/bin/expect
+
+set timeout 30
+
+set user [lindex $argv 0]
+
+set password [lindex $argv 1]
+
+spawn telnet es2.muds.net 4000
+
+expect "您的使用者代號："
+
+sleep 1;
+
+send "$user\r";
+
+expect "請輸入密碼﹕"
+
+sleep 1;
+
+send "$password\r";
+
+expect "出口"
+
+sleep 1;
+
+send "quit\r";
+
+$ ./es2.exp  <user1> <password1>
+
+$ ./es2.exp  <user2> <password2>
+
+$ ./es2.exp  <user3> <password3>
+
+$ ./es2.exp  <user4> <password4>

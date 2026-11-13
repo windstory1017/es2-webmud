@@ -1,0 +1,44 @@
+# 獵戶 短槍
+
+- URL: https://es2tips.blogspot.com/2013/05/blog-post_842.html
+- Published: 2013-05-25T17:21:00.003+08:00
+- Updated: 2013-05-25T17:21:58.285+08:00
+- Labels: 槍法
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+一個身材高大的獵戶﹐年紀約三十開外﹐個頭生得虎背熊腰﹐甚是勇健。
+
+然而﹐他已經死了﹐只剩下一具屍體靜靜地躺在這裡。
+
+他的遺物有﹕
+
+    短槍(Spear)
+
+    短槍(Spear)
+
+    布衣(Cloth)
+
+    頭巾(Cloth cap)
+
+    短靴(Buskins)
+
+wield spear
+
+這把短槍拿在手裡輕飄飄的。
+
+你裝備短槍作武器。
+
+> id spear
+
+一把約五尺長的短槍﹐槍柄纏著布條防手滑。
+
+可用技能：
+
+  單手槍法 (pike)
+
+  左手槍法 (secondhand pike)
+
+傷害力： 3 - 25 (力量修正 65%，乘數等級 2)

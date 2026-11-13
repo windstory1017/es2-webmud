@@ -1,0 +1,24 @@
+# 焦僥
+
+- URL: https://sites.google.com/site/es2mud/home/story-lines/zhong-zu-she-ding/jiaojao
+- Path: /site/es2mud/home/story-lines/zhong-zu-she-ding/jiaojao
+- Source: ES2 MUD 天朝帝國 (Google Site)  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-09T16:41:42+0800
+
+---
+
+# 焦僥
+
+[image:  https://lh3.googleusercontent.com/sitesv/AG8ngQX_guEO4ajyEQDaomsO4TIHrcrUOiJiMyC8uGntVvVfCkjCIg_FmXSF1-26mc93BOoRKcN2mbLYJrlOjU5WD3lUoNSpMmx1Qim9KS1oGkdS5sIJtReYR4rbqCgEyODiSuqcM8KYf0uuM80IeMMS9DCnEaDqcqjajkQngTkZ1pQ6h3HniLV0CaafET3GC1m9aCQAMVJGridQKQWs=w1280]
+
+需要業力：10
+
+適合職業：武者60級，書生65級，小偷65級，和尚65級
+
+初始狀態：精40，氣25，神25
+
+初始屬性上限：膂力14，膽識13，悟性19，靈性19，定力19，機敏24，根骨16，慧根18
+
+種族被動能力：防禦能力15，警覺100
+
+種族主動能力：可以逃逸戰鬥並且原地躲藏。

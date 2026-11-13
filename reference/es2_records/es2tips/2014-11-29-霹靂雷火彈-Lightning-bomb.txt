@@ -1,0 +1,22 @@
+# 霹靂雷火彈(Lightning bomb)
+
+- URL: https://es2tips.blogspot.com/2014/11/lightning-bomb.html
+- Published: 2014-11-29T17:49:00.003+08:00
+- Updated: 2014-11-29T17:49:49.631+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+霹靂雷火彈(Lightning bomb)
+
+一顆小小的珠子，隱隱傳來硝石的味道。似乎可以拿來引爆 (explode)。
+
+你對著黑無常喝道﹕「惡賊，明年的今天就是你的忌日！」
+
+看起來黑無常想殺死你！
+
+> explode agent
+
+你忽然引爆霹靂雷火彈趁著濃濃的黑煙，趕忙想找個地位躲起來 ...

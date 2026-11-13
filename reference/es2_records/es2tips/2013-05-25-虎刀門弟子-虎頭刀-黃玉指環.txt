@@ -1,0 +1,42 @@
+# 虎刀門弟子 虎頭刀 黃玉指環
+
+- URL: https://es2tips.blogspot.com/2013/05/blog-post_5351.html
+- Published: 2013-05-25T17:38:00.001+08:00
+- Updated: 2013-05-25T17:38:13.718+08:00
+- Labels: 傷害力, 虎刀門弟子, 虎頭刀, 黃玉指環
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+身上穿著虎刀門服飾，背上還背著一把虎刀門制式大刀的虎刀門
+
+門人。
+
+他的遺物有﹕
+
+    虎頭刀(Blade)
+
+    黃布衣(Yellow cloth)
+
+    黃玉指環(Topaz symbol)
+
+    十三兩碎銀(Silver)
+
+> id symbol
+
+象徵虎刀門人身份的信物指環，用一般的黃玉雕成。
+
+護具特性﹕
+
+  傷害力                         5
+
+> id blade
+
+又厚又重的大刀，刀柄上刻有代表虎刀門的虎頭紋飾。
+
+可用技能：
+
+  雙握刀法 (twohanded blade)
+
+傷害力： 2 - 56 (力量修正 105%，乘數等級 2)

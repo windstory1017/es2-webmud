@@ -1,0 +1,34 @@
+# 白色長劍(White sword)
+
+- URL: https://es2tips.blogspot.com/2014/02/white-sword.html
+- Published: 2014-02-08T16:07:00.001+08:00
+- Updated: 2014-02-08T16:07:12.683+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+（紫衣道人）
+
+ˇ白色長劍(White sword)
+
+> id sword
+
+一把雪白色的輕柔長劍, 它的劍刃看起來比白紙還薄, 你仔細一看, 劍柄上
+
+隱約刻著一個[齊]字...
+
+可用技能：
+
+  劍術 (sword)
+
+傷害力： 3 - 21 (力量修正 50%，乘數等級 2)
+
+武器特性﹕
+
+  靈性                           1
+
+  冰寒傷害力                     15
+
+  雷電傷害力                     15

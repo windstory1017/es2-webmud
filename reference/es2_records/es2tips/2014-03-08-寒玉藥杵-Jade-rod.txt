@@ -1,0 +1,32 @@
+# 寒玉藥杵(Jade rod)
+
+- URL: https://es2tips.blogspot.com/2014/03/jade-rod.html
+- Published: 2014-03-08T20:03:00.001+08:00
+- Updated: 2014-03-08T20:03:38.432+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+蛇膽 --> 五堂 west -> boar -> north 藥草商 herbalist
+
+ˇ寒玉藥杵(Jade rod)
+
+> id rod
+
+這是一把用上古寒玉雕琢成的藥杆，浸染日久竟也隱隱收著藥石之氣。
+
+可用技能：
+
+  鎚法 (blunt)
+
+傷害力： 3 - 45 (力量修正 115%，乘數等級 3)
+
+武器特性﹕
+
+  冰寒傷害防禦力                 50
+
+  慧根                           1
+
+  丹道【神農之術】               20

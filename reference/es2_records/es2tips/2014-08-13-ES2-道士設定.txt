@@ -1,0 +1,62 @@
+# ES2 道士設定
+
+- URL: https://es2tips.blogspot.com/2014/08/es2.html
+- Published: 2014-08-13T21:04:00.000+08:00
+- Updated: 2014-08-13T21:23:24.349+08:00
+- Labels: 道士
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+□ 道士
+
+道士是一群以道家學說修養自身的修行者，講究清淨自然，與天地和而為一，進而達到
+
+神形俱妙，與天同壽的至人境界。雖然道士同時注重身體與心靈的修養，但是因為修養
+
+方式和對經典解釋的不同，道家也分成許多流派。
+
+□ 升級
+
+道士對武術與法術的修煉並重，然而在武術上，並不像武者一般鑽研各種武學之道，而
+
+是追求身體的平衡和強健。在法術方面，道士重視的是與天地的和諧，因此道士法力的
+
+來源大多是自然界冰、火、風、雷等能量，只要修煉得法，其威力遠超過一般的武術，
+
+因此道士面臨戰鬥時，往往是法術為主，武術為輔。
+
+□ 通用技能
+
+以下列出的是道士們可以學習的特殊技能，其中又因為門派的不同，而分別有所限制。
+
+    太乙劍法 (taiyie):                           所有天師派道士，茅山劍士。
+
+    強化之術 (enchance):                         所有道士。
+
+    幻劍術 (virtual sword):                      所有道士。
+
+    天師道法【紫薇心經】 (chivi sutra):          所有道士。
+
+    天師道法【素雲書】 (taoism-cloud):           所有天師派道士。
+
+    天師道法【桃山密籙】 (taoism of conviction): 所有天師派道士。
+
+□ 道士門派參考文件
+
+help taoist.fire        朱衣派
+
+help taoist.storm       玄衣派
+
+help taoist.freeze      素衣派
+
+help taoist.thunder     紫衣派
+
+help mao-shan.fog       幻霧觀
+
+help mao-shan.wind      隱風觀
+
+help mao-shan.cloud     靈雲觀
+
+help mao-shan.sword     茅山劍士

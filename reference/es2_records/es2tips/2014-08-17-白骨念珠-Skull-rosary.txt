@@ -1,0 +1,21 @@
+# 白骨念珠(Skull rosary)
+
+- URL: https://es2tips.blogspot.com/2014/08/skull-rosary.html
+- Published: 2014-08-17T00:34:00.002+08:00
+- Updated: 2014-08-17T00:34:52.953+08:00
+- Labels: 攻擊能力值, 防禦力
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+##
+白骨念珠(Skull rosary)
+
+一串用人的頭骨串成的念珠 ...
+
+護具特性﹕
+
+  防禦力                         25
+
+  攻擊能力值                     25

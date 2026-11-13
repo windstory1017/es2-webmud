@@ -1,0 +1,31 @@
+# 疾風劍(Rapid sword)
+
+- URL: https://es2tips.blogspot.com/2014/08/rapid-sword.html
+- Published: 2014-08-17T00:35:00.004+08:00
+- Updated: 2014-08-17T00:35:47.827+08:00
+- Labels: 攻勢等級, 膽識, 風擊傷害力
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+##
+疾風劍(Rapid sword)
+
+一把細長的軟劍，劍刃就不斷抖動迎風做響。
+
+可用技能：
+
+  劍術 (sword)
+
+  左手劍術 (secondhand sword)
+
+傷害力： 9 - 54 (力量修正 120%，乘數等級 3)
+
+武器特性﹕
+
+  風擊傷害力                     25
+
+  攻勢等級                       50
+
+  膽識                           1
