@@ -1,0 +1,56 @@
+# 衛兵  鎖子鎧 黃銅戰矛 鐵盔
+
+- URL: https://es2tips.blogspot.com/2013/05/blog-post_2366.html
+- Published: 2013-05-25T17:49:00.002+08:00
+- Updated: 2013-05-25T17:49:57.499+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+衛兵(Guard soldier)
+
+> l corpse
+
+這個衛兵正在執行衛兵勤務﹐在他面前最好不要想搗蛋。
+
+他的遺物有﹕
+
+    鎖子鎧(Ring mail)
+
+    鐵盔(Iron helmet)
+
+    黃銅戰矛(War lance)
+
+> id lance
+
+一把用黃銅打造的長矛，沒有一定膂力大的人是無法發揮其威力的。
+
+可用技能：
+
+  雙手槍法 (twohanded pike)
+
+傷害力： 8 - 71 (力量修正 135%，乘數等級 3)
+
+> id mail
+
+一件用上千個鐵環嵌結而成的鎖子鎧﹐雖然防禦力比不上戰場上
+
+常用的重型戰鎧﹐但是輕便堅固﹐不會妨礙行動則是戰鎧所沒有
+
+的優點。
+
+護具特性﹕
+
+  防禦力                         5
+
+> id helmet
+
+一個沈重的鐵製頭盔 ... 光看就讓人脖子酸。
+
+護具特性﹕
+
+  防禦力                         3
+
+  機敏                           -2

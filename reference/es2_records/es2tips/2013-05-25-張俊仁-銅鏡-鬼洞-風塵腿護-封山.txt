@@ -1,0 +1,42 @@
+# 張俊仁 銅鏡 鬼洞 風塵腿護 封山
+
+- URL: https://es2tips.blogspot.com/2013/05/blog-post_2172.html
+- Published: 2013-05-25T15:52:00.002+08:00
+- Updated: 2013-05-25T15:52:33.957+08:00
+- Labels: 封山, 張俊仁, 風塵腿護
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+張俊仁是封山劍派掌門人柳東蘆的得意門生，雖然有些大器晚成，但是
+
+近年來行走江湖之中嚴守封山劍派門規，也算得上是一位大俠了。
+
+張俊仁生得猿臂狼腰，身手定然十分矯捷，他看起來約四十多歲。
+
+他身上帶著﹕
+
+  ˇ風塵腿護(Red-dust legs)
+
+  ˇ青布衣(Blue cloth)
+
+  ˇ鋼戰甲(Steel armor)
+
+  ˇ太陽大鵬巨神劍(Sun colosus sword of eagle)
+
+>
+
+風塵腿護(Red-dust legs)
+
+> id legs
+
+十分輕便的護具，在注重舒適感的同時，也十分注重防禦能力。
+
+護具特性﹕
+
+  防禦力                         25
+
+  防禦能力值                     25
+
+>

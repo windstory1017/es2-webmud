@@ -1,0 +1,121 @@
+# 「方士」龍圖丹派方士：煉丹採藥 打抱不平
+
+- URL: https://es2tips.blogspot.com/2014/09/blog-post.html
+- Published: 2014-09-17T23:26:00.000+08:00
+- Updated: 2014-09-17T23:26:08.991+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+##
+○ 龍圖丹派資料
+
+職業 : 方士
+
+種族 : 不限
+
+性別 : 不限
+
+師父 : 「牙山居士」陳維俠
+
+技能 :
+
+    丹道【神農之術】 (alchemy-medication):
+
+        技能種類: 法術
+
+        學習條件: 拜師後
+
+        特殊能力: green seal/dispel: 以青印來封住/解開青銅丹鼎。
+
+                  wihte seal/dispel: 以白印來封住/解開青銅丹鼎。
+
+                  red seal/dispel: 以赤印來封住/解開青銅丹鼎。
+
+                  purple seal/dispel: 以紫印來封住/解開青銅丹鼎。
+
+                  yellow seal/dispel: 以黃印來封住/解開青銅丹鼎。
+
+                  gray seal/dispel: 以灰印來封住/解開青銅丹鼎。
+
+                  black seal/dispel: 以皂印來封住/解開青銅丹鼎。
+
+        能力提昇: 無
+
+        相關參考: help alchemist.pill
+
+   丹道【黃白之術】 (alchemy-wealth):
+
+        技能種類: 法術
+
+        學習條件: 任務達成後習得
+
+        任務起始: 江述仁
+
+        特殊能力: gold_seal/silver_seal:
+
+                  金銀咒並沒有本質區別，都是用以將物品轉換為金錢並直接存入錢
+
+                  莊。轉化 500 文以下的物品並沒有等級區別，500 文以上的物品需
+
+                  要技能等級大於物品價格除以10000(文)才有效。
+
+                  每次使用消耗 15 點的 sen。
+
+        能力提昇: 無
+
+        相關參考: help alchemy-wealth
+
+    竹上經心法 (zushang):
+
+        技能種類: 內功
+
+        學習條件: 任務達成後習得
+
+        任務起始: 江述仁
+
+        特殊能力: regenerate: 消耗 gin、kee 當前值，恢復 sen 當前值和最大值。
+
+        能力提昇: 練成為 10級，升級時gin、kee、sen<sk*10，每級可提昇 1 點精，
+
+                  1 點氣，2 點神。
+
+    龍圖心經 (dragon force):
+
+    學習條件: 任務達成後習得
+
+        任務起始: 江述仁
+
+        特殊能力: regenerate: 消耗 gin、kee 當前值，恢復 sen 當前值和最大值。
+
+        能力提昇: 練成為 10級，升級時gin、kee、sen<sk*10，每級可提昇 1 點精，
+
+                  1 點氣，2 點神。
+
+    龍圖心經 (dragon force):
+
+        技能種類: 內功
+
+        學習條件: 內功 90，等級 30，悟性 30，任務達成後習得
+
+        任務起始: 江述仁
+
+        特殊能力: refresh: 消耗銀行存款生成 refresh pill。
+
+                  heal: 消耗銀行存款生成 minor heal pill。
+
+                  mana: 消耗銀行存款生成 mana pill。
+
+                  relax: 消耗銀行存款生成 relax pill。
+
+        能力提昇: 練成為 70 級，提昇 1 點慧根，100 級時提昇 2 點臂力和 1 點慧
+
+                  根。每級提昇 1 點神和 1 點氣，120 級後每級額外再提昇 4 點氣
+
+                  和 5 點精。
+
+其他技能請參考: help alchemist.adv
+
+最後更新日期:2011/07/01

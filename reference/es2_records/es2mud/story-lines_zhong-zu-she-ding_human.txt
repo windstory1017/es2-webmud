@@ -1,0 +1,36 @@
+# 人類
+
+- URL: https://sites.google.com/site/es2mud/home/story-lines/zhong-zu-she-ding/human
+- Path: /site/es2mud/home/story-lines/zhong-zu-she-ding/human
+- Source: ES2 MUD 天朝帝國 (Google Site)  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-09T16:41:42+0800
+
+---
+
+# 人類
+
+[image:  https://lh3.googleusercontent.com/sitesv/AG8ngQXx5AgRjw3CrsVUwrQEuasV-79UgqMWQSHkzt-VBNC55uc296x98v107gmB9xtxGL3mgAGzEzgF5pcl3e-HCgVBE5fU3a3a0C8SzF56u8O5vzm7lAJCw5b45svkCbpUCo1rsEDZK4crYJh9xzPT5EcRsjwTF9mdLQ3aMIeER7ouw1YY69P8Xh0CsWmIafsQfsN25o7YX47c7EueeM4=w1280]
+
+需要業力：5
+
+適合職業：武者60級，書生70級，方士60級，和尚65級
+
+初始狀態：精35，氣35，神35
+
+初始屬性上限：膂力18，膽識18，悟性18，靈性18，定力18，機敏18，根骨18，慧根18
+
+種族被動能力：防禦力10，有萬分之一的機會成為人類族
+
+種族主動能力：陷入絕境時可以誘發驚人的救生力量恢復大量形體和氣。
+
+人類族
+
+適合職業：所職業70級
+
+初始狀態：精30，氣30，神30
+
+初始屬性上限：膂力20，膽識20，悟性20，靈性20，定力20，機敏20，根骨20，慧根20
+
+種族被動能力：防禦力10
+
+種族主動能力：通過向太陽神祈禱獲得陽光的祝福，恢復大量狀態。

@@ -1,0 +1,121 @@
+# 「針灸師」武陀灸堂灸師：驚異二針 / 五敗針法 / 引源針法 / 三自回針法
+
+- URL: https://es2tips.blogspot.com/2014/09/blog-post_17.html
+- Published: 2014-09-17T23:28:00.002+08:00
+- Updated: 2014-09-17T23:31:45.353+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+##
+○ 武陀灸堂灸師資料
+
+職業: 方士
+
+種族: 不限
+
+性別: 不限
+
+師父: 武陀灸堂堂主「鬼華陀」武道通
+
+技能:
+
+    驚異二針 (amazing-needle):
+
+        技能種類: 針灸之術
+
+        學習條件: 拜師後
+
+        特殊能力: amazing_armor: 消耗神增加目標的護甲和防禦能力，少量
+
+                                 傷害和攻擊能力。
+
+                  amazing_power: 消耗神增加目標的傷害和攻擊能力，少量
+
+                                 護甲和防禦能力。
+
+                  self_test: 消耗自己氣格子獲得經驗...
+
+                  霸甲和霸氣不能對同一目標同時施展，對自己施展的效果
+
+                  是對其他目標效果的四倍。
+
+        能力提昇: 無
+
+  相關參考: help amazing-needle
+
+    五敗針法 (wuto-needle):
+
+        技能種類: 針灸之術
+
+        學習條件: 拜師後
+
+        特殊能力: fear first: 根據自身和目標的膽識傷害目標精氣神。
+
+                  foul second: 根據自身和目標的根骨傷害目標氣。
+
+                  fail third: 根據自身和目標的膂力傷害目標氣。
+
+                  fling fourth: 根據自身和目標的定力傷害目標精神。
+
+                  fumble fifth: 根據自身和目標的機敏傷害目標精神。
+
+                  自身 delay 1，有機會 delay 目標 2。
+
+        能力提昇: 無
+
+        相關參考: help wuto-needle
+
+    引源針法 (potency-needle):
+
+        技能種類: 針灸之術
+
+        學習條件: 經脈穴道之學>=80
+
+        特殊能力: fatigue: 緩解目標疲勞。
+
+                  awareness: 消耗神增加目標的警覺，少量行動力和元素傷害。
+
+                  move: 消耗神增加目標的行動力，少量警覺和元素傷害。
+
+                  element: 消耗神增加目標的元素傷害，少量警覺和行動力。
+
+                  強警，強元素和強動不能對同一目標同時施展。
+
+        能力提昇: 無
+
+        相關參考: help potency-needle
+
+    三自回針法 (recovery-needle):
+
+        技能種類: 針灸之術
+
+        學習條件: 經脈穴道之學>=80
+
+        特殊能力: gin-up: 增加疲勞，恢復精。
+
+                  kee-up: 增加疲勞，恢復氣。
+
+                  sen-up: 增加疲勞，恢復神。
+
+        能力提昇: 無
+
+        相關參考: help recovery-needle
+
+    針灸之術 (cauterization):
+
+        技能種類: 基本技能
+
+        學習條件: 拜師後
+
+        特殊能力: 無
+
+        能力提昇: 每 5 級提昇 10 點 gin、kee、sen。
+
+        相關參考: help cauterization
+
+其他技能請參考: help alchemist.adv
+
+最後更新日期:2014/05/15

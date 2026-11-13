@@ -1,0 +1,18 @@
+# 裝備列表和升級計算
+
+- URL: https://sites.google.com/site/es2mud/home/wan-jia-yuan-chuang/windstoryapp
+- Path: /site/es2mud/home/wan-jia-yuan-chuang/windstoryapp
+- Source: ES2 MUD 天朝帝國 (Google Site)  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-09T16:41:42+0800
+
+---
+
+# 裝備列表和升級計算
+
+裝備列表：
+
+https://docs.google.com/spreadsheets/d/1yAMFtGV6hjgT75XxDImvblhBHCjtDSvUySnZh-4U6Ac/edit#gid=0 (https://docs.google.com/spreadsheets/d/1yAMFtGV6hjgT75XxDImvblhBHCjtDSvUySnZh-4U6Ac/edit#gid=0)
+
+升級計算：
+
+https://docs.google.com/spreadsheet/ccc?key=0AlYBmelET03sdDMzNEVqb0k4cFRGZzdxajVjeUVlYnc&usp=sharing#gid=0 (https://docs.google.com/spreadsheet/ccc?key=0AlYBmelET03sdDMzNEVqb0k4cFRGZzdxajVjeUVlYnc&usp=sharing#gid=0)

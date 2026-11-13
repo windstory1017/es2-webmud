@@ -1,0 +1,66 @@
+# ES2 靈雲觀 茅山道士設定（五雷、幽冥三箭）
+
+- URL: https://es2tips.blogspot.com/2014/08/es2_71.html
+- Published: 2014-08-13T21:20:00.002+08:00
+- Updated: 2014-08-13T21:20:50.854+08:00
+- Labels: 道士
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+help mao-shan.cloud
+
+○ 靈雲觀資料
+
+職業 : 道士
+
+種族 : 不收形天、焦僥、厭火、釘靈
+
+性別 : 不限
+
+師傅 : 靈雲觀觀主 林正陽(Lin zheng yang)
+
+技能 :
+
+    幽冥三箭 (taoism of purify):
+
+        技能種類: 咒術
+
+        學習條件: 拜師後
+
+        特殊能力: netherbolt: 青冥之箭，可恢復神。
+
+                  drainerbolt: 紫幽之箭，可恢復精。
+
+                  feeblebolt: 蒼靈之箭，可恢復氣。
+
+                  以上三種咒語對殭屍、鬼魂和動物類目標有更高的傷害。施
+
+                  法需消耗正陽符。
+
+        能力提昇: 無
+
+        相關參考: help taoism of purify
+
+    茅山【五雷術】 (mao-shan lightning):
+
+        技能種類: 法術
+
+        學習條件: 幽冥三箭 >=90，在林正陽處習得
+
+        特殊能力: cleanse: 消耗神凝聚靈力。
+
+                  bless: 消耗神、靈力和先天符，對目標施展五雷術全面提昇
+
+                         屬性、元素傷害和元素抗性。
+
+                  consume: 消耗神、靈力和先天符，恢復目標精神。
+
+        能力提升: 無
+
+        相關參考: help mao-shan lightning
+
+其他技能請參考: help taoist.adv
+
+最後更新日期:2014/05/01

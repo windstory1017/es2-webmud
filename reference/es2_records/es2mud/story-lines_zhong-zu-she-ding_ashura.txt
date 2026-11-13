@@ -1,0 +1,24 @@
+# 阿修羅
+
+- URL: https://sites.google.com/site/es2mud/home/story-lines/zhong-zu-she-ding/ashura
+- Path: /site/es2mud/home/story-lines/zhong-zu-she-ding/ashura
+- Source: ES2 MUD 天朝帝國 (Google Site)  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-09T16:41:42+0800
+
+---
+
+# 阿修羅
+
+[image:  https://lh3.googleusercontent.com/sitesv/AG8ngQXNuy4h84NSOQlraVGfPiLQ-3VwTv4tNO7nLt00mOsFhvn7G3zPRTkXq2uJAK9s63BQcYVnrRHfFFPsiCIAe1B4ACePKOtgLo567qvPIY2yUIIjFw31Pwt9VEwUNA1PIq10r4X9Ha42QA8fi2sBVITRv_GXt-zvIWI69RBCO8jLx5YlLNi55mIw7ZEoYCZex2p5DhEdlQSAWuxh=w1280]
+
+需要業力：30
+
+適合職業：武者70級，軍人70級，道士60級
+
+初始狀態：精80，氣80，神80
+
+初始屬性上限：膂力25，膽識40，悟性15，靈性25，定力10，機敏20，根骨20，慧根20
+
+種族被動能力：攻擊能力30，攻勢30，陰陽眼，混亂主動攻擊
+
+種族主動能力：吞食屍體恢復自身狀態。

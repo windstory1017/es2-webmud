@@ -1,0 +1,36 @@
+# 青銅鳳凰
+
+- URL: https://es2tips.blogspot.com/2013/06/blog-post_2317.html
+- Published: 2013-06-15T11:02:00.002+08:00
+- Updated: 2013-06-15T11:02:35.831+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+> wield sword
+
+這把青銅鳳凰短劍拿在手裡輕飄飄的。
+
+你抽出一把短劍當作武器。
+
+> id sword
+
+一把粗糙的短劍﹐一般旅人帶在身邊防身用的武器。
+
+可用技能：
+
+  劍術 (sword)
+
+  左手劍術 (secondhand sword)
+
+傷害力： 2 - 16 (力量修正 40%，乘數等級 1)
+
+武器特性﹕
+
+  防禦力                         20
+
+  火焰傷害防禦力                 75
+
+>

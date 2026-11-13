@@ -1,0 +1,46 @@
+# 龍麟袋 古鄔赤水袋 百花集註book
+
+- URL: https://es2tips.blogspot.com/2013/05/book.html
+- Published: 2013-05-29T12:33:00.000+08:00
+- Updated: 2013-05-29T12:33:00.071+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+比武 (Win - Lose) >= 1
+
+武器庫 -
+
+    這是軍營里的一間武器庫，四週的武器架上排滿了各種寒光閃閃
+
+的兵刃，看起來收藏的都是一些利器，只是不知道要有怎樣身份的人
+
+才可以使用這裡的武器。
+
+    這裡明顯的出口是 south 和 north。
+
+  初級軍備商(Vendor)
+
+> l
+
+初級軍備商笑呵呵的笑道：大人要來點什麼？
+
+ist
+
+你可以購買下列這些東西：
+
+-------------------------
+
+  龍麟袋(Dragon-skin bag)       ：一兩黃金
+
+  【百花集註】(Book of flower hands)：二百五十兩銀子
+
+  古鄔赤水袋(Strange skin)      ：十五兩黃金
+
+  龍麟袋(Dragon-skin bag)      ==> 無限空間時尚包（當然要拿的動）
+
+  【百花集註】(Book of flower hands)  ==> 拳法書
+
+  古鄔赤水袋(Strange skin)             ==> 無限暢飲大水袋

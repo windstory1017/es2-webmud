@@ -1,0 +1,30 @@
+# 六靈妖姬鞭
+
+- URL: https://es2tips.blogspot.com/2014/01/blog-post_3410.html
+- Published: 2014-01-27T01:52:00.001+08:00
+- Updated: 2014-01-27T01:52:07.139+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+ˇ六靈妖姬鞭(Whip of evil beauties)
+
+一條散發著淡淡胭脂香氣的軟鞭﹐整條鞭子上精細的刻畫著六位半裸的
+
+妖媚女子﹐握在手中有些心神不寧。
+
+可用技能：
+
+  軟鞭鞭法 (whip)
+
+傷害力： 8 - 32 (力量修正 65%，乘數等級 3)
+
+武器特性﹕
+
+  咒文能力                       10
+
+  法術                           10
+
+  慧根                           1

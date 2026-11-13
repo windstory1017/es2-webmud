@@ -1,0 +1,56 @@
+# 天雷鎚法
+
+- URL: https://japentery.pixnet.net/blog/posts/2020129816
+- Published: 2008-07-18
+- Labels: 
+- Source: japentery.pixnet.net | Provenance: DOCUMENTED
+- Retrieved: 2026-09-10T14:42:27+0800
+
+---
+
+受傷漢子(Injured man)
+
+ 你交給受傷漢子一些小還丹。
+
+ 受傷漢子說道﹕感謝這位大爺救命
+之恩, 我本是被派入黑風寨探查大將軍下落的探子,不料被發現, 才會落到如此田地, 如果被知道我沒有死, 他們一定不善罷甘休的。
+
+ 這把鐵鑰匙是我拼命搶到的, 或許對你有幫助, 就給你保管吧!
+
+ 受傷土匪把鑰匙交給你後之後, 轉身便往深山走去,不見身影了...
+
+ look 油燈
+
+ 仔細一瞧, 每盞油燈上面都刻著不同的形狀, 有麒麟、青龍、鳳凰, 每盞高度不盡相同, 照亮了整條廂道。
+
+ move 麒麟油燈
+
+ search 床簾
+
+ 李洪雲(Lee hon_yun)
+
+ 共有2把鑰匙...一把開上面的
+
+ unlock north with key
+
+ touch 青龍油燈
+
+ roll 枝幹
+
+ open box with key
+
+ move 紅石獅子
+
+ unlock door with key
+
+ 黑風惡煞 關裴(Guan pai)
+
+ 地牢鐵門是鎖著的。
+
+ 這個鐵門要用地一把受傷漢子給你的鑰匙
+
+ 征西大將軍 神將(Sen chun)
+
+ 你交給神將一顆印鑑。
+
+ (神將將天雷鎚法的招式舞了一次給你看)

@@ -1,0 +1,40 @@
+# ˇ盤龍針(Dragon needle) - 膽識
+
+- URL: https://es2tips.blogspot.com/2014/10/dragon-needle.html
+- Published: 2014-10-28T22:59:00.000+08:00
+- Updated: 2014-10-28T22:59:00.396+08:00
+- Labels: 攻擊能力值, 膽識, 針灸之術
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+盤龍針 (pan chao @ Chin)
+
+> l needle
+
+一支用黑鐵鑄造的長針﹐針身盤有一條張牙舞爪的惡龍﹐龍尾與針
+
+尖融為一體﹐異常尖銳。
+
+> id needle
+
+一支用黑鐵鑄造的長針﹐針身盤有一條張牙舞爪的惡龍﹐龍尾與針
+
+尖融為一體﹐異常尖銳。
+
+可用技能：
+
+  針術 (needle)
+
+  左手針術 (secondhand needle)
+
+傷害力： 9 - 27 (力量修正 85%，乘數等級 2)
+
+武器特性﹕
+
+  膽識                           2
+
+  針灸之術                       5
+
+  攻擊能力值                     25

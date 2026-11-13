@@ -1,0 +1,20 @@
+# 說書先生 李半仙 (int +1 ... +5) 免裝備
+
+- URL: https://es2tips.blogspot.com/2013/05/int-1-5.html
+- Published: 2013-06-01T09:07:00.001+08:00
+- Updated: 2013-06-01T20:31:58.090+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+say 好;
+
+#delay {16} {say 算;say 魚鐵山;say 人;};
+
+#delay {32} {say 陵山野人;say 虎刀門;say 穿靈};
+
+#delay {48} {say 信}
+
+（還有其他說書組合，請自行嘗試）

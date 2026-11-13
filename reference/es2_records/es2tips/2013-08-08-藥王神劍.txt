@@ -1,0 +1,30 @@
+# 藥王神劍
+
+- URL: https://es2tips.blogspot.com/2013/08/blog-post_9762.html
+- Published: 2013-08-08T21:50:00.004+08:00
+- Updated: 2013-08-08T21:50:30.745+08:00
+- Labels: 守勢等級, 慧根, 靈性
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+ˇ藥王神劍(Medication-king sword)
+
+藥王神劍為侮藥王鬼將的成名兵器。劍身上刻著【天下藥王, 盡為所辱】
+
+八個傲氣十足的楷字。
+
+可用技能：
+
+  劍術 (sword)
+
+傷害力： 9 - 60 (力量修正 100%，乘數等級 3)
+
+武器特性﹕
+
+  靈性                           2
+
+  守勢等級                       50
+
+  慧根                           2

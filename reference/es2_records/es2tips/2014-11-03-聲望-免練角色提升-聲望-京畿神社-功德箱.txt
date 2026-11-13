@@ -1,0 +1,82 @@
+# 聲望：免練角色提升「聲望」 @ 京畿神社「功德箱」
+
+- URL: https://es2tips.blogspot.com/2014/11/blog-post.html
+- Published: 2014-11-03T23:54:00.004+08:00
+- Updated: 2014-11-04T00:11:08.817+08:00
+- Labels: 聲望
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+聲望：免練角色提升「聲望」 @ 京畿神社「功德箱」
+
+10 silver 銀子 == 1 點聲望
+
+神社 -
+
+    這裡是京畿的一家神社，裡面供奉著太陽神、財神、土地公還有「杞庸」和「君違」姐弟二人。
+
+據說這家神舍的財神還是頗為靈驗，京畿
+
+就有兩位商人就是靠財神眷顧才有本錢做生意的。
+
+    這裡唯一的出口是 north。
+
+  二兩碎銀(Silver)
+
+  三百個饅頭(Manto)
+
+  春慶兒(Chun qing er)
+
+  功德箱(Donation box)
+
+領錢： n;w;n;w;n;n;w;s;withdraw 3200 silver
+
+回到神社： n;e;s;s;e;s;e;s;drop silver
+
+開始捐錢
+
+#tick aaa {#4 {get 10 silver;donate silver}} {2}
+
+--------------------------------------------------
+
+e.g. 十萬的聲望，100,000 * 10 == 一百萬兩銀子
+
+一萬的聲望約 2 個 nugget，還算可接受... 
+
+請記住，不要直接捐 nugget ...。 
+
+一次捐 10 兩銀子就好
+
+--------------------------------------------------
+
+你把一些碎銀放入了功德箱。
+
+>
+
+你撿起一些碎銀。
+
+>
+
+你把一些碎銀放入了功德箱。
+
+>
+
+你撿起一些碎銀。
+
+>
+
+你把一些碎銀放入了功德箱。
+
+>
+
+你撿起一些碎銀。
+
+>
+
+你把一些碎銀放入了功德箱。
+
+>
+
+#action {這裡沒有那麼多} {get silver;#untick aaa;#delay {4} {n;w;n;w;n;n;w;s;withdraw 3200 silver;#delay {4} {n;e;s;s;e;s;e;s;drop silver};#delay {8} {#tick aaa {get 10 silver;donate silver} {0.5}}}

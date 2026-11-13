@@ -1,0 +1,40 @@
+# 紫金鳳頭錐(Gin pike)  - 單手槍法
+
+- URL: https://es2tips.blogspot.com/2014/10/gin-pike.html
+- Published: 2014-10-28T22:58:00.003+08:00
+- Updated: 2014-10-28T22:58:22.218+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+紫金鳳頭錐(Gin pike)      
+
+> buy pike from pan
+
+你向潘焦買下一枝紫金鳳頭錐。
+
+> wield pike
+
+這枝紫金鳳頭錐拿在手裡輕飄飄的。
+
+你裝備紫金鳳頭錐作武器。
+
+> id pike
+
+一把隱隱透露出天青色的紫金短槍, 江湖上傳聞攬天門門主公孫彥
+
+三十年前對太湖雙惡一役便是一把太皇弓, 一枝紫金鳳頭錐重創了
+
+徐小惡, 更一舉巧殺白常惡! 從此紫金鳳頭錐便成江湖美談, 充滿
+
+了非常神秘的色彩。
+
+可用技能：
+
+  單手槍法 (pike)
+
+  左手槍法 (secondhand pike)
+
+傷害力： 14 - 54 (力量修正 100%，乘數等級 4)

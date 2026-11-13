@@ -1,0 +1,24 @@
+# 夜叉
+
+- URL: https://sites.google.com/site/es2mud/home/story-lines/zhong-zu-she-ding/yaksa
+- Path: /site/es2mud/home/story-lines/zhong-zu-she-ding/yaksa
+- Source: ES2 MUD 天朝帝國 (Google Site)  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-09T16:41:42+0800
+
+---
+
+# 夜叉
+
+[image:  https://lh3.googleusercontent.com/sitesv/AG8ngQXsrfSGEz1jHZ7q5CJOsUa6xZ7idOoR2y2URQbGizMFQDK9cqg86gplVufs1jG-g1vRY_6j8rG187RxoAGb0ut6RgXGlDvNGWBmOlwh3BnwLzNyE_5Zglg3_-T8Ay1cbUmh9teMwk5m54mMFW3SlRTZnYStpFEUADAVV9Ab1Nl1rVGi7ZGb3bfdxUbJqnKAXZirHEb9fPjCuYGnjE8=w1280]
+
+需要業力：35
+
+適合職業：書生60級，武者65級，小偷70級，道士65級，方士60級
+
+初始狀態：精140，氣70，神70
+
+初始屬性上限：膂力25，膽識25，悟性20，靈性25，定力20，機敏25，根骨25，慧根25
+
+種族被動能力：防禦力50，攻擊能力25，陰陽眼，通天眼
+
+種族主動能力：可以吞噬其他生物的魂魄。

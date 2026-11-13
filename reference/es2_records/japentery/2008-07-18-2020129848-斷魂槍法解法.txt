@@ -1,0 +1,34 @@
+# 斷魂槍法解法
+
+- URL: https://japentery.pixnet.net/blog/posts/2020129848
+- Published: 2008-07-18
+- Labels: 
+- Source: japentery.pixnet.net | Provenance: DOCUMENTED
+- Retrieved: 2026-09-10T14:42:27+0800
+
+---
+
+50 inn 6s 6sw 6se 2s 2e 3n 2nw 2n 5w 2n 4w out w n
+
+ 會看到「五鬼槍」張歷(Zhan
+g li)
+
+ 你說道﹕斷魂槍法
+
+ 張歷說道﹕想跟老夫學槍嗎? 沒問題啊。
+
+ 張歷說道﹕不過﹐這拜師之禮你自己想看看吧。
+
+ s e enter n
+
+ say 是
+
+ 你說道﹕是
+
+ 張天雲說道﹕告訴你吧﹐我爹他一直想要一把叫「龍骨槍」的寶槍。
+
+ 張天雲說道﹕只可惜這把槍已經從江湖上消失了
+
+ 去百花村的高玉 從他身上拿龍骨槍
+
+ 然後回去給張歷..應該就能學到了
