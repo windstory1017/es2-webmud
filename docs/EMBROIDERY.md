@@ -8,7 +8,7 @@
 |---|---|
 | 名稱 / id | 白甌 / `bai ou`、`bai`、`ou`；稱號（nickname）「鳳娘」 |
 | 檔案 | `d/wutang/npc/bai_ou.c`（五堂鎮 NPC，沿用小桃的 `F_VILLAGER`） |
-| 位置 | 先放 `/adm/guild/academy`（在該房間的 `objects` 加一行，之後再搬） |
+| 位置 | 五堂布莊（`d/wutang/cloth_shop.c`，使用者指示 2026-11-13；原先暫放 `/adm/guild/academy`，已移除） |
 | 戰鬥 | 比照小桃的平民設定 |
 
 ### 外觀敘述（long，已照遊戲排版斷行：首行縮四格、每行 70 寬）
@@ -140,4 +140,4 @@
 - `python3 tools/check_big5_text.py` 0 處。
 
 更新需重開遊戲服務（改到 `include/daemon.h`、`adm/daemons/enhanced.c`）。
-指令檔、NPC、物品也要 `update`；`adm/guild/academy` 要重新載入房間才會出現白甌。
+指令檔、NPC、物品也要 `update`；`d/wutang/cloth_shop` 要重新載入房間才會出現白甌。
