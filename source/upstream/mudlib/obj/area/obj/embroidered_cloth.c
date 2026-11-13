@@ -45,24 +45,29 @@ int embroider()
 {
     string *attrs = ({ "str", "cor", "cps", "int", "wis" });
     mapping a = ([ "armor": 1 ]);
+    string attr;
     int r = random(100), result;
 
-    if( r < 20 ) {
-        a[attrs[random(sizeof(attrs))]] = 1 + random(3);
+    // 機率：屬性 10%、傷害＋攻勢 15%、傷害－攻勢 5%、防禦＋守勢 15%、守勢－ 10%、
+    //       詞綴 35%、行動力 5%、警覺性 5%（使用者指示，2026-11-13）。
+    if( r < 10 ) {
+        // 膂力、膽識、定力、悟性各 +2~4；智慧 +1~2
+        attr = attrs[random(sizeof(attrs))];
+        a[attr] = (attr == "wis") ? 1 + random(2) : 2 + random(3);
         result = RESULT_ATTR;
-    } else if( r < 40 ) {
+    } else if( r < 25 ) {
         a["damage"] = 1 + random(10);
         a["intimidate"] = 10 + random(11);
         result = RESULT_SHARP;
-    } else if( r < 50 ) {
+    } else if( r < 30 ) {
         a["damage"] = -(1 + random(10));
         a["intimidate"] = -(10 + random(11));
         result = RESULT_DULL;
-    } else if( r < 70 ) {
+    } else if( r < 45 ) {
         a["armor"] += 10 + random(6);
         a["wittiness"] = 10 + random(11);
         result = RESULT_GUARD;
-    } else if( r < 80 ) {
+    } else if( r < 55 ) {
         a["wittiness"] = -(10 + random(11));
         result = RESULT_LOOSE;
     } else if( r < 90 ) {

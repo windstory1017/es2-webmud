@@ -54,10 +54,16 @@ LONG
 // 白甌說的話照 say 的格式：「白甌說道﹕」加綠色內容（使用者指示，2026-11-13）；
 // 動作的描述用表情的青色。
 
-// 白甌說話；pre 是「說道」前面的動作（可空），例如 "笑著" → 「白甌笑著說道﹕…」。
+// 白甌說話：verb 是完整的說話動詞，例如「說道」「笑道」「接著說道」。
+void talk(string verb, string text)
+{
+    message_vision("$N" + verb + "﹕" + HIG + text + NOR + "\n", this_object());
+}
+
+// pre 是「說道」前面的動作（可空），例如 "笑著" → 「白甌笑著說道﹕…」。
 void speak(string pre, string text)
 {
-    message_vision("$N" + pre + "說道﹕" + HIG + text + NOR + "\n", this_object());
+    talk(pre + "說道", text);
 }
 
 // 動作描述（青色，同表情）。
@@ -74,8 +80,10 @@ void invite(object who)
         return;
     }
     act("$N擱下手中的繡繃，抬眸淡淡一笑。", who);
-    speak("", "繡花麼？也罷，難得有人識貨。取五兩黃金作工錢 (give 5 gold to bai ou)，"
-        "再備一件素淨的布衣 (give cloth to bai ou)，我替你繡上幾針。記著，先付工錢，後交衣裳，這是我的規矩。");
+    // 一行放不下，分成幾句說（遊戲每行 70 格，綠色碼也佔格數）。
+    speak("", "繡花嗎？難得有人識貨。");
+    speak("接著", "只要工錢五兩黃金，我就能為你的布衣繡上幾針；");
+    talk("笑道", "記得先付工錢、後交衣裳，這是繡坊一直以來的規矩。");
 }
 
 void relay_say(object who, string msg)
@@ -91,11 +99,11 @@ int accept_object(object who, object ob)
 
     if( ob->query("money_id") ) {
         if( paid[who] ) {
-            speak("搖頭", "工錢你已經付過了，不必再給。把布衣拿來吧 (give cloth to bai ou)。");
+            speak("", "工錢已經付過了，是哪件布衣想刺繡呢？");
             return 0;
         }
         if( ob->value() < FEE ) {
-            speak("輕輕搖頭", "我這一針一線，可不是尋常價錢。五兩黃金，少一文也不成。");
+            talk("笑道", "五兩黃金，少一文也不成。");
             return 0;
         }
         paid[who] = 1;
