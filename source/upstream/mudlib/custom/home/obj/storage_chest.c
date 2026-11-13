@@ -67,6 +67,11 @@ mapping pack_object(object ob) {
         param = ob->query_autoload();
         if (stringp(param)) data["autoload"] = param;
     }
+    // 登出會丟掉、但要存進儲物箱時保留內容的物品（例如繡花布衣）。
+    if (function_exists("query_store_data", ob)) {
+        param = ob->query_store_data();
+        if (stringp(param)) data["store"] = param;
+    }
     // 有附加屬性機制的武器（長劍、短劍、單刀、鬼頭刀）：連「普通」也記下來，
     // 取出時照原樣還原，避免存進去再拿出來就重新擲骰。
     if (stringp(ob->query("affix_base_name")))
@@ -125,6 +130,8 @@ int do_retrieve(string arg) {
         ob->set_amount(data["amount"]);
     if (!undefinedp(data["autoload"]) && function_exists("autoload", ob))
         ob->autoload(data["autoload"]);
+    if (!undefinedp(data["store"]) && function_exists("restore_store_data", ob))
+        ob->restore_store_data(data["store"]);
     if (mapp(data["affix"]))
         ENHANCE_D->apply_affix(ob, data["affix"]);
 

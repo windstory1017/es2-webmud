@@ -4,7 +4,8 @@ design: docs/EMBROIDERY.md（使用者指示，2026-11-13）
 rule: - 由白甌產生新物件（不是原布衣改的）；產生時擲一次繡花結果（embroider()），八種互斥。
       - 記號 embroidered：繡過的衣服不能再繡。
       - 玩家可用 name 指令命名（custom_name），可重複命名。
-      - 有 query_autoload：登出時不會被丟棄，登入時還原（家園儲物箱也用同一組）。
+      - 登出照一般規則丟在地上（使用者決定，2026-11-13）；不設 query_autoload。
+        家園儲物箱存取用 query_store_data／restore_store_data，結果、屬性、詞綴、名字都保留。
 ---*/
 
 #include <armor.h>
@@ -93,10 +94,10 @@ void set_custom_name(string str)
         "名家。襟內繡著它的名字「" + str + "」，想改名也行 (name cloth as 名稱)。\n");
 }
 
-/* ---- 存檔：登出、家園儲物箱 ---------------------------------------- */
+/* ---- 家園儲物箱存取（登出不保留，所以不用 autoload） ------------------- */
 
 // 格式："1|結果|屬性（k=v;k=v）|前綴|後綴|玩家取的名字"
-string query_autoload()
+string query_store_data()
 {
     mapping base = query("cloth_base_apply"), affix = query("affix");
     string k, stats = "", prefix = "", suffix = "", cname = query("custom_name");
@@ -113,7 +114,7 @@ string query_autoload()
         stringp(cname) ? cname : "");
 }
 
-void autoload(string param)
+void restore_store_data(string param)
 {
     string *p, s, k;
     mapping base = ([]), affix = ([]);
