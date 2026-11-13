@@ -54,28 +54,31 @@ void skill_completed(object me, string skill)
 }
 
 /* 每級獎勵（引擎）；練成之後每升一級：精上限 +1～3、氣上限 +3、神上限 +0～2。 */
-/* 境界獎勵（使用者定案，2026-11-12）：天邪神功練到該等級時各給一次。
- *   等級: ({ 精氣上限各加多少, 膽識與根骨各加多少, 敘述第一句 }) */
-private mapping MILESTONE = ([
-    120: ({ 20, 1, "你的天邪神功漸入佳境﹐丹田中隱隱有虎嘯之聲。" }),
-    140: ({ 40, 2, "你的天邪神功又進一層﹐霸道的真氣在百脈間奔騰不息。" }),
-    160: ({ 60, 4, "你的天邪神功已臻化境﹐週身真氣鼓盪﹐有如猛虎下山。" }),
-]);
+/* 境界獎勵（使用者定案，2026-11-12；門檻 2026-11-13 改為 140／160／190）：天邪神功練到該等級時各給一次。
+ *   ({ 等級門檻, 精氣上限各加多少, 膽識與根骨各加多少, 敘述第一句, 舊版（120／140／160）的領取記號 })
+ * 領過的境界記在 celestial_force/tier_<第幾境>；舊版已領的照舊算已領，不會重複給。 */
+private mixed *MILESTONE = ({
+    ({ 140, 20, 1, "你的天邪神功漸入佳境﹐丹田中隱隱有虎嘯之聲。", "bonus_120" }),
+    ({ 160, 40, 2, "你的天邪神功又進一層﹐霸道的真氣在百脈間奔騰不息。", "bonus_140" }),
+    ({ 190, 60, 4, "你的天邪神功已臻化境﹐週身真氣鼓盪﹐有如猛虎下山。", "bonus_160" }),
+});
 
 private void give_milestones(object me, int lv)
 {
-    int at;
-    mixed *bonus;
+    int i;
+    mixed *m;
 
-    foreach( at in sort_array(keys(MILESTONE), 1) ) {
-        if( lv < at || me->query("celestial_force/bonus_" + at) ) continue;
-        bonus = MILESTONE[at];
-        me->set("celestial_force/bonus_" + at, 1);
-        me->advance_stat("gin", bonus[0]);
-        me->advance_stat("kee", bonus[0]);
-        me->set_attr("cor", me->query_attr("cor", 1) + bonus[1]);
-        me->set_attr("con", me->query_attr("con", 1) + bonus[1]);
-        tell_object(me, HIY + bonus[2] + "\n"
+    for( i = 0; i < sizeof(MILESTONE); i++ ) {
+        m = MILESTONE[i];
+        if( lv < m[0] ) continue;
+        if( me->query("celestial_force/tier_" + (i + 1))
+        ||  me->query("celestial_force/" + m[4]) ) continue;
+        me->set("celestial_force/tier_" + (i + 1), 1);
+        me->advance_stat("gin", m[1]);
+        me->advance_stat("kee", m[1]);
+        me->set_attr("cor", me->query_attr("cor", 1) + m[2]);
+        me->set_attr("con", me->query_attr("con", 1) + m[2]);
+        tell_object(me, HIY + m[3] + "\n"
             "你的膽識增加了。\n"
             "你的根骨增加了。\n"
             "你的精、氣因為修煉天邪神功增進不少。\n" NOR);
