@@ -16,6 +16,10 @@ LONG
     set ("exits", ([
         "west" : __DIR__"guildhall",
     ]));
+    // 鳳娘白甌（繡花）暫放在這裡，之後再搬（使用者指示，2026-11-13，見 docs/EMBROIDERY.md）。
+    set ("objects", ([
+        "/d/wutang/npc/bai_ou" : 1,
+    ]));
 
     setup();
     // load_object("/daemon/board/lpc");
