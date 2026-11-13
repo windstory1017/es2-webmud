@@ -104,7 +104,7 @@ int accept_object(object who, object ob)
     }
 
     if( ob->query("embroidered") ) {
-        speak("微微蹙眉", "這件已有人下過針了，我不願在別人的針腳上再添一筆。");
+        speak("蹙眉", "這件已有人下過針了，我不願在別人的針腳上再添一筆。");
         return 0;
     }
     if( base_name(ob) != CLOTH_FILE ) {
