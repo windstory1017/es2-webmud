@@ -74,8 +74,11 @@ void invite(object who)
         return;
     }
     act("$N擱下手中的繡繃，抬眸淡淡一笑。", who);
-    speak("", "繡花麼？也罷，難得有人識貨。取五兩黃金作工錢 (give 5 gold to bai ou)，"
-        "再備一件素淨的布衣 (give cloth to bai ou)，我替你繡上幾針。記著，先付工錢，後交衣裳，這是我的規矩。");
+    // 一行放不下，分成幾句說（遊戲每行 70 格，綠色碼也佔格數）。
+    speak("", "繡花麼？也罷，難得有人識貨。");
+    speak("接著", "取五兩黃金作工錢 (give 5 gold to bai ou)，");
+    speak("", "再備一件布衣 (give cloth to bai ou)，我替你繡上幾針。");
+    speak("", "記著，先付工錢，後交衣裳，這是我的規矩。");
 }
 
 void relay_say(object who, string msg)
@@ -91,11 +94,11 @@ int accept_object(object who, object ob)
 
     if( ob->query("money_id") ) {
         if( paid[who] ) {
-            speak("搖頭", "工錢你已經付過了，不必再給。把布衣拿來吧 (give cloth to bai ou)。");
+            speak("", "工錢已付，把布衣拿來吧 (give cloth to bai ou)。");
             return 0;
         }
         if( ob->value() < FEE ) {
-            speak("輕輕搖頭", "我這一針一線，可不是尋常價錢。五兩黃金，少一文也不成。");
+            speak("輕輕搖頭", "我的針線不是尋常價錢，五兩黃金，少一文也不成。");
             return 0;
         }
         paid[who] = 1;
