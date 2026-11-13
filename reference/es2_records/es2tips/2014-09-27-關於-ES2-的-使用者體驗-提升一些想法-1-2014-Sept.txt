@@ -1,0 +1,63 @@
+# 關於 ES2 的「使用者體驗」提升一些想法 (1) (2014 Sept)
+
+- URL: https://es2tips.blogspot.com/2014/09/es2-1-2014-sept.html
+- Published: 2014-09-27T12:49:00.002+08:00
+- Updated: 2014-09-27T12:53:56.085+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+##
+關於 ES2 的「使用者體驗」提升一些想法 (2014 Sept)
+
+###
+(a) 一些因為「舊時代」產生的限制，應該可考慮移除
+
+舊時代 ES2 可能放置於學校(交大)的電腦，很可能是 Sun Sparc 33 Mhz  or Intel Pentium 90 MHz
+
+Memory 只有 64MB ~ 256MB 的 Sun Workstation or PC BSD/Linux box
+
+但現在已經是 2014 年，CPU / Memory / Storage  / Bandwidth 都不再是問題...
+
+隨便一個 $10 USD 的 SSD VPS 都是 2~4 cores & 2GB+ memory
+
+(a.1) 移除三個月 Purge 機制（或者只 purge level 40 以下的
+
+(a.2) 多重 Backup 機制 (multiple backups + checksum + remote backup
+
+(a.3) 檢討每 30 天人工 reboot，延長 power cycle 時間（可換到穩定的 Hosting or VPS，我可免費贊助 SSD-VPS
+
+(a.4) 增加「屬性武器」的取得容易度，如「無腸/青陽武器」可用 5 gold 靠運氣買取（類似 shen's amulet
+
+(a.5) 改寫 ES2 讓他成為 Full SMP compatible (沒看過 code，不確定，純猜測
+
+(a.6) Introduce something like "CPU S3/S4" which freezes the players status who disconnected from ES2;
+
+(of course, somethign like 5 gold/hour reservation might be applied ...
+
+###
+(b) 讓沒有公會的玩家，也能夠擁有相同的使用者體驗
+
+(b.1) 恢復舍利子（或者類似運、買、存屍體的機制
+
+(b.2) 享受工會 goto 技能、功能（？
+
+###
+(c) Quest hint system
+
+(c.1) Quest 提示能夠更明顯；很多狀況不是玩家不願意解，而是 Quest Chaining 中間的 nodes 串不起來。
+
+(c.2) 至少二轉的 Help 能夠有「起、承、轉、合」（目前只有「起點」
+
+###
+想像一下 Use case scenario: 
+
+=> 週末到了，好不容易有空閒...
+
+      登入之後要花 8 ~ 16 real-world hours for collecting related items,
+
+      好不容易蒐集完畢裝備，...Umm，已經是週末假期的尾聲。
+
+=> 好吧，開個 screen 把裝備保持一下 ... 等到下個週末，screen -r ... All disconnected

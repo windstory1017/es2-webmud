@@ -1,0 +1,68 @@
+# 混沌之印 混沌之鏡 混沌獸
+
+- URL: https://es2tips.blogspot.com/2013/06/blog-post_7143.html
+- Published: 2013-06-05T14:40:00.005+08:00
+- Updated: 2013-06-05T14:41:22.181+08:00
+- Labels: 傷害力, 膽識
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+> combine broken seal
+
+你將五片破碎的印記合併成了一枚混沌之印掉落在地上。
+
+混沌之印(Seal of chaos)
+
+> l seal
+
+一枚五角星狀的印章，通體散發出幽暗的黑色光芒，據說可以用來召喚混沌獸。
+
+> enter stone
+
+> insert seal of chaos
+
+民房 -
+
+    這裡是一間破舊的民房，殘缺不全的屋頂和滿是青苔裂痕的牆壁給
+
+人一種悽涼的感覺。屋子北面有一扇小門通往後院，破碎的門板散落在
+
+地上已經開始腐朽了。
+
+    這裡明顯的出口是 west 和 out。
+
+  黑熊(Bear)
+
+  水之印記(Seal of water)
+
+  「混沌」的屍體(Corpse of Beast of chaos)
+
+  大黑熊(Greater bear) <昏迷不醒>
+
+  殭屍(Zombie)
+
+魔獸「混沌」是天神創世後殘存在尚未消失的混沌界內的生物，它
+
+們對光明和秩序有著天生的仇視，不斷的吞噬著世界的時空然後轉
+
+化為混沌界的一部份。就是這樣，有序的空間和無序的混沌巧妙的
+
+達到了一種平衡。
+
+>
+
+妳從「混沌」的屍體身上搜出一面混沌之鏡。 (necklace / rosary)
+
+> id mirror
+
+一面散發著幽暗之光的古鏡，仔細看似乎有甚麼東西試圖躍出鏡面。
+
+護具特性﹕
+
+  攻勢等級                       25
+
+  膽識                           1
+
+  傷害力                         10

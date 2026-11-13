@@ -1,0 +1,43 @@
+# 幻影鞭法
+
+- URL: https://japentery.pixnet.net/blog/posts/2020130151
+- Published: 2008-07-18
+- Labels: 
+- Source: japentery.pixnet.net | Provenance: DOCUMENTED
+- Retrieved: 2026-09-10T14:42:27+0800
+
+---
+
+學習:只要是方士就可以學~(at代表方士吧)
+
+ pot 5e ne 2n e ne
+
+ enter 小屋
+
+ fight
+
+ halt
+
+ say 鞭法(要等他說完話,應該吧....)
+
+ say 不錯(要等他說完話,應該吧....)
+
+ out sw w 3n w 2n w
+
+ say 李吉(要等他說完話,應該吧....)
+
+ say 鞭法(要等他說完話,應該吧....)
+
+ e 2s 2w n
+
+ say 幻影鞭法(他問想學嗎,我忘記要再跟他說什麼...或是點頭,說完後~
+
+ in
+
+ roll 油燈
+
+ n
+
+ look 牆壁
+
+ study shadow_whip(手上要裝備著鞭子類的武器,我拿的是釣竿)

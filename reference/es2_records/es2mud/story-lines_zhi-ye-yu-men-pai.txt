@@ -1,0 +1,14 @@
+# 職業與門派
+
+- URL: https://sites.google.com/site/es2mud/home/story-lines/zhi-ye-yu-men-pai
+- Path: /site/es2mud/home/story-lines/zhi-ye-yu-men-pai
+- Source: ES2 MUD 天朝帝國 (Google Site)  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-09T16:41:42+0800
+
+---
+
+# 職業與門派
+
+目前天朝帝國一共開放了七個職業可供玩家選擇，分別是武者 (/site/es2mud/home/story-lines/zhi-ye-yu-men-pai/wu-zhe)、小偷 (/site/es2mud/home/story-lines/zhi-ye-yu-men-pai/xiao-tou)、軍人 (/site/es2mud/home/story-lines/zhi-ye-yu-men-pai/jun-ren)、書生 (/site/es2mud/home/story-lines/zhi-ye-yu-men-pai/shu-sheng)、道士 (/site/es2mud/home/story-lines/zhi-ye-yu-men-pai/dao-shi)、和尚 (/site/es2mud/home/story-lines/zhi-ye-yu-men-pai/he-shang)和方士 (/site/es2mud/home/story-lines/zhi-ye-yu-men-pai/fang-shi)。在遊戲中可以輸入 help class 指令來查看更為詳細的介紹。這裡只對各個職業和其下屬門派稍做介紹並推薦一些較為優秀的種族 (/site/es2mud/home/story-lines/zhong-zu-she-ding)搭配。
+
+[image:  https://lh3.googleusercontent.com/sitesv/AG8ngQVklxTdtTRhWhFeDwqlEX5_U9ie5fspbvh8-szLttAbmrclvkSwL_yCL8kJ4RDFd_YJ4EldglpjWu6L6HyzLwccra8o18V8igUEx6eSBE63XaNIepYhMJ52b1FEWMD2DMi6rXiOAHKj5tODEzMaXFq4Dl4YoQwDO39pzGMSj0tfgeKkkDhC6JraaKaSdzk_DP8T4kXP5JWflgnyli0=w1280]

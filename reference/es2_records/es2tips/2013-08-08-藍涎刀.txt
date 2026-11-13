@@ -1,0 +1,28 @@
+# 藍涎刀
+
+- URL: https://es2tips.blogspot.com/2013/08/blog-post_3785.html
+- Published: 2013-08-08T21:50:00.006+08:00
+- Updated: 2013-08-08T21:50:47.271+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+ˇ藍涎刀(Blue_poison blade)
+
+這是一把細長的單刀, 在刀鋒的部份有著一絲絲淺藍色的水紋...。
+
+可用技能：
+
+  刀法 (blade)
+
+  左手刀法 (secondhand blade)
+
+傷害力： 8 - 41 (力量修正 90%，乘數等級 3)
+
+武器特性﹕
+
+  刀法                           10
+
+  攻擊能力值                     20

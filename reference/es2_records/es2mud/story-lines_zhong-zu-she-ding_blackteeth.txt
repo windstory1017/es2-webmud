@@ -1,0 +1,24 @@
+# 黑齒
+
+- URL: https://sites.google.com/site/es2mud/home/story-lines/zhong-zu-she-ding/blackteeth
+- Path: /site/es2mud/home/story-lines/zhong-zu-she-ding/blackteeth
+- Source: ES2 MUD 天朝帝國 (Google Site)  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-09T16:41:42+0800
+
+---
+
+# 黑齒
+
+[image:  https://lh3.googleusercontent.com/sitesv/AG8ngQXtV-iJVItn6Ev4YWDGl-pjbLEaaF03gTkmT_wUWADbz41fkd0wwI6CJGPzbmWU9CjW1r6__XyEL-4wJ17ZU54gmYL0NYbYvWfL5pPyWq9rFB2Vl1mXMM9x2e3FXhm2Jp7qZCXr7zHFgBavLRUmiF5lrPFfUSPrPlSNOrj1Y-6wXn7MsnofKwB9Os0vnq_YpoLqyxX54eq73oJuXPE=w1280]
+
+需要業力：3
+
+適合職業：武者60級，小偷60級，和尚65級
+
+初始狀態：精35，氣25，神10
+
+初始屬性上限：膂力25，膽識15，悟性15，靈性10，定力15，機敏20，根骨20，慧根10
+
+種族被動能力：防禦力5
+
+種族主動能力：吞食物品恢復自身狀態。

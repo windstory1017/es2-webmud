@@ -1,0 +1,20 @@
+# 雷熊爪(Thunder claw)
+
+- URL: https://es2tips.blogspot.com/2014/01/thunder-claw.html
+- Published: 2014-01-30T13:31:00.000+08:00
+- Updated: 2014-01-30T13:31:25.278+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+雷熊爪(Thunder claw)
+
+一雙用奇獸雷熊的前爪製成的護手，隱隱的散發著道道雷光。
+
+護具特性﹕
+
+  防禦能力值                     25
+
+  雷電傷害防禦力                 50

@@ -1,0 +1,207 @@
+# ES2 職業師父的位置：平民/武者/盜賊/方士/軍人/書生/道士/僧侶
+
+- URL: https://es2tips.blogspot.com/2014/10/es2.html
+- Published: 2014-10-17T18:17:00.001+08:00
+- Updated: 2014-10-17T18:17:24.964+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+##
+ES2 職業師父的位置：平民/武者/盜賊/方士/軍人/書生/道士/僧侶
+
+commoner        平民
+
+fighter         武者
+
+    指令:       taunt
+
+    封山派      fighter.fonxan
+
+--> 柳東蘆(Liuh don-lu) 在喬陰算命先生東方
+
+    雪吟莊      fighter.snow  
+
+ --> 魚鐵山(Yu tieshan) 就在雪亭鎮東北方，sign 之後馬上拜師吧！（新手推薦
+
+    冷梅莊      fighter.lunmay
+
+--> 梅影風(May yin fong) 在水嵐武陵客棧北方
+
+    虎刀門      fighter.tiger  
+
+--> 高慎(Kao shen) 在老松林，喬陰算命先生往北走（新手可能走不到那邊
+
+     「山澗橋頭」往北
+
+    哭笑門      fighter.huge  
+
+--> 劉乙忘玄(Liuye the Master of Grimace)
+
+      在青邪宮，郭步(boo)北方，找小鼠兒坐人力車最快！ 到了之後，然後往北走就是
+
+＊＊＊ 新手推薦先玩 Snow --> Foxan/Huge --> Lunmay --> Tiger
+
+thief           盜賊
+
+    指令:       peek, concentrate
+
+    瑯夷派      thief.longye  
+
+--> 「無常鬼」吳長貴 在雪亭 pot 往西方亂葬崗，有一個草叢, pass 草叢
+
+    隱教        thief.yin  
+
+   -->  隱教聖女 利丰華 在雪亭 pot 往北方被官兵看守住的地方往北的野羊山
+
+        （要先除掉官兵 + 拿到野羊山令牌，對新手來說不容易）
+
+    黑龍使者    thief.adv  
+
+＊＊＊ 新手推薦先玩 Longye --> Yin
+
+alchemist       方士
+
+    指令:       assess, acupuncture
+
+    武陀灸堂    alchemist.wu    
+
+--> 「鬼華陀」武道通，在喬陰往斐縣路上，有個「五向路口」，往南就是
+
+    龍圖丹派    alchemist.dragon
+
+--> 「牙山居士」陳維俠，就在雪亭的私塾，最好找的師父
+
+    劍甲門      alchemist.adv
+
+＊＊＊ 新手推薦先玩 Wu(不需要聲望) --> Dragon
+
+soldier         軍人
+
+    振武營軍人  soldier.ber      
+
+ 
+
+  --> 徵兵官 魯熙年(Lu xinien)  就在五堂西北邊，振武軍營的校練場，很好找。
+
+    大內巡院    soldier.royal      
+
+   --> 大內徵兵官 李天剛(Li tian gang)
+
+           紫煙往西，坐船到京畿，
+
+           後海湖 e e s w w n w w n 進入「兵部尚書府」
+
+           往北一直走，直到「後殿大廳（兩個 maid）」，往東走就是。
+
+       
+
+＊＊＊ 新手推薦先玩:  可先玩 ber --> royal
+
+scholar         書生
+
+    指令:       organize, review
+
+    玄天教      scholar.sky      
+
+     -->  玄天教主 東方孤冥，雪亭往北到風城的路上，有一間「春風客棧」二樓就是。
+
+             （神算子 S E UP)
+
+    步玄派      scholar.myst      
+
+ -->  步玄派掌門人 駱易，五陵客棧往東，在小徑然後朝東北的方向，就會到「步玄派」
+
+     （對，地名就叫步玄派，會先看到步玄派弟子
+
+＊＊＊ 新手推薦先玩:  兩者差不多，但書生要聲望... 所以先練別的職業吧
+
+taoist          天師道士
+
+    指令:       hearth
+
+    朱衣派      taoist.fire    
+
+ --> 朱衣派道士 郭布(Kuo boo)，就在五堂路口，拜師要先找附近的青年人
+
+    玄衣派      taoist.storm    
+
+--> 安懶道人(Old taoist)，老松林往東到「康平村」，看到阿桂(kid)，e/s 草堂。
+
+    素衣派      taoist.freeze  
+
+ --> 太乙觀觀主 白齊(Taoist leader)，Liuye S -> E 哭笑門賓客房 UP -> West
+
+    紫衣派      taoist.thunder
+
+  --> 青雲觀主 華子儀(Hua zi yi)，在天山西方青雲觀，
+
+      雪亭 --> 往北風城 --> 交叉路口(神算子) --> 往東 --> 往北 --> 到天山
+
+＊＊＊ 新手推薦先玩：
+
+新手實際上「不建議」玩天師道士，
+
+因為是 ES2 裡面最難練的職業，要挑選種族、要練殺業...等。
+
+如果硬要玩也是 OK： Fire --> Storm/Freeze(要解任務) --> Thunder(要解任務)
+
+taoist          茅山道士
+
+    指令:       hearth
+
+    幻霧觀      mao-shan.fog    
+
+                                      --> 幻霧觀觀主 杜風凌(Du feng ling)
+
+                                      坐快船(老駱 or 小黃)到紫煙鎮(水嵐武陵西北方)，
+
+                                      然後找大何(Da he) or 阿良(A liang)坐快車到「龍安」
+
+                                      龍安中央廣場 E -> S 的「客棧」就是。
+
+    隱風觀      mao-shan.wind
+
+                                         --> 隱風觀觀主 歐陽無極(Ou-yan wu ji)
+
+                                      康平村 阿桂(kid)，往東走個幾步，到「小客店」就是
+
+    靈雲觀      mao-shan.cloud
+
+                                   
+
+                                   --> 靈雲觀觀主 林正陽(Lin zheng yang)，
+
+                                      康平村 阿桂(kid)，往東北一直走
+
+                                      直到看到一個「山道」有 Eastup 就是靈雲觀山腳。
+
+    道士進階    taoist.adv
+
+＊＊＊ 新手推薦先玩： Cloud(輔助+戰鬥) ---> Wind(輔助系) or Fog(戰鬥系)
+
+bonze           僧侶
+
+    指令:       zazen, meditate, paramita
+
+    天月庵      bonze.moon  
+
+--> 無慾師太(Wu-yu nun)，就在柳東蘆(Liuh don-lu)他家的「東」內庭
+
+    寶蓮寺      bonze.kind  
+
+--> 寶蓮寺住持 無想禪師(Abbo), 水嵐武陵客棧 E E E N 就是！
+
+    白象寺      bonze.wele  
+
+--> 白象寺方丈 無念大師(Abbot)
+
+       武陵客棧往南，然後一直 sw 到兆隱，接著兆隱 SW 往婁縣的「青石小徑」，
+
+        往南走就是白象寺，給老和尚(Old bonze) 100 silver
+
+        接著往南進入寺廟內後院，然後往東小涼亭，enter 就是。
+
+＊＊＊ 新手推薦先玩 Moon / Kind（輔助系） --> Wele（戰鬥系）

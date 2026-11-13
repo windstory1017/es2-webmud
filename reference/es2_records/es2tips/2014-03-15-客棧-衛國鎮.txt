@@ -1,0 +1,36 @@
+# 客棧（衛國鎮）
+
+- URL: https://es2tips.blogspot.com/2014/03/blog-post_5619.html
+- Published: 2014-03-15T21:13:00.001+08:00
+- Updated: 2014-03-15T21:13:16.936+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+客棧 -
+
+    這家小客棧是衛國鎮裡唯一的客棧﹐所以儘管環境很差﹐生意還是
+
+不錯。只是最近有傳聞說衛國鎮外的平陽山土匪有可能會造反﹐因此來
+
+此的旅人很少住店。
+
+    這裡明顯的出口是 north 和 south。
+
+  店小二(Waiter)
+
+  珠寶商人(Jewellery)
+
+> list
+
+你可以購買下列這些東西：
+
+-------------------------
+
+  白切肉(Pork)                  ：二兩銀子
+
+  饅頭(Manto)                   ：十文錢
+
+  牛肉包子(Beef dumpling)       ：十文錢

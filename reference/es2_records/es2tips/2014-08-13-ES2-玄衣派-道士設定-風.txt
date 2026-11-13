@@ -1,0 +1,78 @@
+# ES2 玄衣派 道士設定 （風）
+
+- URL: https://es2tips.blogspot.com/2014/08/es2_85.html
+- Published: 2014-08-13T21:09:00.001+08:00
+- Updated: 2014-08-13T21:23:03.839+08:00
+- Labels: 道士
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+help taoist.storm
+
+○ 玄衣派資料
+
+職業 : 道士
+
+種族 : 不限，但是 spi >=18 才可以入門
+
+性別 : 不限
+
+師傅 : 安懶道人(Old taoist)
+
+技能 :
+
+    天師道法【風符】 (taoism-storm):
+
+        技能種類: 咒術
+
+        學習條件: 經解任務拜師後方可習得
+
+        任務起始: 安懶道人
+
+        特殊能力: quick storm: 疾風，消耗 sen 10 delay 1 傷害 25%，技能滿足
+
+                               條件時，下次風符必出三重催咒。
+
+                  crazy storm: 暴風，消耗 sen 30 delay 1 傷害 33%，，施法成
+
+                               功命中時忽視目標風抗性。
+
+                  killer storm: 飛戮風，消耗 sen 50 delay 1，傷害 75%
+
+                  whirl storm: 轉輪大風，消耗 sen 75 delay 3 傷害 125%。
+
+                  風符技能足夠且隨機咒文技巧夠高時，有機會出現第二、三重催咒，
+
+   能力提昇: 無
+
+    　　相關參考: help taoism-storm
+
+　　明道心法 (dao force):
+
+　　　　技能種類: 內功
+
+　　　　學習條件: 人物等級 >=20
+
+        任務起始: 安懶道人
+
+　　　　特殊能力: recover: 明道心法 30，提昇疲勞恢復 gin kee sen 最大值。
+
+                  remedy: 明道心法 60，消耗飲水恢復 gin kee sen 當前值。
+
+                  windarmor: 明道心法 90，風符 90 ，提高人物守勢等級、護甲能力
+
+                             值、慧根和冰火風雷的四防。
+
+　　　　能力提昇: 練成為 25級，升級 gin<sk*10 kee<sk*10 sen<sk*15 時，每級提
+
+                  昇 1 點 gin，1 點 kee， 3 點 sen。等級 130 提昇慧根 2 點，
+
+                  gin kee sen 亂數加 30-45 點。
+
+　　　　相關參考: help dao force
+
+其他技能請參考: help taoist.adv
+
+最後更新日期:2014/04/25

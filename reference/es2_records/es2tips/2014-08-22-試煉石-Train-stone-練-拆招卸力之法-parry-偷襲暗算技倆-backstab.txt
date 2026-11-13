@@ -1,0 +1,48 @@
+# 試煉石(Train stone) 練 拆招卸力之法 (parry)  偷襲暗算技倆 (backstab)
+
+- URL: https://es2tips.blogspot.com/2014/08/train-stone-parry-backstab.html
+- Published: 2014-08-22T18:32:00.001+08:00
+- Updated: 2014-08-22T18:32:59.655+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+試煉石(Train stone) 練 拆招卸力之法 (parry)  偷襲暗算技倆 (backstab)
+
+藏經塔底 -
+
+    這裡就是白象寺藏經塔的底部，很難想象原來十八銅人巷的盡頭竟
+
+別有洞天，在寶塔深處藏有規模如此龐大的石窟。石窟四面的石壁上依
+
+稀刻著「普心斷慾咒」的經文和「瘋虎功」的口訣，想來是白象寺的先
+
+人們恐其失傳而藏于此地的。
+
+    這裡唯一的出口是 north。
+
+  人靈之僕(Wisdom)
+
+  試煉石(Train stone)
+
+#TICKER {aaa} {drink from skin;#delay {5} {train parry;gain;replete}} @ {10}
+
+#ticker {bbb} {attack 銅像} {4}
+
+#ACTION {必死無疑} {exert heal}
+
+#ACTION {真氣不足} {exert luohan-kee}
+
+#ACTION {無法繼續修習了}={exert heal;#delay {2} {exert heal}}
+
+#ACTION {還是等等吧}={replete}
+
+> train parry
+
+你已經完全掌握了拆招卸力之法。
+
+> train backstab
+
+你已經完全掌握了偷襲暗算技倆。

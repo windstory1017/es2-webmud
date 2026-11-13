@@ -1,0 +1,22 @@
+# ES2 MUD
+
+- URL: https://sites.google.com/site/es2mud/home
+- Path: /site/es2mud/home
+- Source: ES2 MUD 天朝帝國 (Google Site)  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-09T16:41:42+0800
+
+---
+
+# 天朝帝國
+
+[image:  https://lh3.googleusercontent.com/sitesv/AG8ngQWEBoJY8vU3EbT4nM3hatT1k9SXgnzRrh1a1Q81GMlKrEY6p-AMla6ZFOxCbW-_betBP0NKyMgBl86PK5Y5gZ4uzUd71uheGlHA9YQyO8uoxRM5TLPnYP9tUGQ2yRGCXXP_zE5JXbm9Eb8dd44WSkX7LQYvWbOzeS2N2ij-yGd-ET3RBpIGWgaQNnxfXKeRBbIkY2u9daInY203tIg=w1280]
+
+這裡是 ES2 天朝帝國的協作平台，主要是用來整理 ES2 相關故事、世界觀和遊戲內容的設定資料。當然嘍，如果您是天朝帝國的玩家，也歡迎您把遊戲中搞笑的、悲劇的、神奇的瞬間截字發放在這裡分享給大家哦！
+
+主線任務 (/site/es2mud/home/zhu-xian-ren-wu)                主題故事 (/site/es2mud/home/story-lines)
+
+遊戲截字 (/site/es2mud/home/you-xi-jie-zi)                玩家原創 (/site/es2mud/home/wan-jia-yuan-chuang)
+
+隨時歡迎您通過 203.204.205.216 4000 或者是 es2.muds.net 4000 加入到遊戲中來！
+
+等等，如果您是第一玩MUD，可以參考一下新手任務1/2 (/site/es2mud/home/you-xi-jie-zi/noobguide01)和新手任務2/2 (/site/es2mud/home/you-xi-jie-zi/noobquest02)。要加入到遊戲當中的話，您可以直接使用telnet，但是最好先去下載一個叫Zmud的軟體，這可能會讓你在遊戲中事半功倍。如果您是慣於使用簡體字的玩家，推薦在簡體或英文操作系統下使用南極星來瀏覽遊戲內容，有些時候，簡體版的Zmud無法和南極星兼容，可以嘗試使用其他簡繁轉換軟體或使用英文版的Zmud。在和其他玩家交流溝通方面，推薦使用Google拼音的繁體字輸入，畢竟這是一個互動遊戲，後期的Boss都不是一個人可以獨立擊殺的。

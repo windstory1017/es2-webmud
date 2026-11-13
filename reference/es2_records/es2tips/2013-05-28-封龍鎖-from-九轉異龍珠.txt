@@ -1,0 +1,38 @@
+# 封龍鎖 (from 九轉異龍珠)
+
+- URL: https://es2tips.blogspot.com/2013/05/from_28.html
+- Published: 2013-05-28T17:01:00.002+08:00
+- Updated: 2013-05-28T17:01:35.708+08:00
+- Labels: 九轉異龍珠, 內功, 封龍鎖
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+give pearl to jewellery
+
+你拿出九轉異龍珠交給珠寶商人。
+
+>
+
+珠寶商人將珠子含入口中。
+
+一陣黑煙過後﹐珠寶商人從口中取出一枚戒指。
+
+珠寶商人交給你一枚封龍鎖。
+
+ˇ封龍鎖(Sealed-dragon ring)
+
+> id ring
+
+一枚龍形的戒指﹐龍的口裡含著一粒黑黑的小珠子。令人驚異
+
+的是﹐龍目中似乎流出兩股龍血﹐染滿了整個戒指。
+
+護具特性﹕
+
+  防禦力                         10
+
+  攻勢等級                       10
+
+  內功                           10

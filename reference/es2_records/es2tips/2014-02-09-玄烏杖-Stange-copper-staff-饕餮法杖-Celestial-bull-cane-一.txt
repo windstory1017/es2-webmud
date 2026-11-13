@@ -1,0 +1,72 @@
+# 玄烏杖(Stange-copper staff)  饕餮法杖(Celestial bull cane) 一兩銀子「四張」空白符紙！
+
+- URL: https://es2tips.blogspot.com/2014/02/stange-copper-staff-celestial-bull-cane.html
+- Published: 2014-02-09T23:19:00.001+08:00
+- Updated: 2014-11-05T23:04:40.439+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+##
+玄烏杖(Stange-copper staff)  饕餮法杖(Celestial bull cane)
+
+##
+ 一兩銀子「四張」空白符紙！
+
+龍安莫大叔 --> say 杖 --> ... give sword to muo -> give sword to muo
+
+-------------------------------------------
+
+玄烏杖(Stange-copper staff)
+
+一根烏黑色的長杖，杖身似乎有一條血紅色的印記，也許是因為
+
+鑄杖人用自己的鮮血鑄杖而留下的。令人驚訝的是，玄烏杖竟然
+
+輕得出奇。
+
+可用技能：
+
+  雙握杖法 (twohanded staff)
+
+傷害力： 13 - 64 (力量修正 150%，乘數等級 3)
+
+武器特性﹕
+
+  警覺性                         50
+
+  慧根                           3
+
+  風擊傷害防禦力                 100
+
+-------------------------------------------------
+
+龍安莫大叔 --> give staff to muo --> give dagger to muo （awar 罪牙匕）
+
+-------------------------------------------------
+
+饕餮法杖(Celestial bull cane)
+
+一根銅製長杖，杖首貌似一張牛嘴，整個看起來好像是一隻仰口朝天、貪得無厭
+
+的饕餮等著你在給他東西吃 (knock)。
+
+可用技能：
+
+  雙握杖法 (twohanded staff)
+
+傷害力： 13 - 64 (力量修正 150%，乘數等級 3)
+
+武器特性﹕
+
+  膂力                           3
+
+  靈性                           3
+
+  防禦力                         50
+
+> knock silver / gold
+
+==> （會出現符紙），50 gold == 20000 張，約一兩銀子「四張」空白符紙！

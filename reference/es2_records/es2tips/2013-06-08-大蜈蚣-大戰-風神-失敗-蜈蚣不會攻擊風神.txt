@@ -1,0 +1,48 @@
+# 「大蜈蚣」大戰「風神」（失敗，蜈蚣不會攻擊風神）
+
+- URL: https://es2tips.blogspot.com/2013/06/blog-post_9152.html
+- Published: 2013-06-08T10:30:00.002+08:00
+- Updated: 2013-06-12T02:03:39.982+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+蜈蚣大戰風神（失敗，蜈蚣不會攻擊風神）
+
+風神召喚的「大鵬」也不會攻擊蜈蚣（大鵬只保護風神）。
+
+但是蜈蚣會主動攻擊 「青年書生 、茅山老道、冰糖葫蘆小販、封山弟子」等 mob
+
+ ======================================================
+
+後海湖 -
+
+    這就是位於京畿正中央的後海湖，據說這個巨大的湖是當年金色烏
+
+鴉「君違」降臨人間時所形成的。經過了數百年來各種傳說，這裡已經
+
+成為了青年男女踏青遊玩的首選，畢竟當初「君違」和「於蘭攸」也許
+
+就是在這裡相遇的。
+
+    現在是正午時分﹐太陽高掛在你的頭頂正上方。
+
+    這裡唯一的出口是 east。
+
+  青年書生的屍體(Corpse of Young scholar)
+
+  茅山老道的屍體(Corpse of Mao-shan taoist)
+
+  冰糖葫蘆小販的屍體(Corpse of Candy seller)
+
+  大蜈蚣(Legendary centipede)
+
+  舍利子(Pearl of buddha)
+
+  舍利子(Pearl of buddha)
+
+  古鄔赤水袋(Strange skin)
+
+  墮落的風神(Evil spirit of storm)

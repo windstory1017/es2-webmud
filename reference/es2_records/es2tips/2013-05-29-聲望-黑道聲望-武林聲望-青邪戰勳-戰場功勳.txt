@@ -1,0 +1,32 @@
+# 聲望：黑道聲望,武林聲望,青邪戰勳,戰場功勳
+
+- URL: https://es2tips.blogspot.com/2013/05/blog-post_6121.html
+- Published: 2013-05-29T11:37:00.003+08:00
+- Updated: 2013-05-29T11:51:53.486+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+可讚美（付出）的「一般聲望」 => (LV - 1) * (LV -1)
+
+粗略計算如下
+
+Level 50 == 40,425
+
+Level 55 == 53,955
+
+Level 60 == 70,210
+
+Level 65 == 89,440
+
+Level 70 == 111,895
+
+黑道聲望 => 任務 or 擊殺軍營內大將軍之類(500~1000) or 被盜賊同行 praise
+
+武林聲望 => 比武獲勝 or 被武者同行 praise
+
+青邪戰勳 => 任務 or 開 war  or 擊殺鬼王之類
+
+戰場功勳 => 擊殺 bandit or 任務(開 bandit war)

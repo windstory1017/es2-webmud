@@ -1,0 +1,60 @@
+# ES2 東方故事二「天朝帝國」 新手必看 Help！
+
+- URL: https://es2tips.blogspot.com/2013/05/es2-help.html
+- Published: 2013-05-29T12:17:00.001+08:00
+- Updated: 2013-05-29T12:24:46.512+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+0. help newbie （可能有點舊）
+
+    然後看這一篇（官網）
+
+    https://sites.google.com/site/es2mud/home/wan-jia-yuan-chuang/qanda
+
+ 
+
+1. help cmds 基礎指令
+
+   （把所有 cmds 都 help xxx 過一次，可能會花你 2 個小時）
+
+2. help class 門派
+
+   （把所有 class 都 help xxx 過一次，可能會花你 2 個小時）
+
+3. help race 種族
+
+    help race.details
+
+   （把所有 race 都 help xxx 過一次，可能會花你 1 個小時）
+
+4.  接著看一下故事背景   （可能會花你 1 個小時  
+
+  help history
+
+      help myth / myth.1 / myth.2
+
+      help peoples / theme / history.ys / history.zx / history.wz
+
+5. 有空的話，去書局買一本「山海經」白話本來看 （可能會花你 2~4 個小時
+
+     
+
+6. 開始玩之後，pot 附近的所有 board 記得看過，並常 update
+
+7. Annihilator or Zorg  上線時，多注意他們聊天內容。
+
+8. 閒著沒事時，help ALL
+
+Note:
+
+--> ES（沒玩過）
+
+--> ES2 :: 天邪帝國, 天邪派蕭辟塵 16 歲, 雞腿練實戰, 黑衣人, 練內功會走火入魔, 可「背叛門派」, 黑狗血, 招喚, 可拜玩家為師, 丐幫, 女性專用浴池（？）, 練功mud
+
+--> ES2 (青蛙吃蚊子練業力) 
+
+--> ES2 :: NOW! 天朝帝國, 蕭辟塵 7 歲, 「數學mud+練功mud」, 寒於, 侮天鬼, 四神, 十三靈, 十一種族, 天賦, 「封山派+天邪派」還在, 門派架構完整, 滿等級後續遊戲性完整(二轉, ad_rank, Reset), 各種war

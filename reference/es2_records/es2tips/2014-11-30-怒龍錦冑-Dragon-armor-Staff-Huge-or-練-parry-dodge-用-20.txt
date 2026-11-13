@@ -1,0 +1,42 @@
+# 怒龍錦冑(Dragon armor)  - Staff-Huge or 練 parry/dodge 用 (2014 Nov)
+
+- URL: https://es2tips.blogspot.com/2014/11/dragon-armor-staff-huge-or-parrydodge.html
+- Published: 2014-11-30T23:28:00.002+08:00
+- Updated: 2014-11-30T23:29:57.870+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+怒龍錦冑(Dragon armor)  - Staff-Huge or 練 parry/dodge 用 (2014 Nov update)
+
+本來是 定力+5,  防禦 85
+
+------------------------------------------------------------------------
+
+怒龍錦冑(Dragon armor)
+
+------------------------------------------------------------------------
+
+這是一件武林中的至寶﹐據說是由練火大山的幻黑龍皮所製成
+
+的寶甲﹐不但尋常刀槍難以透入﹐也能防火燄冰霜的侵害﹐最
+
+重要的是質地輕軟﹐絲毫不妨礙行動。
+
+護具特性﹕
+
+  攻擊能力值                     -50
+
+  雷電傷害防禦力                 100
+
+  冰寒傷害防禦力                 100
+
+  風擊傷害防禦力                 100
+
+  火焰傷害防禦力                 100
+
+  防禦力                         100
+
+  膽識                           -5

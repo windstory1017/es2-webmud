@@ -1,0 +1,42 @@
+# 尺娘
+
+- URL: https://es2tips.blogspot.com/2013/06/blog-post_7.html
+- Published: 2013-06-07T21:55:00.000+08:00
+- Updated: 2013-06-07T21:55:47.211+08:00
+- Labels: 行動力
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+你成功地偷到一把「尺娘」﹗
+
+wield syndicator as secondhand dagger
+
+這把「尺娘」拿在手裡輕飄飄的。
+
+你裝備「尺娘」作武器。
+
+> id syndicator
+
+這是一把長約四寸的匕首﹐刃上用精細的雕工鏤空出一個美貌
+
+女子的臉﹐奇特的是這女子的表情像是伸出舌頭在舔嘴邊的血
+
+跡﹐匕首的柄奇短﹐只能用兩隻手指捏住。
+
+可用技能：
+
+  錐法 (dagger)
+
+  左手錐法 (secondhand dagger)
+
+傷害力： 10 - 38 (力量修正 100%，乘數等級 2)
+
+武器特性﹕
+
+  攻勢等級                       25
+
+  行動力                         15
+
+>
