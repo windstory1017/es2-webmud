@@ -183,10 +183,11 @@ private int restored_defense_exp(object me, object opponent, string attr)
 
 /* 成功閃躲、格擋時取得實戰經驗（combat）。
  * 對手是玩家：random(2)，即 0 或 1。
- * 對手等級不高於自己：1 點；高 n 級：1 + random(n)，n 最多 10。 */
+ * 對手是 NPC：隨機取 1 ～ 對手等級；自己等級大於對手時減半（最少 1 點）
+ * （使用者指示，2026-11-13）。 */
 private void defense_combat_gain(object me, object opponent)
 {
-    int n;
+    int n, lv;
 
     if( userp(opponent) ) {
         n = random(2);
@@ -194,9 +195,13 @@ private void defense_combat_gain(object me, object opponent)
         return;
     }
 
-    n = opponent->query_level() - me->query_level();
-    if( n > 10 ) n = 10;
-    me->gain_score("combat", n > 0 ? 1 + random(n) : 1);
+    lv = opponent->query_level();
+    n = 1 + (lv > 1 ? random(lv) : 0);
+    if( me->query_level() > lv ) {
+        n /= 2;
+        if( n < 1 ) n = 1;
+    }
+    me->gain_score("combat", n);
 }
 
 /* 閃躲成功時呼叫：基本閃躲與 enable 在閃躲上的身法，
