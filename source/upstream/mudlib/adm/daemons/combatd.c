@@ -183,7 +183,7 @@ private int restored_defense_exp(object me, object opponent, string attr)
 
 /* 成功閃躲、格擋時取得實戰經驗（combat）。
  * 對手是玩家：random(2)，即 0 或 1。
- * 對手等級不高於自己：1 點；高 n 級：1 + random(n)，n 最多 10。 */
+ * 對手等級不高於自己：1 點；高 n 級：1 + random(n)，n 不設上限（使用者指示，2026-11-13）。 */
 private void defense_combat_gain(object me, object opponent)
 {
     int n;
@@ -195,7 +195,6 @@ private void defense_combat_gain(object me, object opponent)
     }
 
     n = opponent->query_level() - me->query_level();
-    if( n > 10 ) n = 10;
     me->gain_score("combat", n > 0 ? 1 + random(n) : 1);
 }
 
