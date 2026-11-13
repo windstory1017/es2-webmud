@@ -43,7 +43,7 @@ void create()
 // 繡花：擲一次結果並套用（只在白甌產生時呼叫一次）。傳回結果代號，白甌依此多說一句。
 int embroider()
 {
-    string *attrs = ({ "str", "cor", "spi", "int", "wis" });
+    string *attrs = ({ "str", "cor", "cps", "int", "wis" });
     mapping a = ([ "armor": 1 ]);
     string attr;
     int r = random(100), result;
@@ -51,7 +51,7 @@ int embroider()
     // 機率：屬性 10%、傷害＋攻勢 15%、傷害－攻勢 5%、防禦＋守勢 15%、守勢－ 10%、
     //       詞綴 35%、行動力 5%、警覺性 5%（使用者指示，2026-11-13）。
     if( r < 10 ) {
-        // 膂力、膽識、靈性、悟性各 +2~4；智慧 +1~2
+        // 膂力、膽識、定力、悟性各 +2~4；智慧 +1~2
         attr = attrs[random(sizeof(attrs))];
         a[attr] = (attr == "wis") ? 1 + random(2) : 2 + random(3);
         result = RESULT_ATTR;
