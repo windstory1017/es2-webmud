@@ -26,9 +26,9 @@ def test_celestial_force():
     assert 'me->query_personal_skill_cap("tidy force")' in s
     assert 'me->advance_stat("gin", 1 + random(3));' in s and 'me->advance_stat("kee", 3);' in s
     assert 'me->advance_stat("sen", random(3));' in s
-    assert '120: ({ 20, 1, "你的天邪神功漸入佳境' in s and '140: ({ 40, 2, "你的天邪神功又進一層' in s
-    assert '160: ({ 60, 4, "你的天邪神功已臻化境' in s
-    assert 'me->query("celestial_force/bonus_" + at)' in s and 'me->set_attr("con", me->query_attr("con", 1) + bonus[1]);' in s
+    assert '({ 140, 20, 1, "你的天邪神功漸入佳境' in s and '({ 160, 40, 2, "你的天邪神功又進一層' in s
+    assert '({ 190, 60, 4, "你的天邪神功已臻化境' in s
+    assert 'me->query("celestial_force/tier_" + (i + 1))' in s and 'me->query("celestial_force/" + m[4])' in s
     # heal：扣 sk/20 神，回 sk/2+根骨 的氣與格子
     assert 'n = sk / 2 + me->query_attr("con");' in s and 'me->heal_stat("kee", n);' in s
     # roar：只打交手中的對手，暈 2、傷害 sk/5+根骨、自回 sk/2、自身停頓 1
