@@ -133,6 +133,11 @@ function normalizeTimer(t){
   return {id:t.id||uid(),name:String(t.name||''),seconds,fireAt,command:String(t.command||''),loop:!!t.loop};
 }
 
+// 清單排序同 Windows 檔案總管：不分大小寫、數字照大小比（item2 在 item10 前面）。只影響顯示，不改執行順序。
+const naturalCompare=new Intl.Collator('en',{numeric:true,sensitivity:'base'}).compare;
+const byKey=list=>[...list].sort(([a],[b])=>naturalCompare(a,b));
+const byField=(list,f)=>[...list].sort((a,b)=>naturalCompare(f(a),f(b)));
+
 function defaultBeep(){
   try{
     const AC=globalThis.AudioContext||globalThis.webkitAudioContext;if(!AC)return;
@@ -223,7 +228,7 @@ export class Automation{
     if(on)set.delete(cls);else set.add(cls);
     this.state.disabledClasses=[...set];this.save();
   }
-  classes(){return [...new Set(this.state.triggers.map(t=>t.cls).filter(Boolean))].sort();}
+  classes(){return [...new Set(this.state.triggers.map(t=>t.cls).filter(Boolean))].sort(naturalCompare);}
 
   // ---------- 變數 ----------
   statusValue(name){
@@ -517,7 +522,7 @@ export class Automation{
       case 'abort':return 'abort';
       case 'var':case 'variable':{
         if(!args.length){
-          const list=Object.entries(this.state.vars);
+          const list=byKey(Object.entries(this.state.vars));
           this.notify(list.length?'變數：\n'+list.map(([k,v])=>`  @${k} = ${formatValue(v)}`).join('\n'):'目前沒有自訂變數。');
           return true;
         }
@@ -548,7 +553,7 @@ export class Automation{
       }
       case 'alias':case 'al':{
         if(!args.length){
-          const list=Object.entries(this.state.aliases);
+          const list=byKey(Object.entries(this.state.aliases));
           this.notify(list.length?'縮寫：\n'+list.map(([k,v])=>`  ${k} = ${v}`).join('\n'):'目前沒有縮寫。');
           return true;
         }
@@ -736,18 +741,16 @@ export function setupAutomationUI(auto,{dialog,toggleButton,openButtons}){
   function renderScript(){
     const del=(kind,key)=>`<td class="auto-actions"><button type="button" data-script-del="${kind}" data-key="${esc(key)}">刪除</button></td>`;
     const empty=(n,text)=>`<tr><td colspan="${n}" class="auto-muted">${text}</td></tr>`;
-    const al=Object.entries(auto.state.aliases);
+    const al=byKey(Object.entries(auto.state.aliases));
     $('#autoAliasRows').innerHTML=al.length?al.map(([k,v])=>`<tr><td class="auto-mono">${esc(k)}</td><td class="auto-mono">${esc(v)}</td>${del('alias',k)}</tr>`).join(''):empty(3,'尚未設定縮寫。');
-    const vs=Object.entries(auto.state.vars);
+    const vs=byKey(Object.entries(auto.state.vars));
     $('#autoVarRows').innerHTML=vs.length?vs.map(([k,v])=>`<tr><td class="auto-mono">@${esc(k)}</td><td class="auto-mono">${esc(String(v))}</td>${del('var',k)}</tr>`).join(''):empty(3,'尚未設定變數。');
-    $('#autoGagRows').innerHTML=auto.state.gags.length?auto.state.gags.map(r=>`<tr><td class="auto-mono">${esc(r.pattern)}</td>${del('gag',r.id)}</tr>`).join(''):empty(2,'沒有隱藏的樣式。');
-    $('#autoColorRows').innerHTML=auto.state.colors.length?auto.state.colors.map(r=>`<tr><td class="auto-mono">${esc(r.pattern)}</td><td>${esc(r.color)}</td>${del('color',r.id)}</tr>`).join(''):empty(3,'沒有上色的樣式。');
+    $('#autoGagRows').innerHTML=auto.state.gags.length?byField(auto.state.gags,r=>r.pattern).map(r=>`<tr><td class="auto-mono">${esc(r.pattern)}</td>${del('gag',r.id)}</tr>`).join(''):empty(2,'沒有隱藏的樣式。');
+    $('#autoColorRows').innerHTML=auto.state.colors.length?byField(auto.state.colors,r=>r.pattern).map(r=>`<tr><td class="auto-mono">${esc(r.pattern)}</td><td>${esc(r.color)}</td>${del('color',r.id)}</tr>`).join(''):empty(3,'沒有上色的樣式。');
   }
 
   // ---------- 觸發（照 zMUD 的排版：左邊清單、右邊編輯） ----------
-  // 清單排序同 Windows 檔案總管：不分大小寫、數字照大小比（trigger2 在 trigger10 前面）。
-  // 有類別的排前面、依類別排，同類別再依句型排；沒有類別的排最後。只影響清單顯示，不改觸發的比對順序。
-  const naturalCompare=new Intl.Collator('en',{numeric:true,sensitivity:'base'}).compare;
+  // 有類別的排前面、依類別排，同類別再依句型排；沒有類別的排最後（排序規則見 naturalCompare）。
   function sortedTriggers(list){
     return [...list].sort((a,b)=>{
       if(!!a.cls!==!!b.cls)return a.cls?-1:1;
@@ -812,7 +815,8 @@ export function setupAutomationUI(auto,{dialog,toggleButton,openButtons}){
   // ---------- 計時器（同觸發的排版；好幾組可以同時倒數） ----------
   let tmrTab='main',tmrDirty=false;
   function renderTimers(){
-    const rows=auto.state.timers.map(t=>{
+    // 依名稱排（沒有名稱的用指令），同 Windows 檔案排序。
+    const rows=byField(auto.state.timers,t=>t.name||t.command).map(t=>{
       const left=auto.remaining(t.id),running=left!==null;
       return `<div class="trg-item tmr-item${t.id===editingTimer?' selected':''}${running?' is-running':''}" role="option" tabindex="0" data-timer-id="${t.id}" aria-selected="${t.id===editingTimer}" title="雙擊${running?'停止':'開始'}倒數">
         <span class="trg-check" data-timer-dot="${t.id}">${running?'▶':''}</span><span class="trg-pat">${esc(t.name||t.command)}</span><span class="tmr-sec">${t.seconds} 秒${t.loop?'・循環':''}</span><span class="auto-left" data-timer-left="${t.id}">${running?fmt(left):'—'}</span></div>`;
