@@ -21,6 +21,7 @@
 　　‧perform sword:kee-break【破氣訣】：攻擊對手氣的現在值。
 　　‧perform sword:gin-break【凝精訣】：攻擊對手精的現在值。
 　　‧perform sword:sen-break【隱神訣】：攻擊對手神的現在值。
+　　‧招架加倍：內功同時 enable 玄天心法時，招架的力道加倍。
 　練成等級：20 級
 　能力提升：之後每級武術造詣增加；武學之道 51 級起。
 

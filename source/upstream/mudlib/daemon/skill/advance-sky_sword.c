@@ -91,8 +91,8 @@ string parry_message(object me, object attacker, int full)
 }
 
 /* 招架加成：內功同時 enable 玄天心法時，格擋力道上限 ×2（使用者定案，2026-11-14）。
- * 這是提供給戰鬥程式（feature/char/combat.c 的 parry_attack）詢問的倍率；
- * 戰鬥程式要加一行呼叫才會生效，那是系統面修改，尚待使用者同意。 */
+ * 這是提供給戰鬥程式（feature/char/combat.c 的 parry_attack）詢問的倍率
+ * （使用者同意改戰鬥程式，2026-11-14）。 */
 int parry_multiplier(object me)
 {
     return me->skill_mapped("force") == "sky force" ? 2 : 1;

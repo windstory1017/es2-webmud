@@ -39,6 +39,10 @@ def test_advance_sky_sword():
     # 可 enable 劍術與招架；內功是玄天心法時招架 2 倍（要戰鬥程式呼叫才生效）
     assert 'usage == "sword" || usage == "parry"' in s
     assert 'me->skill_mapped("force") == "sky force" ? 2 : 1' in s
+    # 戰鬥程式向招架武功詢問倍率（使用者同意，2026-11-14）
+    c = read('feature/char/combat.c')
+    assert 'function_exists("parry_multiplier", daemon)' in c and 'max *= mult;' in c
+    assert c.index('function_exists("parry_multiplier", daemon)') < c.index('block = 1 + random(max);')
     # perform 名稱與顏色（整句 HIW）
     assert '"困天訣", "color": HIG' in s and '"凝精訣", "color": HIY' in s
     assert '"破氣訣", "color": HIR' in s and '"隱神訣", "color": HIB' in s
@@ -60,6 +64,7 @@ def test_help_files():
     assert read('docs/help/scholar.sky.txt').startswith('○ 玄天派資料')
     assert read('docs/help/advance-sky_sword.txt').startswith('◎ 玄天劍訣（advance-sky sword）')
     assert read('docs/help/sky_force.txt').startswith('◎ 玄天心法（sky force）')
+    assert '招架加倍' in read('docs/help/advance-sky_sword.txt') and '招架加倍' in read('docs/help/scholar.sky.txt')
     for f in ('scholar.sky.txt', 'advance-sky_sword.txt', 'sky_force.txt'):
         for line in read('docs/help/' + f).split('\n'):
             assert len(line.encode('big5', errors='replace')) <= 72, (f, line)
