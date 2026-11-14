@@ -103,7 +103,7 @@ int cmd_herblist(object me, string arg)
         if (st == 0)
             rows += ({ cjk_pad(pill->name() + "(" + pill->query("id") + ")", 26)
                        + cjk_pad(money(CATALOG->price(key, "recipe") * CATALOG->recipe_count(key)), 20)
-                       + cjk_pad(money(CATALOG->price(key, "buy")), 14)
+                       + cjk_pad(CATALOG->sells_product(key) ? money(CATALOG->price(key, "buy")) : "不販售", 14)
                        + money(CATALOG->price(key, "sell")) });
         else
             groups[st] += ({ pill->name() });
@@ -244,6 +244,8 @@ private int buy_product(object me, string key, int want)
     pill = CATALOG->product(key);
     if (!pill) return say_to(me, "這項商品的技能需求資料不完整，暫時無法交易。");
     name = pill->name();
+    // 藥鋪不販售的成丹（大還丹，2026-11-14），配方照常可買。
+    if (!CATALOG->sells_product(key)) return say_to(me, "藥鋪不販售" + name + "。");
     if (!QUALIFY->check(me, pill, name, "buy")) return 1;
 
     file = CATALOG->product_path(key);

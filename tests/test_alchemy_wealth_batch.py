@@ -1,4 +1,4 @@
-# 黃白之術 2026-11-14 修改：比例、80 級卡住升 100、銀咒總額 2000、一次轉多個。
+# 黃白之術 2026-11-14 修改：比例、丹藥加成、80 級卡住升 100、銀咒總額 2000、一次轉多個；櫃台停賣大還丹。
 # 設計文件：docs/martial_arts/龍圖丹派_黃白之術.md
 from pathlib import Path
 
@@ -10,23 +10,37 @@ def read(p):
 
 
 def wealth_rate(level):
-    # 與 daemon/skill/alchemy-wealth.c 的 wealth_rate() 相同（千分之一）
+    # 與 daemon/skill/alchemy-wealth.c 的 wealth_rate() 相同（百分比，整數）
     if level < 20:
-        return 600
-    rate = 700 + (min(level, 140) - 20) // 5 * 10
-    if level > 140:
-        rate += (level - 140) * 35
-    return rate
+        return 60
+    if level < 100:
+        return 70 + (min(level, 80) - 20) // 5
+    return level
 
 
 def test_rate_table():
-    assert [wealth_rate(x) for x in (0, 20, 25, 80, 100, 140, 141, 200)] == \
-        [600, 700, 710, 820, 860, 940, 975, 3040]
+    assert [wealth_rate(x) for x in (0, 20, 25, 50, 80, 95, 100, 150, 200)] == \
+        [60, 70, 71, 76, 82, 82, 100, 150, 200]
     s = read('daemon/skill/alchemy-wealth.c')
-    assert 'if( level < 20 ) return 600;' in s
-    assert 'rate = 700 + ((level > 140 ? 140 : level) - 20) / 5 * 10;' in s
-    assert 'if( level > 140 ) rate += (level - 140) * 35;' in s
-    assert 'money = total * wealth_rate(level) / 1000;' in s
+    assert 'if( level < 20 ) return 60;' in s
+    assert 'if( level < 100 ) return 70 + ((level > 80 ? 80 : level) - 20) / 5;' in s
+    assert 'money = total * wealth_rate(level) * pill_bonus(target) / 100;' in s
+
+
+def test_pill_bonus_and_grades():
+    s = read('daemon/skill/alchemy-wealth.c')
+    assert 'case 1: return 10;' in s and 'case 2: return 2;' in s
+    assert 'set("pill_grade", 2)' in read('obj/alchemist/green_pill.c')
+    assert 'set("pill_grade", 1)' in read('obj/alchemist/major_heal_pill.c')
+
+
+def test_herb_counter_stops_selling_major():
+    c = read('daemon/misc/herb_catalog.c')
+    assert 'int sells_product(string key) { return key != "major"; }' in c
+    assert 'if (mode == "buy") return sells_product(key) ? base * 10 : -1;' in c
+    d = read('daemon/misc/herb_d.c')
+    assert 'if (!CATALOG->sells_product(key)) return say_to(me, "藥鋪不販售" + name + "。");' in d
+    assert '"不販售"' in d
 
 
 def test_levels_and_limits():

@@ -6,7 +6,8 @@ design: docs/martial_arts/龍圖丹派_黃白之術.md（2026-10-22）
 note: 0 級即可施展；1～19 級不存在，累積到門檻後 gain 直接學成 20 級。
       80 級領悟金咒；之後只累積經驗，達到 100 級的累計值時直接從 80 升到 100；
       81～99 級不存在（2026-11-14 修改，原為 79 級卡住、90 級領悟金咒）。
-      conjure 時可指定數量：on 20 <物品>、on all <物品>（2026-11-14）。法術修為、法術道行只拿系統規則，本檔不另外給。
+      conjure 時可指定數量：on 20 <物品>、on all <物品>（2026-11-14）。
+      換錢比例 60%～200%；二階丹藥 × 2、一階丹藥 × 10（2026-11-14）。法術修為、法術道行只拿系統規則，本檔不另外給。
       施法時同時累積基本法術（magic），失敗得 1/3（U-13，2026-10-24）。
 ---*/
 
@@ -73,17 +74,26 @@ void skill_advanced(object me, string sk)
     }
 }
 
-// 2.6：換錢比例，以千分之一計（2026-11-14 修改）：
-// 學成前 60%；學成（20 級）70%，之後每 5 級 +1%，到 140 級為 94%；
-// 140 級後每級 +3.5%（200 級為 304%）。不設上限。
+// 2.6：換錢比例（百分比，整數；2026-11-14 修改）：
+// 學成前 60%；學成（20 級）70%，之後每 5 級 +1%，80 級 82%；
+// 突破到 100 級為 100%，之後每級 +1%（200 級 200%）。不設上限。
+// 2026-11-14 以前已在 90～99 級的舊角色照 82% 計算。
 int wealth_rate(int level)
 {
-    int rate;
+    if( level < 20 ) return 60;
+    if( level < 100 ) return 70 + ((level > 80 ? 80 : level) - 20) / 5;
+    return level;
+}
 
-    if( level < 20 ) return 600;
-    rate = 700 + ((level > 140 ? 140 : level) - 20) / 5 * 10;
-    if( level > 140 ) rate += (level - 140) * 35;
-    return rate;
+// 2.7：丹藥加成（2026-11-14）：用黃白之術轉換時，二階丹藥 × 2、一階丹藥 × 10；
+// 三階丹藥與其他物品不加成。丹藥本身的價值不變。
+int pill_bonus(object ob)
+{
+    switch( ob->query("pill_grade") ) {
+    case 1: return 10;
+    case 2: return 2;
+    }
+    return 1;
 }
 
 // W-22：成功率＝等級÷4＋50%，最高 95%（以 1/400 計，避免整數除法誤差）。
@@ -239,7 +249,7 @@ int conjure_magic(object me, string spell, object target)
     }
 
     // 2.6：存入錢莊；成功訊息不顯示存入金額（2026-11-14）。
-    money = total * wealth_rate(level) / 1000;
+    money = total * wealth_rate(level) * pill_bonus(target) / 100;
     if( count > 1 )
         tell_object(me, chinese_number(count) + unit + name + "化作一道" + light
             + "，消失無蹤。\n");
