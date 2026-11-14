@@ -12,6 +12,7 @@ void create()
 LONG
     );
     set("exits", ([
+        "north" : "/d/mengjia/crossroad",
         "south" : __DIR__"crossroad",
         "east" : __DIR__"li_house",
     ]));
