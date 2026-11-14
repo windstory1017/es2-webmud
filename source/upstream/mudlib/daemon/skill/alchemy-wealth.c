@@ -96,13 +96,13 @@ int pill_bonus(object ob)
     return 1;
 }
 
-// W-22：成功率＝等級÷4＋50%，最高 95%（以 1/400 計，避免整數除法誤差）。
+// W-22：成功率＝50%＋等級÷2，最高 100%（以 1/400 計，避免整數除法誤差；2026-11-15）。
 int success_chance(object me)
 {
     int chance;
 
-    chance = me->query_skill(SKILL_ID, 1) + 200;
-    if( chance > 380 ) chance = 380;
+    chance = 200 + me->query_skill(SKILL_ID, 1) * 2;
+    if( chance > 400 ) chance = 400;
     return chance;
 }
 
