@@ -6,8 +6,9 @@ inherit F_CLEAN_UP;
 
 int main(object me, string arg)
 {
-	string magic, spl, trg;
+	string magic, spl, trg, rest;
 	object target;
+	int amount;
 	
 
 	if( me->is_busy() )
@@ -22,6 +23,16 @@ int main(object me, string arg)
 		// （例如銀咒只能轉身上的東西，#32，2026-11-04）。
 		target = present(trg, me);
 		if( !target ) target = present(trg, environment(me));
+		// 指定數量：on 20 <物品>、on all <物品>（黃白之術一次轉多個，2026-11-14）。
+		// 數量交給法術自己判斷（conjure/amount：-1 表示全部），其他法術不受影響。
+		if( !target ) {
+			if( sscanf(trg, "all %s", rest)==1 ) amount = -1;
+			else if( sscanf(trg, "%d %s", amount, rest)!=2 || amount < 1 ) amount = 0;
+			if( amount ) {
+				target = present(rest, me);
+				if( !target ) target = present(rest, environment(me));
+			}
+		}
 		if( !target ) return notify_fail("這裡沒有 " + trg + "。\n");
 	} else {
 		spl = arg;
@@ -33,7 +44,9 @@ int main(object me, string arg)
 	notify_fail("你請先用 enable 指令選擇你要使用的法術系。\n");
 	if( stringp(magic = me->skill_mapped("magic")) ) {
 		int ok, spi;
+		if( amount ) me->set_temp("conjure/amount", amount);
 		ok = (int)SKILL_D(magic)->conjure_magic(me, spl, target);
+		me->delete_temp("conjure/amount");
 		// 施法成功：法術修為得 random(靈性/6) + 1（使用者定案，2026-10-16）；
 		// 丹道修養只有施展丹道【神農之術】、丹道【黃白之術】時才給
 		// （使用者指示，2026-10-21；黃白之術 2026-10-22 加入）。
@@ -60,6 +73,7 @@ int help (object me)
 {
         write(@HELP
 指令格式﹕conjure <法術名稱> [on <對象>]
+          conjure <法術名稱> on <數量|all> <物品>
  
 施法﹐你必需要指定<法術名稱>﹐<施咒對象>則可有可無。
 在你使用某一個法術之前﹐你必須先用 enable 指令來指定
