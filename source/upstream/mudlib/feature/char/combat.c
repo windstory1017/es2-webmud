@@ -265,6 +265,7 @@ absorb (int ability, int strength, object from)
  * enable 在招架上的武功可以實作：
  *   string parry_message(object me, object attacker, int full)  拆招敘述
  *   void parry_success(object me, object attacker, int full)    格擋後的特效
+ *   int parry_multiplier(object me)                              格擋力道上限的倍率（預設 1）
  */
 private int parry_force_bonus()
 {
@@ -298,6 +299,15 @@ private int parry_attack(int strength, object from)
     // 重擋(heavy_parry，軍人技巧)：格擋力道上限放大，對方有內功時 ×5，沒有時 ×2。
     if( query_learn("heavy_parry") )
         max *= (objectp(attacker) && attacker->query_skill("force") > 0) ? 5 : 2;
+
+    // enable 在招架上的武功可以實作 parry_multiplier()，格擋力道上限再乘上這個倍率
+    // （玄天劍訣：內功同時 enable 玄天心法時 ×2，使用者同意，2026-11-14）。
+    art = skill_mapped("parry");
+    if( stringp(art) && art != "parry" ) daemon = SKILL_D(art);
+    if( objectp(daemon) && function_exists("parry_multiplier", daemon) ) {
+        int mult = (int)daemon->parry_multiplier(this_object());
+        if( mult > 1 ) max *= mult;
+    }
     if( max < 1 ) return 0;
 
     block = 1 + random(max);
@@ -318,9 +328,6 @@ private int parry_attack(int strength, object from)
     defense_gin_cost("parry_gin_count", "cps");
     set_temp("parry_result", full ? 2 : 1);
     set_temp("parry_reduce", reduce);
-
-    art = skill_mapped("parry");
-    if( stringp(art) && art != "parry" ) daemon = SKILL_D(art);
 
     if( objectp(daemon) && function_exists("parry_message", daemon) )
         msg = daemon->parry_message(this_object(), attacker, full);
