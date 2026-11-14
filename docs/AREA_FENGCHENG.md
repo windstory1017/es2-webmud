@@ -7,7 +7,7 @@
 
 - 城門口 D20 往 south 接水月村石板路 `/d/shuiyue/stone_road`（D22），D22 往 north 接回來。
 - 石板路 D14 往 north 接孟家莊十字路口（`/d/mengjia/crossroad`，2026-11-14 孟家莊做好後開通）。
-- 東城門 L12 往 `eastup` 接天山霧海 N10（天山尚未製作，暫不開）；往 `northup` 上天山孤崖，孤崖用 `southdown` 下來。
+- 東城門 L12 往 `eastup` 接天山霧海 N10（`/d/tianshan/fog`，2026-11-14 天山做好後開通）；往 `northup` 上天山孤崖，孤崖用 `southdown` 下來。
 - 城門口 D20 往 up 上城樓 B20（圖層「城樓」），城樓用 down 下來。春風客棧 F18 往 up 上二樓（圖層「二樓」）。
 
 ## 房間（`map/area`：風城）
@@ -18,7 +18,7 @@
 | L10 | `cliff.c` | 天山孤崖 | 舊資料全文 | southdown L12 |
 | H12 | `inner_yard.c` | 內院廣場 | 設計需求＋新寫（八寶樓） | south H14 |
 | J12 | `mountain_road.c` | 山路 | 舊資料全文（設計表） | north J10、east L12 |
-| L12 | `east_gate.c` | 東城門 | 設計需求＋新寫 | west J12、south L14、northup L10 |
+| L12 | `east_gate.c` | 東城門 | 設計需求＋新寫 | west J12、south L14、northup L10、eastup 天山霧海 |
 | D14 | `stone_road1.c` | 石板路 | 新寫 | north 孟家莊 D12、south D16、east F14 |
 | F14 | `li_house.c` | 民宅 | 舊資料全文（設計表） | west D14 |
 | H14 | `general_gate.c` | 將軍府 | 設計需求＋新寫；**非戰區** | south H16、north H12（猜對字謎才能過） |
@@ -61,7 +61,7 @@
 
 | NPC | 位置 | 說明 |
 |---|---|---|
-| 青雲觀主 華子儀 | J10 | `npc/hua_zi_yi.c`；人類道士 60 級、強度 S、60 歲；裝備虛靈劍、紫雲盔、紫色道袍 |
+| 青雲觀主 華子儀 | J10 | `npc/hua_zi_yi.c`；人類道士 60 級、強度 S、60 歲；裝備虛靈劍、紫雲盔、紫色道袍；**紫衣派師父**（使用者定案，2026-11-14）：只收平民、慧根（wis）至少 16，拜師後成為道士、稱號「紫衣派弟子」；已有師承的不收。拜師才可學：天師道法【雷法】、清河映星劍、陰陽奇門步與基本劍術、招架、閃躲、徒手搏鬥入門即可自行求教（`acquire`），九龍神功與基本內功要人物等級 10 |
 | 將軍府門衛×2 | H14 | `npc/gate_guard.c`；軍人 30 級、強度 B |
 | 李儒 | F14 | 現有 `custom/legacy_npc/li_ru.c`（不更動） |
 | 劍甲門傳人 陳學亮 | D16 | `npc/chen_xue_liang.c`；人類方士 60 級、強度 A、35 歲；**教強化之術**：`ask chen about 強化之術`，條件（法術 60、等級 10、兵刃精熟經驗 50000）夠了，他說三句話後傳授，條件不夠只說婉拒（不提數字）。設計見 `docs/martial_arts/劍甲門_強化之術.md` |

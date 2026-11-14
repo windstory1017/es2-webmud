@@ -71,7 +71,7 @@
 | 朱衣派 | `taoist.fire` | 已完成 |
 | 玄衣派 | `taoist.storm` | 已完成 |
 | 素衣派 | `taoist.freeze` | 待補說明 |
-| 紫衣派 | `taoist.thunder` | 待補說明 |
+| 紫衣派 | `taoist.thunder` | 已補（`taoist.thunder.txt`，2026-11-14） |
 | 幻霧觀 | `mao-shan.fog` | 已完成 |
 | 隱風觀 | `mao-shan.wind` | 已完成 |
 | 靈雲觀 | `mao-shan.cloud` | 待補說明 |

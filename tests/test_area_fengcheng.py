@@ -49,7 +49,7 @@ def test_rooms_and_npcs():
 def test_exits_are_two_way():
     for r in GRID:
         for d, t in exits(r).items():
-            if t.startswith(('/d/shuiyue/', '/d/mengjia/')) or d == 'northup':
+            if t.startswith(('/d/shuiyue/', '/d/mengjia/', '/d/tianshan/')) or d == 'northup':
                 continue
             assert exits(t.rsplit('/', 1)[1]).get(OPP[d]) == '/d/fengcheng/' + r, (r, d, t)
 
@@ -57,8 +57,9 @@ def test_exits_are_two_way():
 def test_connections():
     assert short_exits('gate')['south'] == '/d/shuiyue/stone_road'
     assert read(MUD / 'd/shuiyue/stone_road.c').count('"north" : "/d/fengcheng/gate"') == 1
-    # 東城門往北上坡到孤崖、孤崖往南下坡；往東接天山霧海要等天山做好才開。
-    assert short_exits('east_gate') == {'west': 'mountain_road', 'south': 'stone_road2', 'northup': 'cliff'}
+    # 東城門往北上坡到孤崖、孤崖往南下坡；往東上坡接天山霧海（天山 2026-11-14 做好後開通）。
+    assert short_exits('east_gate') == {'west': 'mountain_road', 'south': 'stone_road2', 'northup': 'cliff',
+                                        'eastup': '/d/tianshan/fog'}
     assert short_exits('cliff') == {'southdown': 'east_gate'}
     # 石板路往北接孟家莊十字路口（孟家莊 2026-11-14 做好後開通）。
     assert short_exits('stone_road1') == {'north': '/d/mengjia/crossroad', 'south': 'crossroad', 'east': 'li_house'}
