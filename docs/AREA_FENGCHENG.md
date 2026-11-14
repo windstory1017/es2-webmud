@@ -1,0 +1,98 @@
+# 風城（d/fengcheng）設計文件
+
+依使用者提供的新區域設計表（Excel，2026-11-14）製作，是四塊中的第二塊（水月村 → **風城** → 孟家莊 → 天山）。
+風城南接水月村，東至天山；將軍府內有八寶樓，大漠八魔即在此樓中。
+
+## 連接
+
+- 城門口 D20 往 south 接水月村石板路 `/d/shuiyue/stone_road`（D22），D22 往 north 接回來。
+- 石板路 D14 往 north 要接孟家莊十字路口（孟家莊尚未製作，暫不開）。
+- 東城門 L12 往 `eastup` 接天山霧海 N10（天山尚未製作，暫不開）；往 `northup` 上天山孤崖，孤崖用 `southdown` 下來。
+- 城門口 D20 往 up 上城樓 B20（圖層「城樓」），城樓用 down 下來。春風客棧 F18 往 up 上二樓（圖層「二樓」）。
+
+## 房間（`map/area`：風城）
+
+| 格子 | 檔案 | 名稱 | 來源 | 出口 |
+|---|---|---|---|---|
+| J10 | `qingyun_temple.c` | 青雲觀 | 新寫 | south J12 |
+| L10 | `cliff.c` | 天山孤崖 | 舊資料全文 | southdown L12 |
+| H12 | `inner_yard.c` | 內院廣場 | 設計需求＋新寫（八寶樓） | south H14 |
+| J12 | `mountain_road.c` | 山路 | 舊資料全文（設計表） | north J10、east L12 |
+| L12 | `east_gate.c` | 東城門 | 設計需求＋新寫 | west J12、south L14、northup L10 |
+| D14 | `stone_road1.c` | 石板路 | 新寫 | south D16、east F14 |
+| F14 | `li_house.c` | 民宅 | 舊資料全文（設計表） | west D14 |
+| H14 | `general_gate.c` | 將軍府 | 設計需求＋新寫；**非戰區** | south H16、north H12（猜對字謎才能過） |
+| L14 | `stone_road2.c` | 石板路 | 新寫 | north L12、south L16 |
+| D16 | `crossroad.c` | 交叉路口 | 舊資料全文 | north D14、south D18、east F16 |
+| F16 | `street1.c` | 街道 | 新寫 | west D16、east H16 |
+| H16 | `street2.c` | 街道 | 新寫 | west F16、east J16、north H14 |
+| J16 | `east_street1.c` | 東街 | 新寫 | west H16、east L16 |
+| L16 | `east_street2.c` | 東街 | 新寫 | west J16、north L14、south L18 |
+| D18 | `south_street.c` | 南街 | 設計表原文 | north D16、south D20、east F18 |
+| F18 | `inn.c` | 春風客棧 | 舊資料全文（設計表） | west D18、up F18 二樓；**非戰區、可存檔（INN）** |
+| F18 二樓 | `inn2.c` | 春風客棧二樓 | 新寫；**戰區** | down F18 |
+| L18 | `alley.c` | 小巷 | 設計需求＋新寫（字謎小孩） | north L16 |
+| B20 | `tower.c` | 城樓 | 新寫 | down D20 |
+| D20 | `gate.c` | 城門口 | 新寫 | north D18、south 水月村 D22、up B20 |
+
+- 對齊微調（舊資料／設計表原文，只刪字不改意思）：南街「住上一兩天」刪成「住一兩天」，避免標點凸出。
+- 設計表沒有給內院廣場放 NPC，空著。
+
+## 字謎與將軍府（使用者決定，2026-11-14）
+
+- 將軍府門衛（H14，2 位）攔住往北進內院廣場的人，除非這名玩家已經完成小孩的字謎（`quest/fengcheng_riddle`，永久記錄）。
+  門衛的話只暗示「東街南邊的巷子裡有個愛出字謎的小孩」，不提指令。
+- 字謎小孩（L18 小巷）：`ask child about 字謎` 後，他隨機出一題「你說說看…是甚麼字？」，玩家用 `answer 字` 回答，答對就完成。
+  答錯可以重答，也可以再問一次換題。十題來自舊資料《八寶樓謎語》（參考 `reference/es2_records/japentery/2008-07-18-2020129068-八寶樓謎語.txt`）：
+
+| 謎面 | 答案 | 謎面 | 答案 |
+|---|---|---|---|
+| 點點螢火江邊照 | 淡 | 半真半假 | 值 |
+| 飛砂走石 | 少 | 一點不見 | 視 |
+| 弓上一枝箭，箭邊一把弓 | 引 | 十個哥哥 | 克 |
+| 手無寸鐵 | 控 | 日落半林中 | 東 |
+| 半個月亮 | 胖 | 一月七日 | 脂 |
+
+## NPC
+
+| NPC | 位置 | 說明 |
+|---|---|---|
+| 青雲觀主 華子儀 | J10 | `npc/hua_zi_yi.c`；人類道士 60 級、強度 S、60 歲；裝備虛靈劍、紫雲盔、紫色道袍 |
+| 將軍府門衛×2 | H14 | `npc/gate_guard.c`；軍人 30 級、強度 B |
+| 李儒 | F14 | 現有 `custom/legacy_npc/li_ru.c`（不更動） |
+| 劍甲門傳人 陳學亮 | D16 | `npc/chen_xue_liang.c`；人類方士 60 級、強度 A、35 歲；目前只放 NPC |
+| 神算子 | D16 | `npc/fortune_teller.c`；方士 10 級、強度 C；流程同喬陰算命先生（`ask teller about 算命` → 給一兩黃金 → `inquire 技能`），差別是只告知這項技能是否已到個人上限 |
+| 小販 | D18 | `npc/seller.c`；賣供品×10、空白符紙×2000、龍麟袋×5 |
+| 店小二 | F18 | `npc/waiter.c`；平民 21 歲、強度 C |
+| 東方孤冥（玄天教主） | F18 二樓 | 現有 `custom/legacy_npc/dong_fang_gu_ming.c` |
+| 司馬蔚、官兵×4 | B20 城樓 | 現有 `si_ma_wei.c`；官兵用 `/obj/area/garrison` |
+| 官兵×4 | L12 東城門 | `/obj/area/garrison` |
+| 路人 | L10、L14 | `/obj/area/man` |
+| 字謎小孩 | L18 | `npc/child.c` |
+
+## 物品
+
+| 物品 | 內容 |
+|---|---|
+| 供品（`obj/offering.c`，id `gong`） | 祭拜先祖時準備的食物，不能吃，純道具；價錢 500 文 |
+| 空白符紙 | 現有 `custom/item/scroll/blank.c`，每張 10 文 |
+| 龍麟袋 | 現有 `custom/item/dragon_skin_bag.c`，**容量是麻布袋（`obj/area/obj/bag.c`）的 100 倍**；10000 文 |
+
+## 紫雲盔
+
+現有 `custom/armor/head/purple_helmet.c` 改為智慧 +1、精神 +1、防禦 25，重量 2000、價值 12000（同金羽神盔）。
+原本是精神 +1、法術 +5、防禦 5、價值 20000。
+
+## 網頁地圖
+
+`web/world_static_map.json` 加入 20 間房（水月村的北邊：D20 在 y=-8，往北每兩個列號一格；B=1、D=2、F=3、H=4、J=5、L=6）。二樓與城樓各在獨立圖層。
+
+## 驗證
+
+- `tests/test_area_fengcheng.py`：房間數、區域與圖層、出口互通、與水月村的連接、客棧戰區／非戰區、門衛攔路與字謎、商品、NPC 與紫雲盔、敘述版面、網頁地圖。
+- `python3 tools/check_big5_text.py`：0 處。
+- 尚未實際載入遊戲跑過（這個環境沒有編譯好的遊戲主程式）；上線前請巫師走一遍。
+
+## 待辦
+
+孟家莊（D12 十字路口接 D14 石板路）、天山（霧海接東城門 `eastup`）。

@@ -56,7 +56,7 @@ def test_rooms_and_npcs():
 def test_exits_are_two_way():
     for r in GRID:
         for d, t in exits(r).items():
-            if t.startswith('/d/snow/') or d in ('out', 'down'):
+            if t.startswith(('/d/snow/', '/d/fengcheng/')) or d in ('out', 'down'):
                 continue   # out、down 是指令出入的回程，對面沒有對應的一般出口
             assert exits(t.rsplit('/', 1)[1]).get(OPP[d]) == '/d/shuiyue/' + r, (r, d, t)
 
@@ -64,8 +64,8 @@ def test_exits_are_two_way():
 def test_connection_to_snow_and_grid():
     assert short_exits('mountain_path2')['south'] == '/d/snow/npath2'
     assert '"north" : "/d/shuiyue/mountain_path2"' in read(MUD / 'd/snow/npath2.c')
-    # D22 沒有往東、F22 沒有往西的出口（使用者指示）；D22 往北（風城）尚未製作。
-    assert short_exits('stone_road') == {'south': 'mud_road'}
+    # D22 沒有往東、F22 沒有往西的出口（使用者指示）；D22 往北接風城城門口。
+    assert short_exits('stone_road') == {'north': '/d/fengcheng/gate', 'south': 'mud_road'}
     assert short_exits('woods') == {'north': 'waterfall', 'south': 'sky_tree', 'east': 'hunter_hut'}
     assert short_exits('village2')['southdown'] == 'mountain_path1'
     assert short_exits('mountain_path1')['northup'] == 'village2'

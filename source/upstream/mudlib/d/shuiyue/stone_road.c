@@ -12,6 +12,7 @@ void create()
 LONG
     );
     set("exits", ([
+        "north" : "/d/fengcheng/gate",
         "south" : __DIR__"mud_road",
     ]));
     set("map/area", "水月村");
