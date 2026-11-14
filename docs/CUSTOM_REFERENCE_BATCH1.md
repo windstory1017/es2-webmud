@@ -104,6 +104,6 @@
 | 正陽符 | `custom/item/scroll/yang.c` | scroll of yang | 每張 1 | 每張 50 文 | 一張隱隱透著浩然正氣的符紙。 |
 | 少陰符 | `custom/item/scroll/yin.c` | scroll of yin | 每張 1 | 每張 50 文 | 一張冷冽透著陰氣的符紙。 |
 | 先天符 | `custom/item/scroll/nature.c` | scroll of nature | 每張 1 | 每張 50 文 | 一張散發著自然的氣息的符紙。 |
-| 龍麟袋 | `custom/item/dragon_skin_bag.c` | dragon-skin bag | 1000 | 100 兩 | 這個大袋子根本就是一張完整的龍麟﹐不怪竟能裝下這麼多東西。容量為麻布袋的 100 倍。 |
+| 龍麟袋 | `custom/item/dragon_skin_bag.c` | dragon-skin bag | 1000 | 20 兩黃金（2026-11-14 改，原 100 兩白銀） | 這個大袋子根本就是一張完整的龍麟﹐不怪竟能裝下這麼多東西。容量為麻布袋的 100 倍。 |
 
 符紙可以疊在一起，顯示為「X張空白符紙」，四種都可用 `scroll` 指定。

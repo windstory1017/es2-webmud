@@ -1,5 +1,5 @@
 // /d/fengcheng/npc/gate_guard.c — 風城 NPC：將軍府門衛（H14）。
-// 沒猜對東街小巷小孩的字謎（quest/fengcheng_riddle）的人，不讓往北進內院廣場；攔人的判斷在 general_gate.c。
+// 沒猜對小巷小孩的字謎（quest/fengcheng_riddle）的人，不讓往北進內院廣場；攔人的判斷在 general_gate.c。
 
 #include <npc.h>
 
@@ -29,9 +29,7 @@ void create()
 // 攔下想往北走的人。
 void warn(object who)
 {
-    message_vision("$N伸手將$n攔了下來。\n", this_object(), who);
-    command("say 將軍府重地，閒雜人等不得擅入。");
-    command("say 聽說東街南邊的巷子裡有個愛出字謎的小孩，連將軍都誇他機靈，能猜得出，倒也算有些見識。");
+    message_vision("$N把$n攔了下來。\n", this_object(), who);
 }
 
 int accept_fight(object ob)

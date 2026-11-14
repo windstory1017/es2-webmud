@@ -78,6 +78,10 @@ def test_gate_guard_blocks_until_riddle_solved():
     assert 'guard->warn(me);' in g and 'return ::valid_leave(me, dir);' in g
     c = read(S / 'npc' / 'child.c')
     assert 'who->set("quest/fengcheng_riddle", 1);' in c
+    # 小孩：玩家進來就問要不要猜；用 say 或正面表情同意；答案也用 say（不用 ask）。
+    assert 'void relay_say(object who, string msg)' in c and 'void relay_emote(object who, string verb)' in c
+    assert 'accept_inquiry' not in c and '要不要來猜個謎語啊' in c and '將軍府裡藏了八個鬼喔' in c
+    assert 'message_vision("$N把$n攔了下來。\\n", this_object(), who);' in read(S / 'npc' / 'gate_guard.c')
     assert len(re.findall(r'^    \(\{ "', c, re.M)) == 10     # 舊資料的十題字謎
     assert '({ "弓上一枝箭，箭邊一把弓", "引" })' in c
 
@@ -87,6 +91,7 @@ def test_seller_and_items():
     assert '"/d/fengcheng/obj/offering" : 10' in s
     assert '"/custom/item/scroll/blank" : 2000' in s and '"/custom/item/dragon_skin_bag" : 5' in s
     assert 'set("value", 500);' in read(S / 'obj' / 'offering.c')
+    assert 'set("value", 200000);' in read(MUD / 'custom/item/dragon_skin_bag.c')   # 20 兩黃金
     assert (MUD / 'custom/item/scroll/blank.c').exists() and (MUD / 'custom/item/dragon_skin_bag.c').exists()
 
 
@@ -98,7 +103,14 @@ def test_npcs_and_purple_helmet():
     assert 'set_weight(2000);' in helm and 'set("value", 12000);' in helm
     f = read(S / 'npc' / 'fortune_teller.c')
     assert '發展已經到了極限' in f and '還可以繼續發展' in f
-    assert 'set_power("A");' in read(S / 'npc' / 'chen_xue_liang.c')
+    chen = read(S / 'npc' / 'chen_xue_liang.c')
+    assert 'set_power("A");' in chen
+    # 強化之術：ask chen about 強化之術，條件（法術 60、等級 10、兵刃精熟 50000）夠了就三句話後傳授。
+    assert 'who->query_skill("magic", 1) < 60' in chen and 'who->query_level() < 10' in chen
+    assert 'who->query_score("weapon mastery") < 50000' in chen
+    assert chen.count('call_out("say_to"') == 2 and 'call_out("teach", 3 * TICK, who);' in chen
+    assert 'who->set_skill(SKILL_ID, 1);' in chen and '#define SKILL_ID  "enchance"' in chen
+    assert (MUD / 'daemon/skill/enchance.c').exists()
     assert '/obj/area/garrison' in read(S / 'tower.c') and 'si_ma_wei' in read(S / 'tower.c')
 
 

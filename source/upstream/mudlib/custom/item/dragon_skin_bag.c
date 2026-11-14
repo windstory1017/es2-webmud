@@ -9,7 +9,7 @@ void create()
     set_max_encumbrance(3000000);
     if( !clonep() ) {
         set("unit", "隻");
-        set("value", 10000);
+        set("value", 200000);   // 20 兩黃金（1 兩黃金 = 10000 文）
         set("long", "這個大袋子根本就是一張完整的龍麟﹐不怪竟能裝下這麼多東西。\n");
     }
     setup();
