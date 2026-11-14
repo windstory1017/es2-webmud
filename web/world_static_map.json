@@ -3207,6 +3207,93 @@
       "area": "風城",
       "x": 2,
       "y": -8
+    },
+    {
+      "id": "/d/mengjia/backyard",
+      "label": "後院",
+      "area": "孟家莊",
+      "x": 1,
+      "y": -14
+    },
+    {
+      "id": "/d/mengjia/manor",
+      "label": "孟家莊",
+      "area": "孟家莊",
+      "x": 1,
+      "y": -13
+    },
+    {
+      "id": "/d/mengjia/gate",
+      "label": "孟家大門",
+      "area": "孟家莊",
+      "x": 1,
+      "y": -12
+    },
+    {
+      "id": "/d/mengjia/herb_shop",
+      "label": "同仁藥鋪",
+      "area": "孟家莊",
+      "x": 1,
+      "y": -11
+    },
+    {
+      "id": "/d/mengjia/inn2",
+      "label": "客棧二樓",
+      "area": "孟家莊",
+      "x": 2,
+      "y": -14,
+      "layer": "二樓"
+    },
+    {
+      "id": "/d/mengjia/inn",
+      "label": "小客棧",
+      "area": "孟家莊",
+      "x": 2,
+      "y": -13
+    },
+    {
+      "id": "/d/mengjia/crossroad",
+      "label": "十字路口",
+      "area": "孟家莊",
+      "x": 2,
+      "y": -12
+    },
+    {
+      "id": "/d/mengjia/street",
+      "label": "大街",
+      "area": "孟家莊",
+      "x": 3,
+      "y": -12
+    },
+    {
+      "id": "/d/mengjia/forest",
+      "label": "密林",
+      "area": "孟家莊",
+      "x": 3,
+      "y": -13
+    },
+    {
+      "id": "/d/mengjia/graveyard",
+      "label": "孟家祖墳",
+      "area": "孟家莊",
+      "x": 3,
+      "y": -14
+    },
+    {
+      "id": "/d/mengjia/tomb",
+      "label": "墓室",
+      "area": "孟家莊",
+      "x": 3,
+      "y": -15,
+      "layer": "地下"
+    },
+    {
+      "id": "/d/mengjia/passage",
+      "label": "暗道",
+      "area": "孟家莊",
+      "x": 2,
+      "y": -14,
+      "layer": "暗道"
     }
   ],
   "edges": [
@@ -8787,6 +8874,156 @@
     {
       "from": "/d/shuiyue/stone_road",
       "to": "/d/fengcheng/gate",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/backyard",
+      "to": "/d/mengjia/manor",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/manor",
+      "to": "/d/mengjia/backyard",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/manor",
+      "to": "/d/mengjia/gate",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/gate",
+      "to": "/d/mengjia/manor",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/gate",
+      "to": "/d/mengjia/herb_shop",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/gate",
+      "to": "/d/mengjia/crossroad",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/herb_shop",
+      "to": "/d/mengjia/gate",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/inn2",
+      "to": "/d/mengjia/inn",
+      "direction": "down",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/inn",
+      "to": "/d/mengjia/crossroad",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/inn",
+      "to": "/d/mengjia/inn2",
+      "direction": "up",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/crossroad",
+      "to": "/d/mengjia/inn",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/crossroad",
+      "to": "/d/fengcheng/stone_road1",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/crossroad",
+      "to": "/d/mengjia/gate",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/crossroad",
+      "to": "/d/mengjia/street",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/street",
+      "to": "/d/mengjia/crossroad",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/street",
+      "to": "/d/mengjia/forest",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/forest",
+      "to": "/d/mengjia/street",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/forest",
+      "to": "/d/mengjia/graveyard",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/graveyard",
+      "to": "/d/mengjia/forest",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/tomb",
+      "to": "/d/mengjia/graveyard",
+      "direction": "up",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/passage",
+      "to": "/d/mengjia/inn2",
+      "direction": "up",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/passage",
+      "to": "/d/mengjia/forest",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/inn2",
+      "to": "/d/mengjia/passage",
+      "direction": "push",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/graveyard",
+      "to": "/d/mengjia/tomb",
+      "direction": "roll",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/stone_road1",
+      "to": "/d/mengjia/crossroad",
       "direction": "north",
       "resolved": true
     }
