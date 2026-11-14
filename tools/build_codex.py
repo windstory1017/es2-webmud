@@ -505,20 +505,33 @@ def parse_armor(p, src, code):
 
 
 def stat_effects(code):
+    """服用效果。數值可寫成 N 或 N + random(M)（顯示成 N～N+M-1）。
+    supplement／consume 是目前值；heal／damage 是上限（實格，2026-11-14 修正：heal 原本和
+    supplement 一樣顯示，random 部分也被漏掉）。"""
     eff = []
-    for fn, st, n in re.findall(r'(supplement_stat|consume_stat|damage_stat|heal_stat)\(\s*"(\w+)"\s*,\s*(-?\d+)', code):
+    pat = r'(supplement_stat|consume_stat|damage_stat|heal_stat)\(\s*"(\w+)"\s*,\s*(-?\d+)(?:\s*\+\s*random\(\s*(\d+)\s*\))?'
+    for fn, st, n, r in re.findall(pat, code):
+        n = int(n)
+        amt = f'{n}～{n + int(r) - 1}' if r and int(r) > 1 else str(n)
         label = zh(st)
-        if fn == 'supplement_stat' or fn == 'heal_stat':
-            eff.append(f'{label} +{n}')
+        if fn == 'supplement_stat':
+            eff.append(f'{label} +{amt}')
         elif fn == 'consume_stat':
-            eff.append(f'{label} -{n}')
+            eff.append(f'{label} -{amt}')
+        elif fn == 'heal_stat':
+            eff.append(f'{label}實格 +{amt}')
         else:
-            eff.append(f'{label}實格 -{n}')
+            eff.append(f'{label}實格 -{amt}')
     return eff
 
 
 def item_category(p, code):
     rel = str(p.relative_to(MUD))
+    # 煉丹用具（2026-11-14 使用者指示：丹爐、丹鼎算容器；松柴原本被誤判成飲品）
+    if re.search(r'int\s+is_heat_(reactor|furnace)\s*\(', code):
+        return '容器'
+    if re.search(r'int\s+is_heat_wood\s*\(', code):
+        return '其他'
     if 'F_FOOD' in code or set_int(code, 'food_stuff') or 'food_remaining' in code:
         return '食物'
     if 'F_LIQUID' in code or 'liquid' in code:
