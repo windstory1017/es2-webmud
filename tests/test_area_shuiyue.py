@@ -130,6 +130,7 @@ def test_npcs():
     assert 'set_beast(1);' in read(MUD / 'd/oldpine/npc/squirrel.c')
     wf = read(S / 'npc' / 'wei_feng.c')
     assert 'set_level(60);' in wf and 'set_power("S");' in wf and 'au_han_sword' in wf
+    assert 'custom/weapon/sword/colosus_sword' in wf   # 古劍醒塵被拿走時改拿巨神劍
     ys = read(S / 'npc' / 'yu_tian_shan.c')
     assert 'set_level(40);' in ys and 'set_power("B");' in ys and 'set_class("fighter");' in ys
 

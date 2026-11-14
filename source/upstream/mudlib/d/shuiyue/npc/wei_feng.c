@@ -4,6 +4,8 @@ inherit "/custom/legacy_npc/legacy_npc";
 
 void create()
 {
+    object sword;
+
     seteuid(getuid());
     set_name("蔚楓", ({ "wei feng", "wei", "feng" }));
     set("title", "劍領風騷");
@@ -19,7 +21,11 @@ void create()
     set_skill("force", 120);
     set_power("S");
     setup();
-    carry_object("/custom/weapon/sword/au_han_sword")->wield();   // 古劍醒塵
+    // 古劍醒塵是唯一的一把；被玩家打走（還在世上）時，蔚楓重生就改拿巨神劍。
+    sword = carry_object("/custom/weapon/sword/au_han_sword");   // 古劍醒塵
+    if( !objectp(sword) || environment(sword) != this_object() )
+        sword = carry_object("/custom/weapon/sword/colosus_sword");   // 巨神劍
+    if( objectp(sword) ) sword->wield();
     carry_object("/custom/armor/cloth/iron_cloth")->wear();   // 鐵布衫
     carry_object("/custom/armor/feet/forgod_boots")->wear();   // 封神靴
 }
