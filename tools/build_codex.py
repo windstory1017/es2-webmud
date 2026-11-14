@@ -551,6 +551,9 @@ def parse_item(p, src, code):
     it = common(p, src, code)
     it['cat'] = item_category(p, code)
     eff = stat_effects(code)
+    # 解毒丹藥（例如甘靈清毒丹）：只標「解毒」，不寫數值（使用者指示，2026-11-14）
+    if 'cure_poison' in code:
+        eff.append('解毒')
     fs = set_int(code, 'food_stuff')
     if fs:
         eff.insert(0, f'食物 +{fs}')
