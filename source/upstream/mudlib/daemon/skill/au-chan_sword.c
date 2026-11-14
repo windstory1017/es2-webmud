@@ -25,21 +25,21 @@ private void create()
     art_bonus = 20;
 
     moves = ({
-        ([ "name": "皓風起兮雲飛揚", "lvl": 1,   "attack": 9,  "defense": 4, "force": 2, "bonus": 0,  "damage_type": "刺傷",
+        ([ "name": "皓風起兮雲飛揚", "attack": 9,  "defense": 4, "force": 2, "bonus": 0,  "damage_type": "刺傷",
            "action": "$N使出劍訣起手式「皓風起兮雲飛揚」﹐手中$w如一條銀蛇般攻向$n的$l" ]),
-        ([ "name": "騰躍萬里風如煙", "lvl": 20,  "attack": 9,  "defense": 5, "force": 2, "bonus": 5,  "damage_type": "割傷",
+        ([ "name": "騰躍萬里風如煙", "attack": 9,  "defense": 5, "force": 2, "bonus": 5,  "damage_type": "割傷",
            "action": "$N一招「騰躍萬里風如煙」﹐身形陡然幻化成虛影﹐手中$w大開大闔﹐火速斬向$n的$l" ]),
-        ([ "name": "千嬌百媚柔似水", "lvl": 40,  "attack": 10, "defense": 5, "force": 1, "bonus": 0,  "damage_type": "刺傷",
+        ([ "name": "千嬌百媚柔似水", "attack": 10, "defense": 5, "force": 1, "bonus": 0,  "damage_type": "刺傷",
            "action": "$N劍光一閃﹐一招「千嬌百媚柔似水」﹐挑起$w﹐輕靈曼妙的刺向$n的$l" ]),
-        ([ "name": "清風送爽塵雪飛", "lvl": 60,  "attack": 10, "defense": 4, "force": 2, "bonus": 5,  "damage_type": "割傷",
+        ([ "name": "清風送爽塵雪飛", "attack": 10, "defense": 4, "force": 2, "bonus": 5,  "damage_type": "割傷",
            "action": "$N一招「清風送爽塵雪飛」﹐手中$w劍氣大盛﹐$w挾著勁風迎面攻$n的$l" ]),
-        ([ "name": "了絕紅塵遁山林", "lvl": 80,  "attack": 9,  "defense": 3, "force": 3, "bonus": 5,  "damage_type": "割傷",
+        ([ "name": "了絕紅塵遁山林", "attack": 9,  "defense": 3, "force": 3, "bonus": 5,  "damage_type": "割傷",
            "action": "$N深深一嘆﹐一招「了絕紅塵遁山林」使將開來﹐手中$w真氣貫注﹐劍芒四射﹐一道長虹貫過$n的$l" ]),
-        ([ "name": "佳人在擁醉臥君", "lvl": 100, "attack": 9,  "defense": 6, "force": 1, "bonus": 0,  "damage_type": "刺傷",
+        ([ "name": "佳人在擁醉臥君", "attack": 9,  "defense": 6, "force": 1, "bonus": 0,  "damage_type": "刺傷",
            "action": "$N劍轉反側﹐一招「佳人在擁醉臥君」﹐手中$w上刺﹐隨後迴鋒下引攻$n的$l" ]),
-        ([ "name": "持劍立地為生靈", "lvl": 120, "attack": 9,  "defense": 4, "force": 2, "bonus": 5,  "damage_type": "刺傷",
+        ([ "name": "持劍立地為生靈", "attack": 9,  "defense": 4, "force": 2, "bonus": 5,  "damage_type": "刺傷",
            "action": "$N使出劍訣中的「持劍立地為生靈」劍光點點﹐隱藏著無數後著﹐刺向$n的$l" ]),
-        ([ "name": "英雄江山美人絕", "lvl": 150, "attack": 10, "defense": 3, "force": 3, "bonus": 10, "damage_type": "割傷", "weight": 3,
+        ([ "name": "英雄江山美人絕", "attack": 10, "defense": 3, "force": 3, "bonus": 10, "damage_type": "割傷", "weight": 3,
            "action": "$N笑仰蒼天﹐只見劍光閃閃﹐氣漩四起﹐$N挑起手中$w﹐一招「英雄江山美人絕」﹐挾萬鈞之勢﹐無數劍氣將$n透體而過" ]),
     });
 
