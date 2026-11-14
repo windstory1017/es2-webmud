@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": "3.20.76",
-  "generated": "2026-09-12T14:34:47",
+  "version": "3.20.77 MAP V7 READONLY WORLD",
+  "generated": "2026-11-14T16:28:47",
   "sourceBoundary": "taedlar/es2_mudlib only",
   "readOnlyIndex": true,
   "summary": {
@@ -43,7 +43,7 @@
       "reasons": [
         "vendor_logic"
       ],
-      "sha256": "a8f59f4e959e54691fdf0b43d21e35de0f90d2802ea11b305c794af04dc6c627"
+      "sha256": "f087bd029bc84ab92b0fc9fdb84dfa61aa0efc2574ebd7ff80cfc5e52ffeccb4"
     },
     {
       "path": "/cmds/std/follow",
@@ -55,7 +55,7 @@
       "reasons": [
         "leader_ai"
       ],
-      "sha256": "434ecf132fbf58c02a5913142a9acc683617e4d81666a95f815afbebafe2d340"
+      "sha256": "30572cf9f33c801193ac0315ee4fd5f333d9e7e692ab89dfad2910b5a294b646"
     },
     {
       "path": "/cmds/std/sneak",
@@ -67,7 +67,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "3970d2b07f2c5085a938f21a6f6f33e42ccfa3aaeb4b8b03d965a1746073013b"
+      "sha256": "3ce856ae05527338139584366606cc541232dcb78b57aa505e684573fc275006"
     },
     {
       "path": "/cmds/std/steal",
@@ -79,7 +79,7 @@
       "reasons": [
         "timed_logic"
       ],
-      "sha256": "5fec0ecd470c011224ead6b1195e8718706883b0b81a39be530f204a0bf2b277"
+      "sha256": "3c70084a7d780de9ba11993ade96a46cf2d9e96a4892c3e493fbf48b08deb219"
     },
     {
       "path": "/adm/daemons/combatd",
@@ -92,7 +92,7 @@
         "damage_logic",
         "timed_logic"
       ],
-      "sha256": "afea27591bdc99ddaf7527f09d516e737d487599d12d23b1276e721b9b1b9a87"
+      "sha256": "49a4563d1798721d8e02ae113d5085e9d6f43e9a84aa9c78f3ac616c9291c9fb"
     },
     {
       "path": "/adm/daemons/natured",
@@ -104,7 +104,7 @@
       "reasons": [
         "timed_logic"
       ],
-      "sha256": "e7100b2a281ce7272b0ab0d8edabbe06c16ba73cda667629b769e32a9bcb3e59"
+      "sha256": "9efd97047cb3794099f8fedafa31e18d088052dc03a1ba9490c62cc450ffe01f"
     },
     {
       "path": "/adm/daemons/userid",
@@ -116,7 +116,7 @@
       "reasons": [
         "timed_logic"
       ],
-      "sha256": "3c91560956da1dfab46121963599b966b7b60370ff1ad9aa68e698500075d1e2"
+      "sha256": "271f9daef998b249f035a4a69d1b2246795996968dda29e4602c3eef46ad768d"
     },
     {
       "path": "/feature/char/combat",
@@ -129,7 +129,7 @@
         "damage_logic",
         "timed_logic"
       ],
-      "sha256": "c4687322959daebca80d740b42e33320d7eeda2905a352bf965b4d071569587f"
+      "sha256": "95bef48a7406d1b0726347953d0d3f64ef9ffb6ad812aaa248fc594594e2df53"
     },
     {
       "path": "/feature/char/command",
@@ -141,7 +141,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "0409ec6a894600e14438e2e60aab5877ee91191804ddcce5b3b7c87164420fb7"
+      "sha256": "e7b4960876115fb63a6af4791fd29f8de13f2a06a2db7f39795b1f1f78f15c08"
     },
     {
       "path": "/feature/char/team",
@@ -153,7 +153,7 @@
       "reasons": [
         "leader_ai"
       ],
-      "sha256": "980c66f4b4b3f1309bf889bfd7f508d6c6f1fba576d47707fad1d9e060a9792d"
+      "sha256": "31daf0932e76bf8b7ceba30c670210f9829dcd509dc74d9e381ab9affbeebf0c"
     },
     {
       "path": "/feature/equip",
@@ -166,7 +166,7 @@
         "damage_logic",
         "weapon_runtime"
       ],
-      "sha256": "bc4043746652a54a14640a90b0043c0e7371a5a3c50771ab306b62b527d16a7b"
+      "sha256": "2b76c9f6de716935e9b6b842f4d30e46ff3c81cc6aeffe0e6d49745a451739ae"
     },
     {
       "path": "/feature/move",
@@ -178,7 +178,7 @@
       "reasons": [
         "timed_logic"
       ],
-      "sha256": "707eda14f5ae5a87c0d5656e6fbabac970c0eece0fc36122c26079ab52fd8f85"
+      "sha256": "ebe276ea6583967fdf5383a03955c425b27918dd7828bc552c0394e542b33816"
     },
     {
       "path": "/adm/obj/mailbox",
@@ -195,7 +195,7 @@
         "custom_action",
         "timed_logic"
       ],
-      "sha256": "d8457509bd5cc749b92a10b970d0b17826ca4da27844c86e71dad1edc66906f9"
+      "sha256": "e7a9c5f088ba52fafbc7b7bb48bd30d7c9b1ca489d5234322903ff261bc5dd50"
     },
     {
       "path": "/d/snow/obj/stone",
@@ -208,7 +208,7 @@
         "custom_action",
         "timed_logic"
       ],
-      "sha256": "1c2468442f146a08a2f44be70d26077755238f3fc4d764e9b72d1e12e2698370"
+      "sha256": "0cf991f49a7894cacb46ef4881411ecff4b8ff34fc644b21e3d45b6f574f2a4a"
     },
     {
       "path": "/obj/area/obj/dice",
@@ -222,7 +222,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "c5d6668cc673c1bb4270928da6abfb36acbc01b931ad201446a87f0dfd27728a"
+      "sha256": "2e37c82e140a24cc6991700a120c3ffde16c1f5c70eeb74bdf890181e4cc24a8"
     },
     {
       "path": "/obj/block",
@@ -235,7 +235,7 @@
         "custom_action",
         "timed_logic"
       ],
-      "sha256": "e44445426b33eff77d773621d6d8d618c754a5c3d47c307c61851649b2620b98"
+      "sha256": "0adb3a85f217508afe183b524eb688acb76e8811e1ef3b85aaaa2cdd45ab6e63"
     },
     {
       "path": "/obj/block_robot",
@@ -247,7 +247,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "ce0f21e399f429bce5035eb9b76dcaadb83522fa727a2662728f2c5c63cc0ee3"
+      "sha256": "4efb48c1365871f5d633d8153aa127528d34e0cef4f596b05684eff5cd82ae2d"
     },
     {
       "path": "/obj/clan_symbol",
@@ -259,7 +259,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "f46a560cab04166978dab11ddb8c3b79cce7a1089e76ce5c2906048f053db086"
+      "sha256": "ebb8f5ff97ebf0c0efabf11bec7fa42ea0857b2929eec4c1e78b67455dc9be45"
     },
     {
       "path": "/obj/corpse",
@@ -273,7 +273,7 @@
       "reasons": [
         "timed_logic"
       ],
-      "sha256": "31955b213a156181c17938795dc2e23c1bf43c71022959d74017141652413638"
+      "sha256": "c3dc5991cbaeb4f5a7c1eabd17be8553b99db58472ed705dbb63d3c80a0b3804"
     },
     {
       "path": "/obj/dust",
@@ -287,7 +287,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "dd6fc9faf617878636bd3d4495f982cb6978a5264efe8dcbc65450733561d9da"
+      "sha256": "219bdc486327bc3797c77c8d9df2b6c6a592f2ea2c4f23f7213db098af26ecfb"
     },
     {
       "path": "/obj/http",
@@ -299,7 +299,7 @@
       "reasons": [
         "timed_logic"
       ],
-      "sha256": "baeeacbeeb802d3215bf7bbc5f8df10b894a0bf6a8f5bb4fb63eaa2e56dc8fc7"
+      "sha256": "11bc9b9a6e4286e8f0769715d8b42d1a214e6611504ff8d64ab47c87be35d90e"
     },
     {
       "path": "/obj/map",
@@ -313,7 +313,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "38a54d04f94bdfe2d105539b1cc00232af26c833727fb6e848f00a1a1f61cef9"
+      "sha256": "b97120682fe02510de511bdc5d42742070c199d74e27d7e0c6222716886d5766"
     },
     {
       "path": "/obj/obj/firework",
@@ -327,7 +327,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "15e6d86af0d9ab9f4119bb4b43cfe9c329d882e4d99459bab4b412629e06f588"
+      "sha256": "a555f2a0a1c49b37ca0ede66170f0eaa255ee7f9ddc07b4c3af567f1cbaeb7ca"
     },
     {
       "path": "/obj/roommaker",
@@ -339,7 +339,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "b08de74309a9ac11e33b4b2f4080f27d8eb4e76b5a22cb3a8de2f809e9e7633a"
+      "sha256": "edb21fc792f6b29be321c2f7e7f304d723e2326168324ecca8f7356bf40398ba"
     },
     {
       "path": "/obj/spirit",
@@ -355,7 +355,7 @@
         "custom_action",
         "timed_logic"
       ],
-      "sha256": "6ae446e6d708e1ac3ec9380220e836aa634e26f7d2b8c47135184c1ffad63a5d"
+      "sha256": "5df84ecde0440a6a8061f659db190c77ba1643a838fe69597ee6168eca184742"
     },
     {
       "path": "/std/bboard",
@@ -367,7 +367,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "e0ff2812269f1fdcf2d7c027dd22c9adfb012c87dc5db6527584834270589303"
+      "sha256": "9a3d3377cb2c1e321a2db0417699c210ce68433e8ce2daa1ef0e8b4bd8d1843f"
     },
     {
       "path": "/std/item/combined",
@@ -379,7 +379,7 @@
       "reasons": [
         "timed_logic"
       ],
-      "sha256": "977ba55e0b0d10368e1f0fba156a51e1f44e75d28cf41a5e02ba18382b5a3f5c"
+      "sha256": "56e9c28bda54f4282a0eeb3d4c71059e02cb4370af425545587725cd42b0797c"
     },
     {
       "path": "/d/snow/npc/child",
@@ -394,7 +394,7 @@
       "reasons": [
         "timed_logic"
       ],
-      "sha256": "0312ef8deb474ec5d2f2f0675702f6b040f85b86c3dae6a98ef61c8d2d3983d8"
+      "sha256": "87729dc18ae74a035923ce9cfef471de089d4717d0247b84cff171f0cdad5d3f"
     },
     {
       "path": "/d/snow/npc/gammer",
@@ -410,7 +410,7 @@
       "reasons": [
         "timed_logic"
       ],
-      "sha256": "048ee5e9a2b11beddc52ef00e23625f48dd052ad2f2b823aef26c0bc39d4fbf9"
+      "sha256": "012dc359cfab07cdced862fced1131b3d48adb09eabd16ab905bfcd9dfa93148"
     },
     {
       "path": "/d/snow/npc/garrison",
@@ -424,7 +424,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "89a76db549dcc1eb95e71b7b6b36d37128260538247c5dcdd56919f0817cef8b"
+      "sha256": "306924ea7f677cc2e99d4f3d010181832dc743fde2a695316284c7d165eed1ad"
     },
     {
       "path": "/d/snow/npc/girl",
@@ -438,7 +438,7 @@
       "reasons": [
         "timed_logic"
       ],
-      "sha256": "c5607192da05b671f2fe76bbf5f62a1fbcb78481eb5e808b6ad43851260aa4c5"
+      "sha256": "f72bec02f87087793aa1d8bf870c04a8c2b457a6440224d3db6439f40368dcca"
     },
     {
       "path": "/d/snow/npc/guard",
@@ -452,7 +452,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "7ef02a4d754ef33adff86676bb565d83fcec37c13ea1e209ddd60ba1094c9128"
+      "sha256": "88c867193035be064b95075b1fb9ed1a2bb0370ac369dff69e5c51e9a71ba105"
     },
     {
       "path": "/d/snow/npc/herbalist",
@@ -467,7 +467,7 @@
         "custom_action",
         "vendor_logic"
       ],
-      "sha256": "0b7f0688a31f32f303983debed7c99b7876b4f91bdb245804996bce5354ea657"
+      "sha256": "c32b621ea0d9cd6128a97419716c2e97f2f397e0c12fc90d5849e07c66462895"
     },
     {
       "path": "/d/snow/npc/lieutenant",
@@ -481,7 +481,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "7efcef79bf276cdda8efa8dac9e7b02466788f217e6a1ddfad03552e5116282f"
+      "sha256": "e52e2ed3e7a711d314f074688f21c2184860a07cb50849ac09ecf262881847e1"
     },
     {
       "path": "/d/snow/npc/obj/crate",
@@ -496,7 +496,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "e849d78c55e432c0741d191d20b4133c516e0a4ba4eb35165d1f6bafe631cc2d"
+      "sha256": "5e6be0e1d44d9ffc830550d47d88bbc34d5dea1192f80c39c3fb69f84d2375d3"
     },
     {
       "path": "/d/snow/npc/obj/syndicator",
@@ -510,7 +510,7 @@
       "reasons": [
         "damage_logic"
       ],
-      "sha256": "a91c6ff8f34ce9058adf9560a9db1ad799cb7236a6510ffb3f729aace794c047"
+      "sha256": "d01cce36146ad6a2976981d750a742f00d50ca335f6837e1812192c72a3688e7"
     },
     {
       "path": "/d/snow/npc/obj/wagon",
@@ -524,7 +524,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "ff552180c6699ba6ee7c4011d77911322e945ac8928c7be1a66a8a62b16f325d"
+      "sha256": "f7a35e30416f416cd37a21fbc5cd650dff7ad5039d41d736aa1fc166e42fbc83"
     },
     {
       "path": "/d/snow/npc/smith",
@@ -540,7 +540,7 @@
         "timed_logic",
         "vendor_logic"
       ],
-      "sha256": "6c3b65d6e9e683855245f8d529d014a48b0ae95005068cabdf97ab33ca549247"
+      "sha256": "31316d3cc248330cd939c4192ef263b5037b5d1fd263e8a40044559717a1a186"
     },
     {
       "path": "/d/snow/npc/teacher",
@@ -557,7 +557,7 @@
         "custom_action",
         "timed_logic"
       ],
-      "sha256": "80c4d030263e36db3166875fd978cf8cc76a334e9042ad8338b0a2c1f5085148"
+      "sha256": "6b773e99872365319b32b5bae338bb4b341aa99bc3bea2452e372eced50a6b06"
     },
     {
       "path": "/d/snow/npc/waiter",
@@ -572,7 +572,7 @@
       "reasons": [
         "vendor_logic"
       ],
-      "sha256": "93d4fc4ddf279b2f3127734550f581ea6768203fa029678f0554090dba7d90c8"
+      "sha256": "10b35ac582e2c36b20e58737e308fc2113e71cad37b618a8e94e2e91a702dddb"
     },
     {
       "path": "/d/snow/npc/yu",
@@ -590,7 +590,7 @@
         "timed_logic",
         "vendor_logic"
       ],
-      "sha256": "cf13d3b7053607aac1d4528c9d85468392d8fa4422b18ba2af1bbb1cd017e2d4"
+      "sha256": "13f7015f2a130bf3c3ba87ceef6f47f054e760120c2d4b9702390eb05a1df9d4"
     },
     {
       "path": "/feature/npc/vendor",
@@ -602,7 +602,7 @@
       "reasons": [
         "vendor_logic"
       ],
-      "sha256": "1c4a9e7176dcc7376fad6f8ea23e0f9559a9882ceb7ad96d518aa4104412d40c"
+      "sha256": "2871cd5edcea2c300ac668e38d901f8e9a7ac21219ff878d2e4943844f29ea8b"
     },
     {
       "path": "/obj/npc/demogorgon",
@@ -614,7 +614,7 @@
       "reasons": [
         "timed_logic"
       ],
-      "sha256": "0b847d8dd75e66ade7ab7bdf65782725ff114d4cc3f4758404a4a7adf71a765a"
+      "sha256": "a19faff62ec50c04f3a2160dacb01e7a38df28d65a46a748673b663eacad0808"
     },
     {
       "path": "/adm/intermud/i2d",
@@ -626,7 +626,7 @@
       "reasons": [
         "timed_logic"
       ],
-      "sha256": "d09bb15915ddc24752118897aae40416d520a269409edb59e82dfb728d8c7f72"
+      "sha256": "47a4d0de4560045827e590238595a439fb2848eb24ed8957202a50cbc9802509"
     },
     {
       "path": "/std/room",
@@ -638,7 +638,7 @@
       "reasons": [
         "door"
       ],
-      "sha256": "ab0f7ef4a5e575446aa952569bf743aff57b9119ce2d283a84237f61082d871d"
+      "sha256": "cd60af504de552da71a2cccf4b813b31fb9b072bfbbefbf238f6ed1369dc11cf"
     },
     {
       "path": "/std/room/bank",
@@ -650,7 +650,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "31a77f440ddfcefcf9c21e499ff85b832c2b9a79dcea3556a8fa8cff4b58256d"
+      "sha256": "91a4681abecaee2aa1e66580116f24de90c932723f04089713d168d2e532d2aa"
     },
     {
       "path": "/std/room/hockshop",
@@ -662,7 +662,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "727c6eaa01b5d28bf74a572df109a278e834fadba1c887873cf3d686398fbdb6"
+      "sha256": "b09027003063582558b9d2092e0c9781bf88b32551ac26566ed0e0a5906bec52"
     },
     {
       "path": "/std/room/journey",
@@ -675,7 +675,7 @@
         "custom_action",
         "timed_logic"
       ],
-      "sha256": "2dad6d4c799083af05d909f1bef36fb867e38c1d96275039087c4935e9deedbf"
+      "sha256": "fac8f66dd395e45478d36536e34a9defd18b5ff31526e79e4f2d96c24efb6424"
     },
     {
       "path": "/d/snow/epath",
@@ -687,7 +687,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "7c4b2fbaed9cd9c53adef65bcc9ceeacf5f7308361365ec439463ca0c9d29bff"
+      "sha256": "00c6608e32177d461c4c5b0994d778bc2c2d0912f32b1b417673bf7a5278a64e"
     },
     {
       "path": "/d/snow/inn_kitchen",
@@ -700,7 +700,7 @@
         "custom_action",
         "door"
       ],
-      "sha256": "1a87e2c3e8f01ec7316ad89d070099e1bf181d1688f2fd250abc3053313bf9a7"
+      "sha256": "170e37f5dd2b16249424f161a3f47848320a6bae33a392b7565222c22feb7077"
     },
     {
       "path": "/d/snow/kitchen",
@@ -712,7 +712,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "dd316981fcd18bcdad382a0ab62f4b67c6ee67a97a5884746028f26b5a88b3d0"
+      "sha256": "ea9e77b186498248103b02f4cceba166643106394d43b27a3599abeec8f9736a"
     },
     {
       "path": "/d/snow/lane2",
@@ -724,7 +724,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "34d3b65d0231ebc13ee2333b7aa22c98d75164ba44c80f5c6a7d107d1f10e45e"
+      "sha256": "c230d3b4e360bb532542149ed016df070f84ebeb3039fed8b13d59050f9683fc"
     },
     {
       "path": "/d/snow/post_office",
@@ -736,7 +736,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "a3c6be1407fef18a9e7ef08edb39c9729a89354704b0fe1c0b6e85c5b2c98bd4"
+      "sha256": "f8c6669eb4458ba70b23abe0693def313086b2c02df0a8e5d7986e84c93ebe18"
     },
     {
       "path": "/d/snow/ruin1",
@@ -748,7 +748,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "61353bb68a66d7960f8412d5758badf2953601e2d45916e27cfd7f2dee1a3bd0"
+      "sha256": "b7a84971dc2855023c65eb48d54a0d31670b7b4bb35a6b55a8126b943685dcde"
     },
     {
       "path": "/d/snow/ruin2",
@@ -760,7 +760,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "90bea2eb5f3e5f065f063ebc54e36417efe15696e7e7a964348b5cd8ed12939f"
+      "sha256": "72ca40ca5a7264b35b939f25db0e57faf327c5f23c13c3a413cf65784277ce6c"
     },
     {
       "path": "/d/snow/square",
@@ -772,7 +772,7 @@
       "reasons": [
         "custom_action"
       ],
-      "sha256": "4a72a6678418bba192591948cebebf14831fae2bc967d20b0e80602c61450f5b"
+      "sha256": "cc55248169a1d6e254b6b0f209be5a2626ad5a370983fce6d6877fa079564f38"
     },
     {
       "path": "/d/snow/square_w",
@@ -784,7 +784,7 @@
       "reasons": [
         "door"
       ],
-      "sha256": "9a50c9cef7f5a0e566ede3f792aecade64c6ceeeb1046855ca9212577893ff27"
+      "sha256": "8eaeaaeffa6ffe16c7a8e148bca1d9e433196740cd18ae90f03d39710561d03a"
     },
     {
       "path": "/obj/user",
@@ -798,7 +798,7 @@
       "reasons": [
         "timed_logic"
       ],
-      "sha256": "6971629b3ab5d93f481fe7db04323434c9f41cc1845e18eab0613f6019e7c50f"
+      "sha256": "a22d9a8a222d637ae85efa8c2865a9793237adf30ebc6dd1d8e2f963b188a5e0"
     },
     {
       "path": "/std/char",
@@ -810,7 +810,7 @@
       "reasons": [
         "timed_logic"
       ],
-      "sha256": "0a73b86125a42882dc2b7b43bdc83fa90fa01659ee59c3d87b96f91703046685"
+      "sha256": "3d96dea3a34a3b3c6562a8a84b6f9c6685c1388343c7d23716162761d61b65f5"
     }
   ],
   "manualReviewGroups": {
@@ -3695,7 +3695,7 @@
     "origin_verified": true,
     "branch": "main",
     "commit": "cc45c06af4852380e5148dad3c9d53ff06854f2c",
-    "dirty": true,
+    "dirty": false,
     "catalog_files": 513,
     "audit_stats": {
       "dangling_exits": 8,

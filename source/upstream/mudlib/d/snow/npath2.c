@@ -18,7 +18,7 @@ LONG
   set("exits", ([ /* sizeof() == 2 */
 	"southeast" : __DIR__"npath3",
 	"west" : __DIR__"npath1",
-//	"north" : "/d/month/a1",
+	"north" : "/d/shuiyue/mountain_path2",
   ]));
   set("objects", ([
 	__DIR__"npc/woman": 1

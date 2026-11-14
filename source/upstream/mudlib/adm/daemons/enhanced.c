@@ -432,14 +432,16 @@ void apply_affix(object ob, mapping affix)
 }
 
 // 武器產生時呼叫：擲骰決定前綴、後綴並套用。
-void roll_affix(object ob)
+// chance_mult 是出詞綴機會的倍數（不給就是 1 倍：前綴 20%、前綴＋後綴 5%；3 倍：前綴 60%、前綴＋後綴 15%）。
+varargs void roll_affix(object ob, int chance_mult)
 {
     int r = random(100);
     string *pre = keys(AFFIX_PREFIX), *suf = keys(AFFIX_SUFFIX);
     mapping affix = ([]);
 
-    if( r >= 80 ) affix["prefix"] = pre[random(sizeof(pre))];
-    if( r >= 95 ) affix["suffix"] = suf[random(sizeof(suf))];
+    if( chance_mult < 1 ) chance_mult = 1;
+    if( r >= 100 - 20 * chance_mult ) affix["prefix"] = pre[random(sizeof(pre))];
+    if( r >= 100 - 5 * chance_mult ) affix["suffix"] = suf[random(sizeof(suf))];
     apply_affix(ob, affix);
 }
 
