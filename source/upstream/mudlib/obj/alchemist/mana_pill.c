@@ -40,7 +40,7 @@ int stuff_ob(object me)
 	me->supplement_stat("food", 5);
 	me->heal_stat("sen", 15 + random(6));
 	me->supplement_stat("sen", 30 + random(6));
-	me->consume_stat("sen", 8);
+	// 原本補神後再扣 8（神滿時吃反而少神），2026-11-14 使用者決定拿掉。
 	me->damage_stat("gin", 1);
 	me->consume_stat("gin", 5);
 	add_amount(-1);
