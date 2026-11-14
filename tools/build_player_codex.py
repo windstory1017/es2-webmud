@@ -380,14 +380,6 @@ def main(out):
             add_src(e['path'], 'npc', nid)
         for p in extra[nid]['sells']:
             add_src(p, 'shop', nid)
-    # 藥鋪櫃台（inherit HERB 的房間）賣的丹藥，見 daemon/misc/herb_catalog.c（2026-11-14）
-    herb_files = ['/obj/alchemist/' + f for f in re.findall(
-        r'"\w+"\s*:\s*"(\w+)"', bc.read(MUD / 'daemon/misc/herb_catalog.c').split('product_file')[1].split(']);')[0])]
-    for rid in sorted(reach):
-        src = MUD / (rid.lstrip('/') + '.c')
-        if src.exists() and re.search(r'^\s*inherit\s+HERB\s*;', bc.read(src), re.M):
-            for p in herb_files:
-                add_src(p, 'counter', rid)
 
     # ---- 技能：NPC 傳授、書籍研讀
     skill_by_code = {s['code']: s for s in data['skills']}
@@ -475,14 +467,41 @@ def main(out):
             'faction': fac_by_master.get(n) or fac_by_code.get(ex['faction']),
         }
 
+    # 商店售價：一般商店照物品價值；繼承 pill_vendor 的 NPC 依丹藥階級或個別倍數加價（同 obj/alchemist/pill_vendor.c）
+    pv = bc.strip_comments(bc.read(MUD / 'obj/alchemist/pill_vendor.c'))
+    grade_markup = {int(k): int(v) for k, v in re.findall(r'(\d+)\s*:\s*(\d+)', pv.split('GRADE_MARKUP')[1].split(';')[0])}
+    file_markup = {k: int(v) for k, v in re.findall(r'"([^"]+)"\s*:\s*(\d+)', pv.split('FILE_MARKUP')[1].split(';')[0])}
+
+    def shop_price_text(it):
+        code = bc.strip_comments(bc.read(ROOT / it['file']))
+        v = bc.set_int(code, 'value')
+        if v is None:
+            v = bc.set_int(code, 'base_value')
+        if not v:
+            return None
+        path = '/' + str((ROOT / it['file']).relative_to(MUD)).removesuffix('.c')
+        prices = set()
+        for kind, nid in item_src[it['id']]:
+            if kind != 'shop':
+                continue
+            rate = 1
+            if 'pill_vendor' in bc.read(ROOT / npcs[nid]['file']):
+                grade = bc.set_int(code, 'pill_grade')
+                rate = file_markup.get(path) or grade_markup.get(grade) or 1
+            prices.add(v * rate)
+        if not prices:
+            return None
+        lo, hi = min(prices), max(prices)
+        return bc.money_text(lo) if lo == hi else bc.money_text(lo) + '～' + bc.money_text(hi)
+
     def item_out(it):
         o = {'id': ids[it['id']], 'name': it['name'], 'ids': it.get('ids', [])[:1], 'long': text(it['long']),
              'value': it.get('value'), 'weight': it.get('weight'),
              'flags': [f for f in it.get('flags', []) if f != '可研讀'],
              'src': [[k, ids[ref]] for k, ref in item_src[it['id']]]}
-        # 丹藥不顯示價格，只顯示效果（使用者指示，2026-11-14）
+        # 丹藥：商店有賣的顯示商店售價，沒賣的不顯示價格（使用者指示，2026-11-14；方士藥鋪櫃台不算商店）
         if it.get('cat') == '丹藥':
-            o['value'] = None
+            o['value'] = shop_price_text(it)
         if it['kind_tab'] == 'weapons':
             o['kind'] = it['kind']
             o['usages'] = [{'skill': u['skill'], 'dmg': u.get('dmg')} for u in it['usages']]

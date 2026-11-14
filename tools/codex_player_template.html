@@ -265,11 +265,10 @@ svg.map .nm-long { font-size: 10px; }
     return room ? `<button class="linkish" data-room="${esc(r)}">${esc(room.short)}</button><span class="hint">（${esc(areaOfRoom[r] || '')}）</span>` : '';
   }
   function whereHtml(it) {
-    const by = { room: [], npc: [], shop: [], counter: [] };
+    const by = { room: [], npc: [], shop: [] };
     (it.src || []).forEach(([k, ref]) => (by[k] || (by[k] = [])).push(ref));
     const parts = [];
     if (by.shop.length) parts.push('販售：' + by.shop.map(npcLink).join('、'));
-    if (by.counter.length) parts.push('藥鋪櫃台（方士）：' + by.counter.map(roomLink).join('、'));
     if (by.npc.length) parts.push('身上帶著：' + by.npc.map(npcLink).join('、'));
     if (by.room.length) parts.push('擺放在：' + by.room.map(roomLink).join('、'));
     return parts.join('<br>') || '—';
