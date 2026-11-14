@@ -19,8 +19,10 @@ def test_affix_tables_match_design():
     assert pre['修羅'] == {'cor': 2, 'intimidate': 15}
     assert pre['雛鐵'] == {'attack': 10, 'force': 10}
     assert suf['天鷹'] == {'awarness': 50} and suf['金鷹'] == {'wittiness': 30}
-    # 必須有前綴才會有後綴；機率 80／15／5。
-    assert 'if( r >= 80 ) affix["prefix"]' in src and 'if( r >= 95 ) affix["suffix"]' in src
+    # 必須有前綴才會有後綴；一般武器機率 80／15／5（倍數 1：r >= 100 - 20、r >= 100 - 5）。
+    assert 'if( r >= 100 - 20 * chance_mult ) affix["prefix"]' in src
+    assert 'if( r >= 100 - 5 * chance_mult ) affix["suffix"]' in src
+    assert 'if( chance_mult < 1 ) chance_mult = 1;' in src
     assert 'if( !prefix || !stringp(suffix)' in src
     assert '#define AFFIX_COLOR 1' in src
 

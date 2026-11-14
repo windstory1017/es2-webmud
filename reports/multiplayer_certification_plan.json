@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": "3.20.76",
-  "generated": "2026-09-11T14:43:29",
+  "version": "3.20.77 MAP V7 READONLY WORLD",
+  "generated": "2026-11-14T16:28:47",
   "livePassed": [
     "two real accounts simultaneously logged in",
     "bidirectional tell resilience",
@@ -21,7 +21,7 @@
       "liveEvidenceRecorded": true,
       "implementationUnchanged": false,
       "recorded": "4285235bb4d5c91f28c75359745bdeb0690b338076d3d166a9118b24dd479818",
-      "current": "cb51eea576757d11a43eb34641831e4fcc8c4f7c8d39c0f043dcb697dd094413",
+      "current": "72041c2cc23dcb9e0a5b62fd4c0c8a2370df28b21a0a23e5aebbc187c7801cb0",
       "sourceComplete": true
     },
     "login/tell/save/reconnect": {
@@ -29,7 +29,7 @@
       "liveEvidenceRecorded": true,
       "implementationUnchanged": false,
       "recorded": "e35911c7fbde3bc97ff677bffd425cc6d1ff308063032f2af11f5754165fc5ef",
-      "current": "7936c97713fa4e8f0f3831e0e6e7e591be11f0e2ed49de358b5ea7018db9b59b",
+      "current": "6becef10b1f8cb5113dd04e2a42c24507d7e42dada2c8637d3a0fd8deb7923a5",
       "sourceComplete": true
     },
     "same-room/say/team/follow": {
@@ -37,15 +37,15 @@
       "liveEvidenceRecorded": true,
       "implementationUnchanged": false,
       "recorded": "0dd34d02491f38cc79bebc15fb96a0e6c4ac85e02ebc535a7854c9418b4ab757",
-      "current": "69d65f2656b667bfac0e11523ac5feeda1c5894aebed2078b5b0f7e635f5833a",
+      "current": "b89afa0b3eeb1e7ac7c5f5b228a55f428a2fe21f2aae31160e3450f80d19c582",
       "sourceComplete": true
     },
     "shared-world/object-ownership": {
       "fresh": false,
       "liveEvidenceRecorded": false,
-      "implementationUnchanged": true,
+      "implementationUnchanged": false,
       "recorded": "7c3e4eb14786ed4d00e63fb1318a45e76a1b7d9ba8450aba1936504624802aa5",
-      "current": "7c3e4eb14786ed4d00e63fb1318a45e76a1b7d9ba8450aba1936504624802aa5",
+      "current": "01bb8eeb46fd6a7312af0828a7164eac86ed76b470169519dd63a904f9616bea",
       "sourceComplete": true
     },
     "mutual-player-fight": {
@@ -53,7 +53,7 @@
       "liveEvidenceRecorded": false,
       "implementationUnchanged": false,
       "recorded": "4ef05b1037b8a78e094fbe8d1e4f4ff7ba62dc9ad1e2174801dbcb873e2398d3",
-      "current": "33fa9b5e53b2b4c7a74b0dd6b74eb1897c07a051158168d5cb5b0bec863a8262",
+      "current": "ef1a5192cd567d3feeb12961c331bc19753caa8a02e72e7f077ac39741a43c6f",
       "sourceComplete": true
     },
     "death/corpse/revival": {
@@ -61,7 +61,7 @@
       "liveEvidenceRecorded": false,
       "implementationUnchanged": false,
       "recorded": "8ae4403573a6c61148fda4224554d3d00f8803918ba9c35d03539a2c53f30b94",
-      "current": "2d0d0561659bd5659b9d8551aa23273662a9fdbfc14501ca583eb1a2d926372e",
+      "current": "ab792cf2aef61e245cdb5eb8e51a356710d0bcf82b1e750141e9dc3cd1552084",
       "sourceComplete": true
     }
   },
