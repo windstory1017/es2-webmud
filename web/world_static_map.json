@@ -3294,6 +3294,108 @@
       "x": 2,
       "y": -14,
       "layer": "暗道"
+    },
+    {
+      "id": "/d/tianshan/fog",
+      "label": "霧海",
+      "area": "天山",
+      "x": 7,
+      "y": -13
+    },
+    {
+      "id": "/d/tianshan/spring",
+      "label": "清泉",
+      "area": "天山",
+      "x": 7,
+      "y": -14
+    },
+    {
+      "id": "/d/tianshan/cave1",
+      "label": "山洞內",
+      "area": "天山",
+      "x": 8,
+      "y": -14,
+      "layer": "洞穴"
+    },
+    {
+      "id": "/d/tianshan/cave2",
+      "label": "山洞內",
+      "area": "天山",
+      "x": 9,
+      "y": -14,
+      "layer": "洞穴"
+    },
+    {
+      "id": "/d/tianshan/cave_mouth",
+      "label": "洞口",
+      "area": "天山",
+      "x": 10,
+      "y": -14
+    },
+    {
+      "id": "/d/tianshan/dirt_road1",
+      "label": "土路",
+      "area": "天山",
+      "x": 11,
+      "y": -14
+    },
+    {
+      "id": "/d/tianshan/fork",
+      "label": "岔路口",
+      "area": "天山",
+      "x": 12,
+      "y": -14
+    },
+    {
+      "id": "/d/tianshan/peach_grove",
+      "label": "桃花林",
+      "area": "天山",
+      "x": 13,
+      "y": -14
+    },
+    {
+      "id": "/d/tianshan/dirt_road2",
+      "label": "土路",
+      "area": "天山",
+      "x": 12,
+      "y": -15
+    },
+    {
+      "id": "/d/tianshan/dirt_road3",
+      "label": "土路",
+      "area": "天山",
+      "x": 12,
+      "y": -16
+    },
+    {
+      "id": "/d/tianshan/cabin",
+      "label": "小木屋",
+      "area": "天山",
+      "x": 12,
+      "y": -17
+    },
+    {
+      "id": "/d/tianshan/garden",
+      "label": "小菜園",
+      "area": "天山",
+      "x": 12,
+      "y": -13
+    },
+    {
+      "id": "/d/tianshan/hall",
+      "label": "靈堂",
+      "area": "天山",
+      "x": 11,
+      "y": -17,
+      "layer": "內堂"
+    },
+    {
+      "id": "/d/tianshan/secret_room",
+      "label": "密室",
+      "area": "天山",
+      "x": 10,
+      "y": -17,
+      "layer": "密室"
     }
   ],
   "edges": [
@@ -9025,6 +9127,174 @@
       "from": "/d/fengcheng/stone_road1",
       "to": "/d/mengjia/crossroad",
       "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/fog",
+      "to": "/d/fengcheng/east_gate",
+      "direction": "westdown",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/spring",
+      "to": "/d/tianshan/fog",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/cave1",
+      "to": "/d/tianshan/spring",
+      "direction": "out",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/cave1",
+      "to": "/d/tianshan/cave2",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/cave2",
+      "to": "/d/tianshan/cave1",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/cave_mouth",
+      "to": "/d/tianshan/cave2",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/dirt_road1",
+      "to": "/d/tianshan/cave_mouth",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/dirt_road1",
+      "to": "/d/tianshan/fork",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/fork",
+      "to": "/d/tianshan/dirt_road2",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/fork",
+      "to": "/d/tianshan/dirt_road1",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/fork",
+      "to": "/d/tianshan/garden",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/fork",
+      "to": "/d/tianshan/peach_grove",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/peach_grove",
+      "to": "/d/tianshan/fork",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/dirt_road2",
+      "to": "/d/tianshan/dirt_road3",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/dirt_road2",
+      "to": "/d/tianshan/fork",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/dirt_road3",
+      "to": "/d/tianshan/cabin",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/dirt_road3",
+      "to": "/d/tianshan/dirt_road2",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/cabin",
+      "to": "/d/tianshan/dirt_road3",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/garden",
+      "to": "/d/tianshan/fork",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/hall",
+      "to": "/d/tianshan/cabin",
+      "direction": "out",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/secret_room",
+      "to": "/d/tianshan/hall",
+      "direction": "up",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/east_gate",
+      "to": "/d/tianshan/fog",
+      "direction": "eastup",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/fog",
+      "to": "/d/tianshan/spring",
+      "direction": "search",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/spring",
+      "to": "/d/tianshan/cave1",
+      "direction": "enter",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/cave2",
+      "to": "/d/tianshan/cave_mouth",
+      "direction": "enter",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/cave_mouth",
+      "to": "/d/tianshan/dirt_road1",
+      "direction": "search",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/cabin",
+      "to": "/d/tianshan/hall",
+      "direction": "give",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/hall",
+      "to": "/d/tianshan/secret_room",
+      "direction": "kneel",
       "resolved": true
     }
   ],

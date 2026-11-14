@@ -15,6 +15,7 @@ LONG
         "west" : __DIR__"mountain_road",
         "south" : __DIR__"stone_road2",
         "northup" : __DIR__"cliff",
+        "eastup" : "/d/tianshan/fog",
     ]));
     set("objects", ([
         "/obj/area/garrison" : 4,

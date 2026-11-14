@@ -7,7 +7,7 @@
 
 - 城門口 D20 往 south 接水月村石板路 `/d/shuiyue/stone_road`（D22），D22 往 north 接回來。
 - 石板路 D14 往 north 接孟家莊十字路口（`/d/mengjia/crossroad`，2026-11-14 孟家莊做好後開通）。
-- 東城門 L12 往 `eastup` 接天山霧海 N10（天山尚未製作，暫不開）；往 `northup` 上天山孤崖，孤崖用 `southdown` 下來。
+- 東城門 L12 往 `eastup` 接天山霧海 N10（`/d/tianshan/fog`，2026-11-14 天山做好後開通）；往 `northup` 上天山孤崖，孤崖用 `southdown` 下來。
 - 城門口 D20 往 up 上城樓 B20（圖層「城樓」），城樓用 down 下來。春風客棧 F18 往 up 上二樓（圖層「二樓」）。
 
 ## 房間（`map/area`：風城）
@@ -18,7 +18,7 @@
 | L10 | `cliff.c` | 天山孤崖 | 舊資料全文 | southdown L12 |
 | H12 | `inner_yard.c` | 內院廣場 | 設計需求＋新寫（八寶樓） | south H14 |
 | J12 | `mountain_road.c` | 山路 | 舊資料全文（設計表） | north J10、east L12 |
-| L12 | `east_gate.c` | 東城門 | 設計需求＋新寫 | west J12、south L14、northup L10 |
+| L12 | `east_gate.c` | 東城門 | 設計需求＋新寫 | west J12、south L14、northup L10、eastup 天山霧海 |
 | D14 | `stone_road1.c` | 石板路 | 新寫 | north 孟家莊 D12、south D16、east F14 |
 | F14 | `li_house.c` | 民宅 | 舊資料全文（設計表） | west D14 |
 | H14 | `general_gate.c` | 將軍府 | 設計需求＋新寫；**非戰區** | south H16、north H12（猜對字謎才能過） |
