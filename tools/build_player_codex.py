@@ -380,6 +380,10 @@ def main(out):
             add_src(e['path'], 'npc', nid)
         for p in extra[nid]['sells']:
             add_src(p, 'shop', nid)
+    # 方士煉製的丹藥（有 query_heat_product 的成品）：沒有地方賣也要列出效果，但不顯示價格（使用者指示，2026-11-14）
+    for f in sorted((MUD / 'obj' / 'alchemist').glob('*.c')):
+        if 'query_heat_product' in bc.read(f):
+            add_src('/' + str(f.relative_to(MUD)).removesuffix('.c'), 'craft', None)
 
     # ---- 技能：NPC 傳授、書籍研讀
     skill_by_code = {s['code']: s for s in data['skills']}
@@ -498,7 +502,7 @@ def main(out):
         o = {'id': ids[it['id']], 'name': it['name'], 'ids': it.get('ids', [])[:1], 'long': text(it['long']),
              'value': it.get('value'), 'weight': it.get('weight'),
              'flags': [f for f in it.get('flags', []) if f != '可研讀'],
-             'src': [[k, ids[ref]] for k, ref in item_src[it['id']]]}
+             'src': [[k, ids[ref]] if ref is not None else [k, None] for k, ref in item_src[it['id']]]}
         # 丹藥：商店有賣的顯示商店售價，沒賣的不顯示價格（使用者指示，2026-11-14；方士藥鋪櫃台不算商店）
         if it.get('cat') == '丹藥':
             o['value'] = shop_price_text(it)
