@@ -45,7 +45,7 @@ LONG
 
 // ------------------------------------------------------------------
 // 謎題：emote sigh → 轉頭談景 → say 獨上高樓望盡天涯路 → 傳授太乙劍法
-// 敘述一句一行，不自動斷行（使用者指示，2026-11-09）。
+// 說話用 say、動作用 emote，一句一行不斷行（使用者指示，2026-11-14）。
 // ------------------------------------------------------------------
 
 private int talk_gap() { return (1 + random(2)) * 2; }
@@ -53,11 +53,6 @@ private int talk_gap() { return (1 + random(2)) * 2; }
 private int still_here(object who)
 {
     return objectp(who) && environment(who) == environment();
-}
-
-private void speak(string msg)
-{
-    message_vision(msg, this_object(), 0, 1);
 }
 
 int accept_info(object ob, string type)
@@ -82,27 +77,28 @@ void relay_emote(object who, string verb)
 void not_for_you(object who)
 {
     if( !still_here(who) ) return;
-    speak("$N瞥了" + who->name() + "一眼﹐淡淡說道﹕這套劍法與你無緣。\n");
+    command("emote 瞥了" + who->name() + "一眼。");
+    command("say 這套劍法與你無緣。");
 }
 
 void confused(object who)
 {
     if( !still_here(who) ) { delete_temp(WAITING); return; }
-    speak("$N微微一愣﹐不解地望了" + who->name() + "一眼﹐隨即轉過頭去﹐望向遠方。\n");
+    command("emote 微微一愣﹐不解地望了" + who->name() + "一眼﹐隨即轉過頭去﹐望向遠方。");
     call_out("scenery1", talk_gap(), who);
 }
 
 void scenery1(object who)
 {
     if( !still_here(who) ) { delete_temp(WAITING); return; }
-    speak("$N輕聲說道﹕此處山色如畫﹐雲海翻湧﹐令人心胸為之一寬。\n");
+    command("say 此處山色如畫﹐雲海翻湧﹐令人心胸為之一寬。");
     call_out("scenery2", talk_gap(), who);
 }
 
 void scenery2(object who)
 {
     if( !still_here(who) ) { delete_temp(WAITING); return; }
-    speak("$N又道﹕可惜登高望遠﹐總覺得少了一句話能道盡此情此景。\n");
+    command("say 可惜登高望遠﹐總覺得少了一句話能道盡此情此景。");
     call_out("give_up", 60, who);   // 一直沒人接話就不等了
 }
 
@@ -129,14 +125,15 @@ void relay_say(object who, string arg)
 void teach1(object who)
 {
     if( !still_here(who) ) return;
-    speak("$N眼睛一亮﹐撫掌大笑﹐說道﹕好一句「獨上高樓望盡天涯路」！\n");
+    command("emote 眼睛一亮﹐撫掌大笑。");
+    command("say 好一句「獨上高樓望盡天涯路」！");
     call_out("teach2", talk_gap(), who);
 }
 
 void teach2(object who)
 {
     if( !still_here(who) ) return;
-    speak("$N說道﹕貧道正是在此處悟出一套劍法﹐今日便傳與有緣人。\n");
+    command("say 貧道正是在此處悟出一套劍法﹐今日便傳與有緣人。");
     call_out("teach3", talk_gap(), who);
 }
 
@@ -145,7 +142,7 @@ void teach3(object who)
     string sk = "taiyie";
 
     if( !still_here(who) ) return;
-    speak("$N將太乙劍法從頭演示了一遍﹐" + who->name() + "在一旁細心領會。\n");
+    command("emote 將太乙劍法從頭演示了一遍﹐" + who->name() + "在一旁細心領會。");
     if( who->query(TAUGHT) ) return;
     who->set(TAUGHT, 1);
     if( who->query_learn(sk) < who->skill_threshold(sk, 1) )
