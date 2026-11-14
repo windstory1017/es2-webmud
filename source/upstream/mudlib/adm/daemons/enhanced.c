@@ -442,3 +442,91 @@ void roll_affix(object ob)
     if( r >= 95 ) affix["suffix"] = suf[random(sizeof(suf))];
     apply_affix(ob, affix);
 }
+
+/* =====================================================================
+ * 衣服附加屬性（鳳娘白甌繡花，設計見 docs/EMBROIDERY.md）
+ *
+ * 前綴表沿用武器的 AFFIX_PREFIX（效果、顏色都相同），只是名稱像武器的幾個換成布料、針線的說法：
+ * 黑鋼→錦繡、精鋼→金絲、黑鐵→墨染、點鋼→銀針、雛鐵→雲紋、青鋼→青綾、鐵棘→棘繡。
+ * 後綴與武器相同。名稱為「前綴＋後綴＋衣」，每個修飾讓價值變成 1.5 倍。
+ * 結果記在 query("affix")，與武器的 affix 同格式。
+ * =====================================================================
+ */
+private mapping CLOTH_RENAME = ([
+    "黑鋼": "錦繡", "精鋼": "金絲", "黑鐵": "墨染", "點鋼": "銀針",
+    "雛鐵": "雲紋", "青鋼": "青綾", "鐵棘": "棘繡",
+]);
+private mapping cloth_prefix_tab, cloth_color_tab;
+
+private void init_cloth_tables()
+{
+    string k, n;
+
+    if( mapp(cloth_prefix_tab) ) return;
+    cloth_prefix_tab = ([]);
+    cloth_color_tab = ([]);
+    foreach(k in keys(AFFIX_PREFIX)) {
+        n = stringp(CLOTH_RENAME[k]) ? CLOTH_RENAME[k] : k;
+        cloth_prefix_tab[n] = AFFIX_PREFIX[k];
+        if( !undefinedp(AFFIX_COLOR_CODE[k]) ) cloth_color_tab[n] = AFFIX_COLOR_CODE[k];
+    }
+}
+
+// 依 affix 重新設定衣服的名稱、能力與價值；affix 為空就是沒有詞綴。
+// 衣服原本的能力記在 cloth_base_apply，原名記在 cloth_base_name，原價記在 cloth_base_value。
+void apply_cloth_affix(object ob, mapping affix)
+{
+    string name, prefix, suffix, k, pcolor, scolor;
+    int value, v;
+    mapping apply, part;
+
+    if( !objectp(ob) ) return;
+    init_cloth_tables();
+    if( !mapp(affix) ) affix = ([]);
+    if( !mapp(ob->query("cloth_base_apply")) )
+        ob->set("cloth_base_apply", copy(ob->query("apply_armor/cloth")));
+    if( !stringp(ob->query("cloth_base_name")) ) ob->set("cloth_base_name", ob->query("name"));
+    if( !ob->query("cloth_base_value") ) ob->set("cloth_base_value", ob->query("value"));
+
+    prefix = affix["prefix"];
+    suffix = affix["suffix"];
+    if( !stringp(prefix) || undefinedp(cloth_prefix_tab[prefix]) ) prefix = 0;
+    if( !prefix || !stringp(suffix) || undefinedp(AFFIX_SUFFIX[suffix]) ) suffix = 0;
+
+    apply = copy(ob->query("cloth_base_apply"));
+    value = ob->query("cloth_base_value");
+    name = ob->query("cloth_base_name");
+    foreach(part in ({ prefix ? cloth_prefix_tab[prefix] : 0, suffix ? AFFIX_SUFFIX[suffix] : 0 })) {
+        if( !mapp(part) ) continue;
+        foreach(k, v in part) apply[k] += v;
+        value = value * 3 / 2;
+    }
+    if( prefix ) {
+        pcolor = AFFIX_COLOR && !undefinedp(cloth_color_tab[prefix]) ? cloth_color_tab[prefix] : 0;
+        scolor = suffix ? affix_color(suffix) : 0;
+        if( suffix )
+            name = (pcolor ? pcolor + prefix + NOR : prefix)
+                 + (scolor ? scolor + suffix + "衣" + NOR : suffix + "衣");
+        else
+            name = pcolor ? pcolor + prefix + "衣" + NOR : prefix + "衣";
+    }
+    ob->set("name", name);
+    ob->set("value", value);
+    ob->set("apply_armor/cloth", apply);
+    if( prefix ) ob->set("affix", suffix ? ([ "prefix": prefix, "suffix": suffix ]) : ([ "prefix": prefix ]));
+    else ob->set("affix", ([]));
+}
+
+// 繡花擲到詞綴：一個前綴，再 20% 機率加一個後綴。
+void roll_cloth_affix(object ob)
+{
+    string *pre, *suf;
+    mapping affix = ([]);
+
+    init_cloth_tables();
+    pre = keys(cloth_prefix_tab);
+    suf = keys(AFFIX_SUFFIX);
+    affix["prefix"] = pre[random(sizeof(pre))];
+    if( random(100) < 20 ) affix["suffix"] = suf[random(sizeof(suf))];
+    apply_cloth_affix(ob, affix);
+}

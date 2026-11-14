@@ -30,12 +30,6 @@ int skill_cap_points(object me, mapping caps, string skill)
     return me->skill_threshold(skill, caps[skill]);
 }
 
-/* 點數的硬上限：升到「上限下一級」所需點數減 1，保證讀書永遠 gain 不到超過書的上限。 */
-int skill_hard_points(object me, mapping caps, string skill)
-{
-    return me->skill_threshold(skill, caps[skill] + 1) - 1;
-}
-
 /* 這項技能是否已讀到這本書的上限（使用者定案，2026-11-11，修正卡級）：
  * 看等級：等級到了書的上限才算讀滿。
  * 點數已夠升到上限、但等級還沒 gain 上去時，書仍可以讀，每回合只給極少的點數
@@ -44,8 +38,8 @@ int skill_hard_points(object me, mapping caps, string skill)
 int skill_capped(object me, mapping caps, string skill)
 {
     if( undefinedp(caps[skill]) ) return 0;
-    return me->query_skill(skill, 1) >= caps[skill]
-        || me->query_learn(skill) >= skill_hard_points(me, caps, skill);
+    // 不設點數硬上限（使用者定案，2026-11-12）：等級到了書的上限才算讀滿。
+    return me->query_skill(skill, 1) >= caps[skill];
 }
 
 /* 書的上限要每一項都讀到了才算讀完（使用者定案，2026-11-07）：例如上限讀書 70、古文 70，
@@ -146,8 +140,8 @@ int study_content(object me)
         else if( me->query_learn(skill) < skill_cap_points(me, caps, skill) )
             me->improve_skill_exact(skill, gain, skill_cap_points(me, caps, skill));
         // 點數已夠、等級還沒 gain 上去：只給 1 點（另有人物等級加成），
-        // 讓 gain 有新點數可以升級；不會超過升到上限下一級所需的點數。
-        else me->improve_skill_exact(skill, 1, skill_hard_points(me, caps, skill));
+        // 讓 gain 有新點數可以升級。點數本來就超過也照樣給，等級到上限就停讀。
+        else me->improve_skill_exact(skill, 1);
     }
 
     if( study_capped(me, caps) ) {
