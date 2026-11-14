@@ -1,0 +1,80 @@
+# ES2 朱衣派 道士設定 （火）
+
+- URL: https://es2tips.blogspot.com/2014/08/es2_13.html
+- Published: 2014-08-13T21:06:00.001+08:00
+- Updated: 2014-08-13T21:23:10.544+08:00
+- Labels: 道士
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+help taoist.fire
+
+○ 朱衣派資料
+
+職業: 道士
+
+種族: 不限
+
+性別: 不限
+
+師傅: 朱衣派道士 郭布(Kuo boo)
+
+技能:
+
+    天師道法【火術】 (taoism-fire):
+
+　　　　技能種類: 咒術
+
+　　　　學習條件: 拜師後
+
+　　　　特殊能力: magic fire: 咒火，消耗 sen 5 delay 1 傷害 50%。
+
+                  earth fire: 地火，消耗 sen 20 delay 1 傷害 33%，恢復氣，無
+
+                              視目標抗性。
+
+                  inferno fire: 大業火，消耗 sen 45 delay 2 傷害 50% 附加等
+
+                                同於人物當前氣 25% 的傷害。
+
+                  pure fire: 三昧真火，消耗 sen 75 delay 3 總傷害 300%。
+
+　　　　能力提昇: 無
+
+　　　　相關參考: help taoism-fire
+
+　　丹陽神功 (sun force):
+
+　　　　技能種類: 內功
+
+　　　　學習條件: 人物等級 >=15
+
+　　　　特殊能力: remedy: 消耗飲水恢復恢復 gin kee sen 當前值。
+
+                  recover: 等級 30，提昇疲勞恢復 gin kee sen 最大值。
+
+                  sun fire: 丹陽神功 90，聚日術僅能在白天使用。消耗 150 sen，
+
+                            暫時提高人物慧根、定力和咒文能力值。
+
+        能力提昇: 練成為 10級，升級 gin<sk*8 kee<sk*8 sen<sk*15 時，每級提昇
+
+                  1 點 gin，1 點 kee，3 點 sen。練成時提昇 2 點慧根。
+
+        相關參考: help sun force
+
+    火雲奇門步法 (eight_steps):
+
+        技能種類：縱躍閃躲
+
+        習得條件: 拜師後
+
+        特殊功能: 無
+
+        能力提昇: 無
+
+其他技能請參考: help taoist.adv
+
+最後更新日期:2013/05/25

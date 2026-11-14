@@ -1,0 +1,24 @@
+# 刑天
+
+- URL: https://sites.google.com/site/es2mud/home/story-lines/zhong-zu-she-ding/headless
+- Path: /site/es2mud/home/story-lines/zhong-zu-she-ding/headless
+- Source: ES2 MUD 天朝帝國 (Google Site)  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-09T16:41:42+0800
+
+---
+
+# 刑天
+
+[image:  https://lh3.googleusercontent.com/sitesv/AG8ngQXfSjs0CW8OnJCvxuELGorp5SJFSzIU_Y3uq4gOPTcBy-rrs9z3B3hYUAJgw59lFAjzsfqKrjGV2Pe0XVdBQeuOPcFHy_fYiegp_Usfbj2uNzEOF_SotGgw2kynh_BZWxEnWou1B1uosZdd5GdrRlLksspI3nDityXtLvPpQCsyyhLPe53zpNsPzkH4HWRzEe716Le8yzBG_MaAkHk=w1280]
+
+需要業力：25
+
+適合職業：武者65級，軍人70級
+
+初始狀態：精80，氣100，神30
+
+初始屬性上限：膂力30，膽識20，悟性15，靈性10，定力16，機敏24，根骨28，慧根18
+
+種族被動能力：攻擊能力50，防禦能力100，防禦力100，移動力50
+
+種族主動能力：通過祭祀舞蹈來提升自身的各種能力。

@@ -16,9 +16,9 @@ int do_climb(string arg)
     if( arg != "峭壁" && arg != "cliff" ) return 0;
     if( me->is_busy() || me->is_fighting() )
         return notify_fail("你現在沒有辦法分心攀爬。\n");
-    message_vision("$N攀著峭壁上的岩縫與花藤，小心翼翼地往上爬去。\n", me);
+    message_vision("$N攀著峭壁上的岩縫與花藤，小心翼翼地往下爬去。\n", me);
     if( !me->move(__DIR__"platform") ) return 0;
-    message("vision", me->name() + "從峭壁下方爬了上來。\n", environment(me), me);
+    message("vision", me->name() + "從上頭的峭壁爬了下來。\n", environment(me), me);
     return 1;
 }
 
@@ -29,6 +29,7 @@ void create()
 走到這裏時你嚇了一跳, 原來瓦屋之後竟有這般寬闊的景色, 在你腳邊的是深不見底的懸崖. 你心中暗叫僥倖! 差一點就摔下去了. 原來這裏是百花村的風景名勝之一『百花崖』, 你往下看去, 各式各樣的花沿著峭壁生長, 或者這就是百花村的由來吧!
 LONG
     );
+    set("detail/峭壁", "峭壁上岩縫縱橫，一條條花藤沿著石縫垂掛而下，只要小心一點，應該可以攀著岩縫與花藤爬 (climb) 下去。");
     set("exits", ([
         "east" : __DIR__"tile_house",
     ]));

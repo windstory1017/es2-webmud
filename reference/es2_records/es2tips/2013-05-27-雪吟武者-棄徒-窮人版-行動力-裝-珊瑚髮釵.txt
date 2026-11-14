@@ -1,0 +1,48 @@
+# 雪吟武者「棄徒」  窮人版「行動力」裝  (珊瑚髮釵)
+
+- URL: https://es2tips.blogspot.com/2013/05/blog-post_9533.html
+- Published: 2013-05-27T15:45:00.000+08:00
+- Updated: 2013-06-05T17:33:36.909+08:00
+- Labels: 行動力
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+容易取得的   窮人版「行動力」裝備
+
+----------------------------------------------------
+
+ˇ珊瑚髮釵(Coral hairpin)◎                       ← 漕幫 官兵任務
+
+ˇ征衣「血染」(Blood cloth)◎                    ←   STR 可增加行動力（摩雲、鬼王）
+
+ˇ青竹腿護(Bamboo legs)◎                    ←　平陽山 bandit
+
+ˇ天邪虎爪(Celestial tiger's claw)◎        ← 九天玄石 Stone 天邪虎
+
+ˇ黃銅佛珠(Copper rosary)◎                  ←   STR 可增加行動力 (liuye)
+
+ˇ力2行10戒(Ancient ring)◎               ← Strange man 隨機戒指，但不容易有行動力的戒指
+
+ˇ白龍牙(White dragon sword)◎         ← Monkey master
+
+ˇ混天白龍(White-dragon plate)◎      ← 可換成徐彪的狼皮 armor 有 +行動力，或 +STR armor
+
+ˇ銀彎束腰(Silver girth)◎                ← 郭布   (Or, May's 白玉腰帶)
+
+ˇ塵不沾(Boots of cleanse)◎       ← 武道通  
+
+ˇ繞指柔劍(Slasher sword)◎        ← Lu
+
+> id hairpin
+
+一支鮮紅的珊瑚，可以用來當髮釵。
+
+護具特性﹕
+
+  行動力                         50
+
+  內功                           5
+
+  警覺性                         50

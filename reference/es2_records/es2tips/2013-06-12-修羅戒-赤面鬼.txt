@@ -1,0 +1,26 @@
+# 修羅戒 赤面鬼
+
+- URL: https://es2tips.blogspot.com/2013/06/blog-post_8999.html
+- Published: 2013-06-12T11:53:00.002+08:00
+- Updated: 2013-06-12T11:53:55.942+08:00
+- Labels: 火焰傷害力, 膽識
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+你戴上一枚修羅戒。
+
+> id ring
+
+一枚血紅色的戒指，光是看著它鮮紅色的表面，就會令人心跳加速，有
+
+種想一嚐鮮血味道的衝動。
+
+護具特性﹕
+
+  膽識                           1
+
+  火焰傷害力                     10
+
+  攻擊能力值                     25

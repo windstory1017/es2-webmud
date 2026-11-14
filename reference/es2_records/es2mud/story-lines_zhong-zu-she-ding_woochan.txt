@@ -1,0 +1,24 @@
+# 無腸
+
+- URL: https://sites.google.com/site/es2mud/home/story-lines/zhong-zu-she-ding/woochan
+- Path: /site/es2mud/home/story-lines/zhong-zu-she-ding/woochan
+- Source: ES2 MUD 天朝帝國 (Google Site)  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-09T16:41:42+0800
+
+---
+
+# 無腸
+
+[image:  https://lh3.googleusercontent.com/sitesv/AG8ngQVE4tn8oNAb7FRW6au0yzicMYgsUdwB_NEtiC-6JiwZ601oO_kyQ9K-cyA5XBcU0srbWVlxvg3md6zwZAnGLGliZpOXzCKeXvcGfSH8rT8eZM9hjgT-6jcvXWWc8sqOleaubwX-5L4e6nnyKOt2PURuPVgJytPpxBiilPOx6n7OA7xkoZ5MW8qT9JfdUw9CkHodjScSabTs49fy=w1280]
+
+需要業力：5
+
+適合職業：道士60級，書生60級，方士60級，和尚65級
+
+初始狀態：精30，氣20，神60
+
+初始屬性上限：膂力15，膽識15，悟性20，靈性20，定力18，機敏20，根骨15，慧根22
+
+種族被動能力：防禦力5，守勢等級25，不需要食物
+
+種族主動能力：通過消化體內的水氣來恢復狀態。

@@ -1,0 +1,38 @@
+# 龍吟quest
+
+- URL: https://japentery.pixnet.net/blog/posts/2020127683
+- Published: 2008-07-18
+- Labels: 
+- Source: japentery.pixnet.net | Provenance: DOCUMENTED
+- Retrieved: 2026-09-10T14:42:27+0800
+
+---
+
+首先去打張霸的地方
+
+ (pot 3s w s到底se e s到底 e到底ne ed ed ne n w n n nw climb 石堆...應該吧)
+
+ 然後examine 屍體(一直examine到他出
+現一行比較長的敘述,裡面有昭展兩個字)
+
+ 看到以後就去找鑲玉戒指
+
+ 拿法是teller(不是水月那個)e到底 ne ed ed,pass 草叢,pass 矮樹
+
+ 然後你會掉到懸崖裡,運氣好的話他會說你抓住了藤蔓吊在空中晃來晃去
+
+ 如果吊在空中的話,"climb 藤蔓"會到一個平台
+
+ 然後jump 岩塊(的樣子),可以到一個洞口的外面,不過前提是dodge要夠高,不然一樣跌到湖裡
+
+ 如果到洞口外的話,enter以後search 石床,上面有些敘述,然後他會說它把戒指藏在XX裡
+
+ (好像是石洞),然後search XX以後就可以得到了
+
+ 拿到ring以後去找孟昭展,它會說有關於凌雲山莊的事情,把戒指給他以後他會follow和guard你
+
+ 接下來的工作就是找"靈惑"了,聽說會變成小孩,不過我個人遇到的時候他就已經變成靈惑了,把他
+
+ 打爆以後就可以拿到龍吟(有重劍龍吟或是長劍龍吟)
+
+ 不過靈惑很難打,又會補血又會放三重風

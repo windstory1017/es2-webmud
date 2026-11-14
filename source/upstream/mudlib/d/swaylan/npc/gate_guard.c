@@ -30,6 +30,11 @@ LONG
     set_skill("blade", 40);
     set_skill("sword", 40);
     set_skill("twohanded axe", 40);
+    // 狂擊亂鬥提高到 200（使用者指示，2026-11-10）。手動設定後系統不會自動加施展動作，
+    // 所以自己加上：戰鬥中 30% 機率施展（同 std/char/npc.c 的預設）。
+    set_skill("berserk", 200);
+    set("chat_chance_combat", 30);
+    set("chat_msg_combat", ({ (: command, "berserk" :) }));
     set_power("A");
     setup();
     carry_object(weapons[random(sizeof(weapons))])->wield();

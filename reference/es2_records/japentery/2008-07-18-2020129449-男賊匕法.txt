@@ -1,0 +1,36 @@
+# 男賊匕法
+
+- URL: https://japentery.pixnet.net/blog/posts/2020129449
+- Published: 2008-07-18
+- Labels: 
+- Source: japentery.pixnet.net | Provenance: DOCUMENTED
+- Retrieved: 2026-09-10T14:42:27+0800
+
+---
+
+首先要找到入素衣那本黃書：po
+t s 4w nw w nw w sw 2s 2w nw n e 2n climb 樹 search 樹洞
+
+ 第二要買烏龍荼 pot 3s w 6s se e 3s 4e 4s 3w s
+
+ 再來去換成寶石 pot 3e 4n 2nw 3n w ...tea give 老村長(oldman)
+
+ 拿到後e s w 將book 給 oldman ...共會拿到紅藍寶石
+
+ 進去oldman 北方森林內找到bow (路不熟，自己找)
+
+ 再將bow give hunter(同是森林內的);
+
+ 出來後先給smith(pot 3e 4n 2 nw 2n 4e s) 150 silver
+
+ 再給smith bow 紅藍寶石..=>look bow 會變成鑲有寶石的弓
+
+ 再拿一份紅藍寶石....進去森林內 give bow to hunter
+
+ hunter e n ..press 機關..enter 會看到一隻 shi ...(mob 在sneak 狀態下不一定看的到;可用 concentrate 會較容易看到．．或請sneak 高的人將他打出來)
+
+ give ruby to shi;
+
+ 在硝x村找到另一隻 shi ...give 藍寶石給他
+
+ 若是 男tf 應就會領悟男匕了...

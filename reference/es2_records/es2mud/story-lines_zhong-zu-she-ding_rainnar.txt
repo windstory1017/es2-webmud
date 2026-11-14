@@ -1,0 +1,24 @@
+# 雨師妾
+
+- URL: https://sites.google.com/site/es2mud/home/story-lines/zhong-zu-she-ding/rainnar
+- Path: /site/es2mud/home/story-lines/zhong-zu-she-ding/rainnar
+- Source: ES2 MUD 天朝帝國 (Google Site)  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-09T16:41:42+0800
+
+---
+
+# 雨師妾
+
+[image:  https://lh3.googleusercontent.com/sitesv/AG8ngQU0fCXjhITIsVCbMRb8vjZYvxx81qOAoac3p3YrmiA6FR9J8bjjrI5FNST24oFHjSmUGA5E97tq5z1EGSLBik26Nz1auTli3HE_cY4k_koe55DFmrkM4L152dkMr2UZ13Wd7qTLtFCVtxwSqOnd0jb_-vREb9VZBplhRroQhpnqZaUgDXMRFTAdoPwJHaH0S2G8iJGxLGJvLPFctDo=w1280]
+
+需要業力：25
+
+適合職業：方士60級，道士60級，小偷60級，書生60級，和尚65級
+
+初始狀態：精40，氣30，神70
+
+初始屬性上限：膂力9，膽識9，悟性22，靈性24，定力20，機敏13，根骨13，慧根28
+
+種族被動能力：防禦力20，四種元素傷害10
+
+種族主動能力：最多可餵養五條小蛇作為裝備。

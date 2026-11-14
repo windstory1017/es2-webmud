@@ -133,6 +133,11 @@ function normalizeTimer(t){
   return {id:t.id||uid(),name:String(t.name||''),seconds,fireAt,command:String(t.command||''),loop:!!t.loop};
 }
 
+// 清單排序同 Windows 檔案總管：不分大小寫、數字照大小比（item2 在 item10 前面）。只影響顯示，不改執行順序。
+const naturalCompare=new Intl.Collator('en',{numeric:true,sensitivity:'base'}).compare;
+const byKey=list=>[...list].sort(([a],[b])=>naturalCompare(a,b));
+const byField=(list,f)=>[...list].sort((a,b)=>naturalCompare(f(a),f(b)));
+
 function defaultBeep(){
   try{
     const AC=globalThis.AudioContext||globalThis.webkitAudioContext;if(!AC)return;
@@ -223,7 +228,7 @@ export class Automation{
     if(on)set.delete(cls);else set.add(cls);
     this.state.disabledClasses=[...set];this.save();
   }
-  classes(){return [...new Set(this.state.triggers.map(t=>t.cls).filter(Boolean))].sort();}
+  classes(){return [...new Set(this.state.triggers.map(t=>t.cls).filter(Boolean))].sort(naturalCompare);}
 
   // ---------- 變數 ----------
   statusValue(name){
@@ -517,7 +522,7 @@ export class Automation{
       case 'abort':return 'abort';
       case 'var':case 'variable':{
         if(!args.length){
-          const list=Object.entries(this.state.vars);
+          const list=byKey(Object.entries(this.state.vars));
           this.notify(list.length?'變數：\n'+list.map(([k,v])=>`  @${k} = ${formatValue(v)}`).join('\n'):'目前沒有自訂變數。');
           return true;
         }
@@ -548,7 +553,7 @@ export class Automation{
       }
       case 'alias':case 'al':{
         if(!args.length){
-          const list=Object.entries(this.state.aliases);
+          const list=byKey(Object.entries(this.state.aliases));
           this.notify(list.length?'縮寫：\n'+list.map(([k,v])=>`  ${k} = ${v}`).join('\n'):'目前沒有縮寫。');
           return true;
         }
@@ -736,21 +741,28 @@ export function setupAutomationUI(auto,{dialog,toggleButton,openButtons}){
   function renderScript(){
     const del=(kind,key)=>`<td class="auto-actions"><button type="button" data-script-del="${kind}" data-key="${esc(key)}">刪除</button></td>`;
     const empty=(n,text)=>`<tr><td colspan="${n}" class="auto-muted">${text}</td></tr>`;
-    const al=Object.entries(auto.state.aliases);
+    const al=byKey(Object.entries(auto.state.aliases));
     $('#autoAliasRows').innerHTML=al.length?al.map(([k,v])=>`<tr><td class="auto-mono">${esc(k)}</td><td class="auto-mono">${esc(v)}</td>${del('alias',k)}</tr>`).join(''):empty(3,'尚未設定縮寫。');
-    const vs=Object.entries(auto.state.vars);
+    const vs=byKey(Object.entries(auto.state.vars));
     $('#autoVarRows').innerHTML=vs.length?vs.map(([k,v])=>`<tr><td class="auto-mono">@${esc(k)}</td><td class="auto-mono">${esc(String(v))}</td>${del('var',k)}</tr>`).join(''):empty(3,'尚未設定變數。');
-    $('#autoGagRows').innerHTML=auto.state.gags.length?auto.state.gags.map(r=>`<tr><td class="auto-mono">${esc(r.pattern)}</td>${del('gag',r.id)}</tr>`).join(''):empty(2,'沒有隱藏的樣式。');
-    $('#autoColorRows').innerHTML=auto.state.colors.length?auto.state.colors.map(r=>`<tr><td class="auto-mono">${esc(r.pattern)}</td><td>${esc(r.color)}</td>${del('color',r.id)}</tr>`).join(''):empty(3,'沒有上色的樣式。');
+    $('#autoGagRows').innerHTML=auto.state.gags.length?byField(auto.state.gags,r=>r.pattern).map(r=>`<tr><td class="auto-mono">${esc(r.pattern)}</td>${del('gag',r.id)}</tr>`).join(''):empty(2,'沒有隱藏的樣式。');
+    $('#autoColorRows').innerHTML=auto.state.colors.length?byField(auto.state.colors,r=>r.pattern).map(r=>`<tr><td class="auto-mono">${esc(r.pattern)}</td><td>${esc(r.color)}</td>${del('color',r.id)}</tr>`).join(''):empty(3,'沒有上色的樣式。');
   }
 
   // ---------- 觸發（照 zMUD 的排版：左邊清單、右邊編輯） ----------
+  // 有類別的排前面、依類別排，同類別再依句型排；沒有類別的排最後（排序規則見 naturalCompare）。
+  function sortedTriggers(list){
+    return [...list].sort((a,b)=>{
+      if(!!a.cls!==!!b.cls)return a.cls?-1:1;
+      return naturalCompare(a.cls,b.cls)||naturalCompare(a.pattern,b.pattern);
+    });
+  }
   let trgTab='main',selectedTrigger=null,trgEnabled=true,trgDirty=false;
   function renderTriggers(){
     $('#autoTriggersEnabled').checked=auto.state.triggersEnabled;
     const off=new Set(auto.state.disabledClasses);
     $('#trgClassOptions').innerHTML=auto.classes().map(c=>`<option value="${esc(c)}"></option>`).join('');
-    const rows=auto.state.triggers.map(t=>{
+    const rows=sortedTriggers(auto.state.triggers).map(t=>{
       const classOff=t.cls&&off.has(t.cls);
       const on=t.enabled&&!classOff;
       return `<div class="trg-item${t.id===selectedTrigger?' selected':''}${on?'':' is-off'}" role="option" tabindex="0" data-trigger-id="${t.id}" aria-selected="${t.id===selectedTrigger}" title="${on?'已啟動':classOff?'類別已關閉':'已停用'}（雙擊切換）">
@@ -800,36 +812,39 @@ export function setupAutomationUI(auto,{dialog,toggleButton,openButtons}){
     const s=Math.ceil(sec);
     return s>=60?`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`:`${s} 秒`;
   }
+  // ---------- 計時器（同觸發的排版；好幾組可以同時倒數） ----------
+  let tmrTab='main',tmrDirty=false;
   function renderTimers(){
-    const rows=auto.state.timers.map(t=>{
-      const left=auto.remaining(t.id);
-      const running=left!==null;
-      return `<tr class="${running?'is-running':''}">
-        <td>${esc(t.name||'—')}</td>
-        <td>${t.seconds}</td>
-        <td>${t.fireAt}</td>
-        <td class="auto-mono">${esc(t.command)}</td>
-        <td>${t.loop?'循環':'一次'}</td>
-        <td class="auto-left" data-timer-left="${t.id}">${running?fmt(left):'—'}</td>
-        <td class="auto-actions">
-          <button type="button" data-timer-run="${t.id}">${running?'停止':'開始'}</button>
-          <button type="button" data-timer-edit="${t.id}">編輯</button>
-          <button type="button" data-timer-del="${t.id}">刪除</button>
-        </td>
-      </tr>`;}).join('');
-    $('#autoTimerRows').innerHTML=rows||'<tr><td colspan="7" class="auto-muted">尚未設定任何計時器。</td></tr>';
+    // 依名稱排（沒有名稱的用指令），同 Windows 檔案排序。
+    const rows=byField(auto.state.timers,t=>t.name||t.command).map(t=>{
+      const left=auto.remaining(t.id),running=left!==null;
+      return `<div class="trg-item tmr-item${t.id===editingTimer?' selected':''}${running?' is-running':''}" role="option" tabindex="0" data-timer-id="${t.id}" aria-selected="${t.id===editingTimer}" title="雙擊${running?'停止':'開始'}倒數">
+        <span class="trg-check" data-timer-dot="${t.id}">${running?'▶':''}</span><span class="trg-pat">${esc(t.name||t.command)}</span><span class="tmr-sec">${t.seconds} 秒${t.loop?'・循環':''}</span><span class="auto-left" data-timer-left="${t.id}">${running?fmt(left):'—'}</span></div>`;
+    }).join('');
+    $('#autoTimerList').innerHTML=`<div class="trg-item tmr-item trg-list-head"><span></span><span>名稱</span><span>倒數</span><span>剩餘</span></div>`+
+      (rows||'<div class="auto-muted trg-empty">尚未設定任何計時器，按「新增」開始。</div>');
+    renderTimerExtras();
   }
-  // 倒數中只更新剩餘秒數，不重建整張表（避免打斷按鈕操作）。
+  function renderTimerExtras(){
+    for(const b of dialog.querySelectorAll('[data-tmr-tab]')){const on=b.dataset.tmrTab===tmrTab;b.classList.toggle('active',on);b.setAttribute('aria-selected',on?'true':'false');}
+    for(const p of dialog.querySelectorAll('[data-tmr-panel]'))p.hidden=p.dataset.tmrPanel!==tmrTab;
+    const btn=$('#tmrRunBtn');
+    const left=editingTimer?auto.remaining(editingTimer):null,running=left!==null;
+    btn.classList.toggle('off',!running);btn.setAttribute('aria-pressed',running?'true':'false');
+    btn.querySelector('b').textContent=running?`倒數中 ${fmt(left)}（按一下停止）`:'已停止（按一下開始）';
+    btn.disabled=!editingTimer;
+    $('#tmrRunNote').textContent=editingTimer?'':'新的計時器要先按「確定」儲存，才能開始倒數。';
+    $('#tmrDelete').disabled=$('#tmrCopy').disabled=!editingTimer;
+    $('#tmrState').textContent=editingTimer?(tmrDirty?'有修改尚未儲存（儲存後若正在倒數會從頭開始）':''):(tmrDirty?'新的計時器，按「確定」儲存':'新的計時器');
+  }
+  // 倒數中只更新剩餘秒數，不重建整張清單（避免打斷操作）。
   function refreshTimerCountdown(){
     for(const cell of dialog.querySelectorAll('[data-timer-left]')){
       const left=auto.remaining(cell.dataset.timerLeft);
       const text=left===null?'—':fmt(left);
       if(cell.textContent!==text)cell.textContent=text;
-      const row=cell.closest('tr');
-      const btn=row?.querySelector('[data-timer-run]');
-      const label=left===null?'開始':'停止';
-      if(btn&&btn.textContent!==label){btn.textContent=label;row.classList.toggle('is-running',left!==null);}
     }
+    renderTimerExtras();
   }
 
   function fillTimerForm(t){
@@ -839,9 +854,11 @@ export function setupAutomationUI(auto,{dialog,toggleButton,openButtons}){
     $('#tmrFireAt').value=t?.fireAt??0;
     $('#tmrCommand').value=t?.command||'';
     $('#tmrLoop').checked=!!t?.loop;
-    $('#tmrSave').textContent=editingTimer?'儲存修改':'新增計時器';
     $('#tmrError').textContent='';
+    tmrDirty=false;
+    lastStructure='';render();
   }
+  function confirmLeaveTimer(){return !tmrDirty||confirm('目前的計時器有修改還沒按「確定」，要放棄這些修改嗎？');}
 
   let lastStructure='';
   function render(){
@@ -885,16 +902,18 @@ export function setupAutomationUI(auto,{dialog,toggleButton,openButtons}){
       else if(kind==='color')auto.state.colors=auto.state.colors.filter(r=>r.id!==key);
       auto.save();return;
     }
-    if(b?.dataset.timerRun){const id=b.dataset.timerRun;if(auto.running.has(id))auto.stopTimer(id);else auto.startTimer(id);return;}
-    if(b?.dataset.timerEdit){fillTimerForm(auto.state.timers.find(x=>x.id===b.dataset.timerEdit));$('#tmrSeconds').focus();return;}
-    if(b?.dataset.timerDel){
-      const x=auto.state.timers.find(y=>y.id===b.dataset.timerDel);
-      if(x&&confirm(`刪除計時器「${x.name||x.command}」？`)){auto.removeTimer(x.id);if(editingTimer===x.id)fillTimerForm(null);}
+    if(b?.dataset.tmrTab){tmrTab=b.dataset.tmrTab;renderTimerExtras();return;}
+    const titem=t.closest('[data-timer-id]');
+    if(titem){
+      const id=titem.dataset.timerId;
+      if(id!==editingTimer&&confirmLeaveTimer())fillTimerForm(auto.state.timers.find(x=>x.id===id));
       return;
     }
   });
-  // 雙擊清單裡的觸發：切換開關（直接存檔）。
+  // 雙擊清單裡的觸發：切換開關（直接存檔）；雙擊計時器：開始／停止倒數。
   dialog.addEventListener('dblclick',e=>{
+    const titem=e.target instanceof Element?e.target.closest('[data-timer-id]'):null;
+    if(titem){const id=titem.dataset.timerId;if(auto.running.has(id))auto.stopTimer(id);else auto.startTimer(id);return;}
     const item=e.target instanceof Element?e.target.closest('[data-trigger-id]'):null;if(!item)return;
     const x=auto.state.triggers.find(y=>y.id===item.dataset.triggerId);if(!x)return;
     x.enabled=!x.enabled;
@@ -902,17 +921,19 @@ export function setupAutomationUI(auto,{dialog,toggleButton,openButtons}){
     auto.save();
   });
   dialog.addEventListener('keydown',e=>{
-    const item=e.target instanceof Element?e.target.closest('[data-trigger-id]'):null;
+    const item=e.target instanceof Element?e.target.closest('[data-trigger-id],[data-timer-id]'):null;
     if(item&&(e.key==='Enter'||e.key===' ')){e.preventDefault();item.click();}
   });
   dialog.addEventListener('change',e=>{
     const t=e.target;
     if(t.id==='autoTriggersEnabled')auto.setTriggersEnabled(t.checked);
     else if(t.closest?.('#autoTriggerPane')&&t.id!=='trgSample'){trgDirty=true;renderTriggerExtras();}
+    else if(t.closest?.('#autoTimerPane')){tmrDirty=true;renderTimerExtras();}
   });
   dialog.addEventListener('input',e=>{
     const t=e.target;
     if(t.closest?.('#autoTriggerPane')&&['trgPattern','trgCommand','trgClass'].includes(t.id)){trgDirty=true;renderTriggerExtras();}
+    if(t.closest?.('#autoTimerPane')&&t.id&&t.id.startsWith('tmr')){tmrDirty=true;renderTimerExtras();}
   });
 
   $('#trgSave').addEventListener('click',()=>{
@@ -945,17 +966,31 @@ export function setupAutomationUI(auto,{dialog,toggleButton,openButtons}){
   });
 
   $('#tmrSave').addEventListener('click',()=>{
+    const err=m=>{$('#tmrError').textContent=m;};
     const seconds=Number($('#tmrSeconds').value),fireAt=Number($('#tmrFireAt').value||0);
-    if(!Number.isFinite(seconds)||seconds<1){$('#tmrError').textContent='倒數秒數至少 1 秒。';return;}
-    if(!Number.isFinite(fireAt)||fireAt<0){$('#tmrError').textContent='「剩幾秒時執行」不能小於 0。';return;}
-    if(!$('#tmrCommand').value.trim()){$('#tmrError').textContent='請輸入要執行的指令。';return;}
+    if(!Number.isFinite(seconds)||seconds<1){tmrTab='main';renderTimerExtras();err('倒數秒數至少 1 秒。');return;}
+    if(!Number.isFinite(fireAt)||fireAt<0){tmrTab='options';renderTimerExtras();err('「剩幾秒時執行」不能小於 0。');return;}
+    if(!$('#tmrCommand').value.trim()){tmrTab='main';renderTimerExtras();err('請輸入要執行的指令。');return;}
     try{
-      auto.upsertTimer({id:editingTimer||undefined,name:$('#tmrName').value.trim(),seconds,fireAt,
+      const saved=auto.upsertTimer({id:editingTimer||undefined,name:$('#tmrName').value.trim(),seconds,fireAt,
         command:$('#tmrCommand').value.trim(),loop:$('#tmrLoop').checked});
-      fillTimerForm(null);
-    }catch(err){$('#tmrError').textContent=err.message;}
+      fillTimerForm(saved);
+    }catch(e){err(e.message);}
   });
-  $('#tmrNew').addEventListener('click',()=>fillTimerForm(null));
+  $('#tmrCancel').addEventListener('click',()=>fillTimerForm(auto.state.timers.find(x=>x.id===editingTimer)||null));
+  $('#tmrNew').addEventListener('click',()=>{if(confirmLeaveTimer()){tmrTab='main';fillTimerForm(null);$('#tmrName').focus();}});
+  $('#tmrCopy').addEventListener('click',()=>{
+    const x=auto.state.timers.find(y=>y.id===editingTimer);if(!x||!confirmLeaveTimer())return;
+    fillTimerForm({...x,id:undefined});tmrDirty=true;renderTimerExtras();$('#tmrName').focus();
+  });
+  $('#tmrDelete').addEventListener('click',()=>{
+    const x=auto.state.timers.find(y=>y.id===editingTimer);
+    if(x&&confirm(`刪除計時器「${x.name||x.command}」？`)){auto.removeTimer(x.id);fillTimerForm(null);}
+  });
+  $('#tmrRunBtn').addEventListener('click',()=>{
+    if(!editingTimer)return;
+    if(auto.running.has(editingTimer))auto.stopTimer(editingTimer);else auto.startTimer(editingTimer);
+  });
 
   $('#autoExport').addEventListener('click',()=>{
     const a=document.createElement('a');

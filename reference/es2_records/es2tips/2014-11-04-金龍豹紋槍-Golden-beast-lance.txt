@@ -1,0 +1,32 @@
+# 金龍豹紋槍(Golden beast lance)
+
+- URL: https://es2tips.blogspot.com/2014/11/golden-beast-lance.html
+- Published: 2014-11-04T16:22:00.000+08:00
+- Updated: 2014-11-22T16:23:28.176+08:00
+- Labels: 攻擊能力值, 膂力, 防禦力
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+金龍豹紋槍(Golden beast lance)
+
+>  look lance
+
+一把異常沉重的黃銅大矛，長矛之上的道道黑色暗紋想必就是其名字的由來。
+
+一把異常沉重的黃銅大矛，長矛之上的道道黑色暗紋想必就是其名字的由來。
+
+可用技能：
+
+  雙手槍法 (twohanded pike)
+
+傷害力： 14 - 90 (力量修正 150%，乘數等級 4)
+
+武器特性﹕
+
+  攻擊能力值                     50
+
+  膂力                           5
+
+  防禦力                         50

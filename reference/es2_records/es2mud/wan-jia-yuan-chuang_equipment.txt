@@ -1,0 +1,17 @@
+# ES2 部份裝備列表
+
+- URL: https://sites.google.com/site/es2mud/home/wan-jia-yuan-chuang/equipment
+- Path: /site/es2mud/home/wan-jia-yuan-chuang/equipment
+- Source: ES2 MUD 天朝帝國 (Google Site)  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-09T16:41:42+0800
+
+---
+
+# ES2 部份裝備列表
+
+ (https://docs.google.com/spreadsheets/d/0AuX-wOBQ9N62dEFBTThBOHZpMWFzSkVBYktKcDdRbEE/edit)
+
+[image:  https://www.gstatic.com/images/icons/material/product/1x/sheets_32dp.png]
+equip
+
+[embed: https://docs.google.com/spreadsheets/d/0AuX-wOBQ9N62dEFBTThBOHZpMWFzSkVBYktKcDdRbEE/htmlembed]

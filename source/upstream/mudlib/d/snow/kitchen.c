@@ -17,6 +17,7 @@ LONG
 		"/obj/food/dumpling" : 2
 	]) );
 	set("map/area", "雪亭鎮");
+	set("detail/圍牆", "這道圍牆砌得不算太高﹐牆面上有幾處磚塊凸出可以借力﹐只要手腳俐落﹐攀 (climb) 上去就能翻到牆外。");
     setup();
 }
 

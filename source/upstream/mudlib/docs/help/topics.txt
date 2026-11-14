@@ -38,6 +38,7 @@
   rainner      雨師妾            headless     刑天
   malik        巫首              ashura       阿修羅
   yaksa        夜叉              dance        刑天戰舞
+  race.detail  種族詳細資料
 
 【 世界功能 】
   world        世界與探索        snowkeep     雪亭

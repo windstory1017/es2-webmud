@@ -1,0 +1,92 @@
+# ES2 紫衣派 道士設定 （雷）
+
+- URL: https://es2tips.blogspot.com/2014/08/es2_75.html
+- Published: 2014-08-13T21:11:00.006+08:00
+- Updated: 2014-08-13T21:22:29.590+08:00
+- Labels: 道士
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+help taoist.thunder
+
+○ 紫衣派資料
+
+職業 : 道士
+
+種族 : 不限，但需要慧根 >=16
+
+性別 : 不限
+
+師傅 : 青雲觀主 華子儀(Hua zi yi)
+
+技能 :
+
+    天師道法【雷法】 (taoism-thunder):
+
+　　　　技能種類: 咒術
+
+        學習條件: 經解任務後進入華子儀處，拜師後習得
+
+        特殊能力: swamp thunder: 澤雷，消耗 sen 5 delay 1 傷害 50%。
+
+                  blaster thunder: 爆雷，消耗 sen 50 delay 1 傷害 25% 附加當前
+
+                                   神數量的 1/8。
+
+                  divine thunder: 神光雷，消耗 sen 75 delay 2 對目標神造成傷害
+
+                                  33%，同時無視抗性。
+
+                  hexagram thunder: 六卦熒雷，消耗 sen 90 delay 2 傷害 175%，
+
+                                    觸發但不消耗 overload 的效果。
+
+　　　　能力提昇: 無
+
+　　　　相關參考: help taoism-thunder
+
+   九龍神功 (nine-dragon force):
+
+        技能種類：內功
+
+        習得條件：人物等級 >=10
+
+        特殊能力: heal: 消耗 gin 當前值恢復 kee 當前值。　
+
+　　　　　　　　　regenerate: 消耗 gin 當前值，恢復 sen。
+
+　　　　　　　　　overload: 消耗 75 點 sen 喚來雷光，下次施展天師系咒的基礎傷害
+
+                            提昇 50%。
+
+        能力提升：練成為 5 級，升級 gin<sk*30 kee<sk*30 sen<sk*30 時，每級提昇
+
+                  1-2 點 gin，2 點 kee，1-3 點 sen。等級 100 提昇 2點根骨，1 點
+
+                  慧根。
+
+　　　　相關參考: help nine-dragon force
+
+    清河映星劍 (reflecting star sword):
+
+        技能種類: 劍術
+
+        學習條件: 拜師後
+
+        特殊能力: 無
+
+        能力提昇: 無
+
+    陰陽奇門步 (magic steps):
+
+        技能種類: 縱躍閃躲
+
+        學習條件: 拜師後
+
+        特殊能力: 無
+
+其他技能請參考: help taoist.adv
+
+最後更新日期:2013/05/25

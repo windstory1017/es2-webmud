@@ -2549,14 +2549,16 @@
       "label": "空地",
       "area": "密林",
       "x": 3,
-      "y": 1
+      "y": 1,
+      "layer": "地下"
     },
     {
       "id": "/d/swaylan/forest/kitchen",
       "label": "廚房",
       "area": "密林",
       "x": 4,
-      "y": 1
+      "y": 1,
+      "layer": "地下"
     },
     {
       "id": "/d/swaylan/forest/tunnel",
@@ -7474,18 +7476,6 @@
       "resolved": true
     },
     {
-      "from": "/d/swaylan/forest/stele",
-      "to": "/d/swaylan/forest/clearing",
-      "direction": "south",
-      "resolved": true
-    },
-    {
-      "from": "/d/swaylan/forest/clearing",
-      "to": "/d/swaylan/forest/stele",
-      "direction": "north",
-      "resolved": true
-    },
-    {
       "from": "/d/swaylan/forest/clearing",
       "to": "/d/swaylan/forest/kitchen",
       "direction": "east",
@@ -7495,12 +7485,6 @@
       "from": "/d/swaylan/forest/kitchen",
       "to": "/d/swaylan/forest/clearing",
       "direction": "west",
-      "resolved": true
-    },
-    {
-      "from": "/d/swaylan/forest/tunnel",
-      "to": "/d/swaylan/forest/stele",
-      "direction": "up",
       "resolved": true
     },
     {
@@ -7528,15 +7512,33 @@
       "resolved": true
     },
     {
+      "from": "/d/swaylan/forest/hideout",
+      "to": "/d/swaylan/forest/chamber",
+      "direction": "enter",
+      "resolved": true
+    },
+    {
       "from": "/d/swaylan/forest/stele",
-      "to": "/d/swaylan/forest/tunnel",
+      "to": "/d/swaylan/forest/clearing",
       "direction": "down",
       "resolved": true
     },
     {
-      "from": "/d/swaylan/forest/hideout",
-      "to": "/d/swaylan/forest/chamber",
-      "direction": "enter",
+      "from": "/d/swaylan/forest/clearing",
+      "to": "/d/swaylan/forest/stele",
+      "direction": "up",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/forest/clearing",
+      "to": "/d/swaylan/forest/tunnel",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/swaylan/forest/tunnel",
+      "to": "/d/swaylan/forest/clearing",
+      "direction": "north",
       "resolved": true
     },
     {

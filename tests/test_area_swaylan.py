@@ -19,7 +19,7 @@ LEGACY = {'/d/swaylan/' + r for r in ('inn', 'inn2', 'north_street2', 'pawnshop'
                                        'forest/chamber')}
 # 用指令進去、出口出來的單向出口（沐華居 out 回石階；進去要 enter 大廳）。
 ONE_WAY = {('/d/swaylan/forest/entrance', 'out'),
-           ('/d/swaylan/forest/tunnel', 'up'), ('/d/swaylan/forest/chamber', 'out')}
+           ('/d/swaylan/forest/clearing', 'up'), ('/d/swaylan/forest/chamber', 'out')}
 
 
 def all_rooms():
@@ -152,7 +152,7 @@ def test_lunmay_manor():
     for part in ('add_action("do_practice", "practice");', 'arg != "lunmay"',
                  '"fighter.lunmay"', 'query_temp("weapon/sword")',
                  '已經練成冷梅劍法，不用再在這裡練習了。', 'gender_self(me)',
-                 '"環" : "在前院的橫樑中，懸掛著七個空心的鐵環，讓弟子可以練習 (practice) 冷梅劍法。"',
+                 '"環" : "在前院的橫樑中，懸掛著七個空心的鐵環，讓弟子可以練習 (practice lunmay) 冷梅劍法。"',
                  '#define RINGS_DONE  36', '#define GIN_COST    10', 'me->start_busy(1);',
                  'rings = 1 + to_int(sqrt(to_float(count)));', 'apply_gain_progression'):
         assert part in s, part
@@ -187,12 +187,14 @@ def test_temple_and_buxuan():
 
 
 def test_forest():
-    # 密林邊緣 enter 密林；石碑 push 掉進密道、密道 up 回石碑；大廳 kick 石頭進密室、密室 out 回來。
+    # 密林邊緣 enter 密林；石碑 push 掉進空地、空地 up 回石碑（2026-11-01）；大廳 kick 石頭進密室、密室 out 回來。
     assert 'arg != "密林"' in read(S / 'forest_edge.c') and 'forest/entrance' in read(S / 'forest_edge.c')
     s = read(FOREST / 'stele.c')
-    assert 'arg != "石碑"' in s and 'move("/d/swaylan/forest/tunnel")' in s
-    assert '"up" : __DIR__"stele",' in read(FOREST / 'tunnel.c')
-    assert 'south' not in exits('/d/swaylan/forest/clearing') and 'north' not in exits('/d/swaylan/forest/tunnel')
+    assert 'arg != "石碑"' in s and 'move("/d/swaylan/forest/clearing")' in s
+    assert 'south' not in exits('/d/swaylan/forest/stele')
+    assert exits('/d/swaylan/forest/clearing')['up'] == '/d/swaylan/forest/stele'
+    assert exits('/d/swaylan/forest/clearing')['south'] == '/d/swaylan/forest/tunnel'
+    assert exits('/d/swaylan/forest/tunnel')['north'] == '/d/swaylan/forest/clearing'
     s = read(FOREST / 'hideout.c')
     assert 'arg != "石頭"' in s and 'move("/d/swaylan/forest/chamber")' in s
     # 戰場功勳與隨機 5～30 兩。

@@ -63,6 +63,10 @@ int buy_limit(string key, int skill)
     return row[0] + skill / row[1];
 }
 
+// 藥鋪不販售的成丹：大還丹（2026-11-14 使用者決定，避免買來用黃白之術轉錢）。
+// 收購與配方照舊。
+int sells_product(string key) { return key != "major"; }
+
 // 藥鋪一次賣幾份配方：大還丹一份，其餘五份（2026-10-15 使用者決定 R5）。
 int recipe_count(string key) { return key == "major" ? 1 : 5; }
 
@@ -116,7 +120,7 @@ int price(string key, string mode)
     if (mode == "recipe") return ob->query("mixture_value");
     base = ob->query("base_value");
     if (base < 1 || base > 100000000) return -1;
-    if (mode == "buy") return base * 10;
+    if (mode == "buy") return sells_product(key) ? base * 10 : -1;
     // 收購價 × 2（2026-11-07 由 × 5 調降：NPC 售價必須高於收購價，避免轉賣賺價差，見煉丹流程 T-38）。
     if (mode == "sell") return key == "black" ? base * 80 / 100 : base * 2;
     return -1;

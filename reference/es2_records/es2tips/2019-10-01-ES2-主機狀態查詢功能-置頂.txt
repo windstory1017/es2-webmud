@@ -1,0 +1,22 @@
+# ES2 主機狀態查詢功能（置頂）
+
+- URL: https://es2tips.blogspot.com/2014/07/es2.html
+- Published: 2019-10-01T23:02:00.000+08:00
+- Updated: 2016-12-06T01:31:48.896+08:00
+- Labels: 服務狀態, 當機
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+檢查 ES2 MUD 服務狀態/是否當機
+
+@ http://vovo2000.com/utils/status/?es2.muds.net,4000 (http://vovo2000.com/utils/status/?es2.muds.net,4000)
+
+檢查 ES2 Web 服務狀態/是否當機
+
+@ http://vovo2000.com/utils/status/?es2.muds.net,80 (http://vovo2000.com/utils/status/?es2.muds.net,80)
+
+瀏覽 ES2 MUDLIB source/doc
+
+@ http://es2.xor.tw/ (http://es2.xor.tw/)

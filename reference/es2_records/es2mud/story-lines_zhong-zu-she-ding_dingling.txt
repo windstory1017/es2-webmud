@@ -1,0 +1,26 @@
+# 釘靈
+
+- URL: https://sites.google.com/site/es2mud/home/story-lines/zhong-zu-she-ding/dingling
+- Path: /site/es2mud/home/story-lines/zhong-zu-she-ding/dingling
+- Source: ES2 MUD 天朝帝國 (Google Site)  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-09T16:41:42+0800
+
+---
+
+# 釘靈
+
+[image:  https://lh3.googleusercontent.com/sitesv/AG8ngQXcH5b-9BGiAVaO1sj3vco5JqNFsu6GvXdu-c0dO9M2sc_LYSQ0dex6RnDhygFTBfUVJY4gpuDqjQhk69mLCib9zwVvXk-LhxjEOq8jKBL5NnoX1mMi0GCG1Tb-xwfQMvEzqI99sjtSwXQ7FgEKndRQwjJWtDdxJ20qMaM1Cec1tv8mhuV3ibusuMbB-YWuzTScOtKYA3QJrX1WD8U=w1280]
+
+需要業力：10
+
+適合職業：武者60級，軍人65級，小偷60級，和尚65級
+
+初始狀態：精70，氣40，神20
+
+初始屬性上限：膂力20，膽識15，悟性15，靈性10，定力20，機敏25，根骨20，慧根15
+
+種族被動能力：移動力50，傷害力10
+
+種族主動能力：踐踏目標導致目標無法攻擊或行動。
+
+

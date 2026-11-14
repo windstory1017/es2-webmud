@@ -33,6 +33,7 @@ void create()
 LONG
     );
     set("outdoors", "snow");
+    set("detail/草叢", "南邊的草叢密不透風，草間隱約有一道被人鑽出來的縫隙，似乎可以穿過 (pass) 去。");
     set("exits", ([
         "east" : __DIR__"grave7",
         "west" : "/d/taiyi/gate",   // 太乙觀門口（使用者定案，2026-11-09）

@@ -29,8 +29,16 @@ void create()
         "轟動一時的人物。駱易辭卻了朝廷及香雪王的豐厚賞賜及高官厚祿，隱居在喬陰\n"
         "的祖宅，也成為江湖傳頌的美談。\n");
     set("custom_faction", FACTION);   // 步玄派；武功等級依門派自動配置（daemon/misc/npc_skill.c）
+    // 精、氣、神固定為 1800／2200／1000（使用者指示，2026-11-12），不隨強度自動計算。
+    set_stat_maximum("gin", 1800);
+    set_stat_maximum("kee", 2200);
+    set_stat_maximum("sen", 1000);
     set_power("S");
     setup();
+    foreach( string st, int v in ([ "gin": 1800, "kee": 2200, "sen": 1000 ]) ) {
+        set_stat_effective(st, v);
+        set_stat_current(st, v);
+    }
     carry_object("/custom/armor/armor/black_harness")->wear();   // 玄晦戰甲
     carry_object("/custom/armor/finger/han_jade_ring")->wear();   // 漢玉戒指
     carry_object("/custom/armor/feet/snakeskin_boots")->wear();   // 青蟒靴
@@ -39,6 +47,7 @@ void create()
     carry_object("/custom/armor/head/headgear")->wear();   // 紫紗逍遙巾
     carry_object("/custom/weapon/sword/sword_of_wind_spring")->wield("sword");   // 風泉之劍（唯一；已被取走時換成逐風刃）
     carry_object("/custom/weapon/sword/cloudslay_sword")->wield("secondhand sword");   // 落雲刃
+    carry_object("/obj/books/water_dragon_canon");   // 【水龍經】（舊站資料，使用者指示，2026-11-12）
 }
 
 // ------------------------------------------------------------------

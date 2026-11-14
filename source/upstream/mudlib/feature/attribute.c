@@ -34,9 +34,9 @@ int set_attr (string what, int value) {
         attribute = ([]);
 
     // For user characters, the attribute must be initialized in init_attribute() and
-    // the value must be between ATTRVAL_MIN and ATTRVAL_MAX.
+    // the value must be at least ATTRVAL_MIN (no upper limit).
     if (userp(this_object())
-    && (undefinedp(attribute[what]) || value < ATTRVAL_MIN || value > ATTRVAL_MAX))
+    && (undefinedp(attribute[what]) || value < ATTRVAL_MIN))
         return 0;
 
     return (attribute[what] = value);

@@ -178,6 +178,7 @@ revive (int quiet)
 
     enable_player();
     delete_temp("block_msg/all");
+    delete_temp("revive_faint");
 
     if (!quiet) {
         COMBAT_D->announce(this_object(), "revive");
@@ -252,7 +253,7 @@ unconcious (string reason)
     }
 
     /* 昏倒疲勞 +10（使用者定案，2026-10-29）；疲勞超過 80 時死亡，復活補不滿，見 CHAR_D->make_living */
-    me->supplement_stat("fatigue", 10);
+    if( !query_temp("revive_faint") ) me->supplement_stat("fatigue", 10);
 
     /* 停止所有 fight 中的敵人 */
     remove_all_enemy();
@@ -270,7 +271,17 @@ unconcious (string reason)
 
     /* CUSTOM WEBMUD TUNING: 玩家昏迷後 20 秒甦醒（使用者核准，非 canonical ES2 數值） */
     remove_call_out("revive");
-    call_out("revive", 20);
+    // 復活後的昏迷：15 tick（30 秒）後才醒來（使用者定案，2026-11-10）。
+    call_out("revive", query_temp("revive_faint") ? 30 : 20);
+}
+
+/* 復活後昏迷不醒：人物已經復活，但躺在復活點上，15 tick（30 秒）後才醒來才能活動。
+ * 由廟裡的漩渦、城隍爺報到呼叫（CHAR_D->make_living_faint）。 */
+void
+revive_faint()
+{
+    set_temp("revive_faint", 1);
+    unconcious(" <復活後昏迷不醒>");
 }
 
 // overrides

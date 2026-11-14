@@ -66,7 +66,7 @@ void create()
 LONG
     );
     set("detail", ([
-        "環" : "在前院的橫樑中，懸掛著七個空心的鐵環，讓弟子可以練習 (practice) 冷梅劍法。",
+        "環" : "在前院的橫樑中，懸掛著七個空心的鐵環，讓弟子可以練習 (practice lunmay) 冷梅劍法。",
     ]));
     set("exits", ([
         "north" : __DIR__"courtyard",

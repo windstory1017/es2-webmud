@@ -1,0 +1,54 @@
+# 青年書生 鑲玉短劍 古文觀止
+
+- URL: https://es2tips.blogspot.com/2013/06/blog-post_1228.html
+- Published: 2013-06-05T14:31:00.007+08:00
+- Updated: 2013-06-05T14:32:43.877+08:00
+- Labels: 慧根, 靈性
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+醇雨樓客棧 -
+
+    這裡是醇雨樓客棧的三樓﹐佈置和二樓雅座大致差不多﹐不過樓中
+
+放了幾盆蘭花﹐更添幾分雅致﹐往下的樓梯在西邊。
+
+    這裡唯一的出口是 down。
+
+  珍寶商人(Jeweller)
+
+  青年書生(Young scholar)
+
+一個相貌斯文的青年書生正獨自一人在這裡沈思。
+
+青年書生生得猿臂狼腰，身手定然十分矯捷，他看起來約二十多歲。
+
+他身上帶著﹕
+
+  ˇ鑲玉短劍(Jeweled shortsword)
+
+  ˇ青布衣(Blue cloth)
+
+    【古文觀止】(Book of archaism)
+
+>
+
+這把短劍上面嵌了一塊碧綠的美玉﹐看起來相當名貴。
+
+可用技能：
+
+  劍術 (sword)
+
+  左手劍術 (secondhand sword)
+
+傷害力： 3 - 21 (力量修正 50%，乘數等級 2)
+
+武器特性﹕
+
+  靈性                           1
+
+  咒文能力                       5
+
+  慧根                           1

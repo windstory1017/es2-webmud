@@ -1,0 +1,56 @@
+# 天師 spells 更新
+
+- URL: https://japentery.pixnet.net/blog/posts/2020130601
+- Published: 2008-07-18
+- Labels: 
+- Source: japentery.pixnet.net | Provenance: DOCUMENTED
+- Retrieved: 2026-09-10T14:42:27+0800
+
+---
+
+1. 天師 spells 改為瞬發技能，輸入 cast 後就會產生傷害。
+
+ 2. 法術的命中率由咒文技巧和對方的
+抗性決定。
+
+ 法術的傷害由咒文的強度和對方的抗性決定。
+
+ 3. cast 的 delay 修改傷害造成後開始 delay，具體傷害和 delay 如下
+
+ 1 2 3 4 5
+
+ fire
+
+ 傷害 /8 /4 *1 *1.5 *2
+
+ delay 1 2 2 3 3
+
+ freeze
+
+ 傷害 /10 /5 /2 1 *1.5
+
+ delay 1 1 2 2 2
+
+ storm
+
+ 傷害 /10 /5 /2 1 *1.5
+
+ delay 1 1 1 1 2
+
+ thunder
+
+ 傷害 /8 /4 *1 *2 *3
+
+ delay 1 1 1 2 2
+
+ 傷害基數為咒文強度。
+
+ 4. 風咒將更容易出現 2 重，3 重機會不變。
+
+ 5. 火咒二段傷害不變。
+
+ 6. 冰咒更容易吸收 gin/kee/sen, 且效果更為出色。
+
+ 7. 雷咒 delay 對手能力取消，被反噬時也不再損失 kee, 只是造成額外
+
+ 的 delay。

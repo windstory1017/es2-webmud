@@ -1,0 +1,20 @@
+# 雷火天狼罩
+
+- URL: https://es2tips.blogspot.com/2013/08/blog-post_9676.html
+- Published: 2013-08-08T21:50:00.000+08:00
+- Updated: 2013-08-08T21:50:03.715+08:00
+- Labels: 火焰傷害力, 防禦力
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+ˇ雷火天狼罩(Fire-wolf cloak)
+
+一件紫紅色的蓋頭罩袍, 袍後繡著一個面目猙獰的狼頭。
+
+護具特性﹕
+
+  火焰傷害力                     50
+
+  防禦力                         50

@@ -1,0 +1,79 @@
+# 朱衣派fire
+
+- URL: https://japentery.pixnet.net/blog/posts/2020130574
+- Published: 2008-07-18
+- Labels: 
+- Source: japentery.pixnet.net | Provenance: DOCUMENTED
+- Retrieved: 2026-09-10T14:42:27+0800
+
+---
+
+○ 朱衣派資料
+
+ 職業 : 道士
+
+ 種族 : 不限
+
+ 性別 : 不限
+
+ 師傅 : 朱衣派道士 郭布(Kuo boo)
+
+ 技能 :
+
+ ○天師道法【火術】 (taoism-fire):
+
+ 技能種類: 咒術
+
+ 學習條件: 經解任務拜師後，人物等級 >=2，方可習得
+
+ 任務起始: 小桃
+
+ 特殊能力:
+
+ magic fire: 咒火。 延遲 1，消耗 sen 5 。
+
+ earth fire: 地火。 延遲 1，消耗 sen 10 。
+
+ mental fire: 識火。 延遲 2，消耗 sen 20 。
+
+ inferno fire: 大業火。 延遲 2，消耗 sen 30 gin 5。
+
+ pure fire: 三昧真火。延遲 3，消耗 sen 65 gin 10。
+
+ 天師道法【火術】是除了雷法之外，攻擊力最強的一門道術。但是它的施法延遲也是最久的，法術施展之後要花上兩倍延遲的時間才會擊中目標。三昧真火在傷害力高時，會發動兩段燒的特殊攻擊。再根據慧根值判定再次追加攻擊。
+
+ 能力提昇: 無
+
+ 相關參考: help taoism-fire
+
+ ○丹陽神功 (sun force):
+
+ 技能種類: 內功
+
+ 學習條件: 人物等級 >=15
+
+ 特殊能力:
+
+ refresh: 丹陽神功 0 。消耗 kee 當前值恢復 gin 當前值。
+
+ recover: 丹陽神功 30 。消耗 sen 當前值，恢復gin kee sen上限值。
+
+ regenerate: 丹陽神功 60 。消耗飲水恢復 sen 當前值。
+
+ sun fire: 丹陽神功 90 。聚日術，僅能在白天使用。消耗大量飲水，暫時提高人物定力慧根和法力能力值。
+
+ 能力提昇: 練成為 10級，升級 gin<sk*8 kee<sk*8 sen<sk*15 時，每級提昇1 點 gin，1 點 kee，3 點 sen。練成時提昇 2 點慧根。
+
+ 相關參考: help sun force
+
+ ○火雲奇門步法 (eight_steps):
+
+ 技能種類：縱躍閃躲
+
+ 習得條件: 拜師後
+
+ 特殊功能: 無
+
+ 能力提昇: 無
+
+ 最後更新日期: 2006/09/15

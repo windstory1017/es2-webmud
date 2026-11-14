@@ -1,0 +1,64 @@
+# ˇ蔑天劍(Sword of killing God)   攻擊可補精
+
+- URL: https://es2tips.blogspot.com/2014/10/sword-of-killing-god.html
+- Published: 2014-10-12T11:13:00.001+08:00
+- Updated: 2014-10-12T11:13:17.589+08:00
+- Labels: 
+- Source: ES2 Tips blog  |  Provenance: DOCUMENTED
+- Retrieved: 2026-09-08T17:15:20+0800
+
+---
+
+ˇ蔑天劍(Sword of killing God)   攻擊可補精
+
+(@ Liuh's Unique EQ)
+
+> id sword
+
+一把充滿詛咒的邪惡之刃，劍名蔑天，
+
+意為配用此劍之人定有殺神斬鬼之傲氣，上不敬天神，下無視鬼怪。
+
+可用技能：
+
+  雙握劍術 (twohanded sword)
+
+傷害力： 7 - 94 (力量修正 157%，乘數等級 3)
+
+武器特性﹕
+
+  雙握劍術                       25
+
+  膽識                           5
+
+  傷害力                         50
+
+你覺得一股火辣辣的熱氣從蔑天劍傳到你的掌心....
+
+你挺起手中蔑天劍，往%s頭部刺去，%s看清來勢，舉臂招架，怎料你這招來得太快，結果只聽見%s一聲慘嚎，蔑天劍已在%s的頭部對穿而出
+
+---------------------------------------------
+
+你身上帶著下列這些東西 (負重 98.04%)﹕
+
+  古鄔赤水袋(Strange skin)
+
+ˇ火鱗脛甲(Red_scale leggings)
+
+ˇ火鱗腰帶(Red_scale girth)
+
+ˇ火鱗手套(Red_scale gloves)
+
+ˇ火鱗盔(Red_scale helm)
+
+ˇ火鱗靴(Red_scale boots)
+
+ˇ火鱗胸鎧(Red_scale plate)
+
+ˇ火鱗衣(Red_scale cloth)
+
+ˇ蔑天劍(Sword of killing God)
+
+  十六兩黃金(Gold)
+
+  九兩碎銀(Silver)

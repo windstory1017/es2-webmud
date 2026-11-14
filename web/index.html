@@ -227,26 +227,50 @@
         </details>
       </section>
 
-      <section id="autoTimerPane" class="auto-pane" hidden>
-        <div class="auto-table-wrap">
-          <table class="auto-table">
-            <thead><tr><th>名稱</th><th>倒數秒數</th><th>剩幾秒時執行</th><th>指令</th><th>循環</th><th>剩餘</th><th></th></tr></thead>
-            <tbody id="autoTimerRows"></tbody>
-          </table>
-        </div>
-        <div class="auto-form">
-          <label>名稱（可不填） <input id="tmrName" spellcheck="false" placeholder="例：吃飯"></label>
-          <label>1. 倒數幾秒 <input id="tmrSeconds" type="number" min="1" step="1" placeholder="例：60"></label>
-          <label>2. 倒數剩幾秒時執行指令 <input id="tmrFireAt" type="number" min="0" step="1" value="0"></label>
-          <label class="auto-wide">3. 執行的指令 <input id="tmrCommand" spellcheck="false" placeholder="例：eat dumpling;drink water　（多個指令用 ; 分隔）"></label>
-          <div class="auto-checks"><label><input type="checkbox" id="tmrLoop"> 4. 循環（倒數到 0 後重新從第 1 欄的秒數開始）</label></div>
-          <div class="auto-form-actions">
-            <button type="button" id="tmrNew">清空</button>
-            <button type="button" id="tmrSave" class="primary">新增計時器</button>
+      <section id="autoTimerPane" class="auto-pane auto-trigger-pane" hidden>
+        <div class="trg-layout">
+          <aside class="trg-left">
+            <div class="trg-left-head">
+              <strong>已儲存的計時器</strong>
+              <span>點選以下的計時器進行編輯<br>雙擊可開始／停止倒數，好幾組可以同時倒數</span>
+            </div>
+            <div class="trg-list" id="autoTimerList" role="listbox" aria-label="計時器清單"></div>
+            <div class="trg-left-actions">
+              <button type="button" id="tmrNew">＋ 新增</button>
+              <button type="button" id="tmrCopy">複製</button>
+              <button type="button" id="tmrDelete" title="刪除這個計時器">刪除</button>
+            </div>
+          </aside>
+          <div class="trg-right">
+            <div class="trg-subtabs" role="tablist">
+              <button type="button" data-tmr-tab="main" role="tab">計時器</button>
+              <button type="button" data-tmr-tab="options" role="tab">選項</button>
+            </div>
+            <div class="trg-panel" data-tmr-panel="main">
+              <p class="trg-intro"><span class="trg-arrow" aria-hidden="true">▶</span>按「開始」後倒數，倒數到「剩幾秒時執行」那一刻，「指令」欄的指令就會執行。</p>
+              <label class="trg-row"><span>名稱</span><input id="tmrName" spellcheck="false" placeholder="例：吃飯（可不填）"></label>
+              <label class="trg-row"><span>倒數秒數</span><input id="tmrSeconds" type="number" min="1" step="1" placeholder="例：60"></label>
+              <label class="trg-row"><span>指令</span><input id="tmrCommand" spellcheck="false" placeholder="例：eat dumpling;drink water　（多個指令用 ; 分隔）"></label>
+              <div class="trg-row"><span></span><button type="button" id="tmrRunBtn" class="trg-enabled off" aria-pressed="false"><i aria-hidden="true"></i><b>已停止</b></button></div>
+              <div class="trg-class-state" id="tmrRunNote"></div>
+            </div>
+            <div class="trg-panel" data-tmr-panel="options" hidden>
+              <fieldset class="trg-box"><legend>執行時機</legend>
+                <label>倒數剩 <input id="tmrFireAt" type="number" min="0" step="1" value="0" class="tmr-num"> 秒時執行指令（0 表示倒數到底才執行）</label>
+              </fieldset>
+              <fieldset class="trg-box"><legend>倒數結束後</legend>
+                <label><input type="checkbox" id="tmrLoop"> 循環（重新從倒數秒數開始）</label>
+              </fieldset>
+              <p class="auto-note">計時器要按「開始」才會倒數；重新整理或斷線後需要再按一次。輸入欄左邊的按鈕暫停時，計時器照常倒數，但不會送出指令。</p>
+            </div>
+            <div id="tmrError" class="auto-error"></div>
+            <div class="trg-bottom">
+              <span class="trg-state" id="tmrState"></span>
+              <button type="button" id="tmrSave" class="primary">✔ 確定</button>
+              <button type="button" id="tmrCancel">✘ 取消</button>
+            </div>
           </div>
-          <div id="tmrError" class="auto-error"></div>
         </div>
-        <p class="auto-note">計時器要按「開始」才會倒數；重新整理或斷線後需要手動再開始。輸入欄左邊的按鈕暫停時，計時器照常倒數，但不會送出指令。</p>
       </section>
     </dialog>
 
