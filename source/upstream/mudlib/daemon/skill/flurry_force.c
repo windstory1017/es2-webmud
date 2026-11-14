@@ -118,7 +118,7 @@ int halt_exercise(object me, object owner, object from, string how)
     return 1;
 }
 
-/* refresh：消耗 5 + 等級/10 的氣，回復 等級 點精。 */
+/* refresh（戰鬥中可用）：自身停頓 1 回合；消耗 5 + 等級/10 的氣，回復 等級 點精。 */
 int do_refresh(object me)
 {
     int sk, cost;
@@ -130,10 +130,11 @@ int do_refresh(object me)
     me->consume_stat("kee", cost);
     me->supplement_stat("gin", sk);
     message_vision("$N運起迴風拂柳心訣﹐真氣如風拂過靈台﹐精神為之一振。\n", me);
+    me->start_busy(1);
     return 1;
 }
 
-/* heal：消耗 5 + 等級/20 的精，回復 等級/2 的氣，並回復 等級/4 的氣上限（受傷減少的部分）。 */
+/* heal（戰鬥中可用）：自身停頓 2 回合；消耗 5 + 等級/20 的精，回復 等級/2 的氣，並回復 等級/4 的氣上限（受傷減少的部分）。 */
 int do_heal(object me)
 {
     int sk, cost;
@@ -146,6 +147,7 @@ int do_heal(object me)
     me->heal_stat("kee", sk / 4);
     me->supplement_stat("kee", sk / 2);
     message_vision("$N運起迴風拂柳心訣調息療傷﹐臉色漸漸好轉。\n", me);
+    me->start_busy(2);
     return 1;
 }
 
