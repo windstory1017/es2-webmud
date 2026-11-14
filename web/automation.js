@@ -745,12 +745,21 @@ export function setupAutomationUI(auto,{dialog,toggleButton,openButtons}){
   }
 
   // ---------- 觸發（照 zMUD 的排版：左邊清單、右邊編輯） ----------
+  // 清單排序同 Windows 檔案總管：不分大小寫、數字照大小比（trigger2 在 trigger10 前面）。
+  // 有類別的排前面、依類別排，同類別再依句型排；沒有類別的排最後。只影響清單顯示，不改觸發的比對順序。
+  const naturalCompare=new Intl.Collator('en',{numeric:true,sensitivity:'base'}).compare;
+  function sortedTriggers(list){
+    return [...list].sort((a,b)=>{
+      if(!!a.cls!==!!b.cls)return a.cls?-1:1;
+      return naturalCompare(a.cls,b.cls)||naturalCompare(a.pattern,b.pattern);
+    });
+  }
   let trgTab='main',selectedTrigger=null,trgEnabled=true,trgDirty=false;
   function renderTriggers(){
     $('#autoTriggersEnabled').checked=auto.state.triggersEnabled;
     const off=new Set(auto.state.disabledClasses);
     $('#trgClassOptions').innerHTML=auto.classes().map(c=>`<option value="${esc(c)}"></option>`).join('');
-    const rows=auto.state.triggers.map(t=>{
+    const rows=sortedTriggers(auto.state.triggers).map(t=>{
       const classOff=t.cls&&off.has(t.cls);
       const on=t.enabled&&!classOff;
       return `<div class="trg-item${t.id===selectedTrigger?' selected':''}${on?'':' is-off'}" role="option" tabindex="0" data-trigger-id="${t.id}" aria-selected="${t.id===selectedTrigger}" title="${on?'已啟動':classOff?'類別已關閉':'已停用'}（雙擊切換）">
