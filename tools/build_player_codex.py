@@ -380,6 +380,14 @@ def main(out):
             add_src(e['path'], 'npc', nid)
         for p in extra[nid]['sells']:
             add_src(p, 'shop', nid)
+    # 藥鋪櫃台（inherit HERB 的房間）賣的丹藥，見 daemon/misc/herb_catalog.c（2026-11-14）
+    herb_files = ['/obj/alchemist/' + f for f in re.findall(
+        r'"\w+"\s*:\s*"(\w+)"', bc.read(MUD / 'daemon/misc/herb_catalog.c').split('product_file')[1].split(']);')[0])]
+    for rid in sorted(reach):
+        src = MUD / (rid.lstrip('/') + '.c')
+        if src.exists() and re.search(r'^\s*inherit\s+HERB\s*;', bc.read(src), re.M):
+            for p in herb_files:
+                add_src(p, 'counter', rid)
 
     # ---- 技能：NPC 傳授、書籍研讀
     skill_by_code = {s['code']: s for s in data['skills']}
@@ -472,6 +480,9 @@ def main(out):
              'value': it.get('value'), 'weight': it.get('weight'),
              'flags': [f for f in it.get('flags', []) if f != '可研讀'],
              'src': [[k, ids[ref]] for k, ref in item_src[it['id']]]}
+        # 丹藥不顯示價格，只顯示效果（使用者指示，2026-11-14）
+        if it.get('cat') == '丹藥':
+            o['value'] = None
         if it['kind_tab'] == 'weapons':
             o['kind'] = it['kind']
             o['usages'] = [{'skill': u['skill'], 'dmg': u.get('dmg')} for u in it['usages']]
