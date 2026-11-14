@@ -12,6 +12,8 @@ inherit "/std/martial_art";
 
 #define SWORD_SPECIAL_LEVEL  120   // 劍領風騷
 #define PARRY_RECOVER_LEVEL   60   // 招架成功回復氣
+#define DANCE_CD_TICKS         6   // perform 劍領風騷的冷卻（tick）
+#define TICK_SECS              2   // 1 tick = 2 秒
 
 private void create()
 {
@@ -176,4 +178,49 @@ void parry_success(object me, object attacker, int full)
     if( random(100) >= 50 ) return;
     // 等對方這一擊的訊息顯示完再回復。
     call_out("recover_kee", 0, me);
+}
+
+/* 在交手的對手裡挑目標；沒指定就取第一個。 */
+private object pick_target(object me, object target)
+{
+    object ob, *enemies;
+
+    enemies = filter(me->query_enemy(), (: objectp($1) :));
+    if( !sizeof(enemies) ) return 0;
+    if( !objectp(target) ) return enemies[0];
+    foreach(ob in enemies)
+        if( ob == target ) return target;
+    return 0;
+}
+
+/* perform sword:dance（使用者定案，2026-11-14）：強制施展劍領風騷，
+ * 消耗自己氣上限的 1/10；冷卻 6 tick（12 秒）；自身不停頓。
+ * 傲劍訣 120 級起才能施展；需要手持劍（單手或雙手）。 */
+int perform_action(object me, string act, object target)
+{
+    object victim, weapon;
+    int cost;
+
+    if( act != "dance" )
+        return notify_fail("傲劍訣沒有這種絕招。\n");
+    if( me->query_skill("au-chan sword", 1) < SWORD_SPECIAL_LEVEL )
+        return notify_fail("你的傲劍訣尚未大成﹐施展不出劍領風騷。\n");
+    if( !objectp(weapon = sword_in_hand(me)) )
+        return notify_fail("你必須手持劍才能施展劍領風騷。\n");
+
+    victim = pick_target(me, target);
+    if( !objectp(victim) )
+        return notify_fail("你並未與這個人交手。\n");
+
+    if( me->query_temp("au_chan_sword/dance_cd") > time() )
+        return notify_fail("你的劍意尚未平復﹐還施展不出劍領風騷。\n");
+
+    cost = me->query_stat_maximum("kee") / 10;
+    if( me->query_stat("kee") <= cost )
+        return notify_fail("你的氣不夠﹐施展不出劍領風騷。\n");
+
+    me->consume_stat("kee", cost);
+    me->set_temp("au_chan_sword/dance_cd", time() + DANCE_CD_TICKS * TICK_SECS);
+    do_sword_dance(me, victim, weapon);
+    return 1;
 }
