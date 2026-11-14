@@ -21,12 +21,7 @@ LONG
     );
     // 販售丹藥（使用者指示，2026-10-22）。
     set("merchandise", ([
-        "/obj/alchemist/minor_heal_pill" : 10,           // 小還丹
-        "/obj/alchemist/mana_pill" : 10,                 // 醒神丹
         "/obj/alchemist/aquapill" : 50,                  // 金液丹
-        "/obj/alchemist/refresh_pill" : 10,              // 金鎖固精丸
-        "/obj/alchemist/lavage_pill" : 5,              // 清腹丹
-        "/obj/alchemist/relax_pill" : 5,               // 養心丹
         // 以上丹藥數量依使用者指示 #5（2026-10-23）
         "/obj/alchemist/heat_firewood" : 3000,           // 松柴
         "/obj/alchemist/heat_reactor" : 30,              // 青銅丹鼎
