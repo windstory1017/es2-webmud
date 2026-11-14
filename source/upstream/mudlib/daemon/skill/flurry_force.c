@@ -27,6 +27,14 @@ private void create()
     setup();
 }
 
+/* 學習條件：古劍門專屬。 */
+int valid_learn(object me)
+{
+    if( !is_faction(me, "fighter.au-chan") )
+        return notify_fail("你不是古劍門弟子﹐無法修練迴風拂柳心訣。\n");
+    return 1;
+}
+
 /* 內功不會拿來出招。 */
 void attack_using(object me, object opponent, object weapon) { }
 
@@ -82,19 +90,21 @@ void skill_advanced(object me, string skill)
     }
 }
 
-/* 修習：每次運功消耗氣 2（受傷 1）、精 3（受傷 1），
- * 得到 基本公式 + random(定力) 的點數，同時累積基本內功（與寒梅心法相同）。 */
+/* 修習（exert flurry force）：每次運功消耗氣、精、神各 2（受傷各 1），
+ * 得到 基本公式 + random(定力) 的點數，同時累積基本內功。 */
 int do_exercise(object me)
 {
-    if( me->query_stat("kee") < 3 || me->query_stat("gin") < 4 ) {
-        tell_object(me, "你覺得氣血浮動、精力難繼﹐已無法再運轉迴風拂柳心訣。\n");
+    if( me->query_stat("kee") < 3 || me->query_stat("gin") < 3 || me->query_stat("sen") < 3 ) {
+        tell_object(me, "你覺得氣血浮動、精神不濟﹐已無法再運轉迴風拂柳心訣。\n");
         return 0;
     }
 
     me->consume_stat("kee", 2);
     me->damage_stat("kee", 1);
-    me->consume_stat("gin", 3);
+    me->consume_stat("gin", 2);
     me->damage_stat("gin", 1);
+    me->consume_stat("sen", 2);
+    me->damage_stat("sen", 1);
 
     me->improve_restored_force_tick();
     me->improve_skill_exact("flurry force",
@@ -106,4 +116,51 @@ int do_exercise(object me)
 int halt_exercise(object me, object owner, object from, string how)
 {
     return 1;
+}
+
+/* refresh：消耗 5 + 等級/10 的氣，回復 等級 點精。 */
+int do_refresh(object me)
+{
+    int sk, cost;
+
+    sk = me->query_skill("flurry force", 1);
+    cost = 5 + sk / 10;
+    if( me->query_stat("kee") <= cost )
+        return notify_fail("你的氣不夠﹐無法運起迴風拂柳心訣回復精神。\n");
+    me->consume_stat("kee", cost);
+    me->supplement_stat("gin", sk);
+    message_vision("$N運起迴風拂柳心訣﹐真氣如風拂過靈台﹐精神為之一振。\n", me);
+    return 1;
+}
+
+/* heal：消耗 5 + 等級/20 的精，回復 等級/2 的氣，並回復 等級/4 的氣上限（受傷減少的部分）。 */
+int do_heal(object me)
+{
+    int sk, cost;
+
+    sk = me->query_skill("flurry force", 1);
+    cost = 5 + sk / 20;
+    if( me->query_stat("gin") <= cost )
+        return notify_fail("你的精不夠﹐無法運起迴風拂柳心訣療傷。\n");
+    me->consume_stat("gin", cost);
+    me->heal_stat("kee", sk / 4);
+    me->supplement_stat("kee", sk / 2);
+    message_vision("$N運起迴風拂柳心訣調息療傷﹐臉色漸漸好轉。\n", me);
+    return 1;
+}
+
+varargs int exert_function(object me, string func, object target)
+{
+    switch(func) {
+    case "flurry force":
+        message_vision(HIY "$N盤膝坐定﹐默運迴風拂柳心訣﹐真氣如風拂柳在週身經脈流轉。\n" NOR, me);
+        me->start_busy((: do_exercise, me :), (: halt_exercise, me :));
+        return 1;
+    case "refresh":
+        return do_refresh(me);
+    case "heal":
+        return do_heal(me);
+    default:
+        return notify_fail("迴風拂柳心訣沒有這種功能。\n");
+    }
 }
