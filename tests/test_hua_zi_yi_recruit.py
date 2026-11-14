@@ -26,11 +26,11 @@ def test_hua_zi_yi_teaches_only_disciples():
     assert '"taoist.thunder"' in npc_skill and '"force":       "nine-dragon force"' in npc_skill
 
 
-def test_nine_dragon_force_waits_for_skill_file():
-    # 九龍神功的技能檔還沒有（只在 npc_skill.c 與對照表出現）；做好前華子儀不傳授，不會出錯。
+def test_nine_dragon_force_guard_and_skill_file():
+    # 華子儀只在九龍神功技能檔存在時才傳授；2026-11-14 技能檔做好，自動開放。
     s = read(MUD / 'd/fengcheng/npc/hua_zi_yi.c')
     assert 'file_size("/daemon/skill/nine-dragon_force.c") < 0' in s
-    assert not (MUD / 'daemon/skill/nine-dragon_force.c').exists()
+    assert (MUD / 'daemon/skill/nine-dragon_force.c').exists()
 
 
 def test_faction_help_exists():
