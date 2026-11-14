@@ -24,3 +24,17 @@ def test_hua_zi_yi_teaches_only_disciples():
     assert 'me->query_level() < 10' in s                                # 九龍神功與內功要等級 10
     npc_skill = read(MUD / 'daemon/misc/npc_skill.c')
     assert '"taoist.thunder"' in npc_skill and '"force":       "nine-dragon force"' in npc_skill
+
+
+def test_nine_dragon_force_waits_for_skill_file():
+    # 九龍神功的技能檔還沒有（只在 npc_skill.c 與對照表出現）；做好前華子儀不傳授，不會出錯。
+    s = read(MUD / 'd/fengcheng/npc/hua_zi_yi.c')
+    assert 'file_size("/daemon/skill/nine-dragon_force.c") < 0' in s
+    assert not (MUD / 'daemon/skill/nine-dragon_force.c').exists()
+
+
+def test_faction_help_exists():
+    h = read(MUD / 'docs/help/taoist.thunder.txt')
+    assert h.startswith('○ 紫衣派資料') and '青雲觀主 華子儀(Hua zi yi)' in h
+    for sk in ('taoism-thunder', 'reflecting star sword', 'magic steps'):
+        assert '（%s）' % sk in h

@@ -100,6 +100,8 @@ int acquire_skill(object me, string skill)
         break;
     case "nine-dragon force":
     case "force":
+        // 九龍神功的技能檔還沒有製作；做好之前不傳授（基本內功不受影響）。
+        if( skill == "nine-dragon force" && file_size("/daemon/skill/nine-dragon_force.c") < 0 ) return 0;
         if( me->query_level() < 10 )
             return notify_fail("華子儀搖頭笑道：這門內功的真氣霸道得很，你的筋骨還嫩，過些時日再來吧。\n");
         break;
