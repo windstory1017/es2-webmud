@@ -82,3 +82,12 @@ def test_vendor_sells_plain_weapons():
     assert 'ENHANCE_D->apply_affix(ob, ([]));' in s
     assert s.count('plain_goods(new(what))') == 3
     assert 'new(what)' not in s.replace('plain_goods(new(what))', '')
+
+
+def test_colosus_sword_rolls_affix_three_times_as_often():
+    # 巨劍（巨神劍）加入詞綴行列，出詞綴機會 3 倍：前綴 60%、前綴＋後綴 15%。
+    s = (MUD / 'custom/weapon/sword/colosus_sword.c').read_text(encoding='utf-8')
+    assert 'if( clonep() ) ENHANCE_D->roll_affix(this_object(), 3);' in s
+    e = (MUD / 'adm/daemons/enhanced.c').read_text(encoding='utf-8')
+    assert 'varargs void roll_affix(object ob, int chance_mult)' in e
+    assert 'r >= 100 - 20 * chance_mult' in e and 'r >= 100 - 5 * chance_mult' in e
