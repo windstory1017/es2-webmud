@@ -169,10 +169,11 @@ void recover_kee(object me)
     me->supplement_stat("kee", n);
 }
 
-/* 招架成功（含完全擋下）：傲劍訣 60 級起，回復氣＝根骨 ＋ 傲劍訣等級 ÷ 10。 */
+/* 招架成功（含完全擋下）：傲劍訣 60 級起，50% 機率回復氣＝根骨 ＋ 傲劍訣等級 ÷ 10。 */
 void parry_success(object me, object attacker, int full)
 {
     if( me->query_skill("au-chan sword", 1) < PARRY_RECOVER_LEVEL ) return;
+    if( random(100) >= 50 ) return;
     // 等對方這一擊的訊息顯示完再回復。
     call_out("recover_kee", 0, me);
 }
