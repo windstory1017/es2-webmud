@@ -45,11 +45,11 @@ int accept_info(object ob, string type)
 int accept_apprentice(object me)
 {
     if( me->query_class() != "commoner" ) {
-        command("say 閣下已另有師承，貧道不便收你。");
+        command("say 你都有師父啦，貧道可不好搶人，哈哈，改日來喝茶倒是無妨。");
         return 0;
     }
     if( me->query_attr("wis", 1) < 16 ) {
-        command("say 貧道看閣下慧根尚淺，與雷法緣分未到，還是另尋他途吧。");
+        command("say 唔，你這孩子跟雷法的緣分還淺了些，不急不急，山長雲多，慢慢走，說不定哪天機緣就到了。");
         return 0;
     }
     return 1;
@@ -63,8 +63,8 @@ void say_to(object who, string msg)
 
 void welcome(object who)
 {
-    say_to(who, "天師雷法剛猛霸道，卻最怕心浮氣躁，你須先把心性修穩了，雷霆才聽你號令。");
-    call_out("say_to", TICK, who, "往後若想求教本門的雷法、劍術與步法，儘管開口，貧道自會指點。");
+    say_to(who, "雷法這東西，說穿了不過是借天地一口氣，你別怕它兇，也別把它當寶貝，順著性子慢慢來就是。");
+    call_out("say_to", TICK, who, "往後想學什麼，開口問便是，貧道閒著也是閒著。");
 }
 
 int init_apprentice(object me)
@@ -73,7 +73,8 @@ int init_apprentice(object me)
         me->set_class("taoist");
         me->set("title", "紫衣派弟子");
         me->set("custom_faction", FACTION);
-        command("say 好，從今日起，你便是我紫衣派弟子。");
+        command("emote 仰頭哈哈一笑，捋了捋花白的鬍鬚");
+        command("say 難得今日有緣，好，這個徒弟貧道收下了，從今往後你便是紫衣派的人。");
         call_out("welcome", TICK, me);
     }
     return 1;
@@ -100,16 +101,16 @@ int acquire_skill(object me, string skill)
     case "nine-dragon force":
     case "force":
         if( me->query_level() < 10 )
-            return notify_fail("華子儀搖頭道：你的根基尚淺，還承受不住九龍神功的真氣。\n");
+            return notify_fail("華子儀搖頭笑道：這門內功的真氣霸道得很，你的筋骨還嫩，過些時日再來吧。\n");
         break;
     default:
         return 0;
     }
 
     if( me->query_learn(skill) >= me->skill_threshold(skill, 1) )
-        return notify_fail("華子儀說道：入門的要訣已經傳給你了，往後全看你自己。\n");
+        return notify_fail("華子儀笑道：入門的法子都教給你啦，往後可得靠你自己琢磨。\n");
 
     me->improve_skill_exact(skill, me->skill_threshold(skill, 1) - me->query_learn(skill));
-    tell_object(me, CYN + "華子儀將「" + to_chinese(skill) + "」的入門要訣傳授給你。\n" NOR);
+    tell_object(me, CYN + "華子儀隨手比劃了幾下，將「" + to_chinese(skill) + "」的入門要訣傳授給你。\n" NOR);
     return 1;
 }
