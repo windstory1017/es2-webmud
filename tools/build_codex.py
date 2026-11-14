@@ -527,6 +527,11 @@ def stat_effects(code):
 
 def item_category(p, code):
     rel = str(p.relative_to(MUD))
+    # 煉丹用具（2026-11-14 使用者指示：丹爐、丹鼎算容器；松柴原本被誤判成飲品）
+    if re.search(r'int\s+is_heat_(reactor|furnace)\s*\(', code):
+        return '容器'
+    if re.search(r'int\s+is_heat_wood\s*\(', code):
+        return '其他'
     if 'F_FOOD' in code or set_int(code, 'food_stuff') or 'food_remaining' in code:
         return '食物'
     if 'F_LIQUID' in code or 'liquid' in code:
