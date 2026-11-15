@@ -14,14 +14,14 @@ void create()
     set("nickname", "劍皇");
     set_race("human");
     set_class("fighter");
-    set_level(40);
+    set_level(65);
     set("gender", "male");
-    set("age", 65);
+    set("age", 60);
     set("long",
         "此人長的英俊瀟灑，氣度雍容華貴，渾身上下透著一種讓人無法抗拒的魅\n"
         "力。與他的七位結義兄弟不同的是，軒轅劍月很少殺人。\n");
-    set("custom_faction", "fighter.fonxan");   // 封山派（docs/martial_arts/門派武功對照表.md）
-    set_power("A");
+    set("custom_faction", "fighter.snow");   // 雪吟莊（docs/martial_arts/門派武功對照表.md）
+    set_power("S");
     setup();
     carry_object("/obj/area/obj/shortsword")->wield();   // 短劍
     carry_object("/obj/area/obj/longsword");   // 長劍

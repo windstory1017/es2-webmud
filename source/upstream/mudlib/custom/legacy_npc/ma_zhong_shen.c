@@ -21,6 +21,8 @@ void create()
         "異常殘忍。馬鍾聖在拳法上的造詣極深，由於和他動過手的人都被他殺了，所\n"
         "以他的武功套路幾乎沒人知道。\n");
     set("legacy_aggressive", 1);   // 看到玩家就下殺手
+    set_skill("fonxiaoken", 200);   // 風嘯拳法（八寶樓設計表）
+    map_skill("unarmed", "fonxiaoken");
     set_power("B");
     setup();
     carry_object("/custom/zhenwu/obj/steel_boots")->wear();   // 精鋼戰靴

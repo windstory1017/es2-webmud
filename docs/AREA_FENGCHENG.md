@@ -16,7 +16,7 @@
 |---|---|---|---|---|
 | J10 | `qingyun_temple.c` | 青雲觀 | 新寫 | south J12 |
 | L10 | `cliff.c` | 天山孤崖 | 舊資料全文 | southdown L12 |
-| H12 | `inner_yard.c` | 內院廣場 | 設計需求＋新寫（八寶樓） | south H14 |
+| H12 | `inner_yard.c` | 內院廣場 | 設計需求＋新寫（八寶樓） | south H14、north 八寶樓歐陽書房（`/d/baobao/study`，見 `AREA_BAOBAO.md`） |
 | J12 | `mountain_road.c` | 山路 | 舊資料全文（設計表） | north J10、east L12 |
 | L12 | `east_gate.c` | 東城門 | 設計需求＋新寫 | west J12、south L14、northup L10、eastup 天山霧海 |
 | D14 | `stone_road1.c` | 石板路 | 新寫 | north 孟家莊 D12、south D16、east F14 |
