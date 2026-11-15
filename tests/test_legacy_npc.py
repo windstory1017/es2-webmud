@@ -31,11 +31,12 @@ def test_npc_settings_follow_list():
         assert f'set_power("{tier}");' in s, f
         assert ('set("legacy_aggressive", 1);' in s) == ('主動攻擊' in beh), f
         assert ('set("legacy_patrol", 1);' in s) == ('巡邏' in beh), f
-        assert 'set_skill(' not in s and 'set_attr(' not in s, f
+        assert 'set_skill(' not in s or name.strip() == '馬鍾聖', f   # 馬鍾聖：風嘯拳法 200（八寶樓設計表）
+        assert 'set_attr(' not in s, f
 
 
 def test_user_decisions():
-    aggressive = {5, 6, 7, 8, 10, 16, 17, 19, 38, 41, 50, 51, 59, 60, 70, 125, 126}
+    aggressive = {6, 7, 8, 10, 16, 17, 19, 38, 41, 50, 51, 59, 60, 70, 125, 126}
     assert {int(r[0]) for r in ROWS if '主動攻擊' in r[7]} == aggressive
     assert {int(r[0]) for r in ROWS if '巡邏' in r[7]} == {15, 16, 17, 19, 80}
     assert '"si-ma lei"' in read(DIR / 'si_ma_lei.c')

@@ -49,7 +49,7 @@ def test_rooms_and_npcs():
 def test_exits_are_two_way():
     for r in GRID:
         for d, t in exits(r).items():
-            if t.startswith(('/d/shuiyue/', '/d/mengjia/', '/d/tianshan/')) or d == 'northup':
+            if t.startswith(('/d/shuiyue/', '/d/mengjia/', '/d/tianshan/', '/d/baobao/')) or d == 'northup':
                 continue
             assert exits(t.rsplit('/', 1)[1]).get(OPP[d]) == '/d/fengcheng/' + r, (r, d, t)
 

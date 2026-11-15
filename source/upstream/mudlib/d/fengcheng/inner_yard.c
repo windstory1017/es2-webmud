@@ -13,6 +13,7 @@ LONG
     );
     set("exits", ([
         "south" : __DIR__"general_gate",
+        "north" : "/d/baobao/study",
     ]));
     set("map/area", "風城");
     setup();

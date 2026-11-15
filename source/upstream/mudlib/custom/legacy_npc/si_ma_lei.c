@@ -13,14 +13,14 @@ void create()
     set_name("司馬雷", ({ "si-ma lei", "si-ma", "lei" }));
     set_race("ashura");
     set_class("soldier");
-    set_level(35);
+    set_level(60);
     set("gender", "male");
     set("age", 55);
     set("long",
         "大漠八魔中的老七，據說原本是天朝的一名參將，不知為何放著好好的官不做，\n"
         "卻到北方大漠去幹打家劫舍的事。\n");
     set("legacy_aggressive", 1);   // 看到玩家就下殺手
-    set_power("B");
+    set_power("A");
     setup();
     carry_object("/custom/weapon/pike/royal_pike")->wield();   // 霸王槍
     carry_object("/custom/armor/head/royal_helmet")->wear();   // 霸王銅冠
