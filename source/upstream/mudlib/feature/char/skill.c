@@ -449,6 +449,7 @@ static mapping ATTR_GROWTH = ([
     "killerhood":           "cor",
     "literate":             "int",
     "archaic attainment":   "int",
+    "mysticism":            "int",   // 五行陰陽之學（使用者指示，2026-11-14）
     "absorption":           "wis",
 ]);
 
