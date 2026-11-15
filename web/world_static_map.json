@@ -3088,6 +3088,13 @@
       "y": -12
     },
     {
+      "id": "/d/baobao/study",
+      "label": "歐陽書房",
+      "area": "八寶樓",
+      "x": 4,
+      "y": -13
+    },
+    {
       "id": "/d/fengcheng/mountain_road",
       "label": "山路",
       "area": "風城",
@@ -8758,6 +8765,12 @@
       "resolved": true
     },
     {
+      "from": "/d/fengcheng/inner_yard",
+      "to": "/d/baobao/study",
+      "direction": "north",
+      "resolved": true
+    },
+    {
       "from": "/d/fengcheng/mountain_road",
       "to": "/d/fengcheng/qingyun_temple",
       "direction": "north",
@@ -9295,6 +9308,12 @@
       "from": "/d/tianshan/hall",
       "to": "/d/tianshan/secret_room",
       "direction": "kneel",
+      "resolved": true
+    },
+    {
+      "from": "/d/baobao/study",
+      "to": "/d/fengcheng/inner_yard",
+      "direction": "south",
       "resolved": true
     }
   ],
