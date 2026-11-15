@@ -61,7 +61,7 @@
 
 | 門派 | 代碼 | 狀態 |
 |---|---|---|
-| 玄天教 | `scholar.sky` | 待補說明 |
+| 玄天派 | `scholar.sky` | 已完成（2026-11-14） |
 | 步玄派 | `scholar.myst` | 已完成 |
 
 ### 道士（taoist）　共通指令：hearth
@@ -71,7 +71,7 @@
 | 朱衣派 | `taoist.fire` | 已完成 |
 | 玄衣派 | `taoist.storm` | 已完成 |
 | 素衣派 | `taoist.freeze` | 待補說明 |
-| 紫衣派 | `taoist.thunder` | 待補說明 |
+| 紫衣派 | `taoist.thunder` | 已補（`taoist.thunder.txt`，2026-11-14） |
 | 幻霧觀 | `mao-shan.fog` | 已完成 |
 | 隱風觀 | `mao-shan.wind` | 已完成 |
 | 靈雲觀 | `mao-shan.cloud` | 待補說明 |

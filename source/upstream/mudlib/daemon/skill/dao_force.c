@@ -128,7 +128,7 @@ int do_recover(object me)
     return 1;
 }
 
-/* remedy：60 級起；消耗飲水 50（不足 50 時扣到 0，照樣有效），
+/* remedy：60 級起；疲勞達 80 就不能用（同 recover）；疲勞 +5（2026-11-15）；消耗飲水 50（不足 50 時扣到 0，照樣有效），
  * 精、氣、神目前值各回復 等級/3～等級/2（各自擲骰）；自身停頓 1 回合。 */
 int do_remedy(object me)
 {
@@ -137,6 +137,9 @@ int do_remedy(object me)
     sk = me->query_skill("dao force", 1);
     if( sk < 60 )
         return notify_fail("你的明道心法火候未到﹐還無法以吐納回復精神。\n");
+    if( me->query_stat("fatigue") >= 80 )
+        return notify_fail("你實在太累了﹐提不起氣來吐納。\n");
+    me->supplement_stat("fatigue", 5);
     water = me->query_stat("water");
     me->consume_stat("water", water < 50 ? water : 50);
     foreach(string stat in ({ "gin", "kee", "sen" }))

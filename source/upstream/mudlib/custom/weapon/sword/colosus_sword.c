@@ -18,4 +18,6 @@ void create()
             "一把約五尺長的巨劍﹐份量奇重，需要相當的膂力才能揮舞這種武器。\n");
     }
     setup();
+    // 武器附加屬性：每把新產生的巨劍擲一次前綴／後綴，出詞綴的機會是一般武器的 3 倍（adm/daemons/enhanced.c）。
+    if( clonep() ) ENHANCE_D->roll_affix(this_object(), 3);
 }

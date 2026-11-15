@@ -2942,6 +2942,467 @@
       "area": "太乙觀",
       "x": 3,
       "y": 1
+    },
+    {
+      "id": "/d/shuiyue/stone_road",
+      "label": "石板路",
+      "area": "水月村",
+      "x": 2,
+      "y": -7
+    },
+    {
+      "id": "/d/shuiyue/waterfall",
+      "label": "水月瀑布",
+      "area": "水月村",
+      "x": 3,
+      "y": -8
+    },
+    {
+      "id": "/d/shuiyue/cave",
+      "label": "神秘山洞",
+      "area": "水月村",
+      "x": 4,
+      "y": -8,
+      "layer": "洞穴"
+    },
+    {
+      "id": "/d/shuiyue/stone_house",
+      "label": "石屋",
+      "area": "水月村",
+      "x": 5,
+      "y": -8,
+      "layer": "洞穴"
+    },
+    {
+      "id": "/d/shuiyue/woods",
+      "label": "樹林",
+      "area": "水月村",
+      "x": 3,
+      "y": -7
+    },
+    {
+      "id": "/d/shuiyue/hunter_hut",
+      "label": "木屋內",
+      "area": "水月村",
+      "x": 4,
+      "y": -7
+    },
+    {
+      "id": "/d/shuiyue/mud_road",
+      "label": "泥石路",
+      "area": "水月村",
+      "x": 2,
+      "y": -6
+    },
+    {
+      "id": "/d/shuiyue/sky_tree",
+      "label": "『丱天樹』",
+      "area": "水月村",
+      "x": 3,
+      "y": -6
+    },
+    {
+      "id": "/d/shuiyue/tree_top",
+      "label": "樹上",
+      "area": "水月村",
+      "x": 4,
+      "y": -6,
+      "layer": "樹上"
+    },
+    {
+      "id": "/d/shuiyue/tree_hollow",
+      "label": "樹洞",
+      "area": "水月村",
+      "x": 5,
+      "y": -6,
+      "layer": "樹上"
+    },
+    {
+      "id": "/d/shuiyue/village1",
+      "label": "水月村",
+      "area": "水月村",
+      "x": 2,
+      "y": -5
+    },
+    {
+      "id": "/d/shuiyue/crossroad",
+      "label": "十字路口",
+      "area": "水月村",
+      "x": 2,
+      "y": -4
+    },
+    {
+      "id": "/d/shuiyue/chief_house",
+      "label": "村長家",
+      "area": "水月村",
+      "x": 1,
+      "y": -4
+    },
+    {
+      "id": "/d/shuiyue/inn",
+      "label": "福安客棧",
+      "area": "水月村",
+      "x": 3,
+      "y": -4
+    },
+    {
+      "id": "/d/shuiyue/village2",
+      "label": "水月村",
+      "area": "水月村",
+      "x": 2,
+      "y": -3
+    },
+    {
+      "id": "/d/shuiyue/mountain_path1",
+      "label": "上山小路",
+      "area": "水月村",
+      "x": 2,
+      "y": -2
+    },
+    {
+      "id": "/d/shuiyue/mountain_path2",
+      "label": "上山小路",
+      "area": "水月村",
+      "x": 2,
+      "y": -1
+    },
+    {
+      "id": "/d/fengcheng/qingyun_temple",
+      "label": "青雲觀",
+      "area": "風城",
+      "x": 5,
+      "y": -13
+    },
+    {
+      "id": "/d/fengcheng/cliff",
+      "label": "天山孤崖",
+      "area": "風城",
+      "x": 6,
+      "y": -13
+    },
+    {
+      "id": "/d/fengcheng/inner_yard",
+      "label": "內院廣場",
+      "area": "風城",
+      "x": 4,
+      "y": -12
+    },
+    {
+      "id": "/d/baobao/study",
+      "label": "歐陽書房",
+      "area": "八寶樓",
+      "x": 4,
+      "y": -13
+    },
+    {
+      "id": "/d/fengcheng/mountain_road",
+      "label": "山路",
+      "area": "風城",
+      "x": 5,
+      "y": -12
+    },
+    {
+      "id": "/d/fengcheng/east_gate",
+      "label": "東城門",
+      "area": "風城",
+      "x": 6,
+      "y": -12
+    },
+    {
+      "id": "/d/fengcheng/stone_road1",
+      "label": "石板路",
+      "area": "風城",
+      "x": 2,
+      "y": -11
+    },
+    {
+      "id": "/d/fengcheng/li_house",
+      "label": "民宅",
+      "area": "風城",
+      "x": 3,
+      "y": -11
+    },
+    {
+      "id": "/d/fengcheng/general_gate",
+      "label": "將軍府",
+      "area": "風城",
+      "x": 4,
+      "y": -11
+    },
+    {
+      "id": "/d/fengcheng/stone_road2",
+      "label": "石板路",
+      "area": "風城",
+      "x": 6,
+      "y": -11
+    },
+    {
+      "id": "/d/fengcheng/crossroad",
+      "label": "交叉路口",
+      "area": "風城",
+      "x": 2,
+      "y": -10
+    },
+    {
+      "id": "/d/fengcheng/street1",
+      "label": "街道",
+      "area": "風城",
+      "x": 3,
+      "y": -10
+    },
+    {
+      "id": "/d/fengcheng/street2",
+      "label": "街道",
+      "area": "風城",
+      "x": 4,
+      "y": -10
+    },
+    {
+      "id": "/d/fengcheng/east_street1",
+      "label": "東街",
+      "area": "風城",
+      "x": 5,
+      "y": -10
+    },
+    {
+      "id": "/d/fengcheng/east_street2",
+      "label": "東街",
+      "area": "風城",
+      "x": 6,
+      "y": -10
+    },
+    {
+      "id": "/d/fengcheng/south_street",
+      "label": "南街",
+      "area": "風城",
+      "x": 2,
+      "y": -9
+    },
+    {
+      "id": "/d/fengcheng/inn",
+      "label": "春風客棧",
+      "area": "風城",
+      "x": 3,
+      "y": -9
+    },
+    {
+      "id": "/d/fengcheng/inn2",
+      "label": "春風客棧二樓",
+      "area": "風城",
+      "x": 3,
+      "y": -9,
+      "layer": "二樓"
+    },
+    {
+      "id": "/d/fengcheng/alley",
+      "label": "小巷",
+      "area": "風城",
+      "x": 6,
+      "y": -9
+    },
+    {
+      "id": "/d/fengcheng/tower",
+      "label": "城樓",
+      "area": "風城",
+      "x": 1,
+      "y": -8,
+      "layer": "城樓"
+    },
+    {
+      "id": "/d/fengcheng/gate",
+      "label": "城門口",
+      "area": "風城",
+      "x": 2,
+      "y": -8
+    },
+    {
+      "id": "/d/mengjia/backyard",
+      "label": "後院",
+      "area": "孟家莊",
+      "x": 1,
+      "y": -14
+    },
+    {
+      "id": "/d/mengjia/manor",
+      "label": "孟家莊",
+      "area": "孟家莊",
+      "x": 1,
+      "y": -13
+    },
+    {
+      "id": "/d/mengjia/gate",
+      "label": "孟家大門",
+      "area": "孟家莊",
+      "x": 1,
+      "y": -12
+    },
+    {
+      "id": "/d/mengjia/herb_shop",
+      "label": "同仁藥鋪",
+      "area": "孟家莊",
+      "x": 1,
+      "y": -11
+    },
+    {
+      "id": "/d/mengjia/inn2",
+      "label": "客棧二樓",
+      "area": "孟家莊",
+      "x": 2,
+      "y": -14,
+      "layer": "二樓"
+    },
+    {
+      "id": "/d/mengjia/inn",
+      "label": "小客棧",
+      "area": "孟家莊",
+      "x": 2,
+      "y": -13
+    },
+    {
+      "id": "/d/mengjia/crossroad",
+      "label": "十字路口",
+      "area": "孟家莊",
+      "x": 2,
+      "y": -12
+    },
+    {
+      "id": "/d/mengjia/street",
+      "label": "大街",
+      "area": "孟家莊",
+      "x": 3,
+      "y": -12
+    },
+    {
+      "id": "/d/mengjia/forest",
+      "label": "密林",
+      "area": "孟家莊",
+      "x": 3,
+      "y": -13
+    },
+    {
+      "id": "/d/mengjia/graveyard",
+      "label": "孟家祖墳",
+      "area": "孟家莊",
+      "x": 3,
+      "y": -14
+    },
+    {
+      "id": "/d/mengjia/tomb",
+      "label": "墓室",
+      "area": "孟家莊",
+      "x": 3,
+      "y": -15,
+      "layer": "地下"
+    },
+    {
+      "id": "/d/mengjia/passage",
+      "label": "暗道",
+      "area": "孟家莊",
+      "x": 2,
+      "y": -14,
+      "layer": "暗道"
+    },
+    {
+      "id": "/d/tianshan/fog",
+      "label": "霧海",
+      "area": "天山",
+      "x": 7,
+      "y": -13
+    },
+    {
+      "id": "/d/tianshan/spring",
+      "label": "清泉",
+      "area": "天山",
+      "x": 7,
+      "y": -14
+    },
+    {
+      "id": "/d/tianshan/cave1",
+      "label": "山洞內",
+      "area": "天山",
+      "x": 8,
+      "y": -14,
+      "layer": "洞穴"
+    },
+    {
+      "id": "/d/tianshan/cave2",
+      "label": "山洞內",
+      "area": "天山",
+      "x": 9,
+      "y": -14,
+      "layer": "洞穴"
+    },
+    {
+      "id": "/d/tianshan/cave_mouth",
+      "label": "洞口",
+      "area": "天山",
+      "x": 10,
+      "y": -14
+    },
+    {
+      "id": "/d/tianshan/dirt_road1",
+      "label": "土路",
+      "area": "天山",
+      "x": 11,
+      "y": -14
+    },
+    {
+      "id": "/d/tianshan/fork",
+      "label": "岔路口",
+      "area": "天山",
+      "x": 12,
+      "y": -14
+    },
+    {
+      "id": "/d/tianshan/peach_grove",
+      "label": "桃花林",
+      "area": "天山",
+      "x": 13,
+      "y": -14
+    },
+    {
+      "id": "/d/tianshan/dirt_road2",
+      "label": "土路",
+      "area": "天山",
+      "x": 12,
+      "y": -15
+    },
+    {
+      "id": "/d/tianshan/dirt_road3",
+      "label": "土路",
+      "area": "天山",
+      "x": 12,
+      "y": -16
+    },
+    {
+      "id": "/d/tianshan/cabin",
+      "label": "小木屋",
+      "area": "天山",
+      "x": 12,
+      "y": -17
+    },
+    {
+      "id": "/d/tianshan/garden",
+      "label": "小菜園",
+      "area": "天山",
+      "x": 12,
+      "y": -13
+    },
+    {
+      "id": "/d/tianshan/hall",
+      "label": "靈堂",
+      "area": "天山",
+      "x": 11,
+      "y": -17,
+      "layer": "內堂"
+    },
+    {
+      "id": "/d/tianshan/secret_room",
+      "label": "密室",
+      "area": "天山",
+      "x": 10,
+      "y": -17,
+      "layer": "密室"
     }
   ],
   "edges": [
@@ -8079,6 +8540,780 @@
       "from": "/d/graveyard/grave8",
       "to": "/d/taiyi/gate",
       "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/stone_road",
+      "to": "/d/shuiyue/mud_road",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/waterfall",
+      "to": "/d/shuiyue/woods",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/cave",
+      "to": "/d/shuiyue/waterfall",
+      "direction": "out",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/stone_house",
+      "to": "/d/shuiyue/cave",
+      "direction": "out",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/woods",
+      "to": "/d/shuiyue/waterfall",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/woods",
+      "to": "/d/shuiyue/sky_tree",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/woods",
+      "to": "/d/shuiyue/hunter_hut",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/hunter_hut",
+      "to": "/d/shuiyue/woods",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/mud_road",
+      "to": "/d/shuiyue/stone_road",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/mud_road",
+      "to": "/d/shuiyue/village1",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/mud_road",
+      "to": "/d/shuiyue/sky_tree",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/sky_tree",
+      "to": "/d/shuiyue/mud_road",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/sky_tree",
+      "to": "/d/shuiyue/woods",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/tree_top",
+      "to": "/d/shuiyue/sky_tree",
+      "direction": "down",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/tree_hollow",
+      "to": "/d/shuiyue/tree_top",
+      "direction": "out",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/village1",
+      "to": "/d/shuiyue/mud_road",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/village1",
+      "to": "/d/shuiyue/crossroad",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/crossroad",
+      "to": "/d/shuiyue/village1",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/crossroad",
+      "to": "/d/shuiyue/village2",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/crossroad",
+      "to": "/d/shuiyue/chief_house",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/crossroad",
+      "to": "/d/shuiyue/inn",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/chief_house",
+      "to": "/d/shuiyue/crossroad",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/inn",
+      "to": "/d/shuiyue/crossroad",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/village2",
+      "to": "/d/shuiyue/crossroad",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/village2",
+      "to": "/d/shuiyue/mountain_path1",
+      "direction": "southdown",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/mountain_path1",
+      "to": "/d/shuiyue/village2",
+      "direction": "northup",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/mountain_path1",
+      "to": "/d/shuiyue/mountain_path2",
+      "direction": "southdown",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/mountain_path2",
+      "to": "/d/shuiyue/mountain_path1",
+      "direction": "northup",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/mountain_path2",
+      "to": "/d/snow/npath2",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/snow/npath2",
+      "to": "/d/shuiyue/mountain_path2",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/waterfall",
+      "to": "/d/shuiyue/cave",
+      "direction": "enter",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/cave",
+      "to": "/d/shuiyue/stone_house",
+      "direction": "enter",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/sky_tree",
+      "to": "/d/shuiyue/tree_top",
+      "direction": "climb",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/tree_top",
+      "to": "/d/shuiyue/tree_hollow",
+      "direction": "enter",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/qingyun_temple",
+      "to": "/d/fengcheng/mountain_road",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/cliff",
+      "to": "/d/fengcheng/east_gate",
+      "direction": "southdown",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/inner_yard",
+      "to": "/d/fengcheng/general_gate",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/inner_yard",
+      "to": "/d/baobao/study",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/mountain_road",
+      "to": "/d/fengcheng/qingyun_temple",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/mountain_road",
+      "to": "/d/fengcheng/east_gate",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/east_gate",
+      "to": "/d/fengcheng/mountain_road",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/east_gate",
+      "to": "/d/fengcheng/stone_road2",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/east_gate",
+      "to": "/d/fengcheng/cliff",
+      "direction": "northup",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/stone_road1",
+      "to": "/d/fengcheng/crossroad",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/stone_road1",
+      "to": "/d/fengcheng/li_house",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/li_house",
+      "to": "/d/fengcheng/stone_road1",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/general_gate",
+      "to": "/d/fengcheng/street2",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/general_gate",
+      "to": "/d/fengcheng/inner_yard",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/stone_road2",
+      "to": "/d/fengcheng/east_gate",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/stone_road2",
+      "to": "/d/fengcheng/east_street2",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/crossroad",
+      "to": "/d/fengcheng/stone_road1",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/crossroad",
+      "to": "/d/fengcheng/south_street",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/crossroad",
+      "to": "/d/fengcheng/street1",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/street1",
+      "to": "/d/fengcheng/crossroad",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/street1",
+      "to": "/d/fengcheng/street2",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/street2",
+      "to": "/d/fengcheng/street1",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/street2",
+      "to": "/d/fengcheng/east_street1",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/street2",
+      "to": "/d/fengcheng/general_gate",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/east_street1",
+      "to": "/d/fengcheng/street2",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/east_street1",
+      "to": "/d/fengcheng/east_street2",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/east_street2",
+      "to": "/d/fengcheng/east_street1",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/east_street2",
+      "to": "/d/fengcheng/stone_road2",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/east_street2",
+      "to": "/d/fengcheng/alley",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/south_street",
+      "to": "/d/fengcheng/crossroad",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/south_street",
+      "to": "/d/fengcheng/gate",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/south_street",
+      "to": "/d/fengcheng/inn",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/inn",
+      "to": "/d/fengcheng/south_street",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/inn",
+      "to": "/d/fengcheng/inn2",
+      "direction": "up",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/inn2",
+      "to": "/d/fengcheng/inn",
+      "direction": "down",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/alley",
+      "to": "/d/fengcheng/east_street2",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/tower",
+      "to": "/d/fengcheng/gate",
+      "direction": "down",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/gate",
+      "to": "/d/fengcheng/south_street",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/gate",
+      "to": "/d/shuiyue/stone_road",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/gate",
+      "to": "/d/fengcheng/tower",
+      "direction": "up",
+      "resolved": true
+    },
+    {
+      "from": "/d/shuiyue/stone_road",
+      "to": "/d/fengcheng/gate",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/backyard",
+      "to": "/d/mengjia/manor",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/manor",
+      "to": "/d/mengjia/backyard",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/manor",
+      "to": "/d/mengjia/gate",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/gate",
+      "to": "/d/mengjia/manor",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/gate",
+      "to": "/d/mengjia/herb_shop",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/gate",
+      "to": "/d/mengjia/crossroad",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/herb_shop",
+      "to": "/d/mengjia/gate",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/inn2",
+      "to": "/d/mengjia/inn",
+      "direction": "down",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/inn",
+      "to": "/d/mengjia/crossroad",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/inn",
+      "to": "/d/mengjia/inn2",
+      "direction": "up",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/crossroad",
+      "to": "/d/mengjia/inn",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/crossroad",
+      "to": "/d/fengcheng/stone_road1",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/crossroad",
+      "to": "/d/mengjia/gate",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/crossroad",
+      "to": "/d/mengjia/street",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/street",
+      "to": "/d/mengjia/crossroad",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/street",
+      "to": "/d/mengjia/forest",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/forest",
+      "to": "/d/mengjia/street",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/forest",
+      "to": "/d/mengjia/graveyard",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/graveyard",
+      "to": "/d/mengjia/forest",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/tomb",
+      "to": "/d/mengjia/graveyard",
+      "direction": "up",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/passage",
+      "to": "/d/mengjia/inn2",
+      "direction": "up",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/passage",
+      "to": "/d/mengjia/forest",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/inn2",
+      "to": "/d/mengjia/passage",
+      "direction": "push",
+      "resolved": true
+    },
+    {
+      "from": "/d/mengjia/graveyard",
+      "to": "/d/mengjia/tomb",
+      "direction": "roll",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/stone_road1",
+      "to": "/d/mengjia/crossroad",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/fog",
+      "to": "/d/fengcheng/east_gate",
+      "direction": "westdown",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/spring",
+      "to": "/d/tianshan/fog",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/cave1",
+      "to": "/d/tianshan/spring",
+      "direction": "out",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/cave1",
+      "to": "/d/tianshan/cave2",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/cave2",
+      "to": "/d/tianshan/cave1",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/cave_mouth",
+      "to": "/d/tianshan/cave2",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/dirt_road1",
+      "to": "/d/tianshan/cave_mouth",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/dirt_road1",
+      "to": "/d/tianshan/fork",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/fork",
+      "to": "/d/tianshan/dirt_road2",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/fork",
+      "to": "/d/tianshan/dirt_road1",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/fork",
+      "to": "/d/tianshan/garden",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/fork",
+      "to": "/d/tianshan/peach_grove",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/peach_grove",
+      "to": "/d/tianshan/fork",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/dirt_road2",
+      "to": "/d/tianshan/dirt_road3",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/dirt_road2",
+      "to": "/d/tianshan/fork",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/dirt_road3",
+      "to": "/d/tianshan/cabin",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/dirt_road3",
+      "to": "/d/tianshan/dirt_road2",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/cabin",
+      "to": "/d/tianshan/dirt_road3",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/garden",
+      "to": "/d/tianshan/fork",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/hall",
+      "to": "/d/tianshan/cabin",
+      "direction": "out",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/secret_room",
+      "to": "/d/tianshan/hall",
+      "direction": "up",
+      "resolved": true
+    },
+    {
+      "from": "/d/fengcheng/east_gate",
+      "to": "/d/tianshan/fog",
+      "direction": "eastup",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/fog",
+      "to": "/d/tianshan/spring",
+      "direction": "search",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/spring",
+      "to": "/d/tianshan/cave1",
+      "direction": "enter",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/cave2",
+      "to": "/d/tianshan/cave_mouth",
+      "direction": "enter",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/cave_mouth",
+      "to": "/d/tianshan/dirt_road1",
+      "direction": "search",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/cabin",
+      "to": "/d/tianshan/hall",
+      "direction": "give",
+      "resolved": true
+    },
+    {
+      "from": "/d/tianshan/hall",
+      "to": "/d/tianshan/secret_room",
+      "direction": "kneel",
+      "resolved": true
+    },
+    {
+      "from": "/d/baobao/study",
+      "to": "/d/fengcheng/inner_yard",
+      "direction": "south",
       "resolved": true
     }
   ],

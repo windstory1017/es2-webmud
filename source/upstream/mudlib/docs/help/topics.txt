@@ -21,7 +21,8 @@
   taoist.storm     玄衣派         mao-shan.fog     幻霧觀
   mao-shan.wind    隱風觀         soldier.ber      振武軍營
   scholar.myst     步玄派         alchemist.dragon 龍圖丹派
-  alchemist.wu     武陀灸堂
+  alchemist.wu     武陀灸堂       scholar.sky      玄天派
+  taoist.thunder   紫衣派         taoist.freeze    素衣派
 
 【 茅山技能 】
   mao-shan_magic     茅山法術      taoism_of_nature   茅山幻術
@@ -30,6 +31,7 @@
 
 【 其他技能 】
   kee_anatomy  經脈穴道之學
+  enchance     強化之術
 
 【 種族 】
   human        人類／人類族      blackteeth   黑齒

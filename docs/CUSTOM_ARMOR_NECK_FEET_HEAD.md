@@ -91,7 +91,7 @@
 | 綠玉頂戴 | `head/jade_hat.c` | jade hat | 300 | 300 | 原資料 |  |
 | 獅吞獸面盔 | `head/lion_helmet.c` | lion helmet | 2000 | 500 | 原資料 | 唯一 |
 | 狙首盔 | `head/monkey_helmet.c` | monkey helmet | 800 | 50 | 原資料 |  |
-| 紫雲盔 | `head/purple_helmet.c` | purple helmet | 2000 | 200 | 中等 |  |
+| 紫雲盔 | `head/purple_helmet.c` | purple helmet | 2000 | 120 | 中等 | 2026-11-14 改為智慧 +1、精神 +1、防禦 25，重量與價值同金羽神盔（華子儀裝備） |
 | 鮮紅道冠 | `head/red_hat.c` | red hat | 300 | 10 | 原資料 |  |
 | 火鱗盔 | `head/red_scale_helm.c` | red_scale helm | 800 | 150 | 原資料 |  |
 | 霸王銅冠 | `head/royal_helmet.c` | royal helmet | 2000 | 40 | 原資料 | 限軍人 |

@@ -12,7 +12,7 @@ inherit "/custom/legacy_npc/legacy_npc";
 void create()
 {
     seteuid(getuid());
-    set_name("上清道長", ({ "shang-ching", "taoist", "上清道長" }));
+    set_name("上清道長", ({ "Shang-ching taoist", "shang-ching", "taoist", "上清道長" }));
     set_race("human");
     set_class("taoist");
     set_level(50);

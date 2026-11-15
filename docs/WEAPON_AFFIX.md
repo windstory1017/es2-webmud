@@ -1,9 +1,10 @@
 # 武器附加屬性（隨機前綴／後綴）
 
-依 es2_pal「武器附加屬性表」製作，套用在 `obj/area/obj/` 的 12 種一般武器：長劍、短劍、單刀、鬼頭刀、大劍（bastardsword、greatsword）、闊劍、彎刀、大刀、板斧、長槍、鐵鞭，以及匕首（`obj/area/obj/dagger.c`）、齊眉棍（`d/lee/obj/brow_staff.c`）、木杖（`custom/weapon/staff/long_staff.c`）、禪杖（`custom/weapon/staff/zenstaff.c`）和竹釣竿（`custom/weapon/whip/bamboo_fishing_rod.c`）。
+依 es2_pal「武器附加屬性表」製作，套用在 `obj/area/obj/` 的 12 種一般武器：長劍、短劍、單刀、鬼頭刀、大劍（bastardsword、greatsword）、闊劍、彎刀、大刀、板斧、長槍、鐵鞭，以及匕首（`obj/area/obj/dagger.c`）、齊眉棍（`d/lee/obj/brow_staff.c`）、木杖（`custom/weapon/staff/long_staff.c`）、禪杖（`custom/weapon/staff/zenstaff.c`）和竹釣竿（`custom/weapon/whip/bamboo_fishing_rod.c`），以及巨劍（`custom/weapon/sword/colosus_sword.c`，2026-11-14 加入，出詞綴機會 3 倍）。
 
 ## 規則
 
+- 巨劍（巨神劍）出詞綴的機會是 3 倍：`ENHANCE_D->roll_affix(ob, 3)`。程式裡一般武器是前綴 20%（其中 5% 再加後綴），3 倍就是前綴 60%、前綴＋後綴 15%、普通 40%；上面 60/30/10 的比例與程式不同，以程式為準。
 - 每把武器**產生時**擲一次（NPC 身上、地上產生都一樣）：普通 60%、只有前綴 30%、前綴＋後綴 10%。
 - **商店販賣的武器一律是普通品**（使用者決定，2026-10-16）：商人交貨時改回普通武器
   （`feature/npc/vendor.c` 的 `plain_goods()`），名稱、價錢、能力都是原本的。當鋪轉賣的是玩家當掉的武器，照原樣保留。

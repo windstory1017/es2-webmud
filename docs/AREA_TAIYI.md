@@ -69,7 +69,7 @@
 |---|---|---|
 | 名字 | 上清道長 | 玄清道長 |
 | 英文名（顯示） | Shang-ching | Hsuan-ching |
-| 識別代號（id） | shang-ching、taoist、上清道長 | hsuan-ching、taoist、玄清道長 |
+| 識別代號（id） | Shang-ching taoist（顯示）、shang-ching、taoist、上清道長 | Hsuan-ching taoist（顯示）、hsuan-ching、taoist、玄清道長 |
 | 稱號 | 太乙觀道長 | 太乙觀道長 |
 | 其他 | 人類、道士、45 歲、50 級、強度 A；桃木劍、青衣道袍 | 同左 |
 

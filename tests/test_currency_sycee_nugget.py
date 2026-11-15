@@ -30,7 +30,8 @@ def test_payment_breaks_small_to_large():
 
 def test_display_stops_at_sycee():
     # 龍圖心經自 2026-11-09（#45）起不再顯示扣款金額，已無金額寫法，不在檢查之列。
-    for rel in ["cmds/std/balance.c", "daemon/skill/alchemy-wealth.c",
+    # 黃白之術自 2026-11-14 起成功訊息不顯示存入金額，同樣不在檢查之列。
+    for rel in ["cmds/std/balance.c",
                 "feature/npc/vendor.c", "feature/npc/currency.c", "obj/alchemist/pill_vendor.c",
                 "std/room/hockshop.c"]:
         s = read(rel)

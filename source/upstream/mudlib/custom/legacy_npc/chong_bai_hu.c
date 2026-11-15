@@ -13,7 +13,7 @@ void create()
     set_name("崇白虎", ({ "chong bai-hu", "chong", "bai-hu" }));
     set_race("yaksa");
     set_class("fighter");
-    set_level(35);
+    set_level(50);
     set("gender", "male");
     set("age", 55);
     set("long",
@@ -21,7 +21,7 @@ void create()
         "內偷學手藝。\n");
     set("custom_faction", "fighter.tiger");   // 虎刀門（docs/martial_arts/門派武功對照表.md）
     set("legacy_aggressive", 1);   // 看到玩家就下殺手
-    set_power("B");
+    set_power("A");
     setup();
     carry_object("/custom/armor/waist/iron_girth")->wear();   // 精鐵環扣
     carry_object("/custom/zhenwu/obj/steel_boots")->wear();   // 精鋼戰靴

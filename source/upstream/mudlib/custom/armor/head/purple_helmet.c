@@ -12,15 +12,15 @@ void create()
 
     if( !clonep() ) {
         set("unit", "頂");
-        set("value", 20000);
+        set("value", 12000);
         set("long",
             "一定造型優美﹐色調古怪的頭盔。看起來似乎很結實﹐不過多少給人\n"
             "一種不舒服的感覺。\n");
         set("wear_as", "head_eq");
         set("apply_armor/head_eq", ([
+            "wis": 1,
             "spi": 1,
-            "spells": 5,
-            "armor": 5,
+            "armor": 25,
         ]));
     }
     setup();

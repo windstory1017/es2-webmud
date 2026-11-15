@@ -103,11 +103,14 @@ private mapping sect = ([
             ([ "skill": "celestial force", "map": 0, "level": 10, "req": ([ "tidy force": 1 ]) ]),
         }),
     ]),
-    "fighter.au-chan": ([   // 內功迴風拂柳心訣為解謎取得
+    "fighter.au-chan": ([   // 內功迴風拂柳心訣玩家為解謎取得；門派 NPC 自動學會（使用者同意，2026-11-14）
         "name":        "古劍派",
-        "force":       0,
-        "force_level": 0,
+        "force":       "flurry force",
+        "force_level": 10,
         "arts":        ({
+            ([ "skill": "au-chan sword", "map": "sword", "level": 1 ]),
+            ([ "skill": "au-chan sword", "map": "twohanded sword", "level": 1 ]),
+            ([ "skill": "au-chan sword", "map": "parry", "level": 1 ]),
         }),
     ]),
     "scholar.sky": ([

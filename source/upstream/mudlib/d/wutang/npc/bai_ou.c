@@ -126,14 +126,17 @@ int accept_object(object who, object ob)
     }
 
     map_delete(paid, who);
-    call_out("begin", 0, who);
+    call_out("begin", 0, who, ob);      // 等 give 把衣裳交到手上，再銷毀它
     return 1;
 }
 
 /* ---- 繡花 ---------------------------------------------------------- */
 
-void begin(object who)
+// 收下的布衣直接銷毀，不留在白甌身上（使用者指示，2026-11-14）。
+// 布衣的 value() 查不到價錢，give 不會自動銷毀它，所以這裡自己銷毀。
+void begin(object who, object cloth)
 {
+    if( objectp(cloth) ) destruct(cloth);
     act("$N接過$n遞來的布衣，銀針在布面上起落如蝶，轉眼已見雲紋隱隱。", who);
     call_out("finish", EMBROIDER_TICKS * TICK, who);
 }

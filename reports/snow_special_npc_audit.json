@@ -20,7 +20,7 @@
           "exists": true
         }
       ],
-      "sha256": "0312ef8deb474ec5d2f2f0675702f6b040f85b86c3dae6a98ef61c8d2d3983d8"
+      "sha256": "c0c445a96b1beeea90c3e368d298173c9c043fd90f5a016c83a8f072cc62ecda"
     },
     {
       "file": "gammer.c",
@@ -36,7 +36,7 @@
           "exists": true
         }
       ],
-      "sha256": "048ee5e9a2b11beddc52ef00e23625f48dd052ad2f2b823aef26c0bc39d4fbf9"
+      "sha256": "25bd988acb99ef9d7ebff394a2d2a03dbc49ca2bd37ef20f8f279b646a9ee5d5"
     },
     {
       "file": "teacher.c",
@@ -47,7 +47,7 @@
       "behaviorTokensExpected": 5,
       "missingTokens": [],
       "absoluteDependencies": [],
-      "sha256": "80c4d030263e36db3166875fd978cf8cc76a334e9042ad8338b0a2c1f5085148"
+      "sha256": "73dfbdfaeaad62dd42171a5baa33b60eea766c39841a3865db4214bf663ce94a"
     },
     {
       "file": "alchemist.c",
@@ -63,7 +63,7 @@
           "exists": true
         }
       ],
-      "sha256": "dd5c1a5eaae7171f944acd4a3d89ee4a312a9728666c4f219b661dba99cc7472"
+      "sha256": "9b4bd403590f60c29ca32375ce7d51d9da88577cbb4aaf2932f7e09e89990471"
     },
     {
       "file": "girl.c",
@@ -74,7 +74,7 @@
       "behaviorTokensExpected": 8,
       "missingTokens": [],
       "absoluteDependencies": [],
-      "sha256": "c5607192da05b671f2fe76bbf5f62a1fbcb78481eb5e808b6ad43851260aa4c5"
+      "sha256": "508de843998ac11b4006c5f0c8e096cff226807cb4e6c4bc4b684013362fad5a"
     }
   ]
 }
