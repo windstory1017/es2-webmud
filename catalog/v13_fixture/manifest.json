@@ -4,7 +4,7 @@
   "git": {
     "repository": "https://github.com/taedlar/es2_mudlib",
     "origin": "https://github.com/wolfer168/es2-webmud",
-    "commit": "182f2265f85cf68ea07fc03a59c099d2d7e6d600",
+    "commit": "001ffa77a365abdca7c0801c4909f43cc9d57518",
     "branch": "claude/determined-curie-ev9n5z"
   },
   "total_files": 16,
