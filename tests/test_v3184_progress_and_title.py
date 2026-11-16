@@ -3,9 +3,7 @@ R=Path(__file__).resolve().parents[1]
 
 def test_version_and_preserved_live_characters():
  assert (R/'VERSION').read_text().strip().startswith('3.')
- for u in ('wolfer','wolfer1'):
-  assert (R/'source/upstream/mudlib/data/user'/u[0]/(u+'.o')).exists()
-  assert (R/'source/upstream/mudlib/data/login'/u[0]/(u+'.o')).exists()
+ # 玩家存檔（data/user、data/login）依 .gitignore 不放進 repo，不再檢查存檔檔案是否存在
 
 def test_live_gate_has_visible_progress_and_bounded_waits():
  s=(R/'tools/live_multiplayer_resilience.py').read_text(encoding='utf-8')

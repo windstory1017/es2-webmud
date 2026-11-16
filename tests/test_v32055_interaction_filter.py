@@ -7,16 +7,10 @@ def test_no_generic_detail_enumeration():
     assert 'details = room->query("detail")' not in HUD
     assert 'foreach (id, desc in details)' not in HUD
 
-def test_action_registry_supported():
-    assert 'room->query("web_actions")' in HUD
-    assert 'ob->query("web_actions")' in HUD
+def test_hud_is_read_only_status_feed_without_room_action_registry():
+    # 早期版本讓房間／物件用 web_actions 登記網頁按鈕，現在已拿掉；HUD 只提供唯讀的狀態與物品。
+    assert 'Read-only status/inventory feed' in HUD
+    assert 'web_actions' not in HUD
 
-def test_no_combat_buttons_in_safe_room():
-    assert 'if (!room->query("no_fight"))' in HUD
+def test_safe_room_still_blocks_fighting():
     assert 'set ("no_fight",1);' in INN
-
-def test_vendor_and_home_actions_are_real_commands():
-    assert 'function_exists("do_vendor_list", ob)' in HUD
-    assert '|商品|list %s' in HUD
-    assert '|傳送至家園|home' in HUD
-

@@ -71,6 +71,8 @@ def test_existing_npcs_converted():
         assert f'set_power("{tier}");' in s, f
         assert _re.search(r'(?<![>\w])set_level\s*\(%s\)' % lv, s), f
         assert not _re.search(r'^\s*set_attr\(', s, _re.M), f
+        if f == 'd/wutang/npc/may_yin_fong.c':   # 梅影風：精氣神固定 2200／2500／800（使用者指示，2026-11-12）
+            continue
         assert not _re.search(r'^\s*set_stat_maximum\("(gin|kee|sen)"', s, _re.M), f
         assert not _re.search(r'^\s*advance_stat\("(gin|kee|sen)"', s, _re.M), f
 

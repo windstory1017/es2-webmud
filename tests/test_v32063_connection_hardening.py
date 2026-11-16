@@ -5,7 +5,8 @@ def text(rel): return (ROOT/rel).read_text(encoding='utf-8-sig' if rel.endswith(
 
 def test_skill_daemon_fallback_uses_object_safe_comparison():
     s=text('source/upstream/mudlib/feature/char/skill.c')
-    assert 'objectp(daemon) && base_name(daemon) != DAEMON_D' in s
+    # 技能檔現在一律先確認 objectp(daemon)，再用 function_exists 判斷有沒有該函式
+    assert 'objectp(daemon) && function_exists(' in s
     assert 'if( daemon != DAEMON_D )' not in s
 
 def test_launcher_requires_active_mud_handshake():

@@ -16,5 +16,4 @@ def test_always_hittable():
 def test_no_real_damage():
     s=src(); b=s.split("varargs int receive_damage",1)[1].split("void die()",1)[0]; assert "consume_stat" not in b; assert "damage_stat" not in b; assert "return damage;" in b
 
-def test_multiple_hit_messages():
-    s=src(); assert s.count("HIY ") >= 6; assert "random(sizeof(training_hit_msg))" in s
+# 已移除「要有 6 句以上命中訊息」的檢查：訓練木樁被打時不顯示受傷訊息是刻意的（使用者決定，2026-11-16）。

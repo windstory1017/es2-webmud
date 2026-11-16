@@ -8,7 +8,7 @@ APP=(ROOT/'web/app.js').read_text(encoding='utf-8')
 def test_skill_daemon_hook_uses_neolith_native_function_exists():
     assert 'daemon != DAEMON_D' not in SKILL
     assert 'function_exists("skill_improved", daemon)' in SKILL
-    assert 'void improve_skill_exact(string skill, int amount);' in SKILL
+    assert 'varargs void improve_skill_exact(string skill, int amount, int max_learn)' in SKILL
 
 def test_restored_combat_gain_code_is_back():
     assert 'restored_dodge_gain' in COMBAT
@@ -18,5 +18,5 @@ def test_restored_combat_gain_code_is_back():
 def test_interaction_buttons_use_persistent_delegation():
     assert "root.dataset.commandDelegated==='1'" in APP
     assert "e.target.closest('.context-item-action[data-command]')" in APP
-    assert 'bindCommandButtons(interactionBody);' in APP
+    assert 'function bindContextActions(){bindCommandButtons(contextBody);}' in APP
     assert 'send(command);' in APP

@@ -20,7 +20,7 @@ def test_interaction_buttons_use_shared_send_pipeline():
 
 
 def test_inventory_and_interactions_bind_through_same_button_handler():
-    assert 'bindCommandButtons(interactionBody);' in APP
+    # 互動面板已拿掉，只剩「可使用道具」面板，仍用同一個按鈕處理函式
     assert 'function bindContextActions(){bindCommandButtons(contextBody);}' in APP
 
 

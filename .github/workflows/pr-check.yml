@@ -63,5 +63,8 @@ jobs:
           cat bridge.log
           exit 1
 
-      - name: 5. 跑全部測試
+      - name: 安裝 pytest
+        run: python3 -m pip install pytest
+
+      - name: 5. 跑全部測試（pytest 跑 tests/*.py、node 跑 tests/*.mjs）
         run: tools/ci_run_tests.sh

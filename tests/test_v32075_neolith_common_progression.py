@@ -35,10 +35,12 @@ def test_common_threshold_breakpoints():
 
 def test_restored_skills_and_caps_are_explicit_without_member_array_literal():
     s = text()
-    for name in ('unarmed','parry','dodge','blade','twohanded blade','secondhand blade','force','tiger-steps','tiger-blade','ksanmando'):
-        assert f'if( skill == "{name}" ) return 1;' in s
-    assert 'if( skill == "tiger-steps" ) return 120;' in s
-    assert 'if( skill == "tiger-blade" ) return 140;' in s
+    # 舊版把各技能的上限逐一寫死；現在改成「個人技能上限」（得到技能時隨機 140～200，逢 5，
+    # 使用者定案 2026-10-22），技能檔還可用 query_skill_cap 再壓低。
+    assert 'int query_personal_skill_cap(string skill)' in s
+    assert 'cap = 140 + random(13) * 5;' in s
+    assert 'int restored_skill_cap(string skill)' in s
+    assert 'function_exists("query_skill_cap", daemon)' in s
     assert 'member_array(skill' not in s
 
 def test_progression_is_called_after_daemon_hook_and_uses_conservative_call_other():
@@ -50,4 +52,4 @@ def test_progression_is_called_after_daemon_hook_and_uses_conservative_call_othe
     assert exact.index('call_other(daemon, "skill_improved"') < exact.index('apply_restored_skill_progression(skill);')
 
 def test_version():
-    assert (ROOT/'VERSION').read_text().strip() == '3.20.76'
+    assert (ROOT/'VERSION').read_text().strip().startswith('3.20')

@@ -11,9 +11,11 @@ def test_landing_has_no_duplicate_html_title():
 
 def test_hud_is_polled_from_canonical_hp_command():
     s=text('web/app.js')
-    assert "const HUD_POLL_MS = 2500" in s
-    assert "observer.begin('hp','hp')" in s
-    assert "ws.send('hp\\r\\n')" in s
+    # 現在用 webhud（唯讀狀態查詢，內含 hp）輪詢：戰鬥中 0.8 秒、平常 2.5 秒
+    assert "const HUD_POLL_MS = 800" in s
+    assert "const HUD_IDLE_POLL_MS = 2500" in s
+    assert "observer.begin('hp','webhud')" in s
+    assert "ws.send((extra?'webhud '+extra.cmd:'webhud')+'\\r\\n')" in s
     assert 'currentRoomId' in s and 'startHudPolling()' in s
     assert 'isHpSummaryLine' in s
 

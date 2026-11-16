@@ -17,7 +17,9 @@ def test_counts_and_features():
         for f in files:
             s = read(f)
             assert f'inherit {feat};' in s and 'init_damage(' in s and 'set("wield_as"' in s, f.name
-            name = re.search(r'set_name\("([^"]*)"', s).group(1)
+            # 名稱可能是字串，也可能是 HIC "逐風刃" NOR 這種顏色巨集寫法
+            name = re.search(r'set_name\((.*?),\s*\(\{', s, re.S).group(1)
+            name = name.strip().strip('"')
             assert '\\x1b' not in name or name.endswith('\\x1b[m') or name.endswith('\\x1b[0m'), f.name
 
 
