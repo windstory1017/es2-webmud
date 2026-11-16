@@ -73,7 +73,7 @@
 |---|---|
 | 天風道長（Tianfong taoist） | 巫首、180 歲、道士、玄衣派（`taoist.storm`）、等級 40、強度 A、紫薇心經 180 級；桃木劍、青色道袍、青銅道冠 |
 | 青色道袍（新物品） | `custom/armor/cloth/cyan_taoist_robe.c`：防 5、火風冰雷四系防護各 20、慧根 +1、價值 30000、重 1200 |
-| 石假人 | `d/qiaoyin_east/npc/stone_dummy.c`，繼承共用假人基底 |
+| 石假人 | `d/qiaoyin_east/npc/stone_stake.c`，繼承共用假人基底 |
 | 雷同 | `custom/legacy_npc/lay_ton.c` 加巡邏，放經堂 |
 | 武道通 | `custom/legacy_npc/wu_dauton.c` 拿掉巡邏，放武陀灸堂；從 `d/snow/square_n.c` 移除 |
 

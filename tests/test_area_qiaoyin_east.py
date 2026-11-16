@@ -49,7 +49,7 @@ def wrap(s, width=70, first=4):
 def test_rooms_and_npcs():
     rooms = sorted(p.stem for p in E.glob('*.c'))
     assert len(rooms) == 17
-    assert sorted(p.stem for p in (E / 'npc').glob('*.c')) == ['stone_dummy', 'tianfong']
+    assert sorted(p.stem for p in (E / 'npc').glob('*.c')) == ['stone_stake', 'tianfong']
     for r in rooms:
         s = read(E / (r + '.c'))
         assert re.search(r'set\("map/area", "(白雲觀|喬陰東郊)"\);', s), r
@@ -124,7 +124,7 @@ def test_npcs_placed():
     assert 'wu_dauton' in read(E / 'clinic.c')
     assert 'wu_dauton' not in read(MUD / 'd/snow/square_n.c')
     assert 'legacy_patrol' not in read(MUD / 'custom/legacy_npc/wu_dauton.c').replace('不再巡邏', '')
-    assert read(E / 'ground_w.c').count('stone_dummy" : 3') == 1 and read(E / 'ground_e.c').count('stone_dummy" : 3') == 1
+    assert read(E / 'ground_w.c').count('stone_stake" : 3') == 1 and read(E / 'ground_e.c').count('stone_stake" : 3') == 1
     assert 'tianfong' in read(E / 'hall.c')
     assert '/d/lee/obj/well' in read(E / 'yard.c')
 
