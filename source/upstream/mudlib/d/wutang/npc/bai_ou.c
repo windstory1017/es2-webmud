@@ -2,7 +2,7 @@
 description: 五堂鎮 NPC：白甌（鳳娘）。昔日宮裡的繡娘，替玩家把布衣繡出花樣。
 design: docs/EMBROIDERY.md（使用者指示，2026-11-13）
 rule: - 玩家對她說「繡花」開始；先給工錢（五兩黃金＝50000 文以上，多給不找，不足不收、不可分次），
-        再給布衣（/obj/area/obj/cloth）；順序錯、給錯東西、給繡過的衣服都不收。
+        再給布衣（名稱叫「布衣」的三個物品檔：/obj/area/obj/cloth、/obj/armor/cloth、/obj/cloth）；順序錯、給錯東西、給繡過的衣服都不收。
       - 收下布衣後原布衣銷毀（give 時店家收下有價值的物品會自動銷毀），1 tick 後產生新的繡花布衣
         （obj/area/obj/embroidered_cloth.c）交給玩家，繡花結果在那個檔案裡擲。
       - 玩家中途走開，繡好的衣服就沒了；白甌被殺，製作中斷，錢與布衣都不補。
@@ -16,7 +16,8 @@ inherit F_VILLAGER;
 #define FEE         50000                       // 五兩黃金（文）
 #define TICK        2                           // 一個 tick 的秒數
 #define EMBROIDER_TICKS 1                       // 收下布衣後幾個 tick 繡好
-#define CLOTH_FILE  "/obj/area/obj/cloth"
+// 名稱叫「布衣」（id cloth）的三個物品檔都能繡（使用者指示，2026-11-16）。
+#define CLOTH_FILES ({ "/obj/area/obj/cloth", "/obj/armor/cloth", "/obj/cloth" })
 #define EMBROIDERED_FILE "/obj/area/obj/embroidered_cloth"
 
 mapping paid = ([]);                            // 已付工錢、等著交布衣的玩家
@@ -115,7 +116,7 @@ int accept_object(object who, object ob)
         speak("蹙眉", "這件已有人下過針了，我不願在別人的針腳上再添一筆。");
         return 0;
     }
-    if( base_name(ob) != CLOTH_FILE ) {
+    if( member_array(base_name(ob), CLOTH_FILES) < 0 ) {
         speak("", "我的針只為布衣 (cloth) 而動，這東西，恕我不繡。");
         return 0;
     }
