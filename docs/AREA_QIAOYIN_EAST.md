@@ -31,8 +31,8 @@
 |---|---|---|---|---|
 | D2、H2 | 練武場 | `ground_w`、`ground_e` | 新寫（D2 擱木劍與沙袋） | 石假人 ×3（各一） |
 | F2 | 後院 | `yard` | 新寫 | 水井（`/d/lee/obj/well`） |
-| B4 | 靜室 | `cell` | 新寫；east 房門可關 | — |
-| B6 | 客房 | `guest_room` | 新寫；east 房門可關 | — |
+| B4 | 靜室 | `cell` | 新寫；east 房門可關、預設關閉 | — |
+| B6 | 客房 | `guest_room` | 新寫；east 房門可關、預設關閉；`look 茶杯` 提到可以喝，`drink 茶杯` 補水到上限的四分之一 | — |
 | D4、H4 | 西廊、東廊 | `corridor_w`、`corridor_e` | 新寫 | — |
 | F4 | 中庭 | `court` | 新寫 | — |
 | F6 | 三清殿 | `hall` | 新寫；`out` 回喬陰城外 | 天風道長 |

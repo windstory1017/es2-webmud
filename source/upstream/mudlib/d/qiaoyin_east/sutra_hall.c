@@ -16,7 +16,7 @@ LONG
         "west" : __DIR__"guest_room",
         "east" : __DIR__"hall",
     ]));
-    create_door("west", "房門", "east");
+    create_door("west", "房門", "east", DOOR_CLOSED);
     set("objects", ([
         "/custom/legacy_npc/lay_ton" : 1,
     ]));

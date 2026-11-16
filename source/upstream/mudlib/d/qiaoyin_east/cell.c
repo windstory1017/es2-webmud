@@ -14,7 +14,7 @@ LONG
     set("exits", ([
         "east" : __DIR__"corridor_w",
     ]));
-    create_door("east", "房門", "west");
+    create_door("east", "房門", "west", DOOR_CLOSED);
     set("map/area", "白雲觀");
     setup();
     replace_program(ROOM);

@@ -17,7 +17,7 @@ LONG
         "west" : __DIR__"cell",
         "east" : __DIR__"court",
     ]));
-    create_door("west", "房門", "east");
+    create_door("west", "房門", "east", DOOR_CLOSED);
     set("map/area", "白雲觀");
     setup();
     replace_program(ROOM);
