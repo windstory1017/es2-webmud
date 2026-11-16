@@ -110,7 +110,7 @@ void expire(object me, string kind, int id)
 
 /* 施法點數（使用者定案，2026-11-16），每次施展成功各自擲一次，法術與紫薇心經都用靈性：
  * ((random(靈性)+1) × (random(靈性)+1) + random(靈性)) × (random(層級)+1)
- * 層級：禦火、禦風、禦冰、禦雷 2；逆運心經 1（層級是 Claude 預設，可改）。 */
+ * 層級：全部是 1。 */
 void magic_gain(object me, int tier)
 {
     int spi, pts;
@@ -152,7 +152,7 @@ int do_defence(object me, string kind)
     message_vision(kind_color(kind) + cast_line(kind) + "\n" NOR, me, 0, 1);
     tell_object(me, kind_color(kind) + "你的" + kind_attr(kind) + "傷害防禦力提高了。\n" NOR);
     call_out("expire", ticks * 2, me, kind, id);
-    magic_gain(me, 2);
+    magic_gain(me, 1);
     return 1;
 }
 
