@@ -44,8 +44,8 @@ def test_exits_are_two_way_and_linked():
     assert exits(MUD / 'd/oldpine/highway.c')['south'] == '/d/qiaoyin/ngate'
     assert exits(Q / 'highway.c')['northwest'] == '/d/wutang/three_way'
     assert exits(MUD / 'd/wutang/three_way.c')['southeast'] == '/d/qiaoyin/highway'
-    # 東門、南門不開出口（使用者決定）
-    assert set(exits(Q / 'egate.c')) == {'west'} and set(exits(Q / 'sgate.c')) == {'north'}
+    # 南門不開出口；東門主路封閉，只有城牆腳下的小徑通往東北（喬陰城外，2026-11-16）
+    assert set(exits(Q / 'egate.c')) == {'west', 'northeast'} and set(exits(Q / 'sgate.c')) == {'north'}
 
 
 def test_alchemy_room_gate():

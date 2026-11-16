@@ -11,7 +11,7 @@ inherit SKILL;
 string type() { return "magic"; }
 int valid_enable(string usage) { return usage == "magic"; }
 
-/* 學習條件：道士或方士、等級 15（原版是天風道長的任務，任務起始 NPC 尚未製作）。
+/* 學習條件：道士或方士、等級 15（天風道長的任務，白雲觀 d/qiaoyin_east/npc/tianfong.c）。
  * 練成 20 級。 */
 int valid_learn(object me)
 {
@@ -25,6 +25,9 @@ int valid_learn(object me)
 }
 
 int query_entry_level() { return 20; }
+
+/* 學成只要 100 點經驗（使用者定案，2026-11-16：天風道長傳授給 100 點就等於學會）。 */
+int query_entry_threshold() { return 100; }
 
 void skill_completed(object me, string skill)
 {

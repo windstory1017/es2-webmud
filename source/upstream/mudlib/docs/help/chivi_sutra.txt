@@ -1,7 +1,7 @@
 ◎ 天師道法【紫薇心經】（chivi sutra）
 　技能種類：法術
 　學習條件：道士、方士共通，天風道長任務
-　任務起始：尚未製作
+　任務起始：白雲觀的天風道長
 　安裝：enable magic with chivi sutra
 　特殊能力：
 　　‧禦火術：conjure fire defence
