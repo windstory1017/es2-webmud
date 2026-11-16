@@ -13,7 +13,7 @@ LONG
     );
     set("exits", ([
         "northwest" : __DIR__"outside",
-        "southeast" : __DIR__"fork",
+        "eastdown" : __DIR__"fork",
     ]));
     set("map/area", "喬陰東郊");
     setup();
