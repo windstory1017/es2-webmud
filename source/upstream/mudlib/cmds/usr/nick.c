@@ -13,6 +13,16 @@ int main(object me, string arg)
 
     if( !arg ) return notify_fail("你要替自己取什麼綽號﹖\n");
 
+    // nick none：取消綽號（使用者指示，2026-11-16）。
+    if( arg == "none" ) {
+	if( !me->query("nickname") )
+	    return notify_fail("你本來就沒有綽號。\n");
+	seteuid(getuid());
+	me->delete("nickname");
+	write("你不再使用綽號了。\n");
+	return 1;
+    }
+
     // 綽號只能是一行乾淨的文字：不可換行，也不可夾帶控制字元（顏色碼、跳格等）。
     foreach(ch in explode(arg, "")) {
 	if( strlen(ch) == 1 && (ch[0] < ' ' || ch[0] == 127) )
@@ -32,9 +42,11 @@ int help(object me)
 {
     write(@HELP
 指令格式 : nick <外號, 綽號>
- 
+           nick none
+
 這個指令可以讓你為自己取一個響亮的名號或頭銜。
 綽號最多六個中文字（或十二個英文字母），只能是一行文字，不能換行。
+nick none 可以取消綽號。
 
 你如果希望在綽號中使用 ANSI 的控制字元改變顏色﹐可以用以下的控制字串﹕
 (暫不開放)
