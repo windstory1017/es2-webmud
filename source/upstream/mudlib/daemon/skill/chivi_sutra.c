@@ -164,6 +164,8 @@ int conjure_magic(object me, string spell, object target)
 
     if( !me->query_skill("chivi sutra", 1) && !me->query_learn("chivi sutra") )
         return notify_fail("你還沒學會紫薇心經。\n");
+    if( target && target != me )
+        return notify_fail("紫薇心經只能保護自身﹐無法為他人施放。\n");
     if( spell == "dispel" ) return do_dispel(me);
     if( kind = kind_of(spell) ) return do_defence(me, kind);
     return notify_fail("指令格式﹕conjure <法術名稱>\n");
