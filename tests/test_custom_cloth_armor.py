@@ -18,7 +18,7 @@ def test_every_cloth_is_worn_as_cloth():
         assert 'set("wear_as", "cloth");' in s, f.name
         assert 'set("apply_armor/cloth", ([' in s, f.name
         w = int(re.search(r'set_weight\((\d+)\)', s).group(1))
-        assert w in (1000, 2000, 4000, 6000), f.name
+        assert w in (800, 1000, 2000, 4000, 6000), f.name
         v = int(re.search(r'set\("value", (\d+)\)', s).group(1))
         assert 0 < v <= 100000, f.name
 

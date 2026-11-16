@@ -29,8 +29,12 @@ def test_password_prompts_remain_noecho_and_browser_secret():
     assert 'input_to ("retype_password", 1, ob);' in login
     app=text(ROOT/'web/app.js')
     assert "const passwordPrompts=" in app
-    assert "const sensitive=input.type==='password'" in app
-    assert "if(!sensitive&&c)history.push(c)" in app
+    # 密碼模式：送出指令時 sensitive 只在「非自動送出且輸入框是密碼」時成立，
+    # 而且密碼分支在 rememberCommand（寫入指令歷史）之前就 return，密碼不會進指令歷史。
+    assert "const sensitive=!auto&&input.type==='password'" in app
+    submit=app.split("document.querySelector('#form')?.addEventListener('submit'",1)[1]
+    assert submit.index("input.type==='password'") < submit.index('rememberCommand(raw)')
+    assert "if(!sensitive)echoCommand(c)" in app
 
 def test_save_permissions_are_scoped_to_own_canonical_paths():
     sec=text(MUD/'adm/daemons/securityd.c')

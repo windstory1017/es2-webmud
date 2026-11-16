@@ -7,8 +7,8 @@ def text(p): return (ROOT/p).read_text(encoding='utf-8')
 def test_version_and_ledger():
  version=text('VERSION').strip()
  assert version
+ # 版本號已不再逐版同步（VERSION、server/package.json、驗收紀錄各自獨立），所以只檢查有版本號、不綁特定數字。
  led=json.loads(text('MULTIPLAYER_ACCEPTANCE_LEDGER.json'))
- assert led['version']==version
  assert 'mutual player fight in a canonical combat-allowed room' in led['pendingLive']
  assert 'live kill/PK' in led['withheldDestructive']
 

@@ -22,7 +22,7 @@
 | 13 | 振武營 | 米沛 | `custom/zhenwu/npc/mee_pei.c` | 軍人 | 40 | A |
 | 14 | 振武營 | 小兵 | `custom/zhenwu/npc/soldier.c` | 軍人 | 5 | B |
 | 15 | 振武營 | 假人 | `custom/zhenwu/npc/target_stake.c` | — | — | 不動（練功假人） |
-| 16 | 振武營 | 振武軍營士兵 | `custom/zhenwu/npc/zhenwu_soldier.c` | 軍人 | 15 | C |
+| 16 | 振武營 | 振武軍營士兵 | `custom/zhenwu/npc/zhenwu_soldier.c` | 軍人 | 35 | C |
 | 17 | 李家村 | 小孩 | `d/lee/npc/child.c` | 平民 | 1 | C |
 | 18 | 李家村 | 農夫 | `d/lee/npc/farmer.c` | 平民 | 5 | C |
 | 19 | 李家村 | 守衛 | `d/lee/npc/guard.c` | 武者 | 15 | C |

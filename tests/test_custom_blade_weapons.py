@@ -11,10 +11,13 @@ def read(p):
 
 def test_every_blade_answers_to_blade_and_has_damage():
     files = sorted(BLADE.glob('*.c'))
-    assert len(files) == 40
+    assert len(files) == 45
     for f in files:
         s = read(f)
-        assert re.search(r'set_name\("[^"]*", \(\{ "[^"]+", "blade" \}\)\);', s), f.name
+        # 一般寫法 set_name("名稱", ({ "id", "blade" }))；纏布刀／玉戒尺會換名字，改用 #define 的名稱與 id 組
+        literal = re.search(r'set_name\("[^"]*", \(\{ "[^"]+", "blade" \}\)\);', s)
+        defined = re.search(r'set_name\([A-Z_]+, [A-Z_]+\);', s) and re.search(r'#define \w+_IDS\s+\(\{[^}]*"blade" \}\)', s)
+        assert literal or defined, f.name
         assert 'init_damage(' in s, f.name
         assert 'set("wield_as"' in s, f.name
 

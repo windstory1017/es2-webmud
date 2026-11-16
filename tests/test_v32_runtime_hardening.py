@@ -8,10 +8,12 @@ def test_pager_is_numbered_line_mode_and_has_no_raw_get_char():
     inp=text(MUD/'feature/user/input.c')
     assert 'input_to ("more", text, line);' in more
     assert 'get_char ("more"' not in more
-    for n in ('case "1"','case "2"','case "3"','case "4"','case "5"','case "6"','case "0"'):
+    # 現在的說明翻頁只有「下一頁（1）」「上一頁（2）」兩個選項，其他輸入一律當一般指令，不會把人卡在選單裡
+    for n in ('case "1"','case "2"'):
         assert n in more
-    assert '1. 下一頁' in inp and '0. 離開' in inp
-    assert '請輸入選項數字:' in inp
+    assert 'default:' in more and 'command(cmd)' in more
+    assert '1. 下一頁' in inp and '2. 上一頁' in inp
+    assert '請輸入選項數字，或直接輸入其他指令: ' in inp
 
 def test_online_autosave_and_disconnect_single_write_path():
     user=text(MUD/'obj/user.c')

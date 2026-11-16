@@ -12,7 +12,7 @@ GitHub 會在一台用完就丟的臨時機器上依序做這幾件事：
 | 1 | 編譯遊戲伺服器（跟 `update.sh` 同樣的指令） | `source/upstream/neolith/` 改壞 |
 | 2～3 | 開機；新建角色 `citest`（人類、男性）→ `score` → `quit`；再用同一個角色登入 → `look` → `quit` | `login.c`、`user.c`、`logind.c`、種族、出生房間等讓「全服登不進去」的錯誤；開機與登入過程中任何程式載入錯誤 |
 | 4 | 啟動網頁橋接程式，確認健康檢查網址有回應 | `server/` 改壞 |
-| 5 | 跑 `tests/` 裡全部測試（目前 121 個） | 各項既有功能被改壞 |
+| 5 | 跑 `tests/` 裡全部測試：`.py` 用 pytest 真的執行每一項檢查（目前約 470 項），`.mjs` 用 node 逐一執行（21 個） | 各項既有功能被改壞 |
 
 整套大約 3 分鐘。臨時機器跟 Oracle 正式主機無關，不會碰到玩家資料。
 
@@ -22,7 +22,7 @@ GitHub 會在一台用完就丟的臨時機器上依序做這幾件事：
 |---|---|
 | `.github/workflows/pr-check.yml` | GitHub 自動檢查的設定 |
 | `tools/ci_boot_login.py` | 開機與模擬登入（步驟 2～3） |
-| `tools/ci_run_tests.sh` | 逐一跑測試（步驟 5） |
+| `tools/ci_run_tests.sh` | 跑測試（步驟 5）；跑完會還原測試順手重新產生的檔案（`catalog/` 的 manifest、content_workbench、`reports/`） |
 
 ## 紅色叉叉怎麼看
 
@@ -38,7 +38,7 @@ GitHub 會在一台用完就丟的臨時機器上依序做這幾件事：
 
 ```
 python3 tools/ci_boot_login.py --neolith source/upstream/neolith/out/build/linux/src/RelWithDebInfo/neolith
-(cd server && npm ci --omit=dev) && tools/ci_run_tests.sh
+pip install pytest && (cd server && npm ci --omit=dev) && tools/ci_run_tests.sh
 ```
 
 ## 「有錯不准合併」要 wolfer168 在 GitHub 打開
@@ -59,3 +59,11 @@ python3 tools/ci_boot_login.py --neolith source/upstream/neolith/out/build/linux
 
 - 把所有房間、NPC、武功檔都載入一次，抓登入碰不到的檔案的語法錯誤（2026-10-24 確認先不做）。
 - 路線圖第 14、15 項（遊戲文字、說明檔格式的自動檢查）可以掛在同一套流程。
+
+## 新增測試時（2026-11-16 補充）
+
+- `.py` 測試只要檔名是 `test_*.py`、函式名是 `test_*`，pytest 就會自動執行；**不需要**再寫 `if __name__ == '__main__'`。
+  以前自動檢查是用 `python3 檔名.py` 逐檔直接執行，沒寫執行入口的檔案只會載入、不會驗證，
+  結果 108 個檔案永遠「通過」，過期的檢查也一直沒被發現。
+- 檢查的內容跟現況不符時（例如 NPC 數量、版本號）：先確認是遊戲真的壞了，還是檢查過期；
+  過期就更新檢查，不要跳過或停用。

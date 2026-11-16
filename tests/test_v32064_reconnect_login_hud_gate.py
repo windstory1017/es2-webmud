@@ -17,7 +17,9 @@ def test_closed_socket_also_forgets_room_identity():
     assert 'runtimeSnapshot=null' in close_line
 
 def test_hud_poll_still_requires_a_current_room():
-    assert "if(!currentRoomId||input.type==='password'||ws?.readyState!==1||hudPollInFlight)return false;" in APP
+    # 一般輪詢一定要有目前房間；只有開機找房間（allowNoRoom）時才例外
+    assert "if((!currentRoomId&&!allowNoRoom)||input.type==='password'||ws?.readyState!==1||hudPollInFlight)return false;" in APP
+    assert "pollHud(force=false,allowNoRoom=false)" in APP.replace('function ','')
 
 def test_bridge_diagnostics_log_packet_lengths_not_payload_content():
     assert 'WS->MUD packet bytes=${b.length} total=${row.bytesIn}' in BRIDGE

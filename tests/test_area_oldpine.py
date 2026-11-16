@@ -21,7 +21,7 @@ def exits(name):
 def test_rooms_npcs_and_areas():
     rooms = sorted(p.stem for p in O.glob('*.c'))
     assert len(rooms) == 50   # 46 間房間，蘆葦叢迷宮多出 reeds2～reeds5 四間
-    assert len(list((O / 'npc').glob('*.c'))) == 17
+    assert len(list((O / 'npc').glob('*.c'))) == 18
     areas = {}
     for r in rooms:
         s = read(O / (r + '.c'))

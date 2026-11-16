@@ -28,7 +28,7 @@ def test_rooms_and_npcs():
     boats = {'ferry_boat_ro', 'ferry_boat_huang'}
     rooms = sorted(p.stem for p in W.glob('*.c'))
     assert len(rooms) == 58
-    assert len(list((W / 'npc').glob('*.c'))) == 33
+    assert len(list((W / 'npc').glob('*.c'))) == 34
     for r in rooms:
         s = read(W / (r + '.c'))
         assert ('set("map/area", "羿水");' if r in boats else 'set("map/area", "五堂鎮");') in s, r
