@@ -86,8 +86,11 @@ def test_secret_pass_and_doors():
     assert '(pass)' in s and '草叢' in long_of(E / 'fork.c')
     assert set(exits(E / 'thicket.c')) == {'east'}
     for a, b in [('cell', 'corridor_w'), ('guest_room', 'sutra_hall')]:
-        assert 'create_door("east"' in read(E / (a + '.c'))
-        assert 'create_door("west"' in read(E / (b + '.c'))
+        assert 'create_door("east", "房門", "west", DOOR_CLOSED)' in read(E / (a + '.c'))   # 預設關閉
+        assert 'create_door("west", "房門", "east", DOOR_CLOSED)' in read(E / (b + '.c'))
+    g = read(E / 'guest_room.c')
+    assert 'int do_drink(string arg)' in g and 'stuff = max / 4;' in g and 'supplement_stat("water", stuff)' in g
+    assert 'set("detail/茶杯"' in g and '(drink)' in g and '茶杯' in long_of(E / 'guest_room.c')
 
 
 def test_layout_rules():
