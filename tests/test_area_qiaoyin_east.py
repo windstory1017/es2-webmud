@@ -6,7 +6,8 @@ ROOT = Path(__file__).resolve().parents[1]
 MUD = ROOT / 'source' / 'upstream' / 'mudlib'
 E = MUD / 'd' / 'qiaoyin_east'
 OPP = {'north': 'south', 'south': 'north', 'east': 'west', 'west': 'east', 'northeast': 'southwest',
-       'southwest': 'northeast', 'northwest': 'southeast', 'southeast': 'northwest', 'enter': 'out', 'out': 'enter'}
+       'southwest': 'northeast', 'northwest': 'southeast', 'southeast': 'northwest', 'enter': 'out', 'out': 'enter',
+       'eastdown': 'westup', 'westup': 'eastdown'}
 NOSTART = set('﹗！？﹖，﹐。﹒、；﹔：﹕」』）】〉》…')
 
 
@@ -78,6 +79,12 @@ def test_exits_are_two_way():
     assert exits(E / 'outside.c')['enter'] == 'hall' and exits(E / 'hall.c')['out'] == 'outside'
     assert 'add_action("do_enter", "enter")' in read(E / 'outside.c')
     assert '"enter"' not in read(E / 'fork.c')
+
+
+def test_mountain_road_slope():
+    # 山路往岔路口是下坡（eastdown），岔路口往山路是上坡（westup），兩邊都開（使用者指示，2026-11-16）
+    assert exits(E / 'mountain_road.c')['eastdown'] == 'fork'
+    assert exits(E / 'fork.c')['westup'] == 'mountain_road'
 
 
 def test_secret_pass_and_doors():

@@ -28,7 +28,7 @@ void create()
 LONG
     );
     set("exits", ([
-        "northwest" : __DIR__"mountain_road",
+        "westup" : __DIR__"mountain_road",
         "south" : __DIR__"hut",
     ]));
     set("detail/草叢", "草叢又高又密，底下卻有被人踩出來的痕跡，應該可以穿 (pass) 過去。\n");
