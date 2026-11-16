@@ -108,6 +108,21 @@ void expire(object me, string kind, int id)
     remove_defence(me, kind, id, 0);
 }
 
+/* 施法點數（使用者定案，2026-11-16），每次施展成功各自擲一次，法術與紫薇心經都用靈性：
+ * ((random(靈性)+1) × (random(靈性)+1) + random(靈性)) × (random(層級)+1)
+ * 層級：禦火、禦風、禦冰、禦雷 2；逆運心經 1（層級是 Claude 預設，可改）。 */
+void magic_gain(object me, int tier)
+{
+    int spi, pts;
+
+    if( !userp(me) ) return;
+    spi = me->query_attr("spi");
+    if( spi < 1 ) spi = 1;
+    pts = ((random(spi) + 1) * (random(spi) + 1) + random(spi)) * (random(tier) + 1);
+    me->improve_skill_exact("magic", pts);
+    me->improve_skill_exact("chivi sutra", pts);
+}
+
 int spend_sen(object me, int cost)
 {
     if( me->query_stat("sen") < cost )
@@ -137,6 +152,7 @@ int do_defence(object me, string kind)
     message_vision(kind_color(kind) + cast_line(kind) + "\n" NOR, me, 0, 1);
     tell_object(me, kind_color(kind) + "你的" + kind_attr(kind) + "傷害防禦力提高了。\n" NOR);
     call_out("expire", ticks * 2, me, kind, id);
+    magic_gain(me, 2);
     return 1;
 }
 
@@ -155,6 +171,7 @@ int do_dispel(object me)
         message_vision(kind_color(kind) + cancel_line(kind) + "\n" NOR, me, 0, 1);
         remove_defence(me, kind, 0, 0);
     }
+    magic_gain(me, 1);
     return 1;
 }
 
