@@ -81,7 +81,7 @@ string kind_attr(string kind)
 /* 人人可見的施法敘述只有一行。 */
 string cast_line(string kind)
 {
-    return "$N施放【" + kind_name(kind) + "】。";
+    return "$N施放【" + kind_name(kind) + "】﹐周身靈光流轉﹐護得嚴嚴實實。";
 }
 
 string cancel_line(string kind)
@@ -148,7 +148,7 @@ int do_dispel(object me)
     foreach(string kind in ({ "fire", "storm", "freeze", "thunder" }))
         if( mapp(me->query_temp("chivi/" + kind)) ) active += ({ kind });
     if( !sizeof(active) )
-        return notify_fail("你身上沒有紫薇心經的法力可以消除。\n");
+        return notify_fail("你周身並沒有紫薇心經的保護。\n");
     if( !spend_sen(me, 5) ) return 0;
 
     foreach(string kind in active) {
