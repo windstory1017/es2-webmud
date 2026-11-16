@@ -26,7 +26,6 @@ void create()
     set_level(40);
     set("gender", "male");
     set("age", 180);
-    set("title", "白雲觀觀主");
     set("long",
         "天風道長是白雲觀的觀主，原本出身天師道，精研火、風、冰、雷\n"
         "四種破敵咒法。他不願循著前人的路子打磨攻伐之術，反倒另闢蹊\n"
