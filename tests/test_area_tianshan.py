@@ -121,3 +121,13 @@ def test_web_map():
     assert any(e['from'] == '/d/fengcheng/east_gate' and e['to'] == '/d/tianshan/fog' for e in g['edges'])
     pos = [(n['x'], n['y'], n.get('layer')) for n in ids]
     assert len(pos) == len(set(pos))
+
+
+def test_senxu_item_on_mountain_god():
+    g = read(MUD / 'custom/legacy_npc/mountain_god.c')
+    assert 'carry_object("/d/tianshan/obj/senxu");' in g
+    i = read(S / 'obj' / 'senxu.c')
+    assert 'set_weight(10);' in i and 'set("value", 20000);' in i
+    assert 'me->supplement_stat("food", 25);' in i
+    assert 'me->heal_stat("kee", 100);' in i and 'me->supplement_stat("kee", 100);' in i   # 氣的上限與目前值各 100
+    assert 'me->supplement_stat("HP", 20);' in i
