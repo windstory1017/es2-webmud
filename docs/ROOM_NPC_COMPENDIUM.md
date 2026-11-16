@@ -3448,7 +3448,7 @@ look bed 查看床；rest bed 或 上床開始休息；backhall 返回家園大�
 | 枉死鬼(Wronged ghost) | `/custom/ghost/npc/wronged_ghost` | 木橋（雪亭鎮） |
 | 家園管家(Home butler) | `/custom/home/npc/butler` | 家園大廳（玩家住宅） |
 | 幻霧觀觀主 杜風凌(Du feng ling) | `/custom/legacy_npc/du_feng_ling` | 小旅店（李家村） |
-| 武陀灸堂堂主「鬼華陀」武道通(Wu dauton) | `/custom/legacy_npc/wu_dauton` | 廣場（雪亭鎮） |
+| 武陀灸堂堂主「鬼華陀」武道通(Wu dauton) | `/custom/legacy_npc/wu_dauton` | 武陀灸堂（喬陰城外東側） |
 | 朱衣派弟子(Red-taoist) | `/custom/taoism/npc/fire_taoist` | 溪邊（雪亭鎮） |
 | 素衣派弟子(White-taoist) | `/custom/taoism/npc/freeze_taoist` | 溪邊（雪亭鎮） |
 | 玄衣派弟子(Black-taoist) | `/custom/taoism/npc/storm_taoist` | 溪邊（雪亭鎮） |

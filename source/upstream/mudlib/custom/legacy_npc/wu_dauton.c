@@ -3,8 +3,8 @@
 LEGACY NPC. 名稱、英文 ID、敘述、年紀、性別、種族、裝備取自舊站畫面紀錄（DOCUMENTED，
 docs/LEGACY_ROOM_NPC_COMPENDIUM.md）；職業、等級、強度、門派、行為依使用者提供的
 「舊有 NPC 待製作清單」（2026-10-15）。
-舊站區域：武陀灸堂；房間：武陀灸堂。武陀灸堂房間尚未製作，暫放雪亭鎮廣場北邊
-（d/snow/square_n.c），在雪亭鎮巡邏（使用者決定，2026-10-27）。
+舊站區域：武陀灸堂；房間：武陀灸堂（d/qiaoyin_east/clinic.c，喬陰城外東側）。
+2026-11-16 起搬回他家，不再巡邏（原本暫放雪亭鎮廣場北邊巡邏，使用者決定 2026-10-27）。
 武陀灸堂師父：收方士徒弟、傳授針灸之術與四套針法，
 設計見 docs/martial_arts/武陀灸堂_門派設計.md 第二章。技能由 NPC 自動技能系統依門派給。
 戰鬥行為（使用者定案，2026-10-28，同文件第九章）：開打即扎自己驚異霸甲針；
@@ -40,7 +40,6 @@ void create()
         "灸堂」, 傳授附近居民武藝與防身灸術, 門下弟子不下百人, 多雲遊四海, 行醫救\n"
         "世。\n");
     set("custom_faction", FACTION);
-    set("legacy_patrol", 1);
     set_power("S");
     setup();
     carry_object("/custom/armor/feet/boots_of_cleanse")->wear();   // 塵不沾
