@@ -86,7 +86,7 @@ string cast_line(string kind)
 
 string cancel_line(string kind)
 {
-    return "$N消除【" + kind_name(kind) + "】。";
+    return "$N消除【" + kind_name(kind) + "】﹐周身的靈光應聲散去。";
 }
 
 /* 解除某一系禦術。id 對不上表示已經被消除或重新施展過，不處理。 */
