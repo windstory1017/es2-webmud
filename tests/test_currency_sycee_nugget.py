@@ -15,8 +15,9 @@ def test_new_money_objects():
     assert 'set_name("金元寶", ({"sycee", "sycee_money"}))' in sycee
     assert 'set("base_value", 1000000 )' in sycee
     assert 'set("base_unit", "錠")' in sycee
-    assert 'set_name("復刻紀念金元寶", ({"nugget", "nugget_money"}))' in nugget
-    assert 'set("base_value", 100000000 )' in nugget
+    # 2026-11-16：名稱亮黃色、一錠值五百錠金元寶。
+    assert 'set_name(HIY "復刻紀念金元寶" NOR, ({"nugget", "nugget_money"}))' in nugget
+    assert 'set("base_value", 500000000 )' in nugget
     assert 'set("base_unit", "錠")' in nugget
     assert "看起來外圓內方的扁平金屬。" in read("obj/money/coin.c")
 
@@ -57,3 +58,11 @@ if __name__ == "__main__":
         if name.startswith("test_"):
             fn()
     print("ok")
+
+
+def test_nugget_bank_receive_only():
+    """2026-11-16：錢莊只收不付紀念金元寶；付錢拆換比例 500。"""
+    bank = read("std/room/bank.c")
+    assert 'if( money == "nugget" )' in bank
+    assert 'if( to == "nugget" )' in bank
+    assert "#define NUGGET_SYCEE    500" in read("feature/char/finance.c")

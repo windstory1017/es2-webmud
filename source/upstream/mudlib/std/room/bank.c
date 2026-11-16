@@ -12,6 +12,7 @@ inherit ROOM;
 
 // 錢莊只認錢幣的 id：coin（錢）、silver（碎銀）、gold（黃金）、
 // sycee（金元寶）、nugget（復刻紀念金元寶）。不接受中文名稱
+// 復刻紀念金元寶只收不付：可以存入、可以換成其他錢幣，不能提領或兌出（2026-11-16）。
 // （使用者指示，2026-11-07，設計文件 docs/CURRENCY.md）。
 // 複數或物件內部的別名仍換回正式 id。
 string normalize_money_id(string money)
@@ -119,6 +120,11 @@ int do_convert(string arg)
     if( !money_file(to) )
         return notify_fail("你想兌換哪一種錢﹖" + MONEY_HINT + "\n");
 
+    // 復刻紀念金元寶只收不付：可以換成其他錢幣，但不能用其他錢幣換成紀念金元寶
+    // （使用者指示，2026-11-16）。
+    if( to == "nugget" )
+        return notify_fail("錢莊不兌出復刻紀念金元寶。\n");
+
     if( !from_ob )        return notify_fail("你身上沒有這種貨幣。\n");
     if( amount < 1 )    return notify_fail("兌換貨幣一次至少要兌換一個。\n");
 
@@ -205,6 +211,10 @@ int do_withdraw(string arg)
 
     if( !money_file(money) )
         return notify_fail("你要提領哪一種錢﹖" + MONEY_HINT + "\n");
+
+    // 復刻紀念金元寶只收不付（使用者指示，2026-11-16）。
+    if( money == "nugget" )
+        return notify_fail("錢莊不付復刻紀念金元寶﹐客官改領別的錢幣吧。\n");
 
     if( catch(money_ob = new(money_file(money))) )
         return notify_fail("錢莊暫時無法取出這種貨幣，請通知管理員。\n");

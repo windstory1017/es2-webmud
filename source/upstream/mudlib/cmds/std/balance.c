@@ -42,7 +42,8 @@ int help(object me)
 convert <數量> <錢幣> to <另類錢幣> 兌換，錢幣要用 id：
   coin（錢）  silver（碎銀）  gold（黃金）  sycee（金元寶）
   nugget（復刻紀念金元寶）
-一錠金元寶值一百兩黃金，一錠復刻紀念金元寶值一百錠金元寶。
+一錠金元寶值一百兩黃金，一錠復刻紀念金元寶值五百錠金元寶。
+復刻紀念金元寶錢莊只收不付，可以存入或換成其他錢幣。
 例如 deposit 25 coin、withdraw 1 sycee、convert 100 gold to sycee。
 HELP);
     return 1;

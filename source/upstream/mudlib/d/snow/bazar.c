@@ -13,7 +13,7 @@ inherit BANK;
 "提款﹕  withdraw <數量> <錢幣>\n" \
 "兌換﹕  convert <數量> <錢幣> to <另類錢幣>\n" \
 "錢幣﹕  coin（錢）  silver（碎銀）  gold（黃金）  sycee（金元寶）\n" \
-"        nugget（復刻紀念金元寶）\n" \
+"        nugget（復刻紀念金元寶，只收不付）\n" \
 "例如﹕  deposit 25 coin﹐withdraw 1 sycee﹐convert 100 gold to sycee\n" \
 "存款直接記在客官名下﹐不需開戶﹐也不必攜帶金契。\n"
 

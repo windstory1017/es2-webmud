@@ -22,4 +22,4 @@ def test_withdraw_uses_whitelist_money_factory():
 def test_bank_sign_has_literal_examples():
     assert 'deposit 25 coin' in bazar
     assert 'withdraw 1 sycee' in bazar
-    assert 'nugget（復刻紀念金元寶）' in bazar
+    assert 'nugget（復刻紀念金元寶，只收不付）' in bazar
