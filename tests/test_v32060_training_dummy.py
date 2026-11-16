@@ -53,4 +53,4 @@ def test_no_life_phenomena():
 def test_dummy_immune_to_conditions():
     s = (MUD / "feature/char/condition.c").read_text(encoding="utf-8")
     b = s.split("set_condition(string cnd, mixed info)", 1)[1].split("conditions[cnd] = info", 1)[0]
-    assert 'query("training_dummy")' in b and "return;" in b
+    assert 'this_object()->query("training_dummy")' in b and "return;" in b
