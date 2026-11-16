@@ -1,11 +1,11 @@
-// /d/qiaoyin_east/npc/stone_dummy.c — 白雲觀練武場：石假人（依使用者設計表，2026-11-16）。
+// /d/qiaoyin_east/npc/stone_stake.c — 白雲觀練武場：石假人（依使用者設計表，2026-11-16）。
 // 繼承共用假人基底 /feature/npc/dummy（docs/NPC_DUMMY.md）：不還手、不損壞。
 #include <ansi.h>
 inherit "/feature/npc/dummy";
 
 void create()
 {
-    set_name("石假人", ({ "stone dummy", "dummy", "石假人", "假人" }));
+    set_name("石假人", ({ "stone stake", "stake", "石假人", "假人" }));
     set_race("human");
     set_class("commoner");
     set_level(20);

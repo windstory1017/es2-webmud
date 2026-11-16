@@ -16,7 +16,7 @@ LONG
         "south" : __DIR__"corridor_e",
     ]));
     set("objects", ([
-        __DIR__"npc/stone_dummy" : 3,
+        __DIR__"npc/stone_stake" : 3,
     ]));
     set("map/area", "白雲觀");
     setup();
