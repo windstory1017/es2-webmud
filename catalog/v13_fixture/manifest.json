@@ -4,8 +4,8 @@
   "git": {
     "repository": "https://github.com/taedlar/es2_mudlib",
     "origin": "https://github.com/wolfer168/es2-webmud",
-    "commit": "c81782f83b0c44177d1bc5514b81af84656437c8",
-    "branch": "claude/nugget-500"
+    "commit": "73d350cbf9f35992192a54120aa98f66f41c525d",
+    "branch": "claude/determined-curie-ev9n5z"
   },
   "total_files": 16,
   "counts": {

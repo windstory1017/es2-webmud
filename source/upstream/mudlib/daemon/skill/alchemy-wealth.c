@@ -9,6 +9,7 @@ note: 0 級即可施展；1～19 級不存在，累積到門檻後 gain 直接�
       conjure 時可指定數量：on 20 <物品>、on all <物品>（2026-11-14）。
       換錢比例 60%～200%；二階丹藥 × 2、一階丹藥 × 10（2026-11-14）。法術修為、法術道行只拿系統規則，本檔不另外給。
       施法時同時累積基本法術（magic），失敗得 1/3（U-13，2026-10-24）。
+      成功、失敗的經驗改為兩倍，成功經驗不設上限（2026-11-16）。
 ---*/
 
 #include <ansi.h>
@@ -146,29 +147,31 @@ void magic_gain(object me, int failed)
 }
 
 // U-03、U-10：成功的經驗與丹道修養。
-// 經驗取「價值 ÷ 100（最多等級 × 100）」與「random(靈性＋悟性)」較大者（2026-11-07）。
+// 經驗取「價值 ÷ 100」與「random(靈性＋悟性)」較大者（2026-11-07），再 × 2；
+// 不設上限（2026-11-16：取消「最多等級 × 100」，經驗改為兩倍）。
 void reward_success(object me, int value)
 {
     int level, gain, base, n;
 
     level = me->query_skill(SKILL_ID, 1);
     gain = value / 100;
-    if( level > 0 && gain > level * 100 ) gain = level * 100;
     n = me->query_attr("spi") + me->query_attr("int");
     base = n > 0 ? random(n) : 0;
     if( base > gain ) gain = base;
+    gain *= 2;
     if( gain > 0 ) me->improve_skill(SKILL_ID, gain);
     me->gain_score("alchemy", 1 + (level > 0 ? random(level) / 2 : 0));
     magic_gain(me, 0);
 }
 
-// U-04、U-10：失敗的經驗與丹道修養。經驗為 random(靈性＋悟性) ÷ 2（2026-11-07）。
+// U-04、U-10：失敗的經驗與丹道修養。經驗為 random(靈性＋悟性) ÷ 2（2026-11-07），
+// 再 × 2（2026-11-16 經驗改為兩倍）。
 void reward_failure(object me)
 {
     int n, gain;
 
     n = me->query_attr("spi") + me->query_attr("int");
-    gain = n > 0 ? random(n) / 2 : 0;
+    gain = n > 0 ? random(n) / 2 * 2 : 0;
     if( gain > 0 ) me->improve_skill(SKILL_ID, gain);
     me->gain_score("alchemy", 1);
     magic_gain(me, 1);

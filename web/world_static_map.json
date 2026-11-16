@@ -3403,6 +3403,125 @@
       "x": 10,
       "y": -17,
       "layer": "密室"
+    },
+    {
+      "id": "/d/qiaoyin_east/ground_w",
+      "label": "練武場",
+      "area": "白雲觀",
+      "x": 4,
+      "y": -4
+    },
+    {
+      "id": "/d/qiaoyin_east/yard",
+      "label": "後院",
+      "area": "白雲觀",
+      "x": 5,
+      "y": -4
+    },
+    {
+      "id": "/d/qiaoyin_east/ground_e",
+      "label": "練武場",
+      "area": "白雲觀",
+      "x": 6,
+      "y": -4
+    },
+    {
+      "id": "/d/qiaoyin_east/cell",
+      "label": "靜室",
+      "area": "白雲觀",
+      "x": 3,
+      "y": -3
+    },
+    {
+      "id": "/d/qiaoyin_east/corridor_w",
+      "label": "西廊",
+      "area": "白雲觀",
+      "x": 4,
+      "y": -3
+    },
+    {
+      "id": "/d/qiaoyin_east/court",
+      "label": "中庭",
+      "area": "白雲觀",
+      "x": 5,
+      "y": -3
+    },
+    {
+      "id": "/d/qiaoyin_east/corridor_e",
+      "label": "東廊",
+      "area": "白雲觀",
+      "x": 6,
+      "y": -3
+    },
+    {
+      "id": "/d/qiaoyin_east/guest_room",
+      "label": "客房",
+      "area": "白雲觀",
+      "x": 3,
+      "y": -2
+    },
+    {
+      "id": "/d/qiaoyin_east/sutra_hall",
+      "label": "經堂",
+      "area": "白雲觀",
+      "x": 4,
+      "y": -2
+    },
+    {
+      "id": "/d/qiaoyin_east/hall",
+      "label": "三清殿",
+      "area": "白雲觀",
+      "x": 5,
+      "y": -2
+    },
+    {
+      "id": "/d/qiaoyin_east/refectory",
+      "label": "齋堂",
+      "area": "白雲觀",
+      "x": 6,
+      "y": -2
+    },
+    {
+      "id": "/d/qiaoyin_east/outside",
+      "label": "喬陰城外",
+      "area": "喬陰東郊",
+      "x": 5,
+      "y": -1
+    },
+    {
+      "id": "/d/qiaoyin_east/mountain_road",
+      "label": "山路",
+      "area": "喬陰東郊",
+      "x": 6,
+      "y": 0
+    },
+    {
+      "id": "/d/qiaoyin_east/thicket",
+      "label": "雜草叢",
+      "area": "喬陰東郊",
+      "x": 6,
+      "y": 1
+    },
+    {
+      "id": "/d/qiaoyin_east/fork",
+      "label": "岔路口",
+      "area": "喬陰東郊",
+      "x": 7,
+      "y": 1
+    },
+    {
+      "id": "/d/qiaoyin_east/hut",
+      "label": "草廬",
+      "area": "喬陰東郊",
+      "x": 7,
+      "y": 2
+    },
+    {
+      "id": "/d/qiaoyin_east/clinic",
+      "label": "武陀灸堂",
+      "area": "喬陰東郊",
+      "x": 7,
+      "y": 3
     }
   ],
   "edges": [
@@ -9314,6 +9433,252 @@
       "from": "/d/baobao/study",
       "to": "/d/fengcheng/inner_yard",
       "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/ground_w",
+      "to": "/d/qiaoyin_east/yard",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/ground_w",
+      "to": "/d/qiaoyin_east/corridor_w",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/yard",
+      "to": "/d/qiaoyin_east/ground_w",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/yard",
+      "to": "/d/qiaoyin_east/ground_e",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/yard",
+      "to": "/d/qiaoyin_east/court",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/ground_e",
+      "to": "/d/qiaoyin_east/yard",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/ground_e",
+      "to": "/d/qiaoyin_east/corridor_e",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/cell",
+      "to": "/d/qiaoyin_east/corridor_w",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/corridor_w",
+      "to": "/d/qiaoyin_east/ground_w",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/corridor_w",
+      "to": "/d/qiaoyin_east/sutra_hall",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/corridor_w",
+      "to": "/d/qiaoyin_east/cell",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/corridor_w",
+      "to": "/d/qiaoyin_east/court",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/court",
+      "to": "/d/qiaoyin_east/yard",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/court",
+      "to": "/d/qiaoyin_east/hall",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/court",
+      "to": "/d/qiaoyin_east/corridor_w",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/court",
+      "to": "/d/qiaoyin_east/corridor_e",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/corridor_e",
+      "to": "/d/qiaoyin_east/ground_e",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/corridor_e",
+      "to": "/d/qiaoyin_east/refectory",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/corridor_e",
+      "to": "/d/qiaoyin_east/court",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/guest_room",
+      "to": "/d/qiaoyin_east/sutra_hall",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/sutra_hall",
+      "to": "/d/qiaoyin_east/corridor_w",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/sutra_hall",
+      "to": "/d/qiaoyin_east/guest_room",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/sutra_hall",
+      "to": "/d/qiaoyin_east/hall",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/hall",
+      "to": "/d/qiaoyin_east/court",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/hall",
+      "to": "/d/qiaoyin_east/sutra_hall",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/hall",
+      "to": "/d/qiaoyin_east/refectory",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/hall",
+      "to": "/d/qiaoyin_east/outside",
+      "direction": "out",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/refectory",
+      "to": "/d/qiaoyin_east/corridor_e",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/refectory",
+      "to": "/d/qiaoyin_east/hall",
+      "direction": "west",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/outside",
+      "to": "/d/qiaoyin_east/hall",
+      "direction": "enter",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/outside",
+      "to": "/d/qiaoyin_east/mountain_road",
+      "direction": "southeast",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/outside",
+      "to": "/d/qiaoyin/egate",
+      "direction": "southwest",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/mountain_road",
+      "to": "/d/qiaoyin_east/outside",
+      "direction": "northwest",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/mountain_road",
+      "to": "/d/qiaoyin_east/fork",
+      "direction": "southeast",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/thicket",
+      "to": "/d/qiaoyin_east/fork",
+      "direction": "east",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/fork",
+      "to": "/d/qiaoyin_east/mountain_road",
+      "direction": "northwest",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/fork",
+      "to": "/d/qiaoyin_east/hut",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/hut",
+      "to": "/d/qiaoyin_east/fork",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/hut",
+      "to": "/d/qiaoyin_east/clinic",
+      "direction": "south",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin_east/clinic",
+      "to": "/d/qiaoyin_east/hut",
+      "direction": "north",
+      "resolved": true
+    },
+    {
+      "from": "/d/qiaoyin/egate",
+      "to": "/d/qiaoyin_east/outside",
+      "direction": "northeast",
       "resolved": true
     }
   ],
