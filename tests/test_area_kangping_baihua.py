@@ -71,7 +71,7 @@ def test_inns_and_vendors():
 
 
 def test_special_npcs_and_weapons():
-    assert 'set("training_dummy", 1);' in read(B / 'npc/stone_lion.c')
+    assert 'inherit "/feature/npc/dummy";' in read(B / 'npc/stone_lion.c')
     assert '"/obj/area/obj/shortsword")->wield();' in read(B / 'npc/traveller.c')
     assert 'set("custom_faction", "alchemist.longtu");' in read(B / 'npc/wang_yean.c')
     assert 'set("title"' not in read(B / 'npc/wang_yean.c')
