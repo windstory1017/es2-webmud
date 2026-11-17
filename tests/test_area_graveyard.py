@@ -91,7 +91,8 @@ def test_npcs_placed():
     want = {
         'grave5': ['"/custom/legacy_npc/lady" : 1'],
         'shrine': ['__DIR__"npc/dirty_taoist" : 1'],
-        'grave7': ['__DIR__"npc/old_bonze" : 1', '__DIR__"npc/young_bonze" : 1'],
+        'grave7': ['__DIR__"npc/old_bonze" : 1', '__DIR__"npc/young_bonze" : 1',
+                  '"/custom/legacy_npc/liuye_the_master_of_grimace" : 1'],
         'forest_w': ['"/custom/legacy_npc/wu_changuei" : 1'],
         'forest_e': ['"/custom/legacy_npc/barbarian_chief" : 1', '__DIR__"npc/barbarian" : 2'],
     }
