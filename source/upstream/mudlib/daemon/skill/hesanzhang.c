@@ -21,10 +21,10 @@ private void create()
     moves = ({
         ([ "name": "天門洞開", "attack": 6, "defense": 4, "force": 3, "bonus": 10, "damage_type": "瘀傷",
            "action": "$N搶入乾位﹐雙臂大開大闔﹐一招「天門洞開」掌勢剛猛如天崩﹐當頭劈向$n的$l" ]),
-        ([ "name": "厚德載物", "attack": 5, "defense": 6, "force": 3, "bonus": 5, "damage_type": "瘀傷",
-           "action": "$N退守坤位﹐雙臂圈出一道大弧﹐一招「厚德載物」兩掌似托千斤沉沉推向$n的$l" ]),
-        ([ "name": "春雷乍響", "attack": 6, "defense": 3, "force": 3, "bonus": 10, "damage_type": "瘀傷",
-           "action": "$N雙掌一合一分﹐正是「春雷乍響」﹐身形已閃到震位﹐兩道掌緣自側面夾擊$n的$l" ]),
+        ([ "name": "雙掌托鼎", "attack": 5, "defense": 6, "force": 3, "bonus": 5, "damage_type": "瘀傷",
+           "action": "$N退守坤位﹐腰身一沉﹐雙臂自下圈起﹐一招「雙掌托鼎」兩掌如托千斤重鼎般推向$n的$l" ]),
+        ([ "name": "雙風貫耳", "attack": 6, "defense": 3, "force": 3, "bonus": 10, "damage_type": "瘀傷",
+           "action": "$N身形已閃到震位﹐雙掌自兩側同時掄起﹐一招「雙風貫耳」掌緣挾著呼嘯夾擊$n的$l" ]),
         ([ "name": "長風掃葉", "attack": 7, "defense": 4, "force": 2, "bonus": 5, "damage_type": "瘀傷",
            "action": "$N隨著巽位的步子旋身而進﹐左右雙掌輪番拍出﹐「長風掃葉」一掌快似一掌印向$n的$l" ]),
         ([ "name": "黑虎偷心", "attack": 7, "defense": 3, "force": 3, "bonus": 10, "damage_type": "瘀傷",
@@ -33,8 +33,8 @@ private void create()
            "action": "$N右掌掄圓﹐帶著一股熱浪循離位方向劈出﹐「星火燎原」呼的一聲撲向$n的$l" ]),
         ([ "name": "泰山壓頂", "attack": 5, "defense": 4, "force": 3, "bonus": 10, "damage_type": "瘀傷",
            "action": "$N矮身擰腰﹐穩穩立成艮位樁勢﹐一掌自下托起再猛然翻落﹐「泰山壓頂」重重按向$n的$l" ]),
-        ([ "name": "澤畔迴波", "attack": 6, "defense": 4, "force": 2, "bonus": 5, "damage_type": "瘀傷",
-           "action": "$N側身讓過正面﹐繞向兌位﹐掌影層層疊疊如水波盪開﹐「澤畔迴波」連環拍向$n的$l" ]),
+        ([ "name": "層浪拍岸", "attack": 6, "defense": 4, "force": 2, "bonus": 5, "damage_type": "瘀傷",
+           "action": "$N側身讓過正面﹐繞向兌位﹐掌影層層疊疊如水波盪開﹐「層浪拍岸」一浪接一浪拍向$n的$l" ]),
     });
 
     art_entry     = 20;
