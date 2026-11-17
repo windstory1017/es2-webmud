@@ -33,7 +33,7 @@ void create()
         "哭笑野人」, 成為青邪宮繼殘蟻師太之後的霸主, 之後潛心閉關五年, 創出\n"
         "「大邪心法」和「大邪七損刀」, 儼然成為武林中人皆敬佩的武學大宗師。\n");
     set("custom_faction", FACTION);   // 哭笑門（docs/martial_arts/門派武功對照表.md）
-    // 青邪杖法（docs/martial_arts/哭笑門_青邪杖法.md）；大邪心法等其他武功之後補上。
+    // 武功見 docs/martial_arts/哭笑門_青邪杖法.md、哭笑門_大邪心法與其他武功.md。
     // 技能等級與杖法對應由門派表（daemon/misc/npc_skill.c）自動套用，這裡只補招架。
     map_skill("parry", "chin_staff");
     set_power("S");
@@ -77,18 +77,27 @@ int init_apprentice(object me)
 }
 
 /* 傳授：哭笑門弟子才教；只補足到剛好可以升到 1 級的經驗，之後要自己修練。
- * 大邪心法、殘蟻五劍訣等之後再補。 */
+ * 大邪心經是解謎取得，不在這裡傳授。 */
 int acquire_skill(object me, string skill)
 {
     if( me->query("custom_faction") != FACTION ) return 0;
 
     switch( skill ) {
     case "chin_staff":
+    case "chitensword":
+    case "hesanzhang":
+    case "chin-steps":
+    case "sword":
     case "staff":
     case "twohanded staff":
     case "parry":
     case "dodge":
     case "unarmed":
+        break;
+    case "huge force":
+    case "force":
+        if( me->query_level() < 11 )
+            return notify_fail("劉乙忘玄搖頭道：你根基太淺，吃不下這路霸道真氣。\n");
         break;
     default:
         return 0;
