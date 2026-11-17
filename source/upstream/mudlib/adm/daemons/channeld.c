@@ -8,6 +8,20 @@
 
 inherit F_CLEAN_UP;
 #define CHANCE 20
+
+// 訊息裡帶顏色的名字（例如紅色的「赤犬」）結尾會用 NOR 把顏色全部關掉，
+// 後面的文字就變成預設色。這裡把每個 NOR 後面補回頻道原本的顏色（樣板「【」之前的色碼）。
+string keep_channel_color(string tmpl, string text)
+{
+    int pos;
+    string col;
+
+    if( !stringp(tmpl) || !stringp(text) ) return text;
+    pos = strsrch(tmpl, "【");
+    if( pos < 1 ) return text;
+    col = tmpl[0..pos-1];
+    return replace_string(text, NOR, NOR + col);
+}
  
 mapping channels = ([
     "sys":  ([	"msg_speak": HIB "【系統】%s﹕%s\n" NOR,
@@ -147,11 +161,11 @@ do_channel(object me, string verb, string arg, int emote)
                 if( !channels[verb]["msg_emote"] )
                     return notify_fail("這個頻道不能 emote。\n");
                 if( channels[verb]["intermud_emote"] ) warg = real_who + " " + warg;
-                wmsg = sprintf( channels[verb]["msg_emote"], warg );
+                wmsg = sprintf( channels[verb]["msg_emote"], keep_channel_color(channels[verb]["msg_emote"], warg) );
                 if( strsrch(wmsg, '\n')==-1 ) wmsg += "\n";
                 message( "channel:" + verb, wmsg, wiz_ob );
             } else {
-                string wmsg = sprintf( channels[verb]["msg_speak"], real_who, arg );
+                string wmsg = sprintf( channels[verb]["msg_speak"], real_who, keep_channel_color(channels[verb]["msg_speak"], arg) );
                 if( strsrch(wmsg, '\n')==-1 ) wmsg += "\n";
                 message( "channel:" + verb, wmsg, wiz_ob );
             }
@@ -166,11 +180,11 @@ do_channel(object me, string verb, string arg, int emote)
         // Support of old behavier of intermud emote.
         if( channels[verb]["intermud_emote"] ) arg = who + " " + arg;
 
-        msg = sprintf( channels[verb]["msg_emote"], arg );
+        msg = sprintf( channels[verb]["msg_emote"], keep_channel_color(channels[verb]["msg_emote"], arg) );
 	if( strsrch(msg, '\n')==-1 ) msg += "\n";
         message( "channel:" + verb, msg, ob );
     } else {
-        string msg = sprintf( channels[verb]["msg_speak"], who, arg );
+        string msg = sprintf( channels[verb]["msg_speak"], who, keep_channel_color(channels[verb]["msg_speak"], arg) );
 	if( strsrch(msg, '\n')==-1 ) msg += "\n";
         message( "channel:" + verb, msg, ob );
 #if 0
