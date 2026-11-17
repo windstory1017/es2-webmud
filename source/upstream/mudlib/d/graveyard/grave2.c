@@ -14,7 +14,7 @@ LONG
     set("outdoors", "snow");
     set("exits", ([
         "east" : __DIR__"grave1",
-        "northwest" : __DIR__"grave3",
+        "northwest" : __DIR__"grave4",
     ]));
     set("map/area", "亂葬崗");
     setup();

@@ -2608,81 +2608,74 @@
       "y": 2
     },
     {
-      "id": "/d/graveyard/grave3",
+      "id": "/d/graveyard/grave4",
       "label": "亂葬崗",
       "area": "亂葬崗",
       "x": 5,
       "y": 1
     },
     {
-      "id": "/d/graveyard/grave4",
-      "label": "亂葬崗",
-      "area": "亂葬崗",
-      "x": 4,
-      "y": 0
-    },
-    {
       "id": "/d/graveyard/grave5",
       "label": "亂葬崗",
       "area": "亂葬崗",
-      "x": 3,
-      "y": 0
+      "x": 4,
+      "y": 1
     },
     {
       "id": "/d/graveyard/shrine",
       "label": "祠堂",
       "area": "亂葬崗",
-      "x": 2,
-      "y": 0
+      "x": 3,
+      "y": 1
     },
     {
       "id": "/d/graveyard/grave6",
       "label": "亂葬崗",
       "area": "亂葬崗",
-      "x": 2,
-      "y": 1
+      "x": 3,
+      "y": 2
     },
     {
       "id": "/d/graveyard/grave7",
       "label": "亂葬崗",
       "area": "亂葬崗",
-      "x": 2,
-      "y": 2
+      "x": 3,
+      "y": 3
     },
     {
       "id": "/d/graveyard/grave8",
       "label": "亂葬崗",
       "area": "亂葬崗",
-      "x": 1,
-      "y": 2
+      "x": 2,
+      "y": 3
     },
     {
       "id": "/d/graveyard/weeds",
       "label": "雜草叢",
       "area": "亂葬崗",
-      "x": 1,
-      "y": 3
+      "x": 2,
+      "y": 4
     },
     {
       "id": "/d/graveyard/forest",
       "label": "密林",
       "area": "亂葬崗",
-      "x": 1,
-      "y": 4
+      "x": 2,
+      "y": 5
     },
     {
       "id": "/d/graveyard/forest_w",
       "label": "密林",
       "area": "亂葬崗",
-      "x": 0,
-      "y": 4
+      "x": 1,
+      "y": 5
     },
     {
       "id": "/d/graveyard/forest_e",
       "label": "密林",
       "area": "亂葬崗",
-      "x": 2,
-      "y": 4
+      "x": 3,
+      "y": 5
     },
     {
       "id": "/d/graveyard/grave2",
@@ -8128,21 +8121,9 @@
       "resolved": true
     },
     {
-      "from": "/d/graveyard/grave3",
-      "to": "/d/graveyard/grave4",
-      "direction": "northwest",
-      "resolved": true
-    },
-    {
       "from": "/d/graveyard/grave4",
       "to": "/d/graveyard/grave5",
       "direction": "west",
-      "resolved": true
-    },
-    {
-      "from": "/d/graveyard/grave4",
-      "to": "/d/graveyard/grave3",
-      "direction": "southeast",
       "resolved": true
     },
     {
@@ -8251,18 +8232,6 @@
       "from": "/d/graveyard/grave2",
       "to": "/d/graveyard/grave1",
       "direction": "east",
-      "resolved": true
-    },
-    {
-      "from": "/d/graveyard/grave2",
-      "to": "/d/graveyard/grave3",
-      "direction": "northwest",
-      "resolved": true
-    },
-    {
-      "from": "/d/graveyard/grave3",
-      "to": "/d/graveyard/grave2",
-      "direction": "southeast",
       "resolved": true
     },
     {
@@ -9679,6 +9648,18 @@
       "from": "/d/qiaoyin/egate",
       "to": "/d/qiaoyin_east/outside",
       "direction": "northeast",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/grave2",
+      "to": "/d/graveyard/grave4",
+      "direction": "northwest",
+      "resolved": true
+    },
+    {
+      "from": "/d/graveyard/grave4",
+      "to": "/d/graveyard/grave2",
+      "direction": "southeast",
       "resolved": true
     }
   ],
