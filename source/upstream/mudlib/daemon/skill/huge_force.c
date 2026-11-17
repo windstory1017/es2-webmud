@@ -110,7 +110,7 @@ int do_refresh(object me)
     return 1;
 }
 
-/* recover：精的上限減少 15（受傷），恢復氣 大邪心法/2、氣的上限 大邪心法/6。 */
+/* recover：精的上限減少 15（受傷），恢復氣 大邪心法/2、氣的上限 大邪心法/6；自身停頓 2 回合。 */
 int do_recover(object me)
 {
     int sk;
@@ -124,6 +124,7 @@ int do_recover(object me)
     me->heal_stat("kee", sk / 6);
     me->supplement_stat("kee", sk / 2);
     message_vision(HIR "$N「哇」地噴出一大灘鮮血﹐蒼白的臉上恢復了一絲血色。\n" NOR, me);
+    me->start_busy(2);
     return 1;
 }
 
