@@ -32,7 +32,7 @@
 | 冷梅莊 | `fighter.lunmay` | 已完成 |
 | 古劍門 | `fighter.au-chan` | 待補說明 |
 | 虎刀門 | `fighter.tiger` | 已完成 |
-| 哭笑門 | `fighter.huge` | 待補說明（青邪杖法 `chin_staff` 尚無技能檔） |
+| 哭笑門 | `fighter.huge` | 說明檔已建（只有青邪杖法；大邪心法等稍後補），設計見 `martial_arts/哭笑門_青邪杖法.md` |
 | 青邪禁衛 | `fighter.7b` | 未製作 |
 
 ### 盜賊（thief）　共通指令：peek、concentrate

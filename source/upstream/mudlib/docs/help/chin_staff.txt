@@ -1,0 +1,13 @@
+◎ 青邪杖法（chin_staff）
+　技能種類：杖法、雙握杖法、招架
+　學習條件：哭笑門弟子，拜師後即可習得
+　任務起始：劉乙忘玄
+　安裝：enable staff with chin_staff
+　　　　enable twohanded staff with chin_staff
+　　　　enable parry with chin_staff
+　招式：雲散獨不笑、擺頭嘲月老、一怒摧山倒、傲佔青天腰、亂杖碎天山
+　特殊能力：
+　　‧反震：青邪杖法 90，內功使用大邪心法且大邪心法 100，招架成功後
+　　　有機會以大邪真氣反震對手，使其損失氣。
+　練成等級：20 級
+　能力提昇：無
