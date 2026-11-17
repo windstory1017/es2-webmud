@@ -5,7 +5,10 @@ docs/LEGACY_ROOM_NPC_COMPENDIUM.md）；職業、等級、強度、門派、行�
 「舊有 NPC 待製作清單」（2026-10-15）。尚未放入地圖。
 舊站區域：哭笑門、青邪宮；房間：青邪宮哭笑門鎮心。
 */
+#include <ansi.h>
 inherit "/custom/legacy_npc/legacy_npc";
+
+#define FACTION "fighter.huge"
 
 void create()
 {
@@ -29,7 +32,10 @@ void create()
         "亂, 狀如瘋癲。五十三歲那年, 殘蟻逝世, 劉乙忘玄瘋病竟然好轉, 自號「\n"
         "哭笑野人」, 成為青邪宮繼殘蟻師太之後的霸主, 之後潛心閉關五年, 創出\n"
         "「大邪心法」和「大邪七損刀」, 儼然成為武林中人皆敬佩的武學大宗師。\n");
-    set("custom_faction", "fighter.huge");   // 哭笑門（docs/martial_arts/門派武功對照表.md）
+    set("custom_faction", FACTION);   // 哭笑門（docs/martial_arts/門派武功對照表.md）
+    // 青邪杖法（docs/martial_arts/哭笑門_青邪杖法.md）；大邪心法等其他武功之後補上。
+    // 技能等級與杖法對應由門派表（daemon/misc/npc_skill.c）自動套用，這裡只補招架。
+    map_skill("parry", "chin_staff");
     set_power("S");
     setup();
     carry_object("/custom/armor/feet/flying_boots")->wear();   // 飛天靴
@@ -37,4 +43,61 @@ void create()
     carry_object("/custom/weapon/staff/god_cane")->wield();   // 九曲十彎
     carry_object("/custom/armor/cloth/soft_cloth")->wear();   // 軟麻青絲衣
     carry_object("/custom/armor/neck/copper_rosary")->wear();   // 黃銅佛珠
+}
+
+// ------------------------------------------------------------------
+// 拜師與傳授（使用者指示，2026-11-17：哭笑門師傅，主要武功青邪杖法）
+// ------------------------------------------------------------------
+
+int accept_info(object ob, string type)
+{
+    return type == "skills";
+}
+
+/* 拜師條件：平民（尚未加入任何職業）。拜師後成為武者（哭笑門弟子）。 */
+int accept_apprentice(object me)
+{
+    if( me->query_class() != "commoner" ) {
+        command("say 你已另有所屬，不必來我這兒。");
+        return 0;
+    }
+    return 1;
+}
+
+int init_apprentice(object me)
+{
+    if( ::init_apprentice(me) ) {
+        me->set_class("fighter");
+        me->set("title", "哭笑門弟子");
+        me->set("custom_faction", FACTION);
+        command("emote 先是仰天大笑，繼而又眼眶泛紅，好一會兒才止住。");
+        command("say 好，從今日起，你就是哭笑門的人了。");
+    }
+    return 1;
+}
+
+/* 傳授：哭笑門弟子才教；只補足到剛好可以升到 1 級的經驗，之後要自己修練。
+ * 大邪心法、殘蟻五劍訣等之後再補。 */
+int acquire_skill(object me, string skill)
+{
+    if( me->query("custom_faction") != FACTION ) return 0;
+
+    switch( skill ) {
+    case "chin_staff":
+    case "staff":
+    case "twohanded staff":
+    case "parry":
+    case "dodge":
+    case "unarmed":
+        break;
+    default:
+        return 0;
+    }
+
+    if( me->query_learn(skill) >= me->skill_threshold(skill, 1) )
+        return notify_fail("劉乙忘玄擺手道：入門的要訣已經給你了，剩下的自己去磨。\n");
+
+    me->improve_skill_exact(skill, me->skill_threshold(skill, 1) - me->query_learn(skill));
+    tell_object(me, CYN + "劉乙忘玄將「" + to_chinese(skill) + "」的入門要訣傳授給你。\n" NOR);
+    return 1;
 }
