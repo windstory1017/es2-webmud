@@ -6,6 +6,7 @@ docs/LEGACY_ROOM_NPC_COMPENDIUM.md）；職業、等級、強度、門派、行�
 舊站區域：哭笑門、青邪宮；房間：青邪宮哭笑門鎮心。
 */
 #include <ansi.h>
+#include <command.h>
 inherit "/custom/legacy_npc/legacy_npc";
 
 #define FACTION "fighter.huge"
@@ -36,7 +37,7 @@ void create()
     // 武功見 docs/martial_arts/哭笑門_青邪杖法.md、哭笑門_大邪心法與其他武功.md。
     // 技能等級與杖法對應由門派表（daemon/misc/npc_skill.c）自動套用，這裡只補招架。
     map_skill("parry", "chin_staff");
-    set("legacy_patrol", 1);   // 在亂葬崗內走動（使用者指示，2026-11-17）
+    set("legacy_patrol", 1);   // 巡邏範圍見下面的 patrol()（使用者指示，2026-11-17）
     set_power("S");
     setup();
     carry_object("/custom/armor/feet/flying_boots")->wear();   // 飛天靴
@@ -110,4 +111,34 @@ int acquire_skill(object me, string skill)
     me->improve_skill_exact(skill, me->skill_threshold(skill, 1) - me->query_learn(skill));
     tell_object(me, CYN + "劉乙忘玄將「" + to_chinese(skill) + "」的入門要訣傳授給你。\n" NOR);
     return 1;
+}
+
+// ------------------------------------------------------------------
+// 巡邏：可以在亂葬崗與太乙觀之間走動，不能走進雪亭鎮（使用者指示，2026-11-17）。
+// 規則與 legacy_npc.c 的 patrol() 相同（每 4 秒 10% 機會移動），只是可走的區域不同。
+// ------------------------------------------------------------------
+
+#define PATROL_AREAS ({ "亂葬崗", "太乙觀" })
+
+void patrol()
+{
+    object env, room;
+    mapping exits;
+    string *dirs = ({});
+
+    call_out("patrol", 4);
+
+    if( !living(this_object()) || is_fighting() || is_busy() ) return;
+    if( !objectp(env = environment()) ) return;
+    if( random(100) >= 10 ) return;
+    if( !mapp(exits = env->query("exits")) ) return;
+
+    foreach( string dir, mixed dest in exits ) {
+        if( !stringp(dest) ) continue;
+        if( !objectp(room = find_object(dest)) && catch(room = load_object(dest)) ) continue;
+        if( objectp(room) && member_array(room->query("map/area"), PATROL_AREAS) != -1 )
+            dirs += ({ dir });
+    }
+    if( sizeof(dirs) )
+        GO_CMD->main(this_object(), dirs[random(sizeof(dirs))]);
 }
