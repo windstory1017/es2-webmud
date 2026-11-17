@@ -19,6 +19,7 @@ LONG
     set("objects", ([
         __DIR__"npc/old_bonze" : 1,
         __DIR__"npc/young_bonze" : 1,
+        "/custom/legacy_npc/liuye_the_master_of_grimace" : 1,
     ]));
     set("map/area", "亂葬崗");
     setup();

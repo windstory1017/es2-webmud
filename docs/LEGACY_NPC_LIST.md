@@ -42,7 +42,7 @@
 | 18 | 螟蛉子 | Ming ling zi | `custom/legacy_npc/ming_ling_zi.c` | 古墓場／內房 | 巫首族 | 道士 | 20 | A | — | — |
 | 19 | 鬼夜叉 | Ghost yaksa | `custom/legacy_npc/ghost_yaksa.c` | 古墓場／— | 夜叉族 | 武者 | 30 | B | — | 主動攻擊、巡邏 |
 | 20 | 歐陽芝 | O-yan zhi | `custom/legacy_npc/o_yan_zhi.c` | 名山書肆、八寶樓／歐陽書屋 | 人類 | 書生 | 30 | B | 步玄派（`scholar.myst`） | — |
-| 21 | 劉乙忘玄 | Liuye the Master of Grimace | `custom/legacy_npc/liuye_the_master_of_grimace.c` | 哭笑門、青邪宮／青邪宮哭笑門鎮心 | 厭火族 | 武者 | 70 | S | 哭笑門（`fighter.huge`） | — |
+| 21 | 劉乙忘玄 | Liuye the Master of Grimace | `custom/legacy_npc/liuye_the_master_of_grimace.c` | 哭笑門、青邪宮／青邪宮哭笑門鎮心 | 厭火族 | 武者 | 70 | S | 哭笑門（`fighter.huge`） | 巡邏 |
 | 22 | 劉可 | Liu ko | `custom/legacy_npc/liu_ko.c` | 哭笑門／— | 厭火族 | 平民 | 1 | C | — | — |
 | 23 | 無慾師太 | Wu-yu nun | `custom/legacy_npc/wu_yu_nun.c` | 哭笑門／— | 人類 | 和尚 | 30 | B | — | — |
 | 24 | 陰雨巖 | Yin euyen | `custom/legacy_npc/yin_euyen.c` | 喬陰縣／— | 人類 | 武者 | 20 | C | — | — |

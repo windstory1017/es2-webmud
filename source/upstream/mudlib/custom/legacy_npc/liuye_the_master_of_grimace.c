@@ -2,7 +2,7 @@
 /*
 LEGACY NPC. 名稱、英文 ID、敘述、年紀、性別、種族、裝備取自舊站畫面紀錄（DOCUMENTED，
 docs/LEGACY_ROOM_NPC_COMPENDIUM.md）；職業、等級、強度、門派、行為依使用者提供的
-「舊有 NPC 待製作清單」（2026-10-15）。尚未放入地圖。
+「舊有 NPC 待製作清單」（2026-10-15）。2026-11-17 起在亂葬崗老和尚處（d/graveyard/grave7）出生，會在亂葬崗內走動。
 舊站區域：哭笑門、青邪宮；房間：青邪宮哭笑門鎮心。
 */
 #include <ansi.h>
@@ -36,6 +36,7 @@ void create()
     // 武功見 docs/martial_arts/哭笑門_青邪杖法.md、哭笑門_大邪心法與其他武功.md。
     // 技能等級與杖法對應由門派表（daemon/misc/npc_skill.c）自動套用，這裡只補招架。
     map_skill("parry", "chin_staff");
+    set("legacy_patrol", 1);   // 在亂葬崗內走動（使用者指示，2026-11-17）
     set_power("S");
     setup();
     carry_object("/custom/armor/feet/flying_boots")->wear();   // 飛天靴

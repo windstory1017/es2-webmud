@@ -29,7 +29,7 @@
 | H2 | `grave5` | 亂葬崗 | sw F4、e J2 | `enter 小祠` → F2 | 青衣女郎 | 舊資料（風嘯拳法） |
 | F2 | `shrine` | 祠堂 | out H2 | — | 邋遢道士 | 舊資料（風嘯拳法） |
 | F4 | `grave6` | 亂葬崗 | ne H2、s F6 | — | — | 新寫 |
-| F6 | `grave7` | 亂葬崗 | n F4、w D6 | — | 老和尚、小和尚 | 新寫（寫進 D6 舊文提到的破敗石亭） |
+| F6 | `grave7` | 亂葬崗 | n F4、w D6 | — | 老和尚、小和尚、劉乙忘玄（巡邏，2026-11-17） | 新寫（寫進 D6 舊文提到的破敗石亭） |
 | D6 | `grave8` | 亂葬崗 | e F6 | `pass 草叢` → D8 | — | 舊資料（柳家拳法），出口只有 e |
 | D8 | `weeds` | 雜草叢 | n D6、s D10 | — | — | 舊資料 |
 | D10 | `forest` | 密林 | n D8、w B10、e F10 | — | — | 新寫 |
@@ -52,6 +52,7 @@
 | 野人 (Barbarian) ×2 | `d/graveyard/npc/barbarian.c` | 武者 | 12 | B | —（膂力 20） |
 | 青衣女郎 (Lady) | `custom/legacy_npc/lady.c` | 盜賊 | 5 | B | 匕首（既有） |
 | 吳長貴 (Wu changuei) | `custom/legacy_npc/wu_changuei.c` | 盜賊 | 15 | B | 既有 |
+| 劉乙忘玄 (Liuye) | `custom/legacy_npc/liuye_the_master_of_grimace.c` | 武者 | 70 | S | 九曲十彎等；在老和尚處出生，只在亂葬崗內走動 |
 | 野人酋長 (Barbarian chief) | `custom/legacy_npc/barbarian_chief.c` | 武者 | 15 | A | 白骨杖；看到玩家就下殺手 |
 
 - 野人酋長原為程度 5、C 級；使用者要求酋長比野人強，調為程度 15、A 級（2026-11-04）。
