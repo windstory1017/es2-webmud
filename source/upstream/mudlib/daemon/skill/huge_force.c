@@ -150,7 +150,7 @@ int do_armor(object me)
     duration = sk * 4 / 3;
     me->add_temp("apply/armor", sk);
     me->set_temp("huge_force/armor", 1);
-    message_vision(HIY "$N大喝一聲﹐氣衝百穴﹐施展「大邪金身」了！\n" NOR, me);
+    message_vision(HIY "$N氣衝百穴﹐施展「大邪金身」﹐渾身上下鏘鏘作響﹐宛如金鐵交鳴！\n" NOR, me);
     call_out("remove_armor", duration * 2, me, sk);
     return 1;
 }
