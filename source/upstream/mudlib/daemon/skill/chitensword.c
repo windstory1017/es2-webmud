@@ -18,14 +18,14 @@ private void create()
     art_bonus = 0;
 
     moves = ({
-        ([ "name": "蟻穴潛鋒", "attack": 7, "defense": 2, "force": 1, "bonus": 0, "damage_type": "刺傷",
-           "action": "$N身形微沉﹐手中$w貼著地面斜挑而上﹐一招「蟻穴潛鋒」劍尖悄沒聲息地刺向$n的$l" ]),
+        ([ "name": "毒蛇吐信", "attack": 7, "defense": 2, "force": 1, "bonus": 0, "damage_type": "刺傷",
+           "action": "$N身形微沉﹐手中$w貼著地面斜挑而上﹐一招「毒蛇吐信」劍尖悄沒聲息地刺向$n的$l" ]),
         ([ "name": "殘月斷魂", "attack": 8, "defense": 1, "force": 1, "bonus": 3, "damage_type": "割傷",
            "action": "$N左掌虛按﹐右手$w反腕一抹﹐正是「殘月斷魂」﹐劍光如一彎冷月削向$n的$l" ]),
-        ([ "name": "千蟻噬骨", "attack": 7, "defense": 2, "force": 2, "bonus": 0, "damage_type": "刺傷",
-           "action": "$N手腕連抖﹐$w顫出點點寒星﹐「千蟻噬骨」一點緊似一點啄向$n的$l" ]),
-        ([ "name": "蟻陣回鋒", "attack": 6, "defense": 3, "force": 1, "bonus": 3, "damage_type": "割傷",
-           "action": "$N踏步欺身﹐$w繞出一個圈子將$n的招式一絞﹐一招「蟻陣回鋒」劍尖順勢遞進$n的$l" ]),
+        ([ "name": "寒星連珠", "attack": 7, "defense": 2, "force": 2, "bonus": 0, "damage_type": "刺傷",
+           "action": "$N手腕連抖﹐$w顫出點點寒星﹐「寒星連珠」一點緊似一點啄向$n的$l" ]),
+        ([ "name": "迴風絞鋒", "attack": 6, "defense": 3, "force": 1, "bonus": 3, "damage_type": "割傷",
+           "action": "$N踏步欺身﹐$w繞出一個圈子將$n的招式一絞﹐一招「迴風絞鋒」劍尖順勢遞進$n的$l" ]),
         ([ "name": "斷腸一線", "attack": 8, "defense": 1, "force": 2, "bonus": 5, "damage_type": "刺傷",
            "action": "$N縱身躍起﹐人劍合為一線自上而下直落﹐「斷腸一線」$w挾著凌厲殺氣穿向$n的$l" ]),
     });
