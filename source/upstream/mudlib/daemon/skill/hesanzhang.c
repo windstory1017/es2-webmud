@@ -17,18 +17,18 @@ private void create()
     art_desc  = "依八卦方位遊走的掌法，腳步沉穩、掌力渾厚，出手不多卻一擊便是爆發。";
     art_bonus = 0;
 
-    /* 八招對應八卦：乾（黑虎偷心）、坤、震、巽、坎、離、艮、兌。 */
+    /* 八招對應八卦：乾天門、坤地、震雷、巽風、坎（黑虎偷心：坎為北方屬黑、主隱伏，取暗中偷襲）、離火、艮山、兌澤。 */
     moves = ({
-        ([ "name": "黑虎偷心", "attack": 7, "defense": 3, "force": 3, "bonus": 10, "damage_type": "瘀傷",
-           "action": "$N足下一轉搶入乾位﹐左掌虛晃一記﹐右掌五指微曲自肋下穿出﹐「黑虎偷心」直取$n的$l" ]),
+        ([ "name": "天門洞開", "attack": 6, "defense": 4, "force": 3, "bonus": 10, "damage_type": "瘀傷",
+           "action": "$N搶入乾位﹐雙臂大開大闔﹐一招「天門洞開」掌勢剛猛如天崩﹐當頭劈向$n的$l" ]),
         ([ "name": "坤地載物", "attack": 5, "defense": 6, "force": 3, "bonus": 5, "damage_type": "瘀傷",
            "action": "$N退守坤位﹐雙臂圈出一道大弧﹐一招「坤地載物」兩掌似托千斤沉沉推向$n的$l" ]),
         ([ "name": "震雷貫耳", "attack": 6, "defense": 3, "force": 3, "bonus": 10, "damage_type": "瘀傷",
            "action": "$N雙掌一合一分﹐正是「震雷貫耳」﹐身形已閃到震位﹐兩道掌緣自側面夾擊$n的$l" ]),
         ([ "name": "巽風掃葉", "attack": 7, "defense": 4, "force": 2, "bonus": 5, "damage_type": "瘀傷",
            "action": "$N隨著巽位的步子旋身而進﹐左右雙掌輪番拍出﹐「巽風掃葉」一掌快似一掌印向$n的$l" ]),
-        ([ "name": "坎水沉山", "attack": 6, "defense": 5, "force": 2, "bonus": 5, "damage_type": "瘀傷",
-           "action": "$N沉肩墜肘﹐腳下悄然滑入坎位﹐一招「坎水沉山」雙掌平平推向$n的$l" ]),
+        ([ "name": "黑虎偷心", "attack": 7, "defense": 3, "force": 3, "bonus": 10, "damage_type": "瘀傷",
+           "action": "$N悄然滑入坎位﹐身形伏低如暗夜潛行﹐左掌虛晃﹐一招「黑虎偷心」右掌自肋下穿出直取$n的$l" ]),
         ([ "name": "離火燎原", "attack": 7, "defense": 3, "force": 3, "bonus": 5, "damage_type": "瘀傷",
            "action": "$N右掌掄圓﹐帶著一股熱浪循離位方向劈出﹐「離火燎原」呼的一聲撲向$n的$l" ]),
         ([ "name": "艮山壓頂", "attack": 5, "defense": 4, "force": 3, "bonus": 10, "damage_type": "瘀傷",
