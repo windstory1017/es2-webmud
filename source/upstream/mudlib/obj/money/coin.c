@@ -15,7 +15,7 @@ LONG
 		set("material", "copper");
 		set("base_value", 1);
 		set("base_unit", "文");
-		set("base_weight", 0); // CUSTOM: money is weightless
+		set("base_weight", 1);
 	}
 	set_amount(1);
 	setup();

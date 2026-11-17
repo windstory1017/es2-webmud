@@ -12,7 +12,7 @@ void create()
 		set("material", "silver");
 		set("base_value", 100);
 		set("base_unit", "兩");
-		set("base_weight", 0); // CUSTOM: money is weightless
+		set("base_weight", 40);
 	}
 	set_amount(1);
 	setup();

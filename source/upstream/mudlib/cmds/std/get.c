@@ -25,6 +25,7 @@ int ordinary_main(object me, string arg)
 {
     string from, item;
     object obj, *inv, env, obj2, obj3;
+    string guard_owner;
     int i, amount;
 
     if( me->query("life_form") == "ghost" )
@@ -66,12 +67,23 @@ int ordinary_main(object me, string arg)
             old_amount = obj->query_amount();
             
             obj2 = new(base_name(obj));
+            // 分出來的這一堆先不與地上原本那堆合併，否則原本那堆會被併掉銷毀。
+            obj2->set_temp("no_combine", 1);
+            obj2->set_amount( amount );
             obj2->move(env);    // for container
-            obj2->set_amount( amount );            
+            obj2->delete_temp("no_combine");
+            if( stringp(guard_owner = obj->query_temp("guard_owner")) )
+                obj2->set_temp("guard_owner", guard_owner);
             obj->set_amount( old_amount - amount );
             // Counting precise amount costs more time.
             if( me->is_fighting() ) me->start_busy(3);
-            return do_get(me, obj2);
+            if( !do_get(me, obj2) ) {
+                // 沒拿成（太重、被看守等），把分出來的併回原本那堆。
+                if( obj2 ) destruct(obj2);
+                obj->set_amount( old_amount );
+                return 0;
+            }
+            return 1;
         }
     }
 

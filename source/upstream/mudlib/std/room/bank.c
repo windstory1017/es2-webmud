@@ -140,10 +140,22 @@ int do_convert(string arg)
     if( bv1 < bv2 ) amount -= amount % (bv2 / bv1);
     if( amount==0 )    return notify_fail("這些" + from_ob->name() + "的價值太低了﹐換不起。\n");
 
+    // 錢幣有重量：換成較重的錢幣時，要背得動才能換。
+    {
+        int add_w = (amount * bv1 / bv2) * (int)call_other(money_file(to), "query", "base_weight")
+            - amount * (int)from_ob->query("base_weight");
+        if( add_w > 0
+        && this_player()->query_encumbrance() + add_w > this_player()->query_strength("carriage") )
+            return notify_fail("你身上帶不了這許多錢﹐換少一點吧。\n");
+    }
+
     if( !to_ob ) {
         to_ob = new(money_file(to));
-        to_ob->move(this_player());
         to_ob->set_amount(amount * bv1 / bv2);
+        if( !to_ob->move(this_player()) ) {
+            destruct(to_ob);
+            return notify_fail("你身上帶不了這許多錢﹐換少一點吧。\n");
+        }
     } else
         to_ob->add_amount(amount * bv1 / bv2);
 

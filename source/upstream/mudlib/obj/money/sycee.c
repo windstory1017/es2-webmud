@@ -18,7 +18,7 @@ LONG
 		set("material", "gold");
 		set("base_value", 1000000 );
 		set("base_unit", "錠");
-		set("base_weight", 0); // CUSTOM: money is weightless
+		set("base_weight", 50);
 	}
 	set_amount(1);
 	setup();

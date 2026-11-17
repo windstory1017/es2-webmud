@@ -36,7 +36,8 @@ varargs int move(mixed dest, int silent)
 
     // 放到人身上或房間地上時，與同一種物品合併成一堆（房間地上：使用者指示，2026-11-07）。
     // 袋子、屍體、丹爐等容器裡不合併，以免影響逐件計算的系統。
-    if( environment()->is_character() || inherits(ROOM, environment()) )
+    if( !query_temp("no_combine")
+    && (environment()->is_character() || inherits(ROOM, environment())) )
     {
 	object ob, env = environment();
 	string file = base_name(this_object());
