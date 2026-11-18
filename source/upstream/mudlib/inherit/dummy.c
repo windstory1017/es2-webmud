@@ -70,6 +70,14 @@ int query_stat(string what)
     return ::query_stat(what);
 }
 
+/* 氣的上限固定為 0：死物沒有體力可言。戰鬥系統的 report_status() 與各技能報體力前
+ * 都會先看氣的上限，是 0 就不報，所以任何技能打假人都不會出現體力敘述。 */
+mixed query_stat_maximum(string what)
+{
+    if( what == "kee" ) return 0;
+    return ::query_stat_maximum(what);
+}
+
 /* 回傳正的傷害值，讓命中時的修練經驗照常累計，但不扣任何狀態。 */
 varargs int receive_damage(int damage, object from, object attacker)
 {

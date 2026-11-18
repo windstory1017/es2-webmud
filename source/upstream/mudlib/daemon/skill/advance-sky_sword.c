@@ -163,6 +163,17 @@ private int hold_action(object me, object victim)
 
     me->consume_stat("gin", cost);
     me->start_busy(1);
+    // 練武假人是死物：成功、失敗都換成死物的敘述，也不停頓
+    // （使用者定案，2026-11-19，見 docs/NPC_DUMMY.md）。
+    if( victim->query("training_dummy") ) {
+        if( random(100) < hold_chance(me) )
+            message_vision(say_it("hold", "$N左手劍訣一指﹐使出",
+                "﹐一道沉靜的劍意籠住$n﹐$n依舊紋絲不動"), me, victim);
+        else
+            message_vision(say_it("hold", "$N劍訣一指﹐",
+                "的劍意罩向$n﹐卻散而不聚"), me, victim);
+        return 1;
+    }
     if( random(100) < hold_chance(me) ) {
         message_vision(say_it("hold", "$N左手劍訣一指﹐使出",
             "﹐一道沉靜的劍意籠住$n﹐$n只覺周身氣機一滯"), me, victim);
@@ -176,7 +187,7 @@ private int hold_action(object me, object victim)
 
 private int break_action(object me, object victim, string act)
 {
-    int cost, dmg;
+    int cost, dmg, failed;
     string stat, wn;
     object w;
 
@@ -189,7 +200,22 @@ private int break_action(object me, object victim, string act)
     w = me->query_temp("weapon/sword");
     wn = objectp(w) ? w->name() : "長劍";    // 武器名稱本身帶顏色，後面要接回白色（HIW）
 
-    if( random(100) >= break_chance(me) ) {
+    failed = random(100) >= break_chance(me);
+    if( failed && victim->query("training_dummy") ) {
+        // 練武假人是死物：失敗敘述不寫對方的反應（使用者定案，2026-11-19）。
+        switch(act) {
+        case "kee-break":
+            message_vision(say_it(act, "$N使出", "﹐劍氣點向$n﹐卻偏了開去"), me, victim);
+            break;
+        case "gin-break":
+            message_vision(say_it(act, "$N使出", "﹐劍意探向$n﹐卻無功而返"), me, victim);
+            break;
+        default:
+            message_vision(say_it(act, "$N使出", "﹐劍意無聲無息探向$n﹐卻半途散去"), me, victim);
+        }
+        return 1;
+    }
+    if( failed ) {
         switch(act) {
         case "kee-break":
             message_vision(say_it(act, "$N使出", "﹐劍氣點向$n的氣脈﹐卻被$n察覺偏了開去"), me, victim);
@@ -203,7 +229,18 @@ private int break_action(object me, object victim, string act)
         return 1;
     }
 
-    switch(act) {
+    // 練武假人是死物：成功敘述不寫對方的反應（使用者定案，2026-11-19）；回流照舊。
+    if( victim->query("training_dummy") ) switch(act) {
+    case "kee-break":
+        message_vision(say_it(act, "$N" + wn + HIW + "輕輕一點﹐使出", "﹐一縷劍氣逕取$n﹐在$n身上留下一點細痕"), me, victim);
+        break;
+    case "gin-break":
+        message_vision(say_it(act, "$N" + wn + HIW + "微顫﹐使出", "﹐劍意直透$n﹐卻如石沉大海"), me, victim);
+        break;
+    default:
+        message_vision(say_it(act, "$N劍意隱於無形﹐使出", "﹐悄悄侵入$n﹐卻探不到半點心神"), me, victim);
+    }
+    else switch(act) {
     case "kee-break":
         message_vision(say_it(act, "$N" + wn + HIW + "輕輕一點﹐使出", "﹐一縷劍氣逕取$n的氣脈﹐$n胸口一悶"), me, victim);
         break;

@@ -147,6 +147,44 @@ string hit_line(string kind, int rank)
     })[rank-1];
 }
 
+/* 練武假人（training_dummy，見 docs/NPC_DUMMY.md）是死物：命中敘述只寫外觀留下的痕跡，
+ * 不寫痛、抖、麻、昏這類活人反應；木頭、石頭都適用（使用者定案，2026-11-19）。 */
+int is_dummy(object ob) { return objectp(ob) && ob->query("training_dummy"); }
+
+string dummy_hit_line(string kind, int rank)
+{
+    if( kind == "fire" ) return ({
+        "火球正中$n胸前，「轟」的一聲炸開，在$n身上燻出一片焦黑！",
+        "$n腳下猛地噴出一道火柱，烈焰沿著$n直捲上去，燒得劈啪作響！",
+        "火輪挾著灼人的熱浪轟然壓下，將$n整個罩在一片火海之中！",
+        "三色真火纏上$n週身，火舌舔過之處盡成焦黑，火勢猶自不熄！",
+    })[rank-1];
+    if( kind == "freeze" ) return ({
+        "冰錐正中$n肩頭，碎冰四濺，在$n身上結了一層白霜！",
+        "幽藍寒氣纏上$n，$n表面迅速凝起一層細細的冰晶！",
+        "$n周身凝起一層薄冰，冰面泛著森森寒光！",
+        "七重冰輪同時合攏，將$n凍成一座冰柱，寒氣四溢！",
+    })[rank-1];
+    if( kind == "storm" ) return ({
+        "疾風颳過$n身側，風刃在$n身上刻出幾道細長的刮痕！",
+        "旋風直撞$n，捲起滿地塵沙，打得$n身上沙沙作響！",
+        "銳利如刀的勁風掠過$n，在$n身上削出一道深深的裂痕！",
+        "銳利如刀的勁風掠過$n，在$n身上削出一道深深的裂痕！",
+    })[rank-1];
+    return ({
+        "雷光順著$n底座竄上，在$n身上爬出幾道焦黑的紋路！",
+        "雷珠在$n身前「轟」地炸開，震得$n身上碎屑紛飛！",
+        "雷芒自天而降正中$n，$n身上冒起一縷青煙！",
+        "數道霹靂從四面八方一起撲向$n，轟得$n四周塵土飛揚、焦痕遍佈！",
+    })[rank-1];
+}
+
+/* 依目標選命中敘述：假人用死物的寫法。 */
+string target_hit_line(object target, string kind, int rank)
+{
+    return is_dummy(target) ? dummy_hit_line(kind, rank) : hit_line(kind, rank);
+}
+
 /* 落空敘述（取代命中敘述）。 */
 string miss_line(string kind)
 {
@@ -195,6 +233,9 @@ int resistance(object target, string kind)
 int spell_hits(object me, object target, string kind, int ignore_resistance)
 {
     int chance;
+
+    // 練武假人不會閃避：法術打假人必定命中（使用者定案，2026-11-19）。
+    if( is_dummy(target) ) return 1;
 
     chance = 50 + (spell_technique(me) - (ignore_resistance ? 0 : resistance(target, kind))) * 2;
     if( chance < 5 ) chance = 5;
@@ -267,7 +308,7 @@ object *storm_targets(object me, object target)
 int strike_kee(object me, object target, string kind, int rank, int damage)
 {
     damage = target->receive_damage(damage, me, me);
-    say_line(me, target, hit_line(kind, rank));
+    say_line(me, target, target_hit_line(target, kind, rank));
     show_status(target);
     return damage;
 }
@@ -361,6 +402,12 @@ void pure_fire_burst(object me, object target, int damage)
 {
     if( !objectp(me) || !alive_here(me, target) ) return;
     blank(me);
+    // 假人是死物：換成死物的敘述，也不停頓（使用者定案，2026-11-19）。
+    if( is_dummy(target) ) {
+        say_line(me, target, "$n身上殘留的三昧真火猛然爆開，火光一閃，又燒出一片焦黑！");
+        target->receive_damage(damage, me, me);
+        return;
+    }
     say_line(me, target, "$n體內潛伏的三昧真火猛然爆開，燒得$n渾身顫抖，一時動彈不得！");
     target->receive_damage(damage, me, me);
     show_status(target);
@@ -454,7 +501,7 @@ varargs int cast_spell(object me, string spell, object target)
             landed = 1;
             // 多重攻擊（使用者定案，2026-10-22）：命中只看施放時這一次，
             // 成功的話同一格內正與自己交戰的 NPC 全部都中；命中敘述只說一次，再逐一顯示傷勢。
-            say_line(me, target, hit_line(kind, rank));
+            say_line(me, target, target_hit_line(target, kind, rank));
             foreach(object victim in storm_targets(me, target)) {
                 n = elemental_damage(me, victim, kind, power, rank == 2);
                 dealt += victim->receive_damage(n, me, me);
@@ -495,9 +542,10 @@ varargs int cast_spell(object me, string spell, object target)
     }
     else if( kind == "freeze" && rank == 3 ) {
         // 無相冰：不造成傷害，對手停頓 3，自己不停頓。
-        say_line(me, target, hit_line(kind, rank));
+        say_line(me, target, target_hit_line(target, kind, rank));
         show_status(target);
-        target->start_busy(3);
+        // 假人是死物，不停頓（使用者定案，2026-11-19）。
+        if( !is_dummy(target) ) target->start_busy(3);
         award_spell_hit(me, D);
         delay = 0;
     }
@@ -505,7 +553,7 @@ varargs int cast_spell(object me, string spell, object target)
         // 兆冰：精 -D、神 -D×33%；施法者回復一半。
         target->consume_stat("gin", D, me);
         target->consume_stat("sen", D * 33 / 100, me);
-        say_line(me, target, hit_line(kind, rank));
+        say_line(me, target, target_hit_line(target, kind, rank));
         show_status(target);
         me->supplement_stat("gin", D / 2);
         me->supplement_stat("sen", D * 33 / 200);
@@ -516,7 +564,7 @@ varargs int cast_spell(object me, string spell, object target)
         // 神光雷：神 -D×33%。
         n = D * 33 / 100;
         target->consume_stat("sen", n, me);
-        say_line(me, target, hit_line(kind, rank));
+        say_line(me, target, target_hit_line(target, kind, rank));
         show_status(target);
         award_spell_hit(me, n);
     }
@@ -537,7 +585,9 @@ varargs int cast_spell(object me, string spell, object target)
             say_line(me, target, "地火餘溫回流，$N只覺一股暖意流遍四肢百骸，氣色好了許多。");
         }
         if( kind == "fire" && rank == 4 && wis > 0 && random(wis) > 20 && alive_here(me, target) ) {
-            say_line(me, target, "真火餘燼仍在$n體內悶燒，隱隱有再度爆發之勢……");
+            say_line(me, target, is_dummy(target)
+                ? "真火餘燼仍在$n身上悶燒，隱隱有再度爆發之勢……"
+                : "真火餘燼仍在$n體內悶燒，隱隱有再度爆發之勢……");
             call_out("pure_fire_burst", 4, me, target,
                 elemental_damage(me, target, kind, D * 180 / 100, 0));
         }

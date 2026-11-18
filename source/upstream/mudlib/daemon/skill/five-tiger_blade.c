@@ -77,6 +77,12 @@ int door_break(object me, object victim)
         return 1;
     }
     me->consume_stat("kee", cost);
+    // 練武假人是死物：換成死物的敘述，也不停頓（使用者定案，2026-11-19，見 docs/NPC_DUMMY.md）。
+    if( victim->query("training_dummy") ) {
+        say_yellow("$N一聲暴喝﹐使出孟家祖傳絕學『五 虎 斷 門』刀風過處﹐在$n身上劈出一道深深的刀痕！", me, victim);
+        me->start_busy(1);
+        return 1;
+    }
     say_yellow("$N一聲暴喝﹐使出孟家祖傳絕學『五 虎 斷 門』刀風過處退路盡斷﹐$n被封得動彈不得！", me, victim);
     me->start_busy(1);
     victim->start_busy(DELAY_TICKS);

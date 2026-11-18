@@ -78,6 +78,8 @@ void show_needle(object me, object target, string kind)
         act = replace_string(act, "$n", "自己");
         res = replace_string(res, "$n", "$N");
     }
+    // 練武假人是死物：四種效果都換成同一句（使用者定案，2026-11-19，見 docs/NPC_DUMMY.md）。
+    if( target->query("training_dummy") ) res = "針尾在$n身上輕輕晃了晃，$n毫無反應。";
     needle_line(me, target, act);
     needle_blank(me);
     needle_line(me, target, res);
@@ -90,6 +92,12 @@ int do_fatigue(object me, object target, int sk)
 
     if( me->query_stat("sen") < 20 )
         return notify_fail(gender_self(me) + "的心神不足，捏不穩手中的針。\n");
+    // 練武假人可以當施針對象：施針成功（照樣有經驗），但沒有疲勞可解（使用者定案，2026-11-19）。
+    if( target->query("training_dummy") ) {
+        me->consume_stat("sen", 20);
+        show_needle(me, target, "fatigue");
+        return 1;
+    }
     tired = target->query_stat("fatigue");
     if( tired <= 0 )
         return notify_fail((target == me ? gender_self(me) : target->name())

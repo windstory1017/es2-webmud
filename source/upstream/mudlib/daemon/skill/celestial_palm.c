@@ -73,7 +73,9 @@ void after_strike(object me, object opponent, object weapon, mapping m, int dama
     if( !objectp(opponent) || !living(me) ) return;
     sk = me->query_skill("celestial palm", 1);
 
+    // 練武假人是死物：定身不觸發，也不顯示（使用者定案，2026-11-19，見 docs/NPC_DUMMY.md）。
     if( damage > 0 && living(opponent) && environment(opponent) == environment(me)
+    &&  !opponent->query("training_dummy")
     &&  !opponent->is_busy() && random(100) < move_chance(me, 10, 30, 20) ) {
         // 一行、前後各空一行（使用者指示，2026-11-07）
         message_vision(HIY "\n$N掌勢一沉﹐一股天邪真氣透掌而入﹐$n只覺週身一麻﹐竟動彈不得！\n\n" NOR,

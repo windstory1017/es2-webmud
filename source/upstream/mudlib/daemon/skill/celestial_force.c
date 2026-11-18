@@ -170,8 +170,13 @@ int do_roar(object me)
     dmg = sk / 5 + me->query_attr("con");
     foreach( ob in enemies ) {
         if( !objectp(ob) ) continue;
-        message_vision(CYN "$n被嘯聲震得耳中嗡嗡作響﹐一時呆立當場。\n" NOR, me, ob, 1);
-        ob->start_busy(2);
+        // 練武假人是死物：換成死物的敘述，也不停頓（使用者定案，2026-11-19，見 docs/NPC_DUMMY.md）。
+        if( ob->query("training_dummy") )
+            message_vision(CYN "嘯聲撞上$n﹐震得$n身上的塵土簌簌落下。\n" NOR, me, ob, 1);
+        else {
+            message_vision(CYN "$n被嘯聲震得耳中嗡嗡作響﹐一時呆立當場。\n" NOR, me, ob, 1);
+            ob->start_busy(2);
+        }
         ob->receive_damage(dmg, me, me);
         if( objectp(ob) ) show_status(ob, kee_ratio(ob));
     }
