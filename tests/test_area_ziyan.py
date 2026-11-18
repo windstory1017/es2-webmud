@@ -89,7 +89,9 @@ def test_mechanisms():
     assert 'valid_leave' in read(Z / 'jail.c') and 'lin yu lun' in read(Z / 'jail.c')
     s = read(Z / 'house.c')
     assert '"血手印" :' in s and 'arg != "書櫃"' in s and 'bloody_letter' in s
-    assert '上面看起來似字非字、又不像是什麼有意義的符號。' in read(Z / 'obj/bloody_letter.c')
+    # 血書敘述 2026-11-18 改為字跡模糊、只認得趙老賊、勾結、冤（玄冰烈焰斧任務）。
+    s = read(Z / 'obj/bloody_letter.c')
+    assert '字跡被血漬暈得模糊不清' in s and '趙老賊' in s and '勾結' in s and '冤' in s
     assert 'arg != "茅屋"' in read(Z / 'narrow_street.c')
     assert 'inherit INN;' in read(Z / 'inn.c') and 'inherit HOCKSHOP;' in read(Z / 'pawnshop.c')
 

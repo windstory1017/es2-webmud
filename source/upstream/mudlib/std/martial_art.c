@@ -96,6 +96,7 @@ mapping make_action(mapping m, int pct)
         "force":       m["force"],
         "damage_type": m["damage_type"] ? m["damage_type"] : "割傷",
         "damage_pct":  (100 + art_bonus + m["bonus"]) * pct / 100,
+        "element":     m["element"],   // 招式的元素（fire、ice…），沒有就不帶元素傷害
     ]);
 }
 

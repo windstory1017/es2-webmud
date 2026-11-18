@@ -4,8 +4,8 @@
   "git": {
     "repository": "https://github.com/taedlar/es2_mudlib",
     "origin": "https://github.com/wolfer168/es2-webmud",
-    "commit": "73d350cbf9f35992192a54120aa98f66f41c525d",
-    "branch": "claude/determined-curie-ev9n5z"
+    "commit": "3403a4d74ac0d29ca36907a59909b9495ea7e886",
+    "branch": "claude/relaxed-fermat-ju99vi"
   },
   "total_files": 16,
   "counts": {
