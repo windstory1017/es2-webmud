@@ -60,9 +60,16 @@ static mapping score_gain = ([]);
 mapping query_score_gain() { return score_gain; }
 void reset_score_gain() { score_gain = ([]); }
 
+/* 江湖歷練（survive）、實戰經驗（combat）、法術修為（magic）取得速度 × 2（使用者指示，2026-11-18）。
+ * 只放大取得的點數；扣除（xp 為負，例如心眼渡出法術修為）不放大。設計文件：docs/EXP_MULTIPLIER.md。 */
+#define EXP_GAIN_MULTIPLIER 2
+
 varargs void
 gain_score(string course, int xp)
 {
+    if( xp > 0
+    && (course == "survive" || course == "combat" || course == "magic") )
+        xp *= EXP_GAIN_MULTIPLIER;
     // 戰場功勳只有軍人能得到，武者入伍轉成的軍人也算（使用者定案，2026-11-06）。
     if( course == "military service" && query_class() != "soldier" ) return;
     add("score/" + course, xp);
