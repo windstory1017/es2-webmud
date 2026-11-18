@@ -33,15 +33,19 @@ void create()
 
 // ------------------------------------------------------------------
 // 玄冰烈焰斧任務。玩家身上的記號：
-//   quest/ziyan_axe         0 未開始、1 查案中、2 案情大白、3 縣令伏誅（取得官印）、4 完成
+//   quest/ziyan_axe         0 未開始、1 查案中、2 案情大白、3 縣令伏誅（取得官印）
 //   quest/ziyan_axe_letter  已把血書交給程槐
 //   quest/ziyan_axe_seal    已把官印交給程槐
+//   quest/ziyan_axe_done    解過任務（永久記號；之後可向程槐求教斧法）
+// 任務可以一直重解（使用者指示，2026-11-18）：完成時把進度、線索、交付記號、密函記號全部清掉，
+// 只留 done；再解一次又會得到贈禮（非武者或已學過者）。
 // 每句話之間隔 1 tick（2 秒）；說話用 say，神情用 emote。
 // ------------------------------------------------------------------
 
 #define QUEST  "quest/ziyan_axe"
 #define LETTER "quest/ziyan_axe_letter"
 #define SEAL   "quest/ziyan_axe_seal"
+#define DONE   "quest/ziyan_axe_done"
 #define ASKING "ziyan_axe/asking"     // 程槐暫存：正在等誰回答「你殺了那個狗官」
 
 private int still_here(object who)
@@ -79,13 +83,14 @@ void init()
     set_temp(key, time());
 
     switch( (int)who->query(QUEST) ) {
-    case 4:
-        if( who->query("quest/ziyan_axe_reward") )
-            talk(who, ({ "say 恩公又來了，那把斧子還使得順手嗎？" }), 0);
-        else
-            talk(who, ({ "say 恩公又來了，斧法的訣竅，我已盡數相告，往後就看你自己的火候了。" }), 0);
-        break;
     case 0: case 1:
+        if( who->query(DONE) ) {
+            if( who->query_class() == "fighter" && who->query_skill("ice-fire axe", 1) > 0 )
+                talk(who, ({ "say 恩公又來了，斧法的訣竅，我已盡數相告，往後就看你自己的火候了。" }), 0);
+            else
+                talk(who, ({ "say 恩公又來了，那把斧子還使得順手嗎？" }), 0);
+            break;
+        }
         talk(who, ({ "emote 撐著身子坐直，一手悄悄按住背後的斧柄，冷冷地打量著你。",
                      "say 這裡沒有你要找的人，請回吧。" }), 0);
         break;
@@ -198,7 +203,13 @@ private void answered(object who, int yes)
                      "say 這是大事，你想清楚了再回答我。" }), "ask_kill");
         return;
     }
-    who->set(QUEST, 4);
+    // 解完任務：進度與各項記號清掉（可以重解），只留永久記號 done。
+    who->set(DONE, 1);
+    who->set(QUEST, 0);
+    who->delete("quest/ziyan_axe_clue");
+    who->delete(LETTER);
+    who->delete(SEAL);
+    who->delete("quest/ziyan_axe_secret");
     // 學不了玄冰烈焰斧的人（不是武者，或已經學過）：道謝之後送一把闇雲雙刃斧答謝。
     if( who->query_class() != "fighter" || who->query_skill("ice-fire axe", 1) > 0 ) {
         talk(who, ({ "emote 重重地吐出一口長氣，眼角隱隱泛起淚光。",
@@ -217,13 +228,12 @@ private void answered(object who, int yes)
                  "say 如今我身負重傷，再也握不動它，與其埋沒，不如傳給你這樣的人。" }), 0);
 }
 
-// 答謝的闇雲雙刃斧：每位玩家只送一次。
+// 答謝的闇雲雙刃斧：每解完一次任務送一把。
 void give_reward(object who)
 {
     object axe;
 
-    if( !still_here(who) || who->query("quest/ziyan_axe_reward") ) return;
-    who->set("quest/ziyan_axe_reward", 1);
+    if( !still_here(who) ) return;
     axe = new("/custom/weapon/axe/blackcloud_axe");
     message_vision("$N把" + axe->name() + "交給$n。\n", this_object(), who);
     if( !axe->move(who) ) axe->move(environment());
@@ -250,7 +260,7 @@ void relay_emote(object who, string verb)
 int acquire_skill(object me, string skill)
 {
     if( skill != "ice-fire axe" ) return 0;
-    if( (int)me->query(QUEST) < 4 ) {
+    if( !me->query(DONE) ) {
         command("say 我跟你非親非故的，憑什麼教你家傳的斧法？");
         return 0;
     }
