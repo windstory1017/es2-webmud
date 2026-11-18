@@ -4,7 +4,7 @@
   "git": {
     "repository": "https://github.com/taedlar/es2_mudlib",
     "origin": "https://github.com/wolfer168/es2-webmud",
-    "commit": "c1abbad153055459695cd0f20543ba51c09684fc",
+    "commit": "5bf823225ae4cb37bcd67996888fab14027706c9",
     "branch": "claude/relaxed-fermat-ju99vi"
   },
   "total_files": 16,

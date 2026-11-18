@@ -80,7 +80,10 @@ void init()
 
     switch( (int)who->query(QUEST) ) {
     case 4:
-        talk(who, ({ "say 恩公又來了，斧法的訣竅，我已盡數相告，往後就看你自己的火候了。" }), 0);
+        if( who->query("quest/ziyan_axe_reward") )
+            talk(who, ({ "say 恩公又來了，那把斧子還使得順手嗎？" }), 0);
+        else
+            talk(who, ({ "say 恩公又來了，斧法的訣竅，我已盡數相告，往後就看你自己的火候了。" }), 0);
         break;
     case 0: case 1:
         talk(who, ({ "emote 撐著身子坐直，一手悄悄按住背後的斧柄，冷冷地打量著你。",
@@ -196,12 +199,34 @@ private void answered(object who, int yes)
         return;
     }
     who->set(QUEST, 4);
+    // 學不了玄冰烈焰斧的人（不是武者，或已經學過）：道謝之後送一把闇雲雙刃斧答謝。
+    if( who->query_class() != "fighter" || who->query_skill("ice-fire axe", 1) > 0 ) {
+        talk(who, ({ "emote 重重地吐出一口長氣，眼角隱隱泛起淚光。",
+                     "say 好！好！長青九泉之下也能瞑目了。",
+                     "say 我程槐欠你一個天大的人情。",
+                     "emote 從床板下摸出一把通身墨黑的雙刃斧，雙手遞了過來。",
+                     "say 這是我早年得來的一把利刃，我如今握不動斧了，留著也是蒙塵。",
+                     "say 無以為報，就以此斧答謝，請務必收下。" }), "give_reward");
+        return;
+    }
     talk(who, ({ "emote 重重地吐出一口長氣，眼角隱隱泛起淚光。",
                  "say 好！好！長青九泉之下也能瞑目了。",
                  "say 我程槐欠你一個天大的人情。",
                  "emote 解下背上的重斧，在掌心緩緩摩挲。",
                  "say 這把玄冰烈焰斧是我程家世代相傳的家學。",
                  "say 如今我身負重傷，再也握不動它，與其埋沒，不如傳給你這樣的人。" }), 0);
+}
+
+// 答謝的闇雲雙刃斧：每位玩家只送一次。
+void give_reward(object who)
+{
+    object axe;
+
+    if( !still_here(who) || who->query("quest/ziyan_axe_reward") ) return;
+    who->set("quest/ziyan_axe_reward", 1);
+    axe = new("/custom/weapon/axe/blackcloud_axe");
+    message_vision("$N把" + axe->name() + "交給$n。\n", this_object(), who);
+    if( !axe->move(who) ) axe->move(environment());
 }
 
 void relay_say(object who, string arg)
