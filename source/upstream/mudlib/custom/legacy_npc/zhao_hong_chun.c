@@ -27,3 +27,30 @@ void create()
     set_power("C");
     setup();
 }
+
+/* 玄冰烈焰斧任務（docs/martial_arts/玄冰烈焰斧_任務設計.md）：
+ * 案情大白（quest/ziyan_axe 為 2）的玩家擊殺趙弘春，屍體裡多出一方官印；密函第一次另外掉一份。
+ * 官印與密函都記錄持有人（quest_owner），官印交給程槐後才算完成，所以還沒交出官印之前可以重新取。 */
+void die()
+{
+    object killer = last_damage_giver(), corpse, seal, letter;
+    int stage;
+
+    ::die();
+    if( !objectp(killer) || !userp(killer) ) return;
+    stage = (int)killer->query("quest/ziyan_axe");
+    if( (stage != 2 && stage != 3) || killer->query("quest/ziyan_axe_seal") ) return;
+    if( !objectp(corpse = query_temp("corpse")) ) return;
+
+    seal = new("/d/ziyan/obj/magistrate_seal");
+    seal->set("quest_owner", killer->query("id"));
+    seal->move(corpse);
+    if( !killer->query("quest/ziyan_axe_secret") ) {
+        killer->set("quest/ziyan_axe_secret", 1);
+        letter = new("/d/ziyan/obj/secret_letter");
+        letter->set("quest_owner", killer->query("id"));
+        letter->move(corpse);
+    }
+    killer->set("quest/ziyan_axe", 3);
+    tell_object(killer, "你在趙弘春的屍身上摸到一方沉甸甸的官印，這是他從不離身的東西。\n");
+}

@@ -11,6 +11,7 @@
 　學習條件：種族不限，職業限武者，無其他條件
 　任務起始：紫煙鎮 血案（民宅、縣衙、程槐）
 　安裝：enable twohanded axe with ice-fire axe
+　求教：acquire ice-fire axe from cheng huai
 　招式：赤炎開山、熔金斷流、焚野燎原、寒潭鎖月、冰河崩岸、霜刃摧岳
 　特殊能力：
 　　‧屬性傷害：招式附帶烈焰或玄冰之力。烈焰三招吃火焰傷害加成，

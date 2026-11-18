@@ -31,7 +31,7 @@ def test_npc_settings_follow_list():
         assert f'set_power("{tier}");' in s, f
         assert ('set("legacy_aggressive", 1);' in s) == ('主動攻擊' in beh), f
         assert ('set("legacy_patrol", 1);' in s) == ('巡邏' in beh), f
-        assert 'set_skill(' not in s or name.strip() in ('馬鍾聖', '軒轅劍月', '孟驚鴻', '吳長貴', '於蘭兼毅'), f   # 這五位另外設了技能（各檔案內有註明來源）
+        assert 'set_skill(' not in s or name.strip() in ('馬鍾聖', '軒轅劍月', '孟驚鴻', '吳長貴', '於蘭兼毅', '程槐'), f   # 這六位另外設了技能（程槐：玄冰烈焰斧，2026-11-18）（各檔案內有註明來源）
         assert 'set_attr(' not in s, f
 
 
