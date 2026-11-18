@@ -61,6 +61,16 @@ mapping HIT_MSG = ([
     "fumble": "$n指尖發麻，手腳頓時遲鈍了下來，一舉一動都慢了半拍。",
 ]);
 
+// 中招敘述（練武假人）：死物只寫外觀留下的痕跡，不寫活人反應
+// （使用者定案，2026-11-19，見 docs/NPC_DUMMY.md）。
+mapping DUMMY_HIT_MSG = ([
+    "fear":   "$n心口多了一個細小的針孔，針尾兀自輕輕顫動。",
+    "foul":   "銀針斜斜釘在$n背後，$n紋風不動。",
+    "fail":   "針尖扎進$n臂彎，發出「篤」的一聲輕響。",
+    "fling":  "針勢快而無聲，只在$n腦後留下一點細小的痕跡。",
+    "fumble": "針尖點在$n腕底，迸出一點細屑，$n依舊一動也不動。",
+]);
+
 private string needle_key(string spl)
 {
     switch(spl) {
@@ -107,7 +117,7 @@ int do_wuto(object me, string key, object target)
     needle_line(me, target, replace_string(replace_string(STRIKE_MSG[key],
         "$W", needle_name(me)), "$T", "「" + n["color"] + n["name"] + NOR CYN "」"));
     needle_blank(me);
-    needle_line(me, target, HIT_MSG[key]);
+    needle_line(me, target, target->query("training_dummy") ? DUMMY_HIT_MSG[key] : HIT_MSG[key]);
 
     // W-11（使用者定案，2026-11-06）：必中。已經在交手就維持原本的狀態。
     // 還沒交手時：對玩家等於下 kill；對 NPC 等於下 fight，NPC 則對施針者下殺手。
@@ -134,7 +144,8 @@ int do_wuto(object me, string key, object target)
             ([ attr: -amount ]), sk / 5);
 
     // W-07：目標停頓 2 回合的機率 sk/8%（使用者定案，2026-11-06）。
-    if( random(100) < sk / 8 ) {
+    // 練武假人是死物：不觸發停頓，也不顯示敘述（使用者定案，2026-11-19）。
+    if( !target->query("training_dummy") && random(100) < sk / 8 ) {
         needle_line(me, target, "$n身子一僵，一時竟提不起勁來。");
         target->start_busy(2);
     }

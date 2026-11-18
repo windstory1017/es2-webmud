@@ -87,8 +87,13 @@ private void silent_hits(object me, object victim, object weapon, int n, int pct
  * 並受普攻 30% 的傷害（不能閃躲、格擋，防具照樣減傷），耗精 110%。 */
 private void freeze(object me, object victim, object weapon)
 {
-    message_vision("$N招式之間寒冷的傲梅劍氣將$n凍得面起白霜﹐渾身發抖 ...\n", me, victim);
-    victim->start_busy(1);
+    // 練武假人是死物：換成死物的敘述，也不停頓（使用者定案，2026-11-19，見 docs/NPC_DUMMY.md）。
+    if( victim->query("training_dummy") )
+        message_vision("$N招式之間寒冷的傲梅劍氣掠過$n﹐在$n身上凝起一層白霜 ...\n", me, victim);
+    else {
+        message_vision("$N招式之間寒冷的傲梅劍氣將$n凍得面起白霜﹐渾身發抖 ...\n", me, victim);
+        victim->start_busy(1);
+    }
     silent_hits(me, victim, weapon, 1, 30, 110, HIT_MUST);
 }
 

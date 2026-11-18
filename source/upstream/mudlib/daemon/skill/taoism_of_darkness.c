@@ -148,7 +148,14 @@ int do_fire(object me, object target, string spell, int sen)
     if( power < 1 ) power = 1;
 
     dealt = target->receive_damage(power, me, me);
-    if( spell == "ghost_fire" )
+    // 練武假人是死物：只寫外觀留下的痕跡（使用者定案，2026-11-19，見 docs/NPC_DUMMY.md）。
+    if( target->query("training_dummy") ) {
+        if( spell == "ghost_fire" )
+            say_line(me, target, "鬼火貼著$n一燎﹐在$n身上留下一圈幽綠的焦痕。");
+        else
+            say_line(me, target, "冥火轟然撲上$n﹐烈焰翻騰﹐將$n燒得一片焦黑。");
+    }
+    else if( spell == "ghost_fire" )
         say_line(me, target, "鬼火貼著$n的身子一燎﹐$n只覺一股陰寒直透骨髓。");
     else
         say_line(me, target, "冥火轟然撲上$n的身子﹐燒得$n慘號連連﹐彷彿連魂魄都要焚盡了。");
