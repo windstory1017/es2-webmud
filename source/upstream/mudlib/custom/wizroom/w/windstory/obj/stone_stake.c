@@ -5,7 +5,7 @@ inherit "/inherit/dummy";
 
 void create()
 {
-    set_name("石製假人", ({ "stone stake", "stake", "石製假人", "假人" }));
+    set_name("石製假人", ({ "stone stake", "stake", "stone" }));
     set_race("human");
     set_class("commoner");
     set_level(20);

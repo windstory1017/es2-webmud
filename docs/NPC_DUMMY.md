@@ -41,7 +41,7 @@
 毒與狀態上不了身；喚蟒之術、茅山陰魂附身照舊不能對假人施放。
 
 測試用假人：石製假人 `custom/wizroom/w/windstory/obj/stone_stake.c`
-（ID：stone stake，繼承 `/inherit/dummy`）。
+（ID：stone stake、stake、stone，繼承 `/inherit/dummy`）。
 
 暫不做（2026-11-19 使用者決定先取消）：耐久度、擊中扣耐久、對假人練功的技能上限。
 已知現象：偷襲得手後追擊成功時會打三下；偷襲假人照樣增加罪孽。
